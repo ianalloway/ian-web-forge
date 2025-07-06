@@ -2,86 +2,101 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Simple, clean design system */
+/* Matrix-style design system */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    
+    --background: 0 0% 0%;
+    --foreground: 120 100% 75%;
+
+    --card: 0 0% 5%;
+    --card-foreground: 120 100% 75%;
+
+    --popover: 0 0% 5%;
+    --popover-foreground: 120 100% 75%;
+
+    --primary: 120 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --primary-glow: 120 100% 60%;
+
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 120 80% 60%;
+
+    --muted: 0 0% 8%;
+    --muted-foreground: 120 50% 40%;
+
+    --accent: 120 100% 40%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 120 30% 20%;
+    --input: 120 30% 15%;
+    --ring: 120 100% 50%;
+
     --radius: 0.5rem;
+
+    /* Tech-focused gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(var(--background)), hsl(var(--muted)));
     
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 0 0% 3.9%;
-    --sidebar-primary: 0 0% 9%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 0 0% 96.1%;
-    --sidebar-accent-foreground: 0 0% 9%;
-    --sidebar-border: 0 0% 89.8%;
-    --sidebar-ring: 0 0% 3.9%;
+    /* Elegant shadows */
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.3);
+    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.4);
+    --shadow-card: 0 4px 20px -4px hsl(var(--foreground) / 0.1);
+    
+    /* Smooth transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --sidebar-background: 0 0% 2%;
+    --sidebar-foreground: 120 80% 60%;
+    --sidebar-primary: 120 100% 50%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 8%;
+    --sidebar-accent-foreground: 120 80% 60%;
+    --sidebar-border: 120 30% 15%;
+    --sidebar-ring: 120 100% 50%;
   }
-  
+
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    
-    --sidebar-background: 0 0% 3.9%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 0 0% 98%;
-    --sidebar-primary-foreground: 0 0% 9%;
-    --sidebar-accent: 0 0% 14.9%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 0 0% 14.9%;
-    --sidebar-ring: 0 0% 83.1%;
+    --background: 0 0% 0%;
+    --foreground: 120 100% 80%;
+
+    --card: 0 0% 3%;
+    --card-foreground: 120 100% 80%;
+
+    --popover: 0 0% 3%;
+    --popover-foreground: 120 100% 80%;
+
+    --primary: 120 100% 60%;
+    --primary-foreground: 0 0% 0%;
+    --primary-glow: 120 100% 70%;
+
+    --secondary: 0 0% 8%;
+    --secondary-foreground: 120 90% 70%;
+
+    --muted: 0 0% 5%;
+    --muted-foreground: 120 60% 50%;
+
+    --accent: 120 100% 45%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 120 40% 25%;
+    --input: 120 40% 20%;
+    --ring: 120 100% 60%;
+    --sidebar-background: 0 0% 2%;
+    --sidebar-foreground: 120 80% 60%;
+    --sidebar-primary: 120 100% 50%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 8%;
+    --sidebar-accent-foreground: 120 80% 60%;
+    --sidebar-border: 120 30% 15%;
+    --sidebar-ring: 120 100% 50%;
   }
 }
 
@@ -89,9 +104,45 @@
   * {
     @apply border-border;
   }
-  
+
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: 'Fira Code', 'Courier Prime', 'Courier New', monospace;
+    font-variant-ligatures: none;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Matrix-style effects */
+  .matrix-text {
+    text-shadow: 0 0 5px hsl(var(--primary));
+    font-family: 'Fira Code', 'Courier Prime', 'Courier New', monospace;
+  }
+  
+  .terminal-border {
+    border: 1px solid hsl(var(--primary) / 0.3);
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.2);
+  }
+  
+  .matrix-glow {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3),
+                inset 0 0 20px hsl(var(--primary) / 0.1);
+  }
+
+  @keyframes terminal-blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  .animate-terminal-blink {
+    animation: terminal-blink 1s infinite;
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% { text-shadow: 0 0 5px hsl(var(--primary)); }
+    50% { text-shadow: 0 0 20px hsl(var(--primary)), 0 0 30px hsl(var(--primary)); }
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
   }
 }
