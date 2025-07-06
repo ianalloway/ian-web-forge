@@ -1,0 +1,61 @@
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+
+const Skills = () => {
+  const skillCategories = [
+    {
+      title: "Frontend",
+      skills: ["React", "TypeScript", "Next.js", "Vue.js", "Tailwind CSS", "SCSS", "Vite", "Webpack"]
+    },
+    {
+      title: "Backend", 
+      skills: ["Node.js", "Python", "Express", "FastAPI", "PostgreSQL", "MongoDB", "Redis", "GraphQL"]
+    },
+    {
+      title: "Tools & Cloud",
+      skills: ["Docker", "AWS", "Google Cloud", "Git", "GitHub Actions", "Kubernetes", "Terraform", "Vercel"]
+    },
+    {
+      title: "Mobile & Other",
+      skills: ["React Native", "Flutter", "Figma", "Jest", "Cypress", "Linux", "Nginx", "Supabase"]
+    }
+  ];
+
+  return (
+    <section id="skills" className="py-20">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-foreground mb-4">Skills & Technologies</h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            A comprehensive toolkit of modern technologies and frameworks I use to build exceptional digital experiences.
+          </p>
+        </div>
+        
+        <div className="grid md:grid-cols-2 gap-8">
+          {skillCategories.map((category, index) => (
+            <Card key={index} className="bg-gradient-card hover:shadow-card transition-all duration-300">
+              <CardHeader>
+                <CardTitle className="text-xl text-foreground">{category.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-2">
+                  {category.skills.map((skill, skillIndex) => (
+                    <Badge 
+                      key={skillIndex} 
+                      variant="secondary" 
+                      className="hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer"
+                    >
+                      {skill}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Skills;
