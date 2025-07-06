@@ -23,46 +23,46 @@ const Header = () => {
   };
 
   return (
-    <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-background/80 backdrop-blur-md shadow-card' : 'bg-transparent'
+    <header className={`fixed top-0 w-full z-50 transition-all duration-300 font-mono ${
+      isScrolled ? 'bg-background/90 backdrop-blur-md shadow-glow terminal-border border-b' : 'bg-transparent'
     }`}>
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <div className="text-2xl font-bold text-primary">
-            Ian Alloway
+          <div className="text-2xl font-bold text-primary matrix-text">
+            <span className="animate-terminal-blink">█</span> IAN.ALLOWAY.SYS
           </div>
           
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex space-x-8 font-mono">
             <button 
               onClick={() => scrollToSection('home')}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-foreground hover:text-primary transition-colors matrix-text"
             >
-              Home
+              [HOME]
             </button>
             <button 
               onClick={() => scrollToSection('about')}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-foreground hover:text-primary transition-colors matrix-text"
             >
-              About
+              [ABOUT]
             </button>
             <button 
               onClick={() => scrollToSection('skills')}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-foreground hover:text-primary transition-colors matrix-text"
             >
-              Skills
+              [SKILLS]
             </button>
             <button 
               onClick={() => scrollToSection('projects')}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-foreground hover:text-primary transition-colors matrix-text"
             >
-              Projects
+              [PROJECTS]
             </button>
             <button 
               onClick={() => scrollToSection('contact')}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-foreground hover:text-primary transition-colors matrix-text"
             >
-              Contact
+              [CONTACT]
             </button>
           </nav>
 
@@ -79,37 +79,37 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <nav className="md:hidden mt-4 pb-4 border-t border-border">
-            <div className="flex flex-col space-y-4 pt-4">
+          <nav className="md:hidden mt-4 pb-4 border-t border-primary/30 terminal-border bg-background/95 backdrop-blur-sm">
+            <div className="flex flex-col space-y-4 pt-4 font-mono">
               <button 
                 onClick={() => scrollToSection('home')}
-                className="text-left text-foreground hover:text-primary transition-colors"
+                className="text-left text-foreground hover:text-primary transition-colors matrix-text"
               >
-                Home
+                [HOME]
               </button>
               <button 
                 onClick={() => scrollToSection('about')}
-                className="text-left text-foreground hover:text-primary transition-colors"
+                className="text-left text-foreground hover:text-primary transition-colors matrix-text"
               >
-                About
+                [ABOUT]
               </button>
               <button 
                 onClick={() => scrollToSection('skills')}
-                className="text-left text-foreground hover:text-primary transition-colors"
+                className="text-left text-foreground hover:text-primary transition-colors matrix-text"
               >
-                Skills
+                [SKILLS]
               </button>
               <button 
                 onClick={() => scrollToSection('projects')}
-                className="text-left text-foreground hover:text-primary transition-colors"
+                className="text-left text-foreground hover:text-primary transition-colors matrix-text"
               >
-                Projects
+                [PROJECTS]
               </button>
               <button 
                 onClick={() => scrollToSection('contact')}
-                className="text-left text-foreground hover:text-primary transition-colors"
+                className="text-left text-foreground hover:text-primary transition-colors matrix-text"
               >
-                Contact
+                [CONTACT]
               </button>
             </div>
           </nav>

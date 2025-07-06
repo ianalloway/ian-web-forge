@@ -109,6 +109,24 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-matrix;
+    font-variant-ligatures: none;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Matrix-style effects */
+  .matrix-text {
+    text-shadow: 0 0 5px hsl(var(--primary));
+    font-family: 'Fira Code', 'Courier Prime', 'Courier New', monospace;
+  }
+  
+  .terminal-border {
+    border: 1px solid hsl(var(--primary) / 0.3);
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.2);
+  }
+  
+  .matrix-glow {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3),
+                inset 0 0 20px hsl(var(--primary) / 0.1);
   }
 }
