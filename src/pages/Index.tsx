@@ -17,12 +17,12 @@ const Index = () => {
             &gt; ACCESSING: IAN.ALLOWAY.SYS
           </h1>
           <p className="text-xl text-muted-foreground mb-2 font-mono matrix-text">
-            &gt; STATUS: Full Stack Developer Protocol Active
+            &gt; STATUS: Data Science Protocol Active
           </p>
           <p className="text-muted-foreground max-w-2xl mx-auto font-mono matrix-text">
-            &gt; INITIALIZING: Personal data interface<br/>
-            &gt; MISSION: Building innovative digital solutions<br/>
-            &gt; SPECIALIZATION: Modern web technologies
+            &gt; INITIALIZING: Data analysis interface<br/>
+            &gt; MISSION: Extracting insights from complex datasets<br/>
+            &gt; SPECIALIZATION: Machine learning & statistical modeling
           </p>
         </div>
 
@@ -35,24 +35,21 @@ const Index = () => {
                 <ExternalLink size={20} />
                 [PROJECTS.DIR]
               </CardTitle>
-              <CardDescription className="font-mono matrix-text">
-                &gt; Accessing project database...
-              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               <Button variant="outline" className="w-full justify-start font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
                 <a href="#" target="_blank" rel="noopener noreferrer">
-                  &gt; E-Commerce_Platform.exe
+                  &gt; Customer_Churn_Prediction.py
                 </a>
               </Button>
               <Button variant="outline" className="w-full justify-start font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
                 <a href="#" target="_blank" rel="noopener noreferrer">
-                  &gt; Task_Management_App.exe
+                  &gt; Stock_Price_Forecasting.ipynb
                 </a>
               </Button>
               <Button variant="outline" className="w-full justify-start font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
                 <a href="#" target="_blank" rel="noopener noreferrer">
-                  &gt; Weather_Dashboard.exe
+                  &gt; Sentiment_Analysis_Dashboard.py
                 </a>
               </Button>
               <Button variant="outline" className="w-full justify-start font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
@@ -70,9 +67,6 @@ const Index = () => {
                 <Github size={20} />
                 [GITHUB.SYS]
               </CardTitle>
-              <CardDescription className="font-mono matrix-text">
-                &gt; Connecting to code repositories...
-              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               <Button variant="outline" className="w-full justify-start font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
@@ -100,9 +94,6 @@ const Index = () => {
                 <ExternalLink size={20} />
                 [MOVIE_REVIEWS.DB]
               </CardTitle>
-              <CardDescription className="font-mono matrix-text">
-                &gt; Loading entertainment analysis...
-              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               <Button variant="outline" className="w-full justify-start font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
@@ -130,24 +121,21 @@ const Index = () => {
                 <ExternalLink size={20} />
                 [BLOG.POSTS]
               </CardTitle>
-              <CardDescription className="font-mono matrix-text">
-                &gt; Accessing thought protocols...
-              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               <Button variant="outline" className="w-full justify-start font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
                 <a href="#" target="_blank" rel="noopener noreferrer">
-                  &gt; Recent_Posts.md
+                  &gt; Data_Science_Insights.md
                 </a>
               </Button>
               <Button variant="outline" className="w-full justify-start font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
                 <a href="#" target="_blank" rel="noopener noreferrer">
-                  &gt; Tech_Tutorials.guide
+                  &gt; ML_Tutorials.guide
                 </a>
               </Button>
               <Button variant="outline" className="w-full justify-start font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
                 <a href="#" target="_blank" rel="noopener noreferrer">
-                  &gt; Developer_Insights.log
+                  &gt; Python_Analytics.log
                 </a>
               </Button>
             </CardContent>
@@ -160,9 +148,6 @@ const Index = () => {
             <CardTitle className="matrix-text font-mono">
               [CONTACT_INTERFACE.SYS]
             </CardTitle>
-            <CardDescription className="font-mono matrix-text">
-              &gt; Establishing communication protocols...
-            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -198,14 +183,6 @@ const Index = () => {
                   &gt; PHONE.DIAL
                 </a>
               </Button>
-            </div>
-            
-            <div className="text-center mt-6 pt-6 border-t border-primary/30 terminal-border">
-              <p className="text-muted-foreground font-mono matrix-text text-sm">
-                &gt; SYSTEM_STATUS: Online and ready for connection<br/>
-                &gt; RESPONSE_TIME: Usually within 24 hours<br/>
-                &gt; ENCRYPTION: End-to-end secured
-              </p>
             </div>
           </CardContent>
         </Card>
