@@ -145,7 +145,7 @@ const Index = () => {
                 </a>
               </Button>
               <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/in/ianalloway" target="_blank" rel="noopener noreferrer">
                   <Linkedin size={16} className="mr-2" />
                   &gt; LINKEDIN.CONNECT
                 </a>
