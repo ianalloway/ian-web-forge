@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText } from 'lucide-react';
+import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 
 const skills = [
@@ -141,6 +141,11 @@ const Index = () => {
             <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
               <a href="mailto:ian@allowayllc.com">
                 <Mail className="mr-2" size={16} /> Email
+              </a>
+            </Button>
+            <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+              <a href="/Ian_Alloway_Resume.pdf" download>
+                <Download className="mr-2" size={16} /> Resume
               </a>
             </Button>
           </div>
