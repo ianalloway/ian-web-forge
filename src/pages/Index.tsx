@@ -44,19 +44,22 @@ const experience = [
 
 const projects = [
   {
-    name: 'AI Cybersecurity Platform',
-    description: 'Machine learning-powered threat detection system',
-    tech: ['Python', 'TensorFlow', 'Docker'],
+    name: 'AI Advantage Sports',
+    description: 'AI-powered sports betting analytics platform providing data-driven insights and predictions for smarter wagering decisions.',
+    tech: ['React', 'AI/ML', 'Data Analytics'],
+    url: 'https://aiadvantagesports.com',
   },
   {
-    name: 'Blockchain Analytics Dashboard',
-    description: 'Real-time crypto transaction analysis tool',
-    tech: ['Python', 'SQL', 'Power BI'],
+    name: 'Mutant Intelligence',
+    description: 'Transform your Mutant Ape Yacht Club NFT into a unique AI assistant with traits-based personality and specialized knowledge.',
+    tech: ['React', 'Web3', 'Ethereum'],
+    url: 'https://mutantintelligence.com',
   },
   {
-    name: 'Predictive Modeling Suite',
-    description: 'Statistical modeling for business intelligence',
-    tech: ['Python', 'Scikit-learn', 'Tableau'],
+    name: 'Personal Portfolio',
+    description: 'Matrix-themed portfolio website showcasing my work as a Data Scientist and AI Specialist. Built with modern web technologies.',
+    tech: ['React', 'TypeScript', 'Tailwind'],
+    url: 'https://ianalloway.xyz',
   },
 ];
 
@@ -270,13 +273,18 @@ const Index = () => {
                 <CardContent className="p-4">
                   <h3 className="text-primary font-bold mb-2 font-mono text-sm">{project.name}</h3>
                   <p className="text-muted-foreground/70 text-xs mb-3 font-mono">{project.description}</p>
-                  <div className="flex flex-wrap gap-1">
+                  <div className="flex flex-wrap gap-1 mb-3">
                     {project.tech.map((tech, i) => (
                       <span key={i} className="px-2 py-0.5 text-xs terminal-border rounded font-mono text-primary/80">
                         {tech}
                       </span>
                     ))}
                   </div>
+                  <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
+                    <a href={project.url} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="mr-1" size={12} /> Visit Site
+                    </a>
+                  </Button>
                 </CardContent>
               </Card>
             ))}
