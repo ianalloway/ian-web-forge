@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download } from 'lucide-react';
+import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 
 const skills = [
@@ -60,6 +60,33 @@ const projects = [
   },
 ];
 
+const academicPapers = [
+  {
+    title: 'Event Report Capstone',
+    description: 'Comprehensive event analysis and reporting for capstone project',
+    file: '/papers/event-report-capstone.pdf',
+    category: 'Capstone',
+  },
+  {
+    title: 'Bio and Career Goals',
+    description: 'Enhanced biography and career objectives statement',
+    file: '/papers/bio-and-career-goals.pdf',
+    category: 'Personal Statement',
+  },
+  {
+    title: 'GEA Capstone',
+    description: 'Global Economic Analysis capstone research paper',
+    file: '/papers/gea-capstone.pdf',
+    category: 'Capstone',
+  },
+  {
+    title: 'Case Study Capstone',
+    description: 'In-depth case study analysis for capstone project',
+    file: '/papers/case-study-capstone.pdf',
+    category: 'Capstone',
+  },
+];
+
 const Index = () => {
   const [typedText, setTypedText] = useState('');
   const fullText = 'IAN ALLOWAY';
@@ -88,12 +115,13 @@ const Index = () => {
             <Terminal className="inline mr-2" size={18} />
             IAN.SYS
           </div>
-          <div className="flex gap-4 text-sm font-mono">
-            <a href="#about" className="text-primary hover:text-primary/70 transition-all">[ABOUT]</a>
-            <a href="#skills" className="text-primary hover:text-primary/70 transition-all">[SKILLS]</a>
-            <a href="#projects" className="text-primary hover:text-primary/70 transition-all">[PROJECTS]</a>
-            <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
-          </div>
+                    <div className="flex gap-4 text-sm font-mono">
+                      <a href="#about" className="text-primary hover:text-primary/70 transition-all">[ABOUT]</a>
+                      <a href="#skills" className="text-primary hover:text-primary/70 transition-all">[SKILLS]</a>
+                      <a href="#projects" className="text-primary hover:text-primary/70 transition-all">[PROJECTS]</a>
+                      <a href="#academic" className="text-primary hover:text-primary/70 transition-all">[ACADEMIC]</a>
+                      <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
+                    </div>
         </div>
       </nav>
 
@@ -256,8 +284,50 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Academic Writing Section */}
+      <section id="academic" className="py-16 px-4 bg-primary/5 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
+            <GraduationCap className="inline mr-2" size={24} />
+            [ACADEMIC_WRITING]
+          </h2>
+          
+          <p className="text-muted-foreground font-mono mb-6 text-sm">
+            &gt; A collection of academic papers and research from my graduate studies.
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-4">
+            {academicPapers.map((paper, index) => (
+              <Card key={index} className="terminal-border bg-card/80 backdrop-blur-sm hover:scale-105 transition-transform">
+                <CardContent className="p-4">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-primary font-bold font-mono text-sm">{paper.title}</h3>
+                    <span className="px-2 py-0.5 text-xs terminal-border rounded font-mono text-primary/80">
+                      {paper.category}
+                    </span>
+                  </div>
+                  <p className="text-muted-foreground/70 text-xs mb-3 font-mono">{paper.description}</p>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
+                      <a href={paper.file} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="mr-1" size={12} /> View
+                      </a>
+                    </Button>
+                    <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
+                      <a href={paper.file} download>
+                        <Download className="mr-1" size={12} /> Download
+                      </a>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
-      <section id="contact" className="py-16 px-4 bg-primary/5 relative z-10">
+      <section id="contact" className="py-16 px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
             [CONTACT]
