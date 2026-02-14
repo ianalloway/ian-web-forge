@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap } from 'lucide-react';
+import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 
 const skills = [
@@ -44,22 +44,32 @@ const experience = [
 
 const projects = [
   {
+    name: 'Money Maker Bot',
+    description: 'Financial intelligence assistant for sports betting analysis, NFT tracking, and portfolio visualization. Fork it to build your own AI trading assistant.',
+    tech: ['TypeScript', 'AI', 'Clawdbot'],
+    url: 'https://github.com/ianalloway/Money-maker-bot',
+    isGithub: true,
+  },
+  {
     name: 'AI Advantage Sports',
     description: 'AI-powered sports betting analytics platform providing data-driven insights and predictions for smarter wagering decisions.',
     tech: ['React', 'AI/ML', 'Data Analytics'],
     url: 'https://aiadvantagesports.com',
+    isGithub: false,
   },
   {
     name: 'Mutant Intelligence',
     description: 'Transform your Mutant Ape Yacht Club NFT into a unique AI assistant with traits-based personality and specialized knowledge.',
     tech: ['React', 'Web3', 'Ethereum'],
     url: 'https://mutantintelligence.com',
+    isGithub: false,
   },
   {
     name: 'Personal Portfolio',
     description: 'Matrix-themed portfolio website showcasing my work as a Data Scientist and AI Specialist. Built with modern web technologies.',
     tech: ['React', 'TypeScript', 'Tailwind'],
     url: 'https://ianalloway.xyz',
+    isGithub: false,
   },
 ];
 
@@ -119,11 +129,12 @@ const Index = () => {
             IAN.SYS
           </div>
                     <div className="flex gap-4 text-sm font-mono">
-                      <a href="#about" className="text-primary hover:text-primary/70 transition-all">[ABOUT]</a>
-                      <a href="#skills" className="text-primary hover:text-primary/70 transition-all">[SKILLS]</a>
-                      <a href="#projects" className="text-primary hover:text-primary/70 transition-all">[PROJECTS]</a>
-                      <a href="#academic" className="text-primary hover:text-primary/70 transition-all">[ACADEMIC]</a>
-                      <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
+                                            <a href="#about" className="text-primary hover:text-primary/70 transition-all">[ABOUT]</a>
+                                            <a href="#skills" className="text-primary hover:text-primary/70 transition-all">[SKILLS]</a>
+                                            <a href="#projects" className="text-primary hover:text-primary/70 transition-all">[PROJECTS]</a>
+                                            <a href="#bot" className="text-primary hover:text-primary/70 transition-all">[BOT]</a>
+                                            <a href="#academic" className="text-primary hover:text-primary/70 transition-all">[ACADEMIC]</a>
+                                            <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
                     </div>
         </div>
       </nav>
@@ -282,13 +293,62 @@ const Index = () => {
                   </div>
                   <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
                     <a href={project.url} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="mr-1" size={12} /> Visit Site
+                      {project.isGithub ? <Github className="mr-1" size={12} /> : <ExternalLink className="mr-1" size={12} />}
+                      {project.isGithub ? 'View on GitHub' : 'Visit Site'}
                     </a>
                   </Button>
                 </CardContent>
               </Card>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Start Your Own Bot Section */}
+      <section id="bot" className="py-16 px-4 bg-primary/5 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
+            <Bot className="inline mr-2" size={24} />
+            [START_YOUR_OWN_BOT]
+          </h2>
+          
+          <Card className="terminal-border bg-card/80 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <h3 className="text-primary font-bold mb-3 font-mono text-lg">Money Maker Bot</h3>
+              <p className="text-muted-foreground font-mono mb-4 text-sm">
+                &gt; Build your own AI-powered financial assistant. Money Maker Bot is my open-source fork of Clawdbot, 
+                pre-configured with custom skills for sports betting analysis, NFT price tracking, and portfolio visualization.
+              </p>
+              
+              <div className="grid md:grid-cols-3 gap-4 mb-6">
+                <div className="terminal-border p-3 rounded">
+                  <h4 className="text-primary font-bold font-mono text-sm mb-1">Sports Odds</h4>
+                  <p className="text-muted-foreground/70 text-xs font-mono">Compare betting lines across sportsbooks to find value</p>
+                </div>
+                <div className="terminal-border p-3 rounded">
+                  <h4 className="text-primary font-bold font-mono text-sm mb-1">NFT Tracker</h4>
+                  <p className="text-muted-foreground/70 text-xs font-mono">Monitor floor prices and whale activity for top collections</p>
+                </div>
+                <div className="terminal-border p-3 rounded">
+                  <h4 className="text-primary font-bold font-mono text-sm mb-1">Data Viz</h4>
+                  <p className="text-muted-foreground/70 text-xs font-mono">Generate terminal charts from your portfolio data</p>
+                </div>
+              </div>
+              
+              <div className="flex flex-wrap gap-3">
+                <Button className="font-mono bg-primary text-primary-foreground hover:bg-primary/90" asChild>
+                  <a href="https://github.com/ianalloway/Money-maker-bot" target="_blank" rel="noopener noreferrer">
+                    <Github className="mr-2" size={16} /> Fork on GitHub
+                  </a>
+                </Button>
+                <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+                  <a href="https://github.com/ianalloway/Money-maker-bot#quick-start" target="_blank" rel="noopener noreferrer">
+                    <Terminal className="mr-2" size={16} /> Quick Start Guide
+                  </a>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
