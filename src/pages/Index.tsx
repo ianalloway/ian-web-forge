@@ -97,6 +97,13 @@ const projects = [
     url: 'https://github.com/openclaw/openclaw',
     isGithub: true,
   },
+  {
+    name: 'Crypto Portfolio CLI',
+    description: 'Terminal-based cryptocurrency portfolio tracker with live prices, charts, and alerts via CoinGecko API. Track holdings, set price alerts, and visualize allocation.',
+    tech: ['Python', 'Click', 'Rich'],
+    url: 'https://github.com/ianalloway/crypto-portfolio-cli',
+    isGithub: true,
+  },
 ];
 
 interface BlogPost {
