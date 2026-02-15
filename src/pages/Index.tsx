@@ -47,6 +47,13 @@ const experience = [
 
 const projects = [
   {
+    name: 'Drone AI',
+    description: 'Autonomous vehicle intelligence platform with YOLOv8 computer vision, A*/RRT* path planning, behavior trees, and MAVLink drone communication.',
+    tech: ['Python', 'PyTorch', 'MAVLink'],
+    url: 'https://github.com/ianalloway/drone-ai',
+    isGithub: true,
+  },
+  {
     name: 'Sports Betting ML',
     description: 'NBA game prediction model with value bet detection. XGBoost ML model compares predictions to betting odds using Kelly Criterion for optimal bet sizing.',
     tech: ['Python', 'XGBoost', 'Streamlit'],
