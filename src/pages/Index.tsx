@@ -104,6 +104,13 @@ const projects = [
     url: 'https://github.com/ianalloway/crypto-portfolio-cli',
     isGithub: true,
   },
+  {
+    name: 'AI Portfolio Analyzer',
+    description: 'AI-powered CLI tool that analyzes investment portfolios, calculates profit/loss, and generates intelligent insights. Supports crypto and stocks with diversification recommendations.',
+    tech: ['Python', 'AI', 'Financial Analysis'],
+    url: 'https://github.com/ianalloway/ai-portfolio-analyzer',
+    isGithub: true,
+  },
 ];
 
 interface BlogPost {
