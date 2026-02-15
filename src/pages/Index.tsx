@@ -111,6 +111,13 @@ const projects = [
     url: 'https://github.com/ianalloway/ai-portfolio-analyzer',
     isGithub: true,
   },
+  {
+    name: 'Job Fit Analyzer',
+    description: 'Paste any job description and instantly see how well my skills match. NLP-powered analysis shows matched skills, strengths, and recommendations.',
+    tech: ['React', 'FastAPI', 'NLP'],
+    url: 'https://clawdbot-setup-app-haw39wkx.devinapps.com',
+    isGithub: false,
+  },
 ];
 
 interface BlogPost {
