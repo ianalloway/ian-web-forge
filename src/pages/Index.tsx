@@ -161,25 +161,9 @@ const fallbackBlogPosts: BlogPost[] = [
 ];
 
 async function fetchSubstackPosts(): Promise<BlogPost[]> {
-  try {
-    const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://allowayai.substack.com/feed');
-    const data = await response.json();
-    if (data.status === 'ok' && data.items) {
-      return data.items.slice(0, 5).map((item: { title: string; description: string; link: string; pubDate: string }) => {
-        const date = new Date(item.pubDate);
-        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        return {
-          title: item.title,
-          description: item.description.replace(/<[^>]*>/g, '').slice(0, 100) + '...',
-          url: item.link,
-          date: `${monthNames[date.getMonth()]} ${date.getDate()}`,
-        };
-      });
-    }
-    return fallbackBlogPosts;
-  } catch {
-    return fallbackBlogPosts;
-  }
+  // Using hardcoded posts since RSS-to-JSON service caches stale data
+  // Update fallbackBlogPosts array above when adding new Substack posts
+  return fallbackBlogPosts;
 }
 
 const academicPapers = [
