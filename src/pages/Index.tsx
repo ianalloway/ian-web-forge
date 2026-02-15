@@ -66,8 +66,8 @@ const projects = [
   },
   {
     name: 'AI Advantage Sports',
-    description: 'AI-powered sports betting analytics platform providing data-driven insights and predictions for smarter wagering decisions.',
-    tech: ['React', 'AI/ML', 'Data Analytics'],
+    description: 'AI-powered sports betting platform with integrated ML predictions, Kelly Criterion bet sizing, and value bet detection for NBA games.',
+    tech: ['React', 'XGBoost', 'Kelly Criterion'],
     url: 'https://aiadvantagesports.com',
     isGithub: false,
   },
