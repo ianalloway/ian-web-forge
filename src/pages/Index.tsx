@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot, Newspaper } from 'lucide-react';
+import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot, Newspaper, Heart, Copy } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
+import { useToast } from '@/components/ui/use-toast';
+
+const ETH_DONATION_ADDRESS = "0xAc7C093B312700614C80Ba3e0509f8dEde03515b";
 
 const skills = [
   { name: 'Python', level: 95 },
@@ -180,6 +183,22 @@ const Index = () => {
   const [typedText, setTypedText] = useState('');
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>(fallbackBlogPosts);
   const fullText = 'IAN ALLOWAY';
+  const { toast } = useToast();
+
+  const copyEthAddress = async () => {
+    try {
+      await navigator.clipboard.writeText(ETH_DONATION_ADDRESS);
+      toast({
+        title: "Address Copied!",
+        description: "ETH donation address copied to clipboard",
+      });
+    } catch {
+      toast({
+        title: "Failed to copy",
+        variant: "destructive",
+      });
+    }
+  };
 
   useEffect(() => {
     let index = 0;
@@ -540,15 +559,45 @@ const Index = () => {
           <Button className="font-mono bg-primary text-primary-foreground hover:bg-primary/90" asChild>
             <a href="mailto:ian@allowayllc.com">&gt; SEND_MESSAGE</a>
           </Button>
+
+          {/* ETH Donation */}
+          <div className="mt-8 p-4 border border-primary/30 rounded-lg bg-background/50">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <Heart size={16} className="text-red-400" />
+              <span className="text-primary font-mono text-sm">SUPPORT_MY_WORK</span>
+            </div>
+            <p className="text-muted-foreground text-xs font-mono mb-3">
+              &gt; If you find my projects helpful, consider donating ETH
+            </p>
+            <div className="flex items-center justify-center gap-2">
+              <code className="px-3 py-1.5 rounded bg-primary/10 text-primary text-xs font-mono">
+                {ETH_DONATION_ADDRESS.slice(0, 10)}...{ETH_DONATION_ADDRESS.slice(-8)}
+              </code>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={copyEthAddress}
+                className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs"
+              >
+                <Copy size={12} className="mr-1" /> Copy
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="py-6 px-4 border-t border-primary/30 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center flex flex-col md:flex-row items-center justify-between gap-2">
           <p className="text-primary/50 text-xs font-mono">
             &gt; IAN.ALLOWAY.SYS // {new Date().getFullYear()} // Built with React + Tailwind
           </p>
+          <button 
+            onClick={copyEthAddress}
+            className="text-primary/50 hover:text-primary text-xs font-mono flex items-center gap-1"
+          >
+            <Heart size={12} /> Donate ETH
+          </button>
         </div>
       </footer>
     </div>
