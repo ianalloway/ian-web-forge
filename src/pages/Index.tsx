@@ -50,7 +50,7 @@ const projects = [
     name: 'Drone AI',
     description: 'Autonomous vehicle intelligence platform with YOLOv8 computer vision, A*/RRT* path planning, behavior trees, and MAVLink drone communication.',
     tech: ['Python', 'PyTorch', 'MAVLink'],
-    url: 'https://github.com/ianalloway/drone-ai',
+    url: 'https://github.com/ianalloway/ai-drone-auto-vehicle',
     isGithub: true,
   },
   {
