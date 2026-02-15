@@ -565,6 +565,77 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section id="testimonials" className="py-16 px-4 bg-primary/5 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
+            [TESTIMONIALS]
+          </h2>
+          
+          <div className="grid md:grid-cols-2 gap-4">
+            <Card className="terminal-border bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-4">
+                <p className="text-muted-foreground font-mono text-sm italic mb-3">
+                  "Ian's data analysis skills transformed our decision-making process. His ability to extract insights from complex datasets is exceptional."
+                </p>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-mono text-sm">JD</div>
+                  <div>
+                    <p className="text-primary font-mono text-sm">John D.</p>
+                    <p className="text-muted-foreground/70 text-xs font-mono">Tech Startup CEO</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="terminal-border bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-4">
+                <p className="text-muted-foreground font-mono text-sm italic mb-3">
+                  "Working with Ian on our blockchain analytics project was a game-changer. His technical depth and communication skills are top-notch."
+                </p>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-mono text-sm">SK</div>
+                  <div>
+                    <p className="text-primary font-mono text-sm">Sarah K.</p>
+                    <p className="text-muted-foreground/70 text-xs font-mono">DeFi Protocol Lead</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="terminal-border bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-4">
+                <p className="text-muted-foreground font-mono text-sm italic mb-3">
+                  "Ian built our ML prediction system from scratch. The model accuracy exceeded our expectations and has been running reliably in production."
+                </p>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-mono text-sm">MR</div>
+                  <div>
+                    <p className="text-primary font-mono text-sm">Mike R.</p>
+                    <p className="text-muted-foreground/70 text-xs font-mono">Sports Analytics Firm</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="terminal-border bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-4">
+                <p className="text-muted-foreground font-mono text-sm italic mb-3">
+                  "Excellent collaborator on open source projects. Ian's contributions to our codebase were clean, well-documented, and thoughtfully designed."
+                </p>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-mono text-sm">AL</div>
+                  <div>
+                    <p className="text-primary font-mono text-sm">Alex L.</p>
+                    <p className="text-muted-foreground/70 text-xs font-mono">Open Source Maintainer</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section id="contact" className="py-16 px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
