@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot } from 'lucide-react';
+import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot, Newspaper } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 
 const skills = [
@@ -80,6 +80,39 @@ const projects = [
   },
 ];
 
+const blogPosts = [
+  {
+    title: 'I Built an AI-Powered Financial Intelligence Bot. Here\'s How You Can Fork It.',
+    description: 'What a time to be alive',
+    url: 'https://allowayai.substack.com/p/i-built-an-ai-powered-financial-intelligence',
+    date: 'Feb 14',
+  },
+  {
+    title: 'How to Be a Better Investor Without Knowing Finance',
+    description: 'Level 2 - Value Investor',
+    url: 'https://allowayai.substack.com/p/how-to-be-a-better-investor-without',
+    date: 'Feb 3',
+  },
+  {
+    title: 'The Eviction of the American Dream: An Audit of \'99 Homes\'',
+    description: 'Movie Review',
+    url: 'https://allowayai.substack.com/p/the-eviction-of-the-american-dream',
+    date: 'Feb 2',
+  },
+  {
+    title: 'how to master AI in 30 days (the exact roadmap)',
+    description: 'Red pill or blue pill',
+    url: 'https://allowayai.substack.com/p/how-to-master-ai-in-30-days',
+    date: 'Jan 28',
+  },
+  {
+    title: 'The Spreadsheet is Dead (Long Live the Code)',
+    description: 'Excel is over',
+    url: 'https://allowayai.substack.com/p/the-spreadsheet-is-dead-long-live',
+    date: 'Jan 25',
+  },
+];
+
 const academicPapers = [
   {
     title: 'Event Report Capstone',
@@ -136,12 +169,13 @@ const Index = () => {
             IAN.SYS
           </div>
                     <div className="flex gap-4 text-sm font-mono">
-                                            <a href="#about" className="text-primary hover:text-primary/70 transition-all">[ABOUT]</a>
-                                            <a href="#skills" className="text-primary hover:text-primary/70 transition-all">[SKILLS]</a>
-                                            <a href="#projects" className="text-primary hover:text-primary/70 transition-all">[PROJECTS]</a>
-                                            <a href="#bot" className="text-primary hover:text-primary/70 transition-all">[BOT]</a>
-                                            <a href="#academic" className="text-primary hover:text-primary/70 transition-all">[ACADEMIC]</a>
-                                            <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
+                                                                                        <a href="#about" className="text-primary hover:text-primary/70 transition-all">[ABOUT]</a>
+                                                                                        <a href="#skills" className="text-primary hover:text-primary/70 transition-all">[SKILLS]</a>
+                                                                                        <a href="#projects" className="text-primary hover:text-primary/70 transition-all">[PROJECTS]</a>
+                                                                                        <a href="#bot" className="text-primary hover:text-primary/70 transition-all">[BOT]</a>
+                                                                                        <a href="#blog" className="text-primary hover:text-primary/70 transition-all">[BLOG]</a>
+                                                                                        <a href="#academic" className="text-primary hover:text-primary/70 transition-all">[ACADEMIC]</a>
+                                                                                        <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
                     </div>
         </div>
       </nav>
@@ -356,6 +390,44 @@ const Index = () => {
               </div>
             </CardContent>
           </Card>
+        </div>
+      </section>
+
+      {/* Blog Section */}
+      <section id="blog" className="py-16 px-4 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
+            <Newspaper className="inline mr-2" size={24} />
+            [BLOG]
+          </h2>
+          
+          <p className="text-muted-foreground font-mono mb-6 text-sm">
+            &gt; Latest posts from my Substack on AI, investing, and data science.
+          </p>
+          
+          <div className="space-y-4 mb-6">
+            {blogPosts.map((post, index) => (
+              <Card key={index} className="terminal-border bg-card/80 backdrop-blur-sm hover:scale-[1.02] transition-transform">
+                <CardContent className="p-4">
+                  <a href={post.url} target="_blank" rel="noopener noreferrer" className="block">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="text-primary font-bold font-mono text-sm hover:text-primary/70">{post.title}</h3>
+                      <span className="text-primary/50 text-xs font-mono whitespace-nowrap ml-4">{post.date}</span>
+                    </div>
+                    <p className="text-muted-foreground/70 text-xs font-mono">{post.description}</p>
+                  </a>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="text-center">
+            <Button className="font-mono bg-primary text-primary-foreground hover:bg-primary/90" asChild>
+              <a href="https://allowayai.substack.com" target="_blank" rel="noopener noreferrer">
+                <BookOpen className="mr-2" size={16} /> Read More on Substack
+              </a>
+            </Button>
+          </div>
         </div>
       </section>
 
