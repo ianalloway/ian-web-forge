@@ -16,6 +16,8 @@ const skills = [
   { name: 'Deep Learning', level: 85 },
   { name: 'Power BI / Tableau', level: 88 },
   { name: 'Docker', level: 80 },
+  { name: 'Computer Vision', level: 82 },
+  { name: 'NLP', level: 85 },
 ];
 
 const experience = [
