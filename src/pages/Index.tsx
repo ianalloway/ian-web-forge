@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot, Newspaper, Heart, Copy } from 'lucide-react';
+import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot, Newspaper, Heart, Copy, Sun, Moon } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -182,8 +182,26 @@ const academicPapers = [
 const Index = () => {
   const [typedText, setTypedText] = useState('');
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>(fallbackBlogPosts);
+  const [theme, setTheme] = useState<'matrix' | 'light'>(() => {
+    if (typeof window !== 'undefined') {
+      return (localStorage.getItem('theme') as 'matrix' | 'light') || 'matrix';
+    }
+    return 'matrix';
+  });
   const fullText = 'IAN ALLOWAY';
   const { toast } = useToast();
+
+  useEffect(() => {
+    document.documentElement.classList.remove('light');
+    if (theme === 'light') {
+      document.documentElement.classList.add('light');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'matrix' ? 'light' : 'matrix');
+  };
 
   const copyEthAddress = async () => {
     try {
@@ -217,9 +235,9 @@ const Index = () => {
     fetchSubstackPosts().then(setBlogPosts);
   }, []);
 
-  return (
-    <div className="min-h-screen bg-background relative">
-      <MatrixRain />
+    return (
+      <div className="min-h-screen bg-background relative">
+        {theme === 'matrix' && <MatrixRain />}
       
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-sm border-b border-primary/30">
@@ -228,11 +246,18 @@ const Index = () => {
             <Terminal className="inline mr-2" size={18} />
             IAN.SYS
           </div>
-                    <div className="flex gap-4 text-sm font-mono">
-                                                                                        <a href="#about" className="text-primary hover:text-primary/70 transition-all">[ABOUT]</a>
-                                                                                        <a href="#skills" className="text-primary hover:text-primary/70 transition-all">[SKILLS]</a>
-                                                                                        <a href="#projects" className="text-primary hover:text-primary/70 transition-all">[PROJECTS]</a>
-                                                                                        <a href="#bot" className="text-primary hover:text-primary/70 transition-all">[BOT]</a>
+                                        <div className="flex gap-4 text-sm font-mono items-center">
+                                                                                                            <a href="#about" className="text-primary hover:text-primary/70 transition-all">[ABOUT]</a>
+                                                                                                            <a href="#skills" className="text-primary hover:text-primary/70 transition-all">[SKILLS]</a>
+                                                                                                            <a href="#projects" className="text-primary hover:text-primary/70 transition-all">[PROJECTS]</a>
+                                                                                                            <a href="#bot" className="text-primary hover:text-primary/70 transition-all">[BOT]</a>
+                                <button
+                                  onClick={toggleTheme}
+                                  className="ml-2 p-2 rounded-md border border-primary/30 hover:bg-primary/10 transition-all"
+                                  aria-label="Toggle theme"
+                                >
+                                  {theme === 'matrix' ? <Sun size={16} className="text-primary" /> : <Moon size={16} className="text-primary" />}
+                                </button>
                                                                                         <a href="#blog" className="text-primary hover:text-primary/70 transition-all">[BLOG]</a>
                                                                                         <a href="#academic" className="text-primary hover:text-primary/70 transition-all">[ACADEMIC]</a>
                                                                                         <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
