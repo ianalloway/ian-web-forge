@@ -129,6 +129,24 @@ interface BlogPost {
 
 const fallbackBlogPosts: BlogPost[] = [
   {
+    title: 'I Gave My AI Bot a Diary. It Writes in It Every Day.',
+    description: 'by Ian Alloway',
+    url: 'https://allowayai.substack.com/p/i-gave-my-ai-bot-a-diary-it-writes',
+    date: 'Feb 15',
+  },
+  {
+    title: 'Building a Job Fit Analyzer with NLP and React',
+    description: 'by Ian Alloway',
+    url: 'https://allowayai.substack.com/p/building-a-job-fit-analyzer-with',
+    date: 'Feb 15',
+  },
+  {
+    title: 'I Went to See Marty Supreme and Left Feeling Like I Got Hustled (In the Best Way)',
+    description: 'By Ian Alloway',
+    url: 'https://allowayai.substack.com/p/i-went-to-see-marty-supreme',
+    date: 'Feb 15',
+  },
+  {
     title: 'I Built an AI-Powered Financial Intelligence Bot. Here\'s How You Can Fork It.',
     description: 'What a time to be alive',
     url: 'https://allowayai.substack.com/p/i-built-an-ai-powered-financial-intelligence',
@@ -139,24 +157,6 @@ const fallbackBlogPosts: BlogPost[] = [
     description: 'Level 2 - Value Investor',
     url: 'https://allowayai.substack.com/p/how-to-be-a-better-investor-without',
     date: 'Feb 3',
-  },
-  {
-    title: 'The Eviction of the American Dream: An Audit of \'99 Homes\'',
-    description: 'Movie Review',
-    url: 'https://allowayai.substack.com/p/the-eviction-of-the-american-dream',
-    date: 'Feb 2',
-  },
-  {
-    title: 'how to master AI in 30 days (the exact roadmap)',
-    description: 'Red pill or blue pill',
-    url: 'https://allowayai.substack.com/p/how-to-master-ai-in-30-days',
-    date: 'Jan 28',
-  },
-  {
-    title: 'The Spreadsheet is Dead (Long Live the Code)',
-    description: 'Excel is over',
-    url: 'https://allowayai.substack.com/p/the-spreadsheet-is-dead-long-live',
-    date: 'Jan 25',
   },
 ];
 
