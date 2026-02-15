@@ -87,7 +87,14 @@ const projects = [
   },
 ];
 
-const blogPosts = [
+interface BlogPost {
+  title: string;
+  description: string;
+  url: string;
+  date: string;
+}
+
+const fallbackBlogPosts: BlogPost[] = [
   {
     title: 'I Built an AI-Powered Financial Intelligence Bot. Here\'s How You Can Fork It.',
     description: 'What a time to be alive',
@@ -120,6 +127,28 @@ const blogPosts = [
   },
 ];
 
+async function fetchSubstackPosts(): Promise<BlogPost[]> {
+  try {
+    const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://allowayai.substack.com/feed');
+    const data = await response.json();
+    if (data.status === 'ok' && data.items) {
+      return data.items.slice(0, 5).map((item: { title: string; description: string; link: string; pubDate: string }) => {
+        const date = new Date(item.pubDate);
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        return {
+          title: item.title,
+          description: item.description.replace(/<[^>]*>/g, '').slice(0, 100) + '...',
+          url: item.link,
+          date: `${monthNames[date.getMonth()]} ${date.getDate()}`,
+        };
+      });
+    }
+    return fallbackBlogPosts;
+  } catch {
+    return fallbackBlogPosts;
+  }
+}
+
 const academicPapers = [
   {
     title: 'Event Report Capstone',
@@ -149,6 +178,7 @@ const academicPapers = [
 
 const Index = () => {
   const [typedText, setTypedText] = useState('');
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>(fallbackBlogPosts);
   const fullText = 'IAN ALLOWAY';
 
   useEffect(() => {
@@ -162,6 +192,10 @@ const Index = () => {
       }
     }, 100);
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    fetchSubstackPosts().then(setBlogPosts);
   }, []);
 
   return (
