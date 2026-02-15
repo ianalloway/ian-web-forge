@@ -44,6 +44,13 @@ const experience = [
 
 const projects = [
   {
+    name: 'Sports Betting ML',
+    description: 'NBA game prediction model with value bet detection. XGBoost ML model compares predictions to betting odds using Kelly Criterion for optimal bet sizing.',
+    tech: ['Python', 'XGBoost', 'Streamlit'],
+    url: 'https://huggingface.co/spaces/ianalloway/sports-betting-ml',
+    isGithub: false,
+  },
+  {
     name: 'Money Maker Bot',
     description: 'Financial intelligence assistant for sports betting analysis, NFT tracking, and portfolio visualization. Fork it to build your own AI trading assistant.',
     tech: ['TypeScript', 'AI', 'OpenClaw'],
