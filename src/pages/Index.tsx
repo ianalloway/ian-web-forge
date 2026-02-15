@@ -46,9 +46,16 @@ const projects = [
   {
     name: 'Money Maker Bot',
     description: 'Financial intelligence assistant for sports betting analysis, NFT tracking, and portfolio visualization. Fork it to build your own AI trading assistant.',
-    tech: ['TypeScript', 'AI', 'Clawdbot'],
+    tech: ['TypeScript', 'AI', 'OpenClaw'],
     url: 'https://github.com/ianalloway/Money-maker-bot',
     isGithub: true,
+  },
+  {
+    name: 'ClawHub Skills',
+    description: 'Published AI agent skills on ClawHub: sports-odds, nft-tracker, data-viz, and screenshot-annotator. Extending OpenClaw capabilities.',
+    tech: ['TypeScript', 'AI Agents', 'Peekaboo'],
+    url: 'https://clawhub.ai',
+    isGithub: false,
   },
   {
     name: 'AI Advantage Sports',
@@ -65,11 +72,11 @@ const projects = [
     isGithub: false,
   },
   {
-    name: 'Personal Portfolio',
-    description: 'Matrix-themed portfolio website showcasing my work as a Data Scientist and AI Specialist. Built with modern web technologies.',
-    tech: ['React', 'TypeScript', 'Tailwind'],
-    url: 'https://ianalloway.xyz',
-    isGithub: false,
+    name: 'OpenClaw Contributor',
+    description: 'Active contributor to OpenClaw, the open-source AI agent framework. Fixing bugs and improving the skill system.',
+    tech: ['TypeScript', 'Open Source', 'AI'],
+    url: 'https://github.com/openclaw/openclaw',
+    isGithub: true,
   },
 ];
 
