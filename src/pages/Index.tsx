@@ -687,9 +687,14 @@ const Index = () => {
               &gt; If you find my projects helpful, consider donating ETH
             </p>
             <div className="flex items-center justify-center gap-2">
-              <code className="px-3 py-1.5 rounded bg-primary/10 text-primary text-xs font-mono">
+              <a
+                href={`https://etherscan.io/address/${ETH_DONATION_ADDRESS}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 rounded bg-primary/10 text-primary text-xs font-mono hover:bg-primary/20 transition-colors"
+              >
                 {ETH_DONATION_ADDRESS.slice(0, 10)}...{ETH_DONATION_ADDRESS.slice(-8)}
-              </code>
+              </a>
               <Button 
                 variant="outline" 
                 size="sm"
@@ -709,12 +714,14 @@ const Index = () => {
           <p className="text-primary/50 text-xs font-mono">
             &gt; IAN.ALLOWAY.SYS // {new Date().getFullYear()} // Built with React + Tailwind
           </p>
-          <button 
-            onClick={copyEthAddress}
+          <a 
+            href={`https://etherscan.io/address/${ETH_DONATION_ADDRESS}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-primary/50 hover:text-primary text-xs font-mono flex items-center gap-1"
           >
             <Heart size={12} /> Donate ETH
-          </button>
+          </a>
         </div>
       </footer>
     </div>
