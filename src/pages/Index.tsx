@@ -22,28 +22,28 @@ const skills = [
 
 const experience = [
   {
-    title: 'Founder & AI Consultant',
+    title: 'Founder & Business Owner',
     company: 'Alloway LLC',
     period: 'July 2023 - Present',
-    description: 'Built AI-powered analytics for 5+ clients: fraud detection (30% incident reduction), real-time dashboards (40% efficiency gain), and ML-driven decision automation for e-commerce and enterprise.'
+    description: 'Founded data consultancy delivering AI-powered solutions to e-commerce and enterprise clients. Deployed ML models improving client operational efficiency by 40%. Built custom Tableau and Power BI dashboards for real-time data tracking.'
   },
   {
-    title: 'Data Analyst',
-    company: 'The Global Career Accelerator / WVU',
-    period: 'Dec 2024 - May 2025',
-    description: 'Led data analysis for Ascend West Virginia economic development. Built reporting pipelines (Python, SQL, Excel) and interactive Power BI/Tableau dashboards for policy stakeholders.'
-  },
-  {
-    title: 'Data Specialist',
+    title: 'Data Auditor / AI Engineer',
     company: 'Omniichain',
     period: 'Jan 2020 - Dec 2024',
-    description: 'Engineered ETL pipelines for multi-chain blockchain data (Ethereum, Solana, Polkadot). Built AI anomaly detection reducing fraud 30%. Shipped dashboards used by investors and auditors.'
+    description: 'Engineered AI-based anomaly detection tools analyzing multi-chain blockchain data, reducing fraud incidents by 30%. Built interactive dashboards visualizing token flow, market movements, and transactional health.'
   },
   {
-    title: 'Hospitality Operations Leader',
-    company: 'Hilton Hotels & Wyndham Grand',
-    period: '2020 - 2024',
-    description: 'Managed teams of 15+ across multiple properties. Drove 20% guest satisfaction increases through data-driven operations. Nominated Leader of the Quarter.'
+    title: 'Task Force Manager',
+    company: 'Hilton Hotels',
+    period: 'Aug 2020 - Sept 2023',
+    description: 'Directed operational improvements across multiple Hilton locations. Achieved measurable guest satisfaction increases of up to 20% through process optimization. Managed property P&L and budgeting operations.'
+  },
+  {
+    title: 'Sales & Purchasing Manager',
+    company: 'IT Parts and Spares Ltd.',
+    period: 'Sept 2018 - Aug 2023',
+    description: 'Led purchasing operations with international vendors for HP, IBM, Lenovo, and Dell hardware, reducing costs by 15%. Collaborated with IT teams to implement procurement automation tools.'
   },
 ];
 
@@ -85,7 +85,7 @@ const projects = [
   },
   {
     name: 'OpenClaw Contributor',
-    description: 'Active contributor to the 190K+ star open-source AI agent framework. Published 4 custom skills on ClawHub marketplace: sports-odds, nft-tracker, data-viz, screenshot-annotator.',
+    description: 'Active contributor to the 194k+ star open-source AI agent framework. Published 4 custom skills on ClawHub marketplace: sports-odds, nft-tracker, data-viz, screenshot-annotator.',
     tech: ['TypeScript', 'Open Source', 'AI'],
     url: 'https://github.com/openclaw/openclaw',
     isGithub: true,
@@ -304,10 +304,10 @@ const Index = () => {
           </h1>
           
           <p className="text-xl text-muted-foreground mb-2 font-mono">
-            ML Engineer | Data Scientist | AI Builder
+            AI/ML Engineer | Data Scientist | Business Intelligence Specialist
           </p>
           <p className="text-muted-foreground font-mono mb-8">
-            B.S. Data Science @ USF (May 2026) | M.S. AI @ USF (Fall 2026) | Founder @ Alloway LLC
+            B.S. Data Science @ USF (Dec 2025) | M.S. AI @ USF (Dec 2027) | Founder @ Alloway LLC
           </p>
 
           <div className="inline-block px-4 py-2 mb-6 border border-green-400/50 rounded-lg bg-green-400/10">
@@ -343,7 +343,7 @@ const Index = () => {
               </a>
             </Button>
             <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
-              <a href="/Ian_Alloway_Resume.pdf" download>
+              <a href="/Ian_Alloway_Resume_CV.pdf" download>
                 <Download className="mr-2" size={16} /> Resume
               </a>
             </Button>
@@ -366,10 +366,10 @@ const Index = () => {
           <Card className="terminal-border bg-card/80 backdrop-blur-sm mb-8">
             <CardContent className="p-6">
               <p className="text-muted-foreground leading-relaxed font-mono text-sm">
-                &gt; Machine Learning Engineer graduating with a B.S. in Data Science from USF (May 2026), starting M.S. in AI (Fall 2026). 
-                I build production ML systems - from XGBoost prediction models deployed on HuggingFace to YOLOv8 computer vision pipelines for autonomous drones. 
-                Founder of Alloway LLC, where I've delivered AI analytics solutions that reduced fraud incidents by 30% and improved client operational efficiency by 40%. 
-                Active open source contributor to OpenClaw (190K+ stars).
+                &gt; Data Scientist and AI Engineer pursuing an MS in Artificial Intelligence at the University of South Florida. 
+                Builds production ML systems, blockchain analytics pipelines, and AI-powered products. 
+                Open-source contributor to OpenClaw (194k+ stars). Founder of Alloway LLC, delivering data-driven solutions across sports analytics, fintech, and cybersecurity. 
+                Proven track record of reducing fraud incidents by 30% through AI-based anomaly detection and improving client operational efficiency by 40%.
               </p>
             </CardContent>
           </Card>
