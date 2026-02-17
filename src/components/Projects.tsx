@@ -6,36 +6,52 @@ import { ExternalLink, Github } from 'lucide-react';
 const Projects = () => {
   const projects = [
     {
-      title: "E-Commerce Platform",
-      description: "A full-stack e-commerce solution with React, Node.js, and Stripe integration. Features include user authentication, product management, and order processing.",
-      technologies: ["React", "Node.js", "PostgreSQL", "Stripe", "Tailwind CSS"],
-      github: "#",
-      demo: "#",
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop"
+      title: "Sports Betting ML",
+      description: "XGBoost model trained on 5 seasons of NBA data. Compares predictions against sportsbook odds to find value bets using Kelly Criterion. Live on HuggingFace.",
+      technologies: ["Python", "XGBoost", "Scikit-learn", "Streamlit", "HuggingFace"],
+      github: "https://github.com/ianalloway/sports-betting-ml",
+      demo: "https://huggingface.co/spaces/ianalloway/sports-betting-ml",
+      image: "https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?w=400&h=250&fit=crop"
     },
     {
-      title: "Task Management App",
-      description: "A collaborative project management tool with real-time updates, drag-and-drop functionality, and team collaboration features.",
-      technologies: ["Vue.js", "Express", "Socket.io", "MongoDB", "Docker"],
-      github: "#",
+      title: "Drone AI",
+      description: "Autonomous navigation system: YOLOv8 obstacle detection, A*/RRT* path planning, behavior trees for mission logic, and MAVLink flight controller communication.",
+      technologies: ["Python", "YOLOv8", "PyTorch", "MAVLink", "ROS"],
+      github: "https://github.com/ianalloway/ai-drone-auto-vehicle",
       demo: "#",
-      image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=250&fit=crop"
+      image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400&h=250&fit=crop"
     },
     {
-      title: "Weather Dashboard",
-      description: "A responsive weather application with location-based forecasts, interactive maps, and detailed weather analytics.",
-      technologies: ["React", "TypeScript", "OpenWeather API", "Chart.js"],
+      title: "AI Advantage Sports",
+      description: "Production sports betting platform with ML predictions, Kelly Criterion bet sizing, and real-time value bet alerts for NBA games.",
+      technologies: ["React", "FastAPI", "PostgreSQL", "XGBoost", "Stripe"],
       github: "#",
-      demo: "#",
-      image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=400&h=250&fit=crop"
+      demo: "https://aiadvantagesports.com",
+      image: "https://images.unsplash.com/photo-1461896836934-bd45ba8b0e28?w=400&h=250&fit=crop"
     },
     {
-      title: "Blog Platform",
-      description: "A modern blogging platform with markdown support, comment system, and admin dashboard for content management.",
-      technologies: ["Next.js", "Supabase", "Tailwind CSS", "MDX"],
+      title: "Mutant Intelligence",
+      description: "Web3 app that transforms MAYC NFTs into AI assistants with traits-based personality generated from on-chain metadata.",
+      technologies: ["React", "Ethers.js", "Solidity", "OpenAI", "Web3"],
       github: "#",
+      demo: "https://mutantintelligence.com",
+      image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=250&fit=crop"
+    },
+    {
+      title: "Money Maker Bot",
+      description: "Open-source financial intelligence assistant built on OpenClaw for sports betting, NFT tracking, and portfolio visualization.",
+      technologies: ["Python", "OpenClaw", "FastAPI", "React", "Web3"],
+      github: "https://github.com/ianalloway/Money-maker-bot",
       demo: "#",
-      image: "https://images.unsplash.com/photo-1486312338219-ce68e2c6b13d?w=400&h=250&fit=crop"
+      image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=250&fit=crop"
+    },
+    {
+      title: "Job Fit Analyzer",
+      description: "Full-stack NLP app that analyzes job descriptions against candidate profiles using semantic similarity scoring.",
+      technologies: ["React", "FastAPI", "NLP", "Sentence Transformers", "Docker"],
+      github: "#",
+      demo: "https://clawdbot-setup-app-haw39wkx.devinapps.com",
+      image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=250&fit=crop"
     }
   ];
 
@@ -45,7 +61,7 @@ const Projects = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-foreground mb-4">Featured Projects</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Here are some of the projects I've worked on, showcasing my skills in full-stack development and modern web technologies.
+            Production ML systems, autonomous drones, Web3 apps, and open source contributions across LangChain, React.dev, and OpenClaw.
           </p>
         </div>
         
