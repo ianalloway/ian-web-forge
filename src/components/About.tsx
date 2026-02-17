@@ -58,9 +58,9 @@ const About = () => {
           <div className="terminal-border matrix-glow p-6 bg-background/50 backdrop-blur-sm font-mono">
             <div className="text-primary mb-2">&gt; ADDITIONAL_INFO:</div>
             <p className="text-muted-foreground max-w-4xl mx-auto text-lg leading-relaxed">
-              Active open source contributor to OpenClaw (190K+ stars). Published 4 AI agent skills on ClawHub.
-              Founder of Alloway LLC delivering AI-powered analytics that reduced client fraud incidents by 30%
-              and improved operational efficiency by 40%.
+                Active open source contributor to OpenClaw (194k+ stars). Published 4 AI agent skills on ClawHub.
+                Founder of Alloway LLC delivering data-driven solutions across sports analytics, fintech, and cybersecurity.
+                Proven track record of reducing fraud incidents by 30% and improving client operational efficiency by 40%.
             </p>
           </div>
         </div>
