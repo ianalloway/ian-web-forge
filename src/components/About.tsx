@@ -1,27 +1,27 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { Code, Lightbulb, Users, Zap } from 'lucide-react';
+import { Brain, Database, Bot, BarChart3 } from 'lucide-react';
 
 const About = () => {
   const features = [
     {
-      icon: Code,
-      title: "Clean Code",
-      description: "Writing maintainable, scalable, and efficient code that stands the test of time."
+      icon: Brain,
+      title: "Machine Learning",
+      description: "Production ML systems with XGBoost, PyTorch, TensorFlow. From training to deployment."
     },
     {
-      icon: Lightbulb,
-      title: "Problem Solving",
-      description: "Approaching complex challenges with creative solutions and analytical thinking."
+      icon: Database,
+      title: "Data Engineering",
+      description: "ETL pipelines, multi-chain blockchain data, SQL optimization, and real-time analytics."
     },
     {
-      icon: Users,
-      title: "Collaboration",
-      description: "Working effectively with teams to deliver exceptional user experiences."
+      icon: Bot,
+      title: "AI Systems",
+      description: "Computer vision (YOLOv8), NLP, autonomous navigation, and AI agent development."
     },
     {
-      icon: Zap,
-      title: "Performance",
-      description: "Optimizing applications for speed, accessibility, and user satisfaction."
+      icon: BarChart3,
+      title: "Analytics",
+      description: "Tableau, Power BI dashboards. Turning complex datasets into decisions that move the needle."
     }
   ];
 
@@ -30,13 +30,13 @@ const About = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <div className="text-primary font-mono text-sm mb-2">
-            <span className="animate-terminal-blink">█</span> ACCESSING_USER_DATA
+            <span className="animate-terminal-blink">_</span> ACCESSING_USER_DATA
           </div>
           <h2 className="text-4xl font-bold text-foreground mb-4 font-mono matrix-text">&gt; ABOUT.EXE</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-mono">
-            &gt; LOADING: Developer profile data...<br/>
-            &gt; STATUS: Full-stack engineer specializing in modern web architectures<br/>
-            &gt; MISSION: Creating digital experiences with robust functionality
+            &gt; ML Engineer graduating B.S. Data Science from USF (May 2026)<br/>
+            &gt; Starting M.S. in Artificial Intelligence (Fall 2026)<br/>
+            &gt; Building production ML systems and shipping open source contributions
           </p>
         </div>
         
@@ -58,9 +58,9 @@ const About = () => {
           <div className="terminal-border matrix-glow p-6 bg-background/50 backdrop-blur-sm font-mono">
             <div className="text-primary mb-2">&gt; ADDITIONAL_INFO:</div>
             <p className="text-muted-foreground max-w-4xl mx-auto text-lg leading-relaxed">
-              When not actively coding, I engage in technology research, contribute to open-source repositories, 
-              and participate in developer community knowledge sharing. Continuous learning protocol active - 
-              staying current with industry evolution and best practices.
+              Active open source contributor to OpenClaw (190K+ stars). Published 4 AI agent skills on ClawHub.
+              Founder of Alloway LLC delivering AI-powered analytics that reduced client fraud incidents by 30%
+              and improved operational efficiency by 40%.
             </p>
           </div>
         </div>
