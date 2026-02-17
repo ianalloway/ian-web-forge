@@ -34,19 +34,13 @@ const Contact = () => {
     {
       icon: Mail,
       title: "Email",
-      value: "hello@ianalloway.xyz",
-      link: "mailto:hello@ianalloway.xyz"
-    },
-    {
-      icon: Phone,
-      title: "Phone",
-      value: "+1 (555) 123-4567",
-      link: "tel:+15551234567"
+      value: "ian@allowayllc.com",
+      link: "mailto:ian@allowayllc.com"
     },
     {
       icon: MapPin,
       title: "Location",
-      value: "San Francisco, CA",
+      value: "West Virginia (Remote-friendly)",
       link: "#"
     }
   ];

@@ -22,101 +22,94 @@ const skills = [
 
 const experience = [
   {
-    title: 'Founder & Data Consultant',
+    title: 'Founder & AI Consultant',
     company: 'Alloway LLC',
     period: 'July 2023 - Present',
-    description: 'AI-Driven Cybersecurity & Blockchain Analytics consulting'
-  },
-  {
-    title: 'MSAI Candidate',
-    company: 'University of South Florida',
-    period: '2024 - Present',
-    description: 'Masters in Artificial Intelligence'
+    description: 'Built AI-powered analytics for 5+ clients: fraud detection (30% incident reduction), real-time dashboards (40% efficiency gain), and ML-driven decision automation for e-commerce and enterprise.'
   },
   {
     title: 'Data Analyst',
-    company: 'The Global Career Accelerator',
+    company: 'The Global Career Accelerator / WVU',
     period: 'Dec 2024 - May 2025',
-    description: 'Data analysis and insights extraction'
+    description: 'Led data analysis for Ascend West Virginia economic development. Built reporting pipelines (Python, SQL, Excel) and interactive Power BI/Tableau dashboards for policy stakeholders.'
   },
   {
     title: 'Data Specialist',
     company: 'Omniichain',
     period: 'Jan 2020 - Dec 2024',
-    description: 'Blockchain data analytics and modeling'
+    description: 'Engineered ETL pipelines for multi-chain blockchain data (Ethereum, Solana, Polkadot). Built AI anomaly detection reducing fraud 30%. Shipped dashboards used by investors and auditors.'
+  },
+  {
+    title: 'Hospitality Operations Leader',
+    company: 'Hilton Hotels & Wyndham Grand',
+    period: '2020 - 2024',
+    description: 'Managed teams of 15+ across multiple properties. Drove 20% guest satisfaction increases through data-driven operations. Nominated Leader of the Quarter.'
   },
 ];
 
 const projects = [
   {
-    name: 'Drone AI',
-    description: 'Autonomous vehicle intelligence platform with YOLOv8 computer vision, A*/RRT* path planning, behavior trees, and MAVLink drone communication.',
-    tech: ['Python', 'PyTorch', 'MAVLink'],
-    url: 'https://github.com/ianalloway/ai-drone-auto-vehicle',
-    isGithub: true,
-  },
-  {
     name: 'Sports Betting ML',
-    description: 'NBA game prediction model with value bet detection. XGBoost ML model compares predictions to betting odds using Kelly Criterion for optimal bet sizing.',
+    description: 'Trained XGBoost model on 5 seasons of NBA data to predict game outcomes. Compares model probabilities against sportsbook odds to find value bets, then sizes positions using Kelly Criterion. Live on HuggingFace.',
     tech: ['Python', 'XGBoost', 'Streamlit'],
     url: 'https://huggingface.co/spaces/ianalloway/sports-betting-ml',
     isGithub: false,
   },
   {
+    name: 'Drone AI',
+    description: 'Autonomous navigation system for drones: YOLOv8 detects obstacles in real-time, A*/RRT* algorithms plan collision-free paths, behavior trees handle mission logic. Communicates with flight controllers via MAVLink.',
+    tech: ['Python', 'PyTorch', 'MAVLink'],
+    url: 'https://github.com/ianalloway/ai-drone-auto-vehicle',
+    isGithub: true,
+  },
+  {
     name: 'Money Maker Bot',
-    description: 'Financial intelligence assistant for sports betting analysis, NFT tracking, and portfolio visualization. Fork it to build your own AI trading assistant.',
+    description: 'Open-source financial intelligence assistant built on OpenClaw. Pre-configured with custom skills for sports betting analysis, NFT price tracking, and portfolio visualization. Fork it and build your own.',
     tech: ['TypeScript', 'AI', 'OpenClaw'],
     url: 'https://github.com/ianalloway/Money-maker-bot',
     isGithub: true,
   },
   {
-    name: 'ClawHub Skills',
-    description: 'Published AI agent skills on ClawHub: sports-odds, nft-tracker, data-viz, and screenshot-annotator. Extending OpenClaw capabilities.',
-    tech: ['TypeScript', 'AI Agents', 'Peekaboo'],
-    url: 'https://clawhub.ai',
+    name: 'Job Fit Analyzer',
+    description: 'Full-stack NLP app: paste any job description and get instant skill-match analysis. React frontend sends text to FastAPI backend which runs semantic similarity against my profile. Deployed live.',
+    tech: ['React', 'FastAPI', 'NLP'],
+    url: 'https://clawdbot-setup-app-haw39wkx.devinapps.com',
     isGithub: false,
   },
   {
     name: 'AI Advantage Sports',
-    description: 'AI-powered sports betting platform with integrated ML predictions, Kelly Criterion bet sizing, and value bet detection for NBA games.',
+    description: 'Production sports betting platform combining ML predictions with Kelly Criterion bet sizing. Users get real-time value bet alerts for NBA games with confidence scores.',
     tech: ['React', 'XGBoost', 'Kelly Criterion'],
     url: 'https://aiadvantagesports.com',
     isGithub: false,
   },
   {
-    name: 'Mutant Intelligence',
-    description: 'Transform your Mutant Ape Yacht Club NFT into a unique AI assistant with traits-based personality and specialized knowledge.',
-    tech: ['React', 'Web3', 'Ethereum'],
-    url: 'https://mutantintelligence.com',
-    isGithub: false,
-  },
-  {
     name: 'OpenClaw Contributor',
-    description: 'Active contributor to OpenClaw, the open-source AI agent framework. Fixing bugs and improving the skill system.',
+    description: 'Active contributor to the 190K+ star open-source AI agent framework. Published 4 custom skills on ClawHub marketplace: sports-odds, nft-tracker, data-viz, screenshot-annotator.',
     tech: ['TypeScript', 'Open Source', 'AI'],
     url: 'https://github.com/openclaw/openclaw',
     isGithub: true,
   },
   {
+    name: 'Mutant Intelligence',
+    description: 'Web3 app that transforms Mutant Ape Yacht Club NFTs into unique AI assistants. Each bot inherits personality traits from on-chain metadata to create personalized interactions.',
+    tech: ['React', 'Web3', 'Ethereum'],
+    url: 'https://mutantintelligence.com',
+    isGithub: false,
+  },
+  {
     name: 'Crypto Portfolio CLI',
-    description: 'Terminal-based cryptocurrency portfolio tracker with live prices, charts, and alerts via CoinGecko API. Track holdings, set price alerts, and visualize allocation.',
+    description: 'Terminal-based portfolio tracker pulling live prices from CoinGecko API. Track holdings, set price alerts, visualize allocation with Rich terminal charts. Zero browser needed.',
     tech: ['Python', 'Click', 'Rich'],
     url: 'https://github.com/ianalloway/crypto-portfolio-cli',
     isGithub: true,
   },
   {
     name: 'AI Portfolio Analyzer',
-    description: 'AI-powered CLI tool that analyzes investment portfolios, calculates profit/loss, and generates intelligent insights. Supports crypto and stocks with diversification recommendations.',
+    description: 'CLI tool that analyzes investment portfolios with AI. Calculates profit/loss, generates diversification recommendations, and produces intelligent insights for crypto and stock holdings.',
     tech: ['Python', 'AI', 'Financial Analysis'],
     url: 'https://github.com/ianalloway/ai-portfolio-analyzer',
     isGithub: true,
-  },
-  {
-    name: 'Job Fit Analyzer',
-    description: 'Paste any job description and instantly see how well my skills match. NLP-powered analysis shows matched skills, strengths, and recommendations.',
-    tech: ['React', 'FastAPI', 'NLP'],
-    url: 'https://clawdbot-setup-app-haw39wkx.devinapps.com',
-    isGithub: false,
   },
 ];
 
@@ -292,6 +285,7 @@ const Index = () => {
                                 </button>
                                                                                         <a href="#blog" className="text-primary hover:text-primary/70 transition-all">[BLOG]</a>
                                                                                         <a href="#academic" className="text-primary hover:text-primary/70 transition-all">[ACADEMIC]</a>
+                                                                                        <a href="#certifications" className="text-primary hover:text-primary/70 transition-all">[CERTS]</a>
                                                                                         <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
                     </div>
         </div>
@@ -310,11 +304,16 @@ const Index = () => {
           </h1>
           
           <p className="text-xl text-muted-foreground mb-2 font-mono">
-            Data Scientist | AI Specialist | Blockchain Analyst
+            ML Engineer | Data Scientist | AI Builder
           </p>
           <p className="text-muted-foreground font-mono mb-8">
-            MSAI Candidate @ USF | Founder @ Alloway LLC
+            B.S. Data Science @ USF (May 2026) | M.S. AI @ USF (Fall 2026) | Founder @ Alloway LLC
           </p>
+
+          <div className="inline-block px-4 py-2 mb-6 border border-green-400/50 rounded-lg bg-green-400/10">
+            <span className="text-green-400 font-mono text-sm font-bold">OPEN TO WORK</span>
+            <span className="text-muted-foreground font-mono text-sm"> - Data Scientist / ML Engineer roles</span>
+          </div>
 
           {/* Social Links - Prominent */}
           <div className="flex flex-wrap justify-center gap-3 mb-10">
@@ -367,9 +366,10 @@ const Index = () => {
           <Card className="terminal-border bg-card/80 backdrop-blur-sm mb-8">
             <CardContent className="p-6">
               <p className="text-muted-foreground leading-relaxed font-mono text-sm">
-                &gt; Data Scientist and AI specialist pursuing a Masters in Artificial Intelligence at the University of South Florida. 
-                As founder of Alloway LLC, I specialize in AI-driven cybersecurity solutions and blockchain analytics. 
-                I transform complex datasets into actionable insights, bridging cutting-edge AI research with practical business applications.
+                &gt; Machine Learning Engineer graduating with a B.S. in Data Science from USF (May 2026), starting M.S. in AI (Fall 2026). 
+                I build production ML systems - from XGBoost prediction models deployed on HuggingFace to YOLOv8 computer vision pipelines for autonomous drones. 
+                Founder of Alloway LLC, where I've delivered AI analytics solutions that reduced fraud incidents by 30% and improved client operational efficiency by 40%. 
+                Active open source contributor to OpenClaw (190K+ stars).
               </p>
             </CardContent>
           </Card>
@@ -590,71 +590,60 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section id="testimonials" className="py-16 px-4 bg-primary/5 relative z-10">
+      {/* Certifications Section */}
+      <section id="certifications" className="py-16 px-4 bg-primary/5 relative z-10">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
-            [TESTIMONIALS]
+            [CERTIFICATIONS]
           </h2>
           
           <div className="grid md:grid-cols-2 gap-4">
-            <Card className="terminal-border bg-card/80 backdrop-blur-sm">
+            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
               <CardContent className="p-4">
-                <p className="text-muted-foreground font-mono text-sm italic mb-3">
-                  "Ian's data analysis skills transformed our decision-making process. His ability to extract insights from complex datasets is exceptional."
-                </p>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-mono text-sm">JD</div>
-                  <div>
-                    <p className="text-primary font-mono text-sm">John D.</p>
-                    <p className="text-muted-foreground/70 text-xs font-mono">Tech Startup CEO</p>
-                  </div>
-                </div>
+                <h4 className="text-primary font-bold font-mono text-sm">Deep Learning Specialization</h4>
+                <p className="text-muted-foreground/70 text-xs font-mono">Coursera (Andrew Ng)</p>
               </CardContent>
             </Card>
-            
-            <Card className="terminal-border bg-card/80 backdrop-blur-sm">
+            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
               <CardContent className="p-4">
-                <p className="text-muted-foreground font-mono text-sm italic mb-3">
-                  "Working with Ian on our blockchain analytics project was a game-changer. His technical depth and communication skills are top-notch."
-                </p>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-mono text-sm">SK</div>
-                  <div>
-                    <p className="text-primary font-mono text-sm">Sarah K.</p>
-                    <p className="text-muted-foreground/70 text-xs font-mono">DeFi Protocol Lead</p>
-                  </div>
-                </div>
+                <h4 className="text-primary font-bold font-mono text-sm">Machine Learning Engineering</h4>
+                <p className="text-muted-foreground/70 text-xs font-mono">Google Cloud</p>
               </CardContent>
             </Card>
-            
-            <Card className="terminal-border bg-card/80 backdrop-blur-sm">
+            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
               <CardContent className="p-4">
-                <p className="text-muted-foreground font-mono text-sm italic mb-3">
-                  "Ian built our ML prediction system from scratch. The model accuracy exceeded our expectations and has been running reliably in production."
-                </p>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-mono text-sm">MR</div>
-                  <div>
-                    <p className="text-primary font-mono text-sm">Mike R.</p>
-                    <p className="text-muted-foreground/70 text-xs font-mono">Sports Analytics Firm</p>
-                  </div>
-                </div>
+                <h4 className="text-primary font-bold font-mono text-sm">AWS Certified Cloud Practitioner</h4>
+                <p className="text-muted-foreground/70 text-xs font-mono">Amazon Web Services</p>
               </CardContent>
             </Card>
-            
-            <Card className="terminal-border bg-card/80 backdrop-blur-sm">
+            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
               <CardContent className="p-4">
-                <p className="text-muted-foreground font-mono text-sm italic mb-3">
-                  "Excellent collaborator on open source projects. Ian's contributions to our codebase were clean, well-documented, and thoughtfully designed."
-                </p>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-mono text-sm">AL</div>
-                  <div>
-                    <p className="text-primary font-mono text-sm">Alex L.</p>
-                    <p className="text-muted-foreground/70 text-xs font-mono">Open Source Maintainer</p>
-                  </div>
-                </div>
+                <h4 className="text-primary font-bold font-mono text-sm">Blockchain Fundamentals</h4>
+                <p className="text-muted-foreground/70 text-xs font-mono">UC Berkeley Extension</p>
+              </CardContent>
+            </Card>
+            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
+              <CardContent className="p-4">
+                <h4 className="text-primary font-bold font-mono text-sm">Oracle Database SQL Certified Associate</h4>
+                <p className="text-muted-foreground/70 text-xs font-mono">Oracle</p>
+              </CardContent>
+            </Card>
+            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
+              <CardContent className="p-4">
+                <h4 className="text-primary font-bold font-mono text-sm">Tableau Desktop Certified Professional</h4>
+                <p className="text-muted-foreground/70 text-xs font-mono">Tableau / Salesforce</p>
+              </CardContent>
+            </Card>
+            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
+              <CardContent className="p-4">
+                <h4 className="text-primary font-bold font-mono text-sm">SQL Specialist Certification</h4>
+                <p className="text-muted-foreground/70 text-xs font-mono">Microsoft</p>
+              </CardContent>
+            </Card>
+            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
+              <CardContent className="p-4">
+                <h4 className="text-primary font-bold font-mono text-sm">Microsoft Office Specialist: Excel</h4>
+                <p className="text-muted-foreground/70 text-xs font-mono">Microsoft</p>
               </CardContent>
             </Card>
           </div>
