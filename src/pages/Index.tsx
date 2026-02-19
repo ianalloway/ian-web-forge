@@ -18,6 +18,8 @@ const skills = [
   { name: 'Docker', level: 80 },
   { name: 'Computer Vision', level: 82 },
   { name: 'NLP', level: 85 },
+  { name: 'Streamlit', level: 88 },
+  { name: 'Sentiment Analysis', level: 85 },
 ];
 
 const experience = [
@@ -109,6 +111,27 @@ const projects = [
     description: 'CLI tool that analyzes investment portfolios with AI. Calculates profit/loss, generates diversification recommendations, and produces intelligent insights for crypto and stock holdings.',
     tech: ['Python', 'AI', 'Financial Analysis'],
     url: 'https://github.com/ianalloway/ai-portfolio-analyzer',
+    isGithub: true,
+  },
+  {
+    name: 'Stock Sentiment Analyzer',
+    description: 'AI-powered news sentiment analysis app. Enter any stock ticker and get real-time sentiment analysis using NLP transformers. Built with Streamlit.',
+    tech: ['Python', 'NLP', 'Streamlit'],
+    url: 'https://github.com/ianalloway/stock-sentiment-analyzer',
+    isGithub: true,
+  },
+  {
+    name: 'Crypto Price Predictor',
+    description: 'LSTM neural network for cryptocurrency price prediction. Technical indicators, backtesting, and interactive charts. Supports BTC, ETH, SOL, and more.',
+    tech: ['Python', 'TensorFlow', 'LSTM'],
+    url: 'https://github.com/ianalloway/crypto-price-predictor',
+    isGithub: true,
+  },
+  {
+    name: 'Job Application Tracker',
+    description: 'Streamlit app to track job applications with analytics dashboard, status tracking, and CSV export. Never lose track of your applications again.',
+    tech: ['Python', 'Streamlit', 'Analytics'],
+    url: 'https://github.com/ianalloway/job-application-tracker',
     isGithub: true,
   },
 ];
