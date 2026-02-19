@@ -1,46 +1,50 @@
-# AGENTS.md - Ian's Portfolio Website
+# AGENTS.md - AI Agent Guidelines for ian-web-forge
 
 ## Overview
-Personal portfolio website for Ian Alloway at ianalloway.xyz. Built with React + Vite + TypeScript + Tailwind CSS + shadcn/ui.
 
-## Tech Stack
-- **Framework:** React 18 + TypeScript
-- **Build:** Vite
-- **Styling:** Tailwind CSS + shadcn/ui (Radix primitives)
-- **Package Manager:** npm (lockfile present), bun also supported
-- **Deployment:** Likely Vercel/Netlify (check for config)
+This repo uses a risk-aware CI/CD pipeline with policy gates and code review agents.
 
-## Commands
+## Risk Tiers
+
+| Tier | Paths | Required Checks |
+|------|-------|-----------------|
+| High | `app/api/**`, `lib/tools/**`, `db/**`, `**/auth*`, `**/payment*`, `**/admin*` | risk-policy-gate, harness-smoke, Browser Evidence, CI Pipeline |
+| Medium | `app/components/**`, `lib/**`, `services/**` | risk-policy-gate, CI Pipeline |
+| Low | All other files | risk-policy-gate, CI Pipeline |
+
+## Workflow
+
+1. **Risk Policy Gate** runs first (before expensive CI)
+2. **Code Review** via Greptile/Coderabbit for high-risk changes
+3. **CI Pipeline** runs typecheck → lint → test → build
+4. **Browser Evidence** captured for UI changes
+
+## SHA Discipline
+
+⚠️ **IMPORTANT**: Always verify against the current HEAD SHA. Stale review evidence is invalid.
+
+## Testing Commands
+
 ```bash
-npm run dev        # Start dev server
-npm run build      # Production build
-npm run lint       # ESLint
-npm run preview    # Preview production build
+npm run typecheck   # Type checking
+npm run lint        # Linting
+npm test            # Unit tests
+npm run build       # Production build
+npm run harness:ui:smoke  # Browser smoke tests
 ```
 
-## Project Structure
-```
-src/
-  App.tsx          # Root component
-  main.tsx         # Entry point
-  pages/           # Route pages
-  components/      # UI components
-  hooks/           # Custom React hooks
-  lib/             # Utilities
-  integrations/    # Third-party integrations (Supabase, etc.)
-  assets/          # Static assets
-public/            # Public static files
-supabase/          # Supabase config (if used)
-```
+## Remediation Loop
 
-## Key Conventions
-- Uses shadcn/ui component library (components.json config)
-- Tailwind config in tailwind.config.ts
-- ESLint config in eslint.config.js
-- TypeScript strict mode via tsconfig.json
+If code review finds issues:
+1. Agent reads review context
+2. Agent patches code
+3. Agent runs local validation
+4. Agent pushes fix commit
+5. Review re-runs automatically
 
-## Owner Context
-- **Owner:** Ian Alloway (@ianalloway)
-- **ETH Donation Address:** 0xAc7C093B312700614C80Ba3e0509f8dEde03515b (include donation button)
-- **Substack Integration:** Should auto-show latest articles via RSS
-- **Cross-repo updates:** When adding projects, also update Resume repo and GitHub profile README (ianalloway/ianalloway)
+## Useful Links
+
+- Risk Policy: `risk-policy.json`
+- CI Config: `.github/workflows/risk-policy-gate.yml`
+- Greptile: `.greptile.yml`
+- CodeRabbit: `coderabbit.yaml`

@@ -1,0 +1,55 @@
+{
+  "version": "1",
+  "riskTierRules": {
+    "high": [
+      "app/api/legal-chat/**",
+      "lib/tools/**",
+      "db/schema.ts",
+      "**/auth*",
+      "**/payment*",
+      "**/admin*"
+    ],
+    "medium": [
+      "app/components/**",
+      "lib/**",
+      "services/**"
+    ],
+    "low": ["**"]
+  },
+  "mergePolicy": {
+    "high": {
+      "requiredChecks": [
+        "risk-policy-gate",
+        "harness-smoke",
+        "Browser Evidence",
+        "CI Pipeline"
+      ]
+    },
+    "medium": {
+      "requiredChecks": [
+        "risk-policy-gate",
+        "CI Pipeline"
+      ]
+    },
+    "low": {
+      "requiredChecks": [
+        "risk-policy-gate",
+        "CI Pipeline"
+      ]
+    }
+  },
+  "reviewAgents": {
+    "greptile": {
+      "enabled": true,
+      "requireOnHighRisk": true
+    },
+    "coderabbit": {
+      "enabled": true
+    }
+  },
+  "remediation": {
+    "enabled": true,
+    "model": "claude-sonnet-4-20250514",
+    "maxRetries": 2
+  }
+}

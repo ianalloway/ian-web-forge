@@ -1,0 +1,57 @@
+# CodeRabbit configuration
+# https://docs.coderabbit.ai
+
+version: "1"
+
+enable: true
+
+# Review settings
+review:
+  # Auto title placeholder
+  auto_title_placeholders:
+    - placeholder: "Review"
+      type: "default"
+  
+  # Collapse walkthrough
+  collapse_walkthrough: false
+  
+  # High-level summary
+  high_level_summary: true
+  
+  # Poem
+  poem: false
+  
+  # Review status
+  review_status: true
+  
+  # Sequence diagrams
+  sequence_diagrams: true
+
+# Paths
+paths:
+  # Exclude
+  exclude:
+    - "*.md"
+    - "*.json"
+    - "*.yml"
+    - "*.yaml"
+    - "node_modules/**"
+    - ".next/**"
+    - "dist/**"
+    - "public/**"
+
+# Annotations
+annotations:
+  # Enable annotations
+  enable: true
+  
+  # Annotation levels
+  levels:
+    - "error"
+    - "warning"
+    - "info"
+
+# Chat
+chat:
+  # Auto-reply
+  auto_reply: false
