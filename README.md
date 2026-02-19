@@ -1,6 +1,6 @@
 # Ian Alloway Portfolio
 
-Personal portfolio website for Ian Alloway - Data Scientist & AI Specialist.
+Personal portfolio website for Ian Alloway - Data Scientist and AI Specialist.
 
 **Live Site**: https://ianalloway.xyz
 
