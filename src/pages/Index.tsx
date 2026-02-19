@@ -5,7 +5,7 @@ import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, B
 import MatrixRain from '@/components/MatrixRain';
 import { useToast } from '@/components/ui/use-toast';
 
-const ETH_DONATION_ADDRESS = "0xAc7C093B312700614C80Ba3e0509f8dEde03515b";
+const ETH_DONATION_ADDRESS = "0x6f278ce76ba5ed31fd9be646d074863e126836e9";
 
 const skills = [
   { name: 'Python', level: 95 },
