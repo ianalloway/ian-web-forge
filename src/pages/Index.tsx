@@ -311,6 +311,7 @@ const Index = () => {
                                                                                         <a href="#academic" className="text-primary hover:text-primary/70 transition-all">[ACADEMIC]</a>
                                                                                         <a href="#certifications" className="text-primary hover:text-primary/70 transition-all">[CERTS]</a>
                                                                                         <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
+                                                                                        <a href="/now" className="text-primary hover:text-primary/70 transition-all">[/NOW]</a>
                     </div>
         </div>
       </nav>
