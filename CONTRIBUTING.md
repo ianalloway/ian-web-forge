@@ -1,61 +1,58 @@
-# Contributing to Ian Alloway Portfolio
+# Contributing to ian-web-forge
 
-Thanks for your interest in contributing! This is my personal portfolio site, but I welcome suggestions and improvements.
+Thanks for your interest in contributing! Here's how to get started.
 
 ## Getting Started
 
+1. **Fork** this repo and create your branch from `main`
+2. Branch naming: `feat/your-feature`, `fix/your-bug`, or `docs/your-docs`
+3. Make your changes with clear, descriptive commits
+4. **Test** your changes locally before opening a PR
+5. Open a Pull Request — fill out the template and describe your changes
+
+## Development Setup
+
 ```bash
-# Clone the repo
-git clone https://github.com/ianalloway/ian-web-forge.git
+git clone https://github.com/ianalloway/ian-web-forge
 cd ian-web-forge
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
+npm install      # or: pip install -r requirements.txt
+npm run dev      # or: python main.py
 ```
-
-## Tech Stack
-
-- React 18 with TypeScript
-- Vite for build tooling
-- Tailwind CSS for styling
-- shadcn/ui components
 
 ## Code Style
 
-- TypeScript for all components
-- Functional components with hooks
-- Tailwind CSS for styling (no inline styles)
-- Follow existing patterns in the codebase
+- **TypeScript/JS**: ESLint + Prettier (config in repo). Run `npm run lint` before committing.
+- **Python**: Black + isort. Run `black . && isort .` before committing.
+- Keep functions small and focused — one job per function.
+- Write self-documenting code; add comments only where logic is non-obvious.
 
-## Commit Messages
+## Pull Request Guidelines
 
-Use conventional commits:
+- Keep PRs focused — one feature or bug fix per PR
+- Include a clear description of **what** and **why**
+- Reference related issues with `Closes #123`
+- All CI checks must pass before merging
+- Be responsive to review feedback
 
-- `feat:` New features
-- `fix:` Bug fixes
-- `docs:` Documentation
-- `style:` Formatting
-- `refactor:` Code restructuring
+## Reporting Bugs
 
-## Pull Requests
+Use the [Bug Report template](.github/ISSUE_TEMPLATE/bug_report.md). Include:
+- Steps to reproduce
+- Expected vs actual behavior
+- Environment info (OS, Node/Python version)
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run `npm run lint` to check for issues
-5. Submit a PR with a clear description
+## Suggesting Features
 
-## Suggestions
+Use the [Feature Request template](.github/ISSUE_TEMPLATE/feature_request.md). Explain the problem it solves.
 
-Have an idea for improving the portfolio? Open an issue with:
+## Code of Conduct
 
-- Description of the improvement
-- Why it would be valuable
-- Any implementation suggestions
+Be respectful and constructive. Everyone is welcome here.
 
-## Contact
+## License
 
-Questions? Reach out on Twitter [@ianallowayxyz](https://x.com/ianallowayxyz) or email ian@allowayllc.com
+By contributing, you agree that your contributions will be licensed under the [MIT License](LICENSE).
+
+---
+
+Questions? Open an issue or reach out: **ian@allowayllc.com**

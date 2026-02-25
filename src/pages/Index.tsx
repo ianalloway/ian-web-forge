@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot, Newspaper, Heart, Copy, Sun, Moon } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
+import Testimonials from '@/components/Testimonials';
 import { useToast } from '@/components/ui/use-toast';
 
 const ETH_DONATION_ADDRESS = "0x6f278ce76ba5ed31fd9be646d074863e126836e9";
@@ -307,9 +308,11 @@ const Index = () => {
                                   {theme === 'matrix' ? <Sun size={16} className="text-primary" /> : <Moon size={16} className="text-primary" />}
                                 </button>
                                                                                         <a href="#blog" className="text-primary hover:text-primary/70 transition-all">[BLOG]</a>
+                                                                                        <a href="#opensource" className="text-primary hover:text-primary/70 transition-all">[OSS]</a>
                                                                                         <a href="#academic" className="text-primary hover:text-primary/70 transition-all">[ACADEMIC]</a>
                                                                                         <a href="#certifications" className="text-primary hover:text-primary/70 transition-all">[CERTS]</a>
                                                                                         <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
+                                                                                        <a href="/now" className="text-primary hover:text-primary/70 transition-all">[/NOW]</a>
                     </div>
         </div>
       </nav>
@@ -673,6 +676,79 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Open Source Section */}
+      <section id="opensource" className="py-16 px-4 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
+            <Bot className="inline mr-2" size={24} />
+            [OPEN_SOURCE]
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-4 mb-6">
+            {[
+              { stat: '194k+', label: 'Stars — OpenClaw',    desc: 'Active contributor to the leading open-source AI agent framework' },
+              { stat: '9+',    label: 'Published Skills',    desc: 'Custom skills on ClawHub: sports-odds, nft-tracker, data-viz, streak-tracker, market-sentiment, and more' },
+              { stat: '5+',    label: 'Merged OSS PRs',      desc: 'Contributions to LangChain, OpenClaw, React.dev, and other major repos' },
+            ].map(({ stat, label, desc }) => (
+              <Card key={label} className="terminal-border bg-card/80 backdrop-blur-sm text-center">
+                <CardContent className="p-5">
+                  <div className="text-3xl font-bold text-primary font-mono mb-1">{stat}</div>
+                  <div className="text-primary/80 font-mono text-sm font-semibold mb-2">{label}</div>
+                  <p className="text-muted-foreground text-xs font-mono">{desc}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="space-y-3">
+            {[
+              {
+                repo: 'OpenClaw',
+                url: 'https://github.com/openclaw/openclaw',
+                description: 'Bug fixes, skill system improvements, and published 9+ skills to the ClawHub marketplace including market-sentiment and streak-tracker.',
+                badge: 'Active Contributor',
+              },
+              {
+                repo: 'LangChain',
+                url: 'https://github.com/ianalloway/langchain/pull/1',
+                description: 'Robust args_schema annotation validation using get_origin/get_args — handles Type[BaseModel], Optional, Annotated, and Union types.',
+                badge: 'Merged PR',
+              },
+              {
+                repo: 'OpenClaw Brain',
+                url: 'https://github.com/ianalloway/openclaw-brain/pull/2',
+                description: 'Model-specific task routing with automatic failover chains for rate limits, timeouts, and context overflow.',
+                badge: 'Merged PR',
+              },
+              {
+                repo: 'React.dev',
+                url: 'https://github.com/ianalloway/react.dev/pull/3',
+                description: 'Grammar fix in TypeScript guide (useContext typing section).',
+                badge: 'Merged PR',
+              },
+            ].map(({ repo, url, description, badge }) => (
+              <Card key={repo} className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
+                <CardContent className="p-4">
+                  <div className="flex justify-between items-start flex-wrap gap-2 mb-1">
+                    <h4 className="text-primary font-bold font-mono text-sm">{repo}</h4>
+                    <span className="text-xs font-mono px-2 py-0.5 rounded bg-primary/10 text-primary">{badge}</span>
+                  </div>
+                  <p className="text-muted-foreground/70 text-xs font-mono mb-2">{description}</p>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary/60 hover:text-primary text-xs font-mono flex items-center gap-1 w-fit"
+                  >
+                    <ExternalLink size={11} /> View on GitHub
+                  </a>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section id="contact" className="py-16 px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
@@ -730,6 +806,11 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Testimonials Section */}
+      <div className="relative z-10">
+        <Testimonials />
+      </div>
 
       {/* Footer */}
       <footer className="py-6 px-4 border-t border-primary/30 relative z-10">
