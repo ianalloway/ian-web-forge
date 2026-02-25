@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot, Newspaper, Heart, Copy, Sun, Moon } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
+import Testimonials from '@/components/Testimonials';
 import { useToast } from '@/components/ui/use-toast';
 
 const ETH_DONATION_ADDRESS = "0x6f278ce76ba5ed31fd9be646d074863e126836e9";
@@ -805,6 +806,11 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Testimonials Section */}
+      <div className="relative z-10">
+        <Testimonials />
+      </div>
 
       {/* Footer */}
       <footer className="py-6 px-4 border-t border-primary/30 relative z-10">
