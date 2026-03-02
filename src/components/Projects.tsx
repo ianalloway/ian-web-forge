@@ -52,6 +52,14 @@ const Projects = () => {
       github: "#",
       demo: "https://clawdbot-setup-app-haw39wkx.devinapps.com",
       image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=250&fit=crop"
+    },
+    {
+      title: "TF Object Detector",
+      description: "Real-time object detection running entirely in the browser. TensorFlow.js COCO-SSD (MobileNet v2) identifies 80+ object classes via webcam with animated bounding boxes, confidence scores, and a live detection log — zero server-side processing.",
+      technologies: ["TensorFlow.js", "COCO-SSD", "React", "TypeScript", "WebGL"],
+      github: "https://github.com/ianalloway/tf-object-detection",
+      demo: "https://tf-object-detection.manus.space",
+      image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&h=250&fit=crop"
     }
   ];
 
