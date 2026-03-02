@@ -8,6 +8,12 @@ services:
     ports:
       - "3000:80"
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     environment:
       - NODE_ENV=production
 
