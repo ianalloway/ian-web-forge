@@ -313,6 +313,7 @@ const Index = () => {
                                                                                         <a href="#certifications" className="text-primary hover:text-primary/70 transition-all">[CERTS]</a>
                                                                                         <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
                                                                                         <a href="/now" className="text-primary hover:text-primary/70 transition-all">[/NOW]</a>
+                                                                                        <a href="/vision" className="text-primary hover:text-primary/70 transition-all">[VISION]</a>
                     </div>
         </div>
       </nav>
