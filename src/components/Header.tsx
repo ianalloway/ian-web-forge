@@ -59,6 +59,12 @@ const Header = () => {
               [PROJECTS]
             </button>
             <button 
+              onClick={() => scrollToSection('contracting')}
+              className="text-foreground hover:text-primary transition-colors matrix-text"
+            >
+              [HIRE]
+            </button>
+            <button 
               onClick={() => scrollToSection('contact')}
               className="text-foreground hover:text-primary transition-colors matrix-text"
             >
@@ -104,6 +110,12 @@ const Header = () => {
                 className="text-left text-foreground hover:text-primary transition-colors matrix-text"
               >
                 [PROJECTS]
+              </button>
+              <button 
+                onClick={() => scrollToSection('contracting')}
+                className="text-left text-foreground hover:text-primary transition-colors matrix-text"
+              >
+                [HIRE]
               </button>
               <button 
                 onClick={() => scrollToSection('contact')}

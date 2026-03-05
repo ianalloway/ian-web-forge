@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot, Newspaper, Heart, Copy, Sun, Moon } from 'lucide-react';
+import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot, Newspaper, Heart, Copy, Sun, Moon, Briefcase, DollarSign, CheckCircle2 } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 import Testimonials from '@/components/Testimonials';
 import { useToast } from '@/components/ui/use-toast';
@@ -745,6 +745,95 @@ const Index = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contracting Section */}
+      <section id="contracting" className="py-16 px-4 bg-primary/5 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
+            <Briefcase className="inline mr-2" size={24} />
+            [HIRE_ME_1099]
+          </h2>
+          
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            <div className="space-y-6">
+              <p className="text-muted-foreground font-mono text-sm leading-relaxed">
+                &gt; I am available for independent contractor (1099) roles. 
+                Whether you need AI integration, data pipeline engineering, or full-stack development, 
+                I can help scale your technical capabilities.
+              </p>
+              
+              <ul className="space-y-3">
+                {[
+                  "AI Agent Development & Integration",
+                  "ML Model Training & Deployment",
+                  "Data Visualization & Dashboards",
+                  "Full-stack Web Applications",
+                  "Process Automation & Optimization"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-2 text-primary/80 font-mono text-xs">
+                    <CheckCircle2 size={14} className="text-primary" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="terminal-border p-4 rounded bg-background/40">
+                <h4 className="text-primary font-bold font-mono text-sm mb-2 flex items-center gap-2">
+                  <DollarSign size={16} /> HOURLY_RATE
+                </h4>
+                <div className="text-2xl font-bold text-white font-mono mb-1">$100<span className="text-xs text-muted-foreground ml-1">/hour</span></div>
+                <p className="text-muted-foreground/70 text-[10px] font-mono">
+                  &gt; Standard rate for 1099 independent contractor services.
+                </p>
+              </div>
+            </div>
+
+            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-t-4 border-t-primary">
+              <CardContent className="p-6">
+                <h3 className="text-primary font-bold font-mono text-lg mb-4 text-center">CONTRACT_INITIATION</h3>
+                <p className="text-muted-foreground font-mono text-xs mb-6 text-center">
+                  Ready to start? You can pay the initial hours securely via Stripe to kick off our collaboration.
+                </p>
+                
+                <div className="space-y-4">
+                  <Button 
+                    className="w-full font-mono bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-sm"
+                    asChild
+                  >
+                    <a 
+                      href="https://buy.stripe.com/test_eVq00i9jGd2mg1L9od9R603" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
+                      <Briefcase className="mr-2" size={18} /> HIRE_AS_CONTRACTOR
+                    </a>
+                  </Button>
+                  
+                  <div className="flex items-center gap-2 justify-center py-2">
+                    <div className="h-[1px] bg-primary/20 flex-1"></div>
+                    <span className="text-[10px] font-mono text-primary/40">OR</span>
+                    <div className="h-[1px] bg-primary/20 flex-1"></div>
+                  </div>
+
+                  <Button 
+                    variant="outline"
+                    className="w-full font-mono terminal-border text-primary border-primary hover:bg-primary/10 h-12 text-sm"
+                    asChild
+                  >
+                    <a href="mailto:ian@allowayllc.com">
+                      <Mail className="mr-2" size={18} /> DISCUSS_PROJECT
+                    </a>
+                  </Button>
+                </div>
+
+                <div className="mt-6 flex items-center justify-center gap-4 opacity-50 grayscale hover:grayscale-0 transition-all">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" className="h-4" />
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
