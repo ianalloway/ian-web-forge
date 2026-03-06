@@ -809,7 +809,7 @@ const Index = () => {
                     asChild
                   >
                     <a 
-                      href="https://buy.stripe.com/test_eVq00i9jGd2mg1L9od9R603" 
+                      href="https://buy.stripe.com/test_6oU6oG0Na4vQ02N9od9R606" 
                       target="_blank" 
                       rel="noopener noreferrer"
                     >
