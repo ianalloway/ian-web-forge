@@ -343,6 +343,11 @@ const Index = () => {
 
           {/* Social Links - Prominent */}
           <div className="flex flex-wrap justify-center gap-3 mb-10">
+            <Button className="font-mono bg-primary text-primary-foreground hover:bg-primary/90 px-8" asChild>
+              <a href="#contracting">
+                <Briefcase className="mr-2" size={18} /> [HIRE_ME_1099]
+              </a>
+            </Button>
             <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
               <a href="https://www.linkedin.com/in/ianit" target="_blank" rel="noopener noreferrer">
                 <Linkedin className="mr-2" size={16} /> LinkedIn
