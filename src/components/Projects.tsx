@@ -67,8 +67,8 @@ const Projects = () => {
     <section id="projects" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-foreground mb-4">Featured Projects</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <h2 className="text-2xl sm:text-4xl font-bold text-foreground mb-4">Featured Projects</h2>
+          <p className="text-base sm:text-xl text-muted-foreground max-w-3xl mx-auto">
             Production ML systems, autonomous drones, Web3 apps, and open source contributions across LangChain, React.dev, and OpenClaw.
           </p>
         </div>

@@ -151,14 +151,17 @@ const Testimonials = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <p className="text-primary font-mono text-sm uppercase tracking-widest mb-2">Social Proof</p>
-          <h2 className="text-3xl font-bold mb-4">What People Are Saying</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">What People Are Saying</h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
             From quant analysts to DFS pros to Web3 builders — here's what collaborators and users have shared.
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid md:grid-cols-3 gap-4 max-w-5xl mx-auto mb-8">
+        {/* Cards - mobile: active card only, desktop: 3-up */}
+        <div className="md:hidden max-w-lg mx-auto mb-8">
+          <TestimonialCard t={TESTIMONIALS[active]} active={true} />
+        </div>
+        <div className="hidden md:grid md:grid-cols-3 gap-4 max-w-5xl mx-auto mb-8">
           {indices.map((i, slot) => (
             <TestimonialCard key={i} t={TESTIMONIALS[i]} active={slot === 1} />
           ))}

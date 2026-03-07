@@ -111,6 +111,11 @@
     font-family: 'Fira Code', 'Courier Prime', 'Courier New', monospace;
     font-variant-ligatures: none;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  html {
+    overflow-x: hidden;
   }
   
   /* Matrix-style effects */

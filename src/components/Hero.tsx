@@ -5,27 +5,27 @@ const Hero = () => {
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">      
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center animate-fade-in matrix-glow p-8 terminal-border bg-background/80 backdrop-blur-sm">
+        <div className="text-center animate-fade-in matrix-glow p-4 sm:p-8 terminal-border bg-background/80 backdrop-blur-sm">
           <div className="mb-4 text-primary font-mono text-sm">
             <span className="animate-terminal-blink">_</span> SYSTEM ONLINE
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 matrix-text font-mono">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-6 matrix-text font-mono">
             <span className="text-foreground">&gt; </span>
             <span className="text-primary">
               IAN ALLOWAY
             </span>
           </h1>
-          
-          <p className="text-xl md:text-2xl text-muted-foreground mb-4 max-w-3xl mx-auto font-mono">
+
+          <p className="text-base sm:text-xl md:text-2xl text-muted-foreground mb-4 max-w-3xl mx-auto font-mono">
             ML Engineer | Data Scientist | AI Builder
           </p>
-          <p className="text-muted-foreground mb-4 font-mono">
+          <p className="text-sm sm:text-base text-muted-foreground mb-4 font-mono px-2">
             B.S. Data Science @ USF (May 2026) | M.S. AI @ USF (Fall 2026) | Founder @ Alloway LLC
           </p>
 
-          <div className="inline-block px-4 py-2 mb-8 border border-green-400/50 rounded-lg bg-green-400/10">
+          <div className="inline-flex flex-wrap justify-center items-center gap-1 px-4 py-2 mb-8 border border-green-400/50 rounded-lg bg-green-400/10 max-w-full">
             <span className="text-green-400 font-mono text-sm font-bold">OPEN TO WORK</span>
-            <span className="text-muted-foreground font-mono text-sm"> - Data Scientist / ML Engineer roles</span>
+            <span className="text-muted-foreground font-mono text-xs sm:text-sm"> - Data Scientist / ML Engineer roles</span>
           </div>
           
           <div className="flex flex-wrap justify-center gap-3 mb-8">

@@ -28,8 +28,8 @@ const Skills = () => {
           <div className="text-primary font-mono text-sm mb-2">
             <span className="animate-terminal-blink">█</span> SCANNING_SKILL_DATABASE
           </div>
-          <h2 className="text-4xl font-bold text-foreground mb-4 font-mono matrix-text">&gt; SKILLS.LOG</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-mono">
+          <h2 className="text-2xl sm:text-4xl font-bold text-foreground mb-4 font-mono matrix-text">&gt; SKILLS.LOG</h2>
+          <p className="text-base sm:text-xl text-muted-foreground max-w-3xl mx-auto font-mono">
             &gt; COMPILING: Technology stack and framework proficiencies<br/>
             &gt; SCOPE: Modern development tools for exceptional digital architectures
           </p>

@@ -32,8 +32,8 @@ const About = () => {
           <div className="text-primary font-mono text-sm mb-2">
             <span className="animate-terminal-blink">_</span> ACCESSING_USER_DATA
           </div>
-          <h2 className="text-4xl font-bold text-foreground mb-4 font-mono matrix-text">&gt; ABOUT.EXE</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-mono">
+          <h2 className="text-2xl sm:text-4xl font-bold text-foreground mb-4 font-mono matrix-text">&gt; ABOUT.EXE</h2>
+          <p className="text-base sm:text-xl text-muted-foreground max-w-3xl mx-auto font-mono">
             &gt; ML Engineer graduating B.S. Data Science from USF (May 2026)<br/>
             &gt; Starting M.S. in Artificial Intelligence (Fall 2026)<br/>
             &gt; Building production ML systems and shipping open source contributions

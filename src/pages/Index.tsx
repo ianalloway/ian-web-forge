@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot, Newspaper, Heart, Copy, Sun, Moon, Briefcase, DollarSign, CheckCircle2 } from 'lucide-react';
+import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot, Newspaper, Heart, Copy, Sun, Moon, Briefcase, DollarSign, CheckCircle2, Menu, X } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 import Testimonials from '@/components/Testimonials';
 import { useToast } from '@/components/ui/use-toast';
@@ -231,6 +231,7 @@ const academicPapers = [
 const Index = () => {
   const [typedText, setTypedText] = useState('');
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>(fallbackBlogPosts);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState<'matrix' | 'light'>(() => {
     if (typeof window !== 'undefined') {
       return (localStorage.getItem('theme') as 'matrix' | 'light') || 'matrix';
@@ -295,26 +296,76 @@ const Index = () => {
             <Terminal className="inline mr-2" size={18} />
             IAN.SYS
           </div>
-                                        <div className="flex gap-4 text-sm font-mono items-center">
-                                                                                                            <a href="#about" className="text-primary hover:text-primary/70 transition-all">[ABOUT]</a>
-                                                                                                            <a href="#skills" className="text-primary hover:text-primary/70 transition-all">[SKILLS]</a>
-                                                                                                            <a href="#projects" className="text-primary hover:text-primary/70 transition-all">[PROJECTS]</a>
-                                                                                                            <a href="#bot" className="text-primary hover:text-primary/70 transition-all">[BOT]</a>
-                                <button
-                                  onClick={toggleTheme}
-                                  className="ml-2 p-2 rounded-md border border-primary/30 hover:bg-primary/10 transition-all"
-                                  aria-label="Toggle theme"
-                                >
-                                  {theme === 'matrix' ? <Sun size={16} className="text-primary" /> : <Moon size={16} className="text-primary" />}
-                                </button>
-                                                                                        <a href="#blog" className="text-primary hover:text-primary/70 transition-all">[BLOG]</a>
-                                                                                        <a href="#opensource" className="text-primary hover:text-primary/70 transition-all">[OSS]</a>
-                                                                                        <a href="#academic" className="text-primary hover:text-primary/70 transition-all">[ACADEMIC]</a>
-                                                                                        <a href="#certifications" className="text-primary hover:text-primary/70 transition-all">[CERTS]</a>
-                                                                                        <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
-                                                                                        <a href="/now" className="text-primary hover:text-primary/70 transition-all">[/NOW]</a>
-                    </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex gap-4 text-sm font-mono items-center">
+            <a href="#about" className="text-primary hover:text-primary/70 transition-all">[ABOUT]</a>
+            <a href="#skills" className="text-primary hover:text-primary/70 transition-all">[SKILLS]</a>
+            <a href="#projects" className="text-primary hover:text-primary/70 transition-all">[PROJECTS]</a>
+            <a href="#bot" className="text-primary hover:text-primary/70 transition-all">[BOT]</a>
+            <button
+              onClick={toggleTheme}
+              className="ml-2 p-2 rounded-md border border-primary/30 hover:bg-primary/10 transition-all"
+              aria-label="Toggle theme"
+            >
+              {theme === 'matrix' ? <Sun size={16} className="text-primary" /> : <Moon size={16} className="text-primary" />}
+            </button>
+            <a href="#blog" className="text-primary hover:text-primary/70 transition-all">[BLOG]</a>
+            <a href="#opensource" className="text-primary hover:text-primary/70 transition-all">[OSS]</a>
+            <a href="#academic" className="text-primary hover:text-primary/70 transition-all">[ACADEMIC]</a>
+            <a href="#certifications" className="text-primary hover:text-primary/70 transition-all">[CERTS]</a>
+            <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
+            <a href="/now" className="text-primary hover:text-primary/70 transition-all">[/NOW]</a>
+          </div>
+
+          {/* Mobile Controls */}
+          <div className="flex md:hidden items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-md border border-primary/30 hover:bg-primary/10 transition-all"
+              aria-label="Toggle theme"
+            >
+              {theme === 'matrix' ? <Sun size={16} className="text-primary" /> : <Moon size={16} className="text-primary" />}
+            </button>
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 rounded-md border border-primary/30 hover:bg-primary/10 transition-all"
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? <X size={20} className="text-primary" /> : <Menu size={20} className="text-primary" />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Menu Dropdown */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-background/95 backdrop-blur-sm border-t border-primary/20">
+            <div className="max-w-5xl mx-auto px-4 py-4 flex flex-col gap-4 font-mono text-sm">
+              {[
+                ['#about', '[ABOUT]'],
+                ['#skills', '[SKILLS]'],
+                ['#projects', '[PROJECTS]'],
+                ['#bot', '[BOT]'],
+                ['#blog', '[BLOG]'],
+                ['#opensource', '[OSS]'],
+                ['#academic', '[ACADEMIC]'],
+                ['#certifications', '[CERTS]'],
+                ['#contracting', '[HIRE_ME]'],
+                ['#contact', '[CONTACT]'],
+                ['/now', '[/NOW]'],
+              ].map(([href, label]) => (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-primary hover:text-primary/70 transition-all py-1 border-b border-primary/10 last:border-0"
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
@@ -325,20 +376,20 @@ const Index = () => {
             SYSTEM_ONLINE
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 matrix-text font-mono text-primary">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 matrix-text font-mono text-primary">
             {typedText}<span className="animate-terminal-blink">_</span>
           </h1>
-          
-          <p className="text-xl text-muted-foreground mb-2 font-mono">
+
+          <p className="text-base sm:text-xl text-muted-foreground mb-2 font-mono">
             AI/ML Engineer | Data Scientist | Business Intelligence Specialist
           </p>
-          <p className="text-muted-foreground font-mono mb-8">
+          <p className="text-sm sm:text-base text-muted-foreground font-mono mb-8 px-2">
             B.S. Data Science @ USF (Dec 2025) | M.S. AI @ USF (Dec 2027) | Founder @ Alloway LLC
           </p>
 
-          <div className="inline-block px-4 py-2 mb-6 border border-green-400/50 rounded-lg bg-green-400/10">
+          <div className="inline-flex flex-wrap justify-center items-center gap-1 px-4 py-2 mb-6 border border-green-400/50 rounded-lg bg-green-400/10 max-w-full">
             <span className="text-green-400 font-mono text-sm font-bold">OPEN TO WORK</span>
-            <span className="text-muted-foreground font-mono text-sm"> - Data Scientist / ML Engineer roles</span>
+            <span className="text-muted-foreground font-mono text-xs sm:text-sm"> - Data Scientist / ML Engineer roles</span>
           </div>
 
           {/* Social Links - Prominent */}
@@ -558,9 +609,9 @@ const Index = () => {
               <Card key={index} className="terminal-border bg-card/80 backdrop-blur-sm hover:scale-[1.02] transition-transform">
                 <CardContent className="p-4">
                   <a href={post.url} target="_blank" rel="noopener noreferrer" className="block">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-primary font-bold font-mono text-sm hover:text-primary/70">{post.title}</h3>
-                      <span className="text-primary/50 text-xs font-mono whitespace-nowrap ml-4">{post.date}</span>
+                    <div className="flex flex-wrap justify-between items-start gap-1 mb-2">
+                      <h3 className="text-primary font-bold font-mono text-sm hover:text-primary/70 flex-1 min-w-0">{post.title}</h3>
+                      <span className="text-primary/50 text-xs font-mono whitespace-nowrap">{post.date}</span>
                     </div>
                     <p className="text-muted-foreground/70 text-xs font-mono">{post.description}</p>
                   </a>
@@ -595,9 +646,9 @@ const Index = () => {
             {academicPapers.map((paper, index) => (
               <Card key={index} className="terminal-border bg-card/80 backdrop-blur-sm hover:scale-105 transition-transform">
                 <CardContent className="p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-primary font-bold font-mono text-sm">{paper.title}</h3>
-                    <span className="px-2 py-0.5 text-xs terminal-border rounded font-mono text-primary/80">
+                  <div className="flex flex-wrap justify-between items-start gap-1 mb-2">
+                    <h3 className="text-primary font-bold font-mono text-sm flex-1 min-w-0">{paper.title}</h3>
+                    <span className="px-2 py-0.5 text-xs terminal-border rounded font-mono text-primary/80 whitespace-nowrap">
                       {paper.category}
                     </span>
                   </div>

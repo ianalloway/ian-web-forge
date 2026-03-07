@@ -28,7 +28,7 @@ const Header = () => {
     }`}>
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <div className="text-2xl font-bold text-primary matrix-text">
+          <div className="text-lg sm:text-2xl font-bold text-primary matrix-text truncate max-w-[200px] sm:max-w-none">
             <span className="animate-terminal-blink">█</span> IAN.ALLOWAY.SYS
           </div>
           
@@ -86,43 +86,23 @@ const Header = () => {
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t border-primary/30 terminal-border bg-background/95 backdrop-blur-sm">
-            <div className="flex flex-col space-y-4 pt-4 font-mono">
-              <button 
-                onClick={() => scrollToSection('home')}
-                className="text-left text-foreground hover:text-primary transition-colors matrix-text"
-              >
-                [HOME]
-              </button>
-              <button 
-                onClick={() => scrollToSection('about')}
-                className="text-left text-foreground hover:text-primary transition-colors matrix-text"
-              >
-                [ABOUT]
-              </button>
-              <button 
-                onClick={() => scrollToSection('skills')}
-                className="text-left text-foreground hover:text-primary transition-colors matrix-text"
-              >
-                [SKILLS]
-              </button>
-              <button 
-                onClick={() => scrollToSection('projects')}
-                className="text-left text-foreground hover:text-primary transition-colors matrix-text"
-              >
-                [PROJECTS]
-              </button>
-              <button 
-                onClick={() => scrollToSection('contracting')}
-                className="text-left text-foreground hover:text-primary transition-colors matrix-text"
-              >
-                [HIRE]
-              </button>
-              <button 
-                onClick={() => scrollToSection('contact')}
-                className="text-left text-foreground hover:text-primary transition-colors matrix-text"
-              >
-                [CONTACT]
-              </button>
+            <div className="flex flex-col pt-2 font-mono">
+              {[
+                ['home', '[HOME]'],
+                ['about', '[ABOUT]'],
+                ['skills', '[SKILLS]'],
+                ['projects', '[PROJECTS]'],
+                ['contracting', '[HIRE]'],
+                ['contact', '[CONTACT]'],
+              ].map(([section, label]) => (
+                <button
+                  key={section}
+                  onClick={() => scrollToSection(section)}
+                  className="text-left text-foreground hover:text-primary transition-colors matrix-text px-2 py-3 min-h-[44px] border-b border-primary/10 last:border-0"
+                >
+                  {label}
+                </button>
+              ))}
             </div>
           </nav>
         )}
