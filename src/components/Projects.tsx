@@ -6,76 +6,76 @@ import { ExternalLink, Github } from 'lucide-react';
 const Projects = () => {
   const projects = [
     {
-      title: "Sports Betting ML",
-      description: "XGBoost model trained on 5 seasons of NBA data. Compares predictions against sportsbook odds to find value bets using Kelly Criterion. Live on HuggingFace.",
-      technologies: ["Python", "XGBoost", "Scikit-learn", "Streamlit", "HuggingFace"],
-      github: "https://github.com/ianalloway/sports-betting-ml",
-      demo: "https://huggingface.co/spaces/ianalloway/sports-betting-ml",
-      image: "https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?w=400&h=250&fit=crop"
-    },
-    {
-      title: "Drone AI",
-      description: "Autonomous navigation system: YOLOv8 obstacle detection, A*/RRT* path planning, behavior trees for mission logic, and MAVLink flight controller communication.",
-      technologies: ["Python", "YOLOv8", "PyTorch", "MAVLink", "ROS"],
-      github: "https://github.com/ianalloway/ai-drone-auto-vehicle",
-      demo: "#",
-      image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400&h=250&fit=crop"
-    },
-    {
-      title: "AI Advantage Sports",
-      description: "Production sports betting platform with ML predictions, Kelly Criterion bet sizing, and real-time value bet alerts for NBA games.",
-      technologies: ["React", "FastAPI", "PostgreSQL", "XGBoost", "Stripe"],
-      github: "#",
-      demo: "https://aiadvantagesports.com",
-      image: "https://images.unsplash.com/photo-1461896836934-bd45ba8b0e28?w=400&h=250&fit=crop"
-    },
-    {
-      title: "Mutant Intelligence",
-      description: "Web3 app that transforms MAYC NFTs into AI assistants with traits-based personality generated from on-chain metadata.",
-      technologies: ["React", "Ethers.js", "Solidity", "OpenAI", "Web3"],
-      github: "#",
-      demo: "https://mutantintelligence.com",
-      image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=250&fit=crop"
-    },
-    {
-      title: "Money Maker Bot",
-      description: "Open-source financial intelligence assistant built on OpenClaw for sports betting, NFT tracking, and portfolio visualization.",
-      technologies: ["Python", "OpenClaw", "FastAPI", "React", "Web3"],
+      title: "Money-maker-bot",
+      description: "Financial intelligence agent forked from OpenClaw/Clawdbot. Built with an 8-component architecture: Brain, Soul, DNA, Muscles, Bones, Eyes, Heartbeat, and Nervous System.",
+      technologies: ["Python", "OpenClaw", "Anthropic API"],
       github: "https://github.com/ianalloway/Money-maker-bot",
       demo: "#",
       image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=250&fit=crop"
     },
     {
+      title: "NBA Sports Betting Pipeline",
+      description: "XGBoost model hitting 68.3% accuracy with Kelly Criterion bet sizing. Live at aiadvantagesports.com and on Hugging Face.",
+      technologies: ["Python", "XGBoost", "FastAPI", "Hugging Face"],
+      github: "#",
+      demo: "https://aiadvantagesports.com",
+      image: "https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?w=400&h=250&fit=crop"
+    },
+    {
+      title: "Booperbot",
+      description: "Autonomous agent featuring Notion diary integration.",
+      technologies: ["Python", "LLMs", "Notion API"],
+      github: "https://github.com/ianalloway",
+      demo: "#",
+      image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&h=250&fit=crop"
+    },
+    {
+      title: "Mutant Intelligence",
+      description: "AI agent built on MAYC NFT traits. Live at mutantintelligence.com.",
+      technologies: ["Python", "Web3", "LLMs"],
+      github: "#",
+      demo: "https://mutantintelligence.com",
+      image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=250&fit=crop"
+    },
+    {
+      title: "ClawHub Contributions",
+      description: "9 published open-source skills including sports-odds, nft-tracker, data-viz, screenshot-annotator, kelly-criterion, portfolio-rebalancer, market-sentiment, streak-tracker, and devin-integration.",
+      technologies: ["Python", "OpenClaw", "Open Source"],
+      github: "https://github.com/openclaw/openclaw",
+      demo: "#",
+      image: "https://images.unsplash.com/photo-1461896836934-bd45ba8b0e28?w=400&h=250&fit=crop"
+    },
+    {
       title: "Job Fit Analyzer",
-      description: "Full-stack NLP app that analyzes job descriptions against candidate profiles using semantic similarity scoring.",
-      technologies: ["React", "FastAPI", "NLP", "Sentence Transformers", "Docker"],
+      description: "FastAPI + React app with regex-based skill extraction, hosted on Devin.",
+      technologies: ["Python", "FastAPI", "React"],
       github: "#",
       demo: "https://clawdbot-setup-app-haw39wkx.devinapps.com",
       image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=250&fit=crop"
     },
     {
-      title: "TF Object Detector",
-      description: "Real-time object detection running entirely in the browser. TensorFlow.js COCO-SSD (MobileNet v2) identifies 80+ object classes via webcam with animated bounding boxes, confidence scores, and a live detection log — zero server-side processing.",
-      technologies: ["TensorFlow.js", "COCO-SSD", "React", "TypeScript", "WebGL"],
-      github: "https://github.com/ianalloway/tf-object-detection",
-      demo: "https://tf-object-detection.manus.space",
-      image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&h=250&fit=crop"
+      title: "Drone AI",
+      description: "Autonomous navigation system: YOLOv8 obstacle detection, A*/RRT* path planning, behavior trees for mission logic, and MAVLink flight controller communication.",
+      technologies: ["Python", "YOLOv8", "PyTorch", "MAVLink"],
+      github: "https://github.com/ianalloway/ai-drone-auto-vehicle",
+      demo: "#",
+      image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400&h=250&fit=crop"
     }
   ];
 
   return (
-    <section id="projects" className="py-20 bg-muted/30">
+    <section id="projects" className="py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-foreground mb-4">Featured Projects</h2>
+          <h2 className="text-4xl font-bold text-foreground mb-4">Featured Work</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Production ML systems, autonomous drones, Web3 apps, and open source contributions across LangChain, React.dev, and OpenClaw.
+            Production ML systems, AI agents, Web3 apps, and open source contributions across LangChain, React.dev, and OpenClaw.
           </p>
         </div>
-        
+
         <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <Card key={index} className="bg-gradient-card hover:shadow-elegant transition-all duration-300 hover:-translate-y-2 overflow-hidden">
+            <Card key={index} className="bg-card hover:border-muted-foreground/30 transition-all duration-200 hover:-translate-y-1 overflow-hidden">
               <div className="aspect-video overflow-hidden">
                 <img 
                   src={project.image} 

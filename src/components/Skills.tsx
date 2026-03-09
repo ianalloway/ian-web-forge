@@ -8,7 +8,7 @@ const Skills = () => {
       skills: ["Python", "SQL", "R", "TypeScript", "JavaScript", "Solidity"]
     },
     {
-      title: "ML / AI", 
+      title: "ML / AI",
       skills: ["TensorFlow", "PyTorch", "Scikit-learn", "XGBoost", "YOLOv8", "NLP", "Deep Learning", "Computer Vision"]
     },
     {
@@ -25,29 +25,25 @@ const Skills = () => {
     <section id="skills" className="py-20 relative">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <div className="text-primary font-mono text-sm mb-2">
-            <span className="animate-terminal-blink">█</span> SCANNING_SKILL_DATABASE
-          </div>
-          <h2 className="text-4xl font-bold text-foreground mb-4 font-mono matrix-text">&gt; SKILLS.LOG</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-mono">
-            &gt; COMPILING: Technology stack and framework proficiencies<br/>
-            &gt; SCOPE: Modern development tools for exceptional digital architectures
+          <h2 className="text-4xl font-bold text-foreground mb-4">Skills</h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Technology stack and framework proficiencies across modern development tools.
           </p>
         </div>
-        
+
         <div className="grid md:grid-cols-2 gap-8">
           {skillCategories.map((category, index) => (
-            <Card key={index} className="bg-card/50 hover:bg-card/80 hover:shadow-glow transition-all duration-300 terminal-border matrix-glow">
+            <Card key={index} className="bg-card hover:border-muted-foreground/30 transition-all duration-200">
               <CardHeader>
-                <CardTitle className="text-xl text-foreground font-mono matrix-text">[{category.title.toUpperCase()}_MODULE]</CardTitle>
+                <CardTitle className="text-xl text-foreground">{category.title}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
                   {category.skills.map((skill, skillIndex) => (
-                    <Badge 
-                      key={skillIndex} 
-                      variant="secondary" 
-                      className="hover:bg-primary hover:text-background transition-colors cursor-pointer font-mono terminal-border matrix-text"
+                    <Badge
+                      key={skillIndex}
+                      variant="secondary"
+                      className="hover:bg-foreground hover:text-background transition-colors cursor-pointer"
                     >
                       {skill}
                     </Badge>

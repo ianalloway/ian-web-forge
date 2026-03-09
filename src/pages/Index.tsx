@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot, Newspaper, Heart, Copy, Sun, Moon, Briefcase, DollarSign, CheckCircle2 } from 'lucide-react';
-import MatrixRain from '@/components/MatrixRain';
+// MatrixRain removed for clean dark theme
 import Testimonials from '@/components/Testimonials';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -52,87 +52,66 @@ const experience = [
 
 const projects = [
   {
-    name: 'Sports Betting ML',
-    description: 'Trained XGBoost model on 5 seasons of NBA data to predict game outcomes. Compares model probabilities against sportsbook odds to find value bets, then sizes positions using Kelly Criterion. Live on HuggingFace.',
-    tech: ['Python', 'XGBoost', 'Streamlit'],
-    url: 'https://huggingface.co/spaces/ianalloway/sports-betting-ml',
+    name: 'Money-maker-bot',
+    description: 'Financial intelligence agent forked from OpenClaw/Clawdbot. Built with an 8-component architecture: Brain, Soul, DNA, Muscles, Bones, Eyes, Heartbeat, and Nervous System.',
+    tech: ['Python', 'OpenClaw', 'Anthropic API'],
+    url: 'https://github.com/ianalloway/Money-maker-bot',
+    isGithub: true,
+  },
+  {
+    name: 'NBA Sports Betting Pipeline',
+    description: 'XGBoost model hitting 68.3% accuracy with Kelly Criterion bet sizing. Live at aiadvantagesports.com and on Hugging Face.',
+    tech: ['Python', 'XGBoost', 'FastAPI', 'Hugging Face'],
+    url: 'https://aiadvantagesports.com',
+    isGithub: false,
+  },
+  {
+    name: 'Booperbot',
+    description: 'Autonomous agent featuring Notion diary integration.',
+    tech: ['Python', 'LLMs', 'Notion API'],
+    url: 'https://github.com/ianalloway',
+    isGithub: true,
+  },
+  {
+    name: 'Mutant Intelligence',
+    description: 'AI agent built on MAYC NFT traits. Live at mutantintelligence.com.',
+    tech: ['Python', 'Web3', 'LLMs'],
+    url: 'https://mutantintelligence.com',
+    isGithub: false,
+  },
+  {
+    name: 'ClawHub Contributions',
+    description: '9 published open-source skills including sports-odds, nft-tracker, data-viz, screenshot-annotator, kelly-criterion, portfolio-rebalancer, market-sentiment, streak-tracker, and devin-integration.',
+    tech: ['Python', 'OpenClaw', 'Open Source'],
+    url: 'https://github.com/openclaw/openclaw',
+    isGithub: true,
+  },
+  {
+    name: 'Job Fit Analyzer',
+    description: 'FastAPI + React app with regex-based skill extraction, hosted on Devin.',
+    tech: ['Python', 'FastAPI', 'React'],
+    url: 'https://clawdbot-setup-app-haw39wkx.devinapps.com',
     isGithub: false,
   },
   {
     name: 'Drone AI',
-    description: 'Autonomous navigation system for drones: YOLOv8 detects obstacles in real-time, A*/RRT* algorithms plan collision-free paths, behavior trees handle mission logic. Communicates with flight controllers via MAVLink.',
+    description: 'Autonomous navigation system: YOLOv8 obstacle detection, A*/RRT* path planning, behavior trees for mission logic, and MAVLink flight controller communication.',
     tech: ['Python', 'PyTorch', 'MAVLink'],
     url: 'https://github.com/ianalloway/ai-drone-auto-vehicle',
     isGithub: true,
   },
   {
-    name: 'Money Maker Bot',
-    description: 'Open-source financial intelligence assistant built on OpenClaw. Pre-configured with custom skills for sports betting analysis, NFT price tracking, and portfolio visualization. Fork it and build your own.',
-    tech: ['TypeScript', 'AI', 'OpenClaw'],
-    url: 'https://github.com/ianalloway/Money-maker-bot',
-    isGithub: true,
-  },
-  {
-    name: 'Job Fit Analyzer',
-    description: 'Full-stack NLP app: paste any job description and get instant skill-match analysis. React frontend sends text to FastAPI backend which runs semantic similarity against my profile. Deployed live.',
-    tech: ['React', 'FastAPI', 'NLP'],
-    url: 'https://clawdbot-setup-app-haw39wkx.devinapps.com',
-    isGithub: false,
-  },
-  {
-    name: 'AI Advantage Sports',
-    description: 'Production sports betting platform combining ML predictions with Kelly Criterion bet sizing. Users get real-time value bet alerts for NBA games with confidence scores.',
-    tech: ['React', 'XGBoost', 'Kelly Criterion'],
-    url: 'https://aiadvantagesports.com',
-    isGithub: false,
-  },
-  {
-    name: 'OpenClaw Contributor',
-    description: 'Active contributor to the 194k+ star open-source AI agent framework. Published 4 custom skills on ClawHub marketplace: sports-odds, nft-tracker, data-viz, screenshot-annotator.',
-    tech: ['TypeScript', 'Open Source', 'AI'],
-    url: 'https://github.com/openclaw/openclaw',
-    isGithub: true,
-  },
-  {
-    name: 'Mutant Intelligence',
-    description: 'Web3 app that transforms Mutant Ape Yacht Club NFTs into unique AI assistants. Each bot inherits personality traits from on-chain metadata to create personalized interactions.',
-    tech: ['React', 'Web3', 'Ethereum'],
-    url: 'https://mutantintelligence.com',
-    isGithub: false,
-  },
-  {
-    name: 'Crypto Portfolio CLI',
-    description: 'Terminal-based portfolio tracker pulling live prices from CoinGecko API. Track holdings, set price alerts, visualize allocation with Rich terminal charts. Zero browser needed.',
-    tech: ['Python', 'Click', 'Rich'],
-    url: 'https://github.com/ianalloway/crypto-portfolio-cli',
-    isGithub: true,
-  },
-  {
-    name: 'AI Portfolio Analyzer',
-    description: 'CLI tool that analyzes investment portfolios with AI. Calculates profit/loss, generates diversification recommendations, and produces intelligent insights for crypto and stock holdings.',
-    tech: ['Python', 'AI', 'Financial Analysis'],
-    url: 'https://github.com/ianalloway/ai-portfolio-analyzer',
+    name: 'TF Object Detector',
+    description: 'Real-time object detection running entirely in the browser. TensorFlow.js COCO-SSD identifies 80+ object classes via webcam with animated bounding boxes and confidence scores.',
+    tech: ['TensorFlow.js', 'React', 'TypeScript'],
+    url: 'https://github.com/ianalloway/tf-object-detection',
     isGithub: true,
   },
   {
     name: 'Stock Sentiment Analyzer',
-    description: 'AI-powered news sentiment analysis app. Enter any stock ticker and get real-time sentiment analysis using NLP transformers. Built with Streamlit.',
+    description: 'AI-powered news sentiment analysis app. Enter any stock ticker and get real-time sentiment analysis using NLP transformers.',
     tech: ['Python', 'NLP', 'Streamlit'],
     url: 'https://github.com/ianalloway/stock-sentiment-analyzer',
-    isGithub: true,
-  },
-  {
-    name: 'Crypto Price Predictor',
-    description: 'LSTM neural network for cryptocurrency price prediction. Technical indicators, backtesting, and interactive charts. Supports BTC, ETH, SOL, and more.',
-    tech: ['Python', 'TensorFlow', 'LSTM'],
-    url: 'https://github.com/ianalloway/crypto-price-predictor',
-    isGithub: true,
-  },
-  {
-    name: 'Job Application Tracker',
-    description: 'Streamlit app to track job applications with analytics dashboard, status tracking, and CSV export. Never lose track of your applications again.',
-    tech: ['Python', 'Streamlit', 'Analytics'],
-    url: 'https://github.com/ianalloway/job-application-tracker',
     isGithub: true,
   },
 ];
@@ -286,102 +265,97 @@ const Index = () => {
 
     return (
       <div className="min-h-screen bg-background relative">
-        {theme === 'matrix' && <MatrixRain />}
+        {/* Clean dark theme - no background animation */}
       
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-sm border-b border-primary/30">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-sm border-b border-border">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="text-primary font-bold text-lg matrix-text font-mono">
-            <Terminal className="inline mr-2" size={18} />
-            IAN.SYS
+          <div className="text-foreground font-bold text-lg">
+            Ian Alloway
           </div>
-                                        <div className="flex gap-4 text-sm font-mono items-center">
-                                                                                                            <a href="#about" className="text-primary hover:text-primary/70 transition-all">[ABOUT]</a>
-                                                                                                            <a href="#skills" className="text-primary hover:text-primary/70 transition-all">[SKILLS]</a>
-                                                                                                            <a href="#projects" className="text-primary hover:text-primary/70 transition-all">[PROJECTS]</a>
-                                                                                                            <a href="#bot" className="text-primary hover:text-primary/70 transition-all">[BOT]</a>
-                                <button
-                                  onClick={toggleTheme}
-                                  className="ml-2 p-2 rounded-md border border-primary/30 hover:bg-primary/10 transition-all"
-                                  aria-label="Toggle theme"
-                                >
-                                  {theme === 'matrix' ? <Sun size={16} className="text-primary" /> : <Moon size={16} className="text-primary" />}
-                                </button>
-                                                                                        <a href="#blog" className="text-primary hover:text-primary/70 transition-all">[BLOG]</a>
-                                                                                        <a href="#opensource" className="text-primary hover:text-primary/70 transition-all">[OSS]</a>
-                                                                                        <a href="#academic" className="text-primary hover:text-primary/70 transition-all">[ACADEMIC]</a>
-                                                                                        <a href="#certifications" className="text-primary hover:text-primary/70 transition-all">[CERTS]</a>
-                                                                                        <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
-                                                                                        <a href="/now" className="text-primary hover:text-primary/70 transition-all">[/NOW]</a>
-                    </div>
+          <div className="flex gap-5 text-sm items-center">
+            <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">About</a>
+            <a href="#skills" className="text-muted-foreground hover:text-foreground transition-colors">Skills</a>
+            <a href="#projects" className="text-muted-foreground hover:text-foreground transition-colors">Projects</a>
+            <a href="#bot" className="text-muted-foreground hover:text-foreground transition-colors">Bot</a>
+            <a href="#blog" className="text-muted-foreground hover:text-foreground transition-colors">Blog</a>
+            <a href="#opensource" className="text-muted-foreground hover:text-foreground transition-colors">OSS</a>
+            <a href="#contact" className="text-muted-foreground hover:text-foreground transition-colors">Contact</a>
+            <a href="/now" className="text-muted-foreground hover:text-foreground transition-colors">/now</a>
+            <button
+              onClick={toggleTheme}
+              className="ml-2 p-2 rounded-md border border-border hover:bg-accent transition-all"
+              aria-label="Toggle theme"
+            >
+              {theme === 'matrix' ? <Sun size={16} className="text-foreground" /> : <Moon size={16} className="text-foreground" />}
+            </button>
+          </div>
         </div>
       </nav>
 
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center px-4 pt-16 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block px-3 py-1 terminal-border text-primary text-sm mb-6 font-mono">
-            <span className="inline-block w-2 h-2 bg-primary rounded-full mr-2 animate-pulse"></span>
-            SYSTEM_ONLINE
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 matrix-text font-mono text-primary">
-            {typedText}<span className="animate-terminal-blink">_</span>
+          <h1 className="text-5xl md:text-7xl font-bold mb-4 text-foreground tracking-tight">
+            {typedText}<span className="animate-terminal-blink text-muted-foreground">_</span>
           </h1>
-          
-          <p className="text-xl text-muted-foreground mb-2 font-mono">
-            AI/ML Engineer | Data Scientist | Business Intelligence Specialist
+
+          <p className="text-xl text-muted-foreground mb-2">
+            Machine Learning Engineer &amp; Data Scientist
           </p>
-          <p className="text-muted-foreground font-mono mb-8">
+          <p className="text-muted-foreground mb-5 text-sm">
+            I build robust AI/ML pipelines, predictive models, and full-stack applications. I'm a builder focused on solving real-world problems with data.
+          </p>
+          <p className="text-muted-foreground mb-8 text-sm">
             B.S. Data Science @ USF (Dec 2025) | M.S. AI @ USF (Dec 2027) | Founder @ Alloway LLC
           </p>
 
-          <div className="inline-block px-4 py-2 mb-6 border border-green-400/50 rounded-lg bg-green-400/10">
-            <span className="text-green-400 font-mono text-sm font-bold">OPEN TO WORK</span>
-            <span className="text-muted-foreground font-mono text-sm"> - Data Scientist / ML Engineer roles</span>
+          <div className="inline-block px-4 py-2 mb-6 border border-green-400/30 rounded-lg bg-green-400/5">
+            <span className="text-green-400 text-sm font-semibold">OPEN TO WORK</span>
+            <span className="text-muted-foreground text-sm"> — Data Scientist / ML Engineer roles</span>
           </div>
 
           {/* Social Links - Prominent */}
           <div className="flex flex-wrap justify-center gap-3 mb-10">
-            <Button className="font-mono bg-primary text-primary-foreground hover:bg-primary/90 px-8" asChild>
+            <Button className="bg-foreground text-background hover:opacity-90 px-8" asChild>
               <a href="#contracting">
-                <Briefcase className="mr-2" size={18} /> [HIRE_ME_1099]
+                <Briefcase className="mr-2" size={18} /> Hire Me
               </a>
             </Button>
-            <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+            <Button variant="outline" className="border-border text-foreground hover:bg-accent" asChild>
               <a href="https://www.linkedin.com/in/ianit" target="_blank" rel="noopener noreferrer">
                 <Linkedin className="mr-2" size={16} /> LinkedIn
               </a>
             </Button>
-            <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+            <Button variant="outline" className="border-border text-foreground hover:bg-accent" asChild>
               <a href="https://x.com/ianallowayxyz" target="_blank" rel="noopener noreferrer">
                 <Twitter className="mr-2" size={16} /> Twitter/X
               </a>
             </Button>
-            <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+            <Button variant="outline" className="border-border text-foreground hover:bg-accent" asChild>
               <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer">
                 <Github className="mr-2" size={16} /> GitHub
               </a>
             </Button>
-            <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+            <Button variant="outline" className="border-border text-foreground hover:bg-accent" asChild>
               <a href="https://allowayai.substack.com" target="_blank" rel="noopener noreferrer">
-                <BookOpen className="mr-2" size={16} /> Blog
+                <BookOpen className="mr-2" size={16} /> Substack
               </a>
             </Button>
-            <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+            <Button variant="outline" className="border-border text-foreground hover:bg-accent" asChild>
               <a href="mailto:ian@allowayllc.com">
                 <Mail className="mr-2" size={16} /> Email
               </a>
             </Button>
-            <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+            <Button variant="outline" className="border-border text-foreground hover:bg-accent" asChild>
               <a href="/Ian_Alloway_Resume_CV.pdf" download>
                 <Download className="mr-2" size={16} /> Resume
               </a>
             </Button>
           </div>
 
-          <Button className="font-mono bg-primary text-primary-foreground hover:bg-primary/90" asChild>
-            <a href="#contact">&gt; GET_IN_TOUCH</a>
+          <Button className="bg-foreground text-background hover:opacity-90" asChild>
+            <a href="#contact">Contact Me</a>
           </Button>
         </div>
       </section>
@@ -389,40 +363,37 @@ const Index = () => {
       {/* About & Resume Section */}
       <section id="about" className="py-16 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
-            <FileText className="inline mr-2" size={24} />
-            [ABOUT & RESUME]
+          <h2 className="text-2xl font-bold mb-6 text-foreground">
+            About
           </h2>
-          
-          <Card className="terminal-border bg-card/80 backdrop-blur-sm mb-8">
+
+          <Card className="border-border bg-card mb-8">
             <CardContent className="p-6">
-              <p className="text-muted-foreground leading-relaxed font-mono text-sm">
-                &gt; Data Scientist and AI Engineer pursuing an MS in Artificial Intelligence at the University of South Florida. 
-                Builds production ML systems, blockchain analytics pipelines, and AI-powered products. 
-                Open-source contributor to OpenClaw (194k+ stars). Founder of Alloway LLC, delivering data-driven solutions across sports analytics, fintech, and cybersecurity. 
+              <p className="text-muted-foreground leading-relaxed text-sm">
+                &gt; Machine Learning Engineer and Data Scientist. I build robust AI/ML pipelines, predictive models, and full-stack applications.
+                Open-source contributor to OpenClaw (194k+ stars) with 9 published skills on ClawHub. Founder of Alloway LLC, delivering data-driven solutions across sports analytics, fintech, and cybersecurity.
                 Proven track record of reducing fraud incidents by 30% through AI-based anomaly detection and improving client operational efficiency by 40%.
               </p>
             </CardContent>
           </Card>
 
           {/* Experience/Resume */}
-          <h3 className="text-xl font-bold mb-4 font-mono text-primary">
-            <Code className="inline mr-2" size={20} />
-            [EXPERIENCE]
+          <h3 className="text-xl font-bold mb-4 text-foreground">
+            Experience
           </h3>
-          
+
           <div className="space-y-3">
             {experience.map((exp, index) => (
-              <Card key={index} className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
+              <Card key={index} className="border-border bg-card border-l-4 border-l-foreground/20">
                 <CardContent className="p-4">
                   <div className="flex justify-between items-start flex-wrap gap-2">
                     <div>
-                      <h4 className="text-primary font-bold font-mono text-sm">{exp.title}</h4>
-                      <p className="text-muted-foreground font-mono text-sm">{exp.company}</p>
+                      <h4 className="text-foreground font-semibold text-sm">{exp.title}</h4>
+                      <p className="text-muted-foreground text-sm">{exp.company}</p>
                     </div>
-                    <span className="text-primary/70 text-xs font-mono">{exp.period}</span>
+                    <span className="text-muted-foreground text-xs">{exp.period}</span>
                   </div>
-                  <p className="text-muted-foreground/70 mt-1 text-xs font-mono">{exp.description}</p>
+                  <p className="text-muted-foreground mt-1 text-xs">{exp.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -431,24 +402,23 @@ const Index = () => {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-16 px-4 bg-primary/5 relative z-10">
+      <section id="skills" className="py-16 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
-            <Brain className="inline mr-2" size={24} />
-            [SKILLS]
+          <h2 className="text-2xl font-bold mb-6 text-foreground">
+            Skills
           </h2>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             {skills.map((skill, index) => (
-              <Card key={index} className="terminal-border bg-card/80 backdrop-blur-sm">
+              <Card key={index} className="border-border bg-card">
                 <CardContent className="p-3">
-                  <div className="flex justify-between mb-1 font-mono text-sm">
-                    <span className="text-primary">&gt; {skill.name}</span>
-                    <span className="text-primary/70">{skill.level}%</span>
+                  <div className="flex justify-between mb-1 text-sm">
+                    <span className="text-foreground">{skill.name}</span>
+                    <span className="text-muted-foreground">{skill.level}%</span>
                   </div>
                   <div className="h-1.5 bg-muted rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-primary rounded-full"
+                    <div
+                      className="h-full bg-foreground/70 rounded-full"
                       style={{ width: `${skill.level}%` }}
                     />
                   </div>
@@ -462,25 +432,24 @@ const Index = () => {
       {/* Projects Section */}
       <section id="projects" className="py-16 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
-            <ExternalLink className="inline mr-2" size={24} />
-            [PROJECTS]
+          <h2 className="text-2xl font-bold mb-6 text-foreground">
+            Featured Work
           </h2>
-          
-          <div className="grid md:grid-cols-3 gap-4">
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {projects.map((project, index) => (
-              <Card key={index} className="terminal-border bg-card/80 backdrop-blur-sm hover:scale-105 transition-transform">
-                <CardContent className="p-4">
-                  <h3 className="text-primary font-bold mb-2 font-mono text-sm">{project.name}</h3>
-                  <p className="text-muted-foreground/70 text-xs mb-3 font-mono">{project.description}</p>
-                  <div className="flex flex-wrap gap-1 mb-3">
+              <Card key={index} className="border-border bg-card hover:-translate-y-0.5 transition-all duration-200 hover:border-muted-foreground/30">
+                <CardContent className="p-5 flex flex-col h-full">
+                  <h3 className="text-foreground font-semibold mb-2 text-sm">{project.name}</h3>
+                  <p className="text-muted-foreground text-xs mb-3 flex-grow">{project.description}</p>
+                  <div className="flex flex-wrap gap-1.5 mb-4">
                     {project.tech.map((tech, i) => (
-                      <span key={i} className="px-2 py-0.5 text-xs terminal-border rounded font-mono text-primary/80">
+                      <span key={i} className="px-2 py-0.5 text-[11px] border border-border rounded bg-muted text-muted-foreground">
                         {tech}
                       </span>
                     ))}
                   </div>
-                  <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
+                  <Button variant="outline" size="sm" className="border-border text-foreground hover:bg-accent text-xs w-fit" asChild>
                     <a href={project.url} target="_blank" rel="noopener noreferrer">
                       {project.isGithub ? <Github className="mr-1" size={12} /> : <ExternalLink className="mr-1" size={12} />}
                       {project.isGithub ? 'View on GitHub' : 'Visit Site'}
@@ -494,43 +463,42 @@ const Index = () => {
       </section>
 
       {/* Start Your Own Bot Section */}
-      <section id="bot" className="py-16 px-4 bg-primary/5 relative z-10">
+      <section id="bot" className="py-16 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
-            <Bot className="inline mr-2" size={24} />
-            [START_YOUR_OWN_BOT]
+          <h2 className="text-2xl font-bold mb-6 text-foreground">
+            Start Your Own Bot
           </h2>
-          
-          <Card className="terminal-border bg-card/80 backdrop-blur-sm">
+
+          <Card className="border-border bg-card">
             <CardContent className="p-6">
-              <h3 className="text-primary font-bold mb-3 font-mono text-lg">Money Maker Bot</h3>
-              <p className="text-muted-foreground font-mono mb-4 text-sm">
-                &gt; Build your own AI-powered financial assistant. Money Maker Bot is my open-source fork of Clawdbot, 
-                pre-configured with custom skills for sports betting analysis, NFT price tracking, and portfolio visualization.
+              <h3 className="text-foreground font-semibold mb-3 text-lg">Money-maker-bot</h3>
+              <p className="text-muted-foreground mb-4 text-sm">
+                &gt; Financial intelligence agent forked from OpenClaw/Clawdbot. Built with an 8-component architecture:
+                Brain, Soul, DNA, Muscles, Bones, Eyes, Heartbeat, and Nervous System. Fork it and build your own.
               </p>
               
               <div className="grid md:grid-cols-3 gap-4 mb-6">
-                <div className="terminal-border p-3 rounded">
-                  <h4 className="text-primary font-bold font-mono text-sm mb-1">Sports Odds</h4>
-                  <p className="text-muted-foreground/70 text-xs font-mono">Compare betting lines across sportsbooks to find value</p>
+                <div className="border border-border p-3 rounded">
+                  <h4 className="text-foreground font-semibold text-sm mb-1">Sports Odds</h4>
+                  <p className="text-muted-foreground text-xs">Compare betting lines across sportsbooks to find value</p>
                 </div>
-                <div className="terminal-border p-3 rounded">
-                  <h4 className="text-primary font-bold font-mono text-sm mb-1">NFT Tracker</h4>
-                  <p className="text-muted-foreground/70 text-xs font-mono">Monitor floor prices and whale activity for top collections</p>
+                <div className="border border-border p-3 rounded">
+                  <h4 className="text-foreground font-semibold text-sm mb-1">NFT Tracker</h4>
+                  <p className="text-muted-foreground text-xs">Monitor floor prices and whale activity for top collections</p>
                 </div>
-                <div className="terminal-border p-3 rounded">
-                  <h4 className="text-primary font-bold font-mono text-sm mb-1">Data Viz</h4>
-                  <p className="text-muted-foreground/70 text-xs font-mono">Generate terminal charts from your portfolio data</p>
+                <div className="border border-border p-3 rounded">
+                  <h4 className="text-foreground font-semibold text-sm mb-1">Data Viz</h4>
+                  <p className="text-muted-foreground text-xs">Generate charts from your portfolio data</p>
                 </div>
               </div>
-              
+
               <div className="flex flex-wrap gap-3">
-                <Button className="font-mono bg-primary text-primary-foreground hover:bg-primary/90" asChild>
+                <Button className="bg-foreground text-background hover:opacity-90" asChild>
                   <a href="https://github.com/ianalloway/Money-maker-bot" target="_blank" rel="noopener noreferrer">
                     <Github className="mr-2" size={16} /> Fork on GitHub
                   </a>
                 </Button>
-                <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+                <Button variant="outline" className="border-border text-foreground hover:bg-accent" asChild>
                   <a href="https://github.com/ianalloway/Money-maker-bot#quick-start" target="_blank" rel="noopener noreferrer">
                     <Terminal className="mr-2" size={16} /> Quick Start Guide
                   </a>
@@ -544,25 +512,24 @@ const Index = () => {
       {/* Blog Section */}
       <section id="blog" className="py-16 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
-            <Newspaper className="inline mr-2" size={24} />
-            [BLOG]
+          <h2 className="text-2xl font-bold mb-6 text-foreground">
+            Blog
           </h2>
-          
-          <p className="text-muted-foreground font-mono mb-6 text-sm">
-            &gt; Latest posts from my Substack on AI, investing, and data science.
+
+          <p className="text-muted-foreground mb-6 text-sm">
+            Latest posts from my Substack on AI, investing, and data science.
           </p>
-          
+
           <div className="space-y-4 mb-6">
             {blogPosts.map((post, index) => (
-              <Card key={index} className="terminal-border bg-card/80 backdrop-blur-sm hover:scale-[1.02] transition-transform">
+              <Card key={index} className="border-border bg-card hover:-translate-y-0.5 transition-all duration-200">
                 <CardContent className="p-4">
                   <a href={post.url} target="_blank" rel="noopener noreferrer" className="block">
                     <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-primary font-bold font-mono text-sm hover:text-primary/70">{post.title}</h3>
-                      <span className="text-primary/50 text-xs font-mono whitespace-nowrap ml-4">{post.date}</span>
+                      <h3 className="text-foreground font-semibold text-sm hover:text-muted-foreground transition-colors">{post.title}</h3>
+                      <span className="text-muted-foreground text-xs whitespace-nowrap ml-4">{post.date}</span>
                     </div>
-                    <p className="text-muted-foreground/70 text-xs font-mono">{post.description}</p>
+                    <p className="text-muted-foreground text-xs">{post.description}</p>
                   </a>
                 </CardContent>
               </Card>
@@ -570,7 +537,7 @@ const Index = () => {
           </div>
           
           <div className="text-center">
-            <Button className="font-mono bg-primary text-primary-foreground hover:bg-primary/90" asChild>
+            <Button className="bg-foreground text-background hover:opacity-90" asChild>
               <a href="https://allowayai.substack.com" target="_blank" rel="noopener noreferrer">
                 <BookOpen className="mr-2" size={16} /> Read More on Substack
               </a>
@@ -580,35 +547,34 @@ const Index = () => {
       </section>
 
       {/* Academic Writing Section */}
-      <section id="academic" className="py-16 px-4 bg-primary/5 relative z-10">
+      <section id="academic" className="py-16 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
-            <GraduationCap className="inline mr-2" size={24} />
-            [ACADEMIC_WRITING]
+          <h2 className="text-2xl font-bold mb-6 text-foreground">
+            Academic Writing
           </h2>
-          
-          <p className="text-muted-foreground font-mono mb-6 text-sm">
-            &gt; A collection of academic papers and research from my graduate studies.
+
+          <p className="text-muted-foreground mb-6 text-sm">
+            A collection of academic papers and research from my studies.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             {academicPapers.map((paper, index) => (
-              <Card key={index} className="terminal-border bg-card/80 backdrop-blur-sm hover:scale-105 transition-transform">
+              <Card key={index} className="border-border bg-card hover:-translate-y-0.5 transition-all duration-200">
                 <CardContent className="p-4">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-primary font-bold font-mono text-sm">{paper.title}</h3>
-                    <span className="px-2 py-0.5 text-xs terminal-border rounded font-mono text-primary/80">
+                    <h3 className="text-foreground font-semibold text-sm">{paper.title}</h3>
+                    <span className="px-2 py-0.5 text-[11px] border border-border rounded bg-muted text-muted-foreground">
                       {paper.category}
                     </span>
                   </div>
-                  <p className="text-muted-foreground/70 text-xs mb-3 font-mono">{paper.description}</p>
+                  <p className="text-muted-foreground text-xs mb-3">{paper.description}</p>
                   <div className="flex gap-2">
-                    <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
+                    <Button variant="outline" size="sm" className="border-border text-foreground hover:bg-accent text-xs" asChild>
                       <a href={paper.file} target="_blank" rel="noopener noreferrer">
                         <ExternalLink className="mr-1" size={12} /> View
                       </a>
                     </Button>
-                    <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
+                    <Button variant="outline" size="sm" className="border-border text-foreground hover:bg-accent text-xs" asChild>
                       <a href={paper.file} download>
                         <Download className="mr-1" size={12} /> Download
                       </a>
@@ -622,59 +588,59 @@ const Index = () => {
       </section>
 
       {/* Certifications Section */}
-      <section id="certifications" className="py-16 px-4 bg-primary/5 relative z-10">
+      <section id="certifications" className="py-16 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
-            [CERTIFICATIONS]
+          <h2 className="text-2xl font-bold mb-6 text-foreground">
+            Certifications
           </h2>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
-            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
+            <Card className="border-border bg-card border-l-4 border-l-foreground/20">
               <CardContent className="p-4">
-                <h4 className="text-primary font-bold font-mono text-sm">Deep Learning Specialization</h4>
-                <p className="text-muted-foreground/70 text-xs font-mono">Coursera (Andrew Ng)</p>
+                <h4 className="text-foreground font-semibold text-sm">Deep Learning Specialization</h4>
+                <p className="text-muted-foreground text-xs">Coursera (Andrew Ng)</p>
               </CardContent>
             </Card>
-            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
+            <Card className="border-border bg-card border-l-4 border-l-foreground/20">
               <CardContent className="p-4">
-                <h4 className="text-primary font-bold font-mono text-sm">Machine Learning Engineering</h4>
-                <p className="text-muted-foreground/70 text-xs font-mono">Google Cloud</p>
+                <h4 className="text-foreground font-semibold text-sm">Machine Learning Engineering</h4>
+                <p className="text-muted-foreground text-xs">Google Cloud</p>
               </CardContent>
             </Card>
-            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
+            <Card className="border-border bg-card border-l-4 border-l-foreground/20">
               <CardContent className="p-4">
-                <h4 className="text-primary font-bold font-mono text-sm">AWS Certified Cloud Practitioner</h4>
-                <p className="text-muted-foreground/70 text-xs font-mono">Amazon Web Services</p>
+                <h4 className="text-foreground font-semibold text-sm">AWS Certified Cloud Practitioner</h4>
+                <p className="text-muted-foreground text-xs">Amazon Web Services</p>
               </CardContent>
             </Card>
-            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
+            <Card className="border-border bg-card border-l-4 border-l-foreground/20">
               <CardContent className="p-4">
-                <h4 className="text-primary font-bold font-mono text-sm">Blockchain Fundamentals</h4>
-                <p className="text-muted-foreground/70 text-xs font-mono">UC Berkeley Extension</p>
+                <h4 className="text-foreground font-semibold text-sm">Blockchain Fundamentals</h4>
+                <p className="text-muted-foreground text-xs">UC Berkeley Extension</p>
               </CardContent>
             </Card>
-            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
+            <Card className="border-border bg-card border-l-4 border-l-foreground/20">
               <CardContent className="p-4">
-                <h4 className="text-primary font-bold font-mono text-sm">Oracle Database SQL Certified Associate</h4>
-                <p className="text-muted-foreground/70 text-xs font-mono">Oracle</p>
+                <h4 className="text-foreground font-semibold text-sm">Oracle Database SQL Certified Associate</h4>
+                <p className="text-muted-foreground text-xs">Oracle</p>
               </CardContent>
             </Card>
-            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
+            <Card className="border-border bg-card border-l-4 border-l-foreground/20">
               <CardContent className="p-4">
-                <h4 className="text-primary font-bold font-mono text-sm">Tableau Desktop Certified Professional</h4>
-                <p className="text-muted-foreground/70 text-xs font-mono">Tableau / Salesforce</p>
+                <h4 className="text-foreground font-semibold text-sm">Tableau Desktop Certified Professional</h4>
+                <p className="text-muted-foreground text-xs">Tableau / Salesforce</p>
               </CardContent>
             </Card>
-            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
+            <Card className="border-border bg-card border-l-4 border-l-foreground/20">
               <CardContent className="p-4">
-                <h4 className="text-primary font-bold font-mono text-sm">SQL Specialist Certification</h4>
-                <p className="text-muted-foreground/70 text-xs font-mono">Microsoft</p>
+                <h4 className="text-foreground font-semibold text-sm">SQL Specialist Certification</h4>
+                <p className="text-muted-foreground text-xs">Microsoft</p>
               </CardContent>
             </Card>
-            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
+            <Card className="border-border bg-card border-l-4 border-l-foreground/20">
               <CardContent className="p-4">
-                <h4 className="text-primary font-bold font-mono text-sm">Microsoft Office Specialist: Excel</h4>
-                <p className="text-muted-foreground/70 text-xs font-mono">Microsoft</p>
+                <h4 className="text-foreground font-semibold text-sm">Microsoft Office Specialist: Excel</h4>
+                <p className="text-muted-foreground text-xs">Microsoft</p>
               </CardContent>
             </Card>
           </div>
@@ -684,22 +650,21 @@ const Index = () => {
       {/* Open Source Section */}
       <section id="opensource" className="py-16 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
-            <Bot className="inline mr-2" size={24} />
-            [OPEN_SOURCE]
+          <h2 className="text-2xl font-bold mb-6 text-foreground">
+            Open Source
           </h2>
 
           <div className="grid md:grid-cols-3 gap-4 mb-6">
             {[
               { stat: '194k+', label: 'Stars — OpenClaw',    desc: 'Active contributor to the leading open-source AI agent framework' },
-              { stat: '9+',    label: 'Published Skills',    desc: 'Custom skills on ClawHub: sports-odds, nft-tracker, data-viz, streak-tracker, market-sentiment, and more' },
+              { stat: '9',     label: 'Published Skills',    desc: 'Custom skills on ClawHub: sports-odds, nft-tracker, data-viz, screenshot-annotator, kelly-criterion, portfolio-rebalancer, market-sentiment, streak-tracker, devin-integration' },
               { stat: '5+',    label: 'Merged OSS PRs',      desc: 'Contributions to LangChain, OpenClaw, React.dev, and other major repos' },
             ].map(({ stat, label, desc }) => (
-              <Card key={label} className="terminal-border bg-card/80 backdrop-blur-sm text-center">
+              <Card key={label} className="border-border bg-card text-center">
                 <CardContent className="p-5">
-                  <div className="text-3xl font-bold text-primary font-mono mb-1">{stat}</div>
-                  <div className="text-primary/80 font-mono text-sm font-semibold mb-2">{label}</div>
-                  <p className="text-muted-foreground text-xs font-mono">{desc}</p>
+                  <div className="text-3xl font-bold text-foreground mb-1">{stat}</div>
+                  <div className="text-muted-foreground text-sm font-semibold mb-2">{label}</div>
+                  <p className="text-muted-foreground text-xs">{desc}</p>
                 </CardContent>
               </Card>
             ))}
@@ -710,7 +675,7 @@ const Index = () => {
               {
                 repo: 'OpenClaw',
                 url: 'https://github.com/openclaw/openclaw',
-                description: 'Bug fixes, skill system improvements, and published 9+ skills to the ClawHub marketplace including market-sentiment and streak-tracker.',
+                description: 'Bug fixes, skill system improvements, and published 9 skills to the ClawHub marketplace including sports-odds, nft-tracker, data-viz, kelly-criterion, portfolio-rebalancer, market-sentiment, streak-tracker, screenshot-annotator, and devin-integration.',
                 badge: 'Active Contributor',
               },
               {
@@ -732,18 +697,18 @@ const Index = () => {
                 badge: 'Merged PR',
               },
             ].map(({ repo, url, description, badge }) => (
-              <Card key={repo} className="terminal-border bg-card/80 backdrop-blur-sm border-l-4 border-l-primary">
+              <Card key={repo} className="border-border bg-card border-l-4 border-l-foreground/20">
                 <CardContent className="p-4">
                   <div className="flex justify-between items-start flex-wrap gap-2 mb-1">
-                    <h4 className="text-primary font-bold font-mono text-sm">{repo}</h4>
-                    <span className="text-xs font-mono px-2 py-0.5 rounded bg-primary/10 text-primary">{badge}</span>
+                    <h4 className="text-foreground font-semibold text-sm">{repo}</h4>
+                    <span className="text-xs px-2 py-0.5 rounded bg-accent text-muted-foreground">{badge}</span>
                   </div>
-                  <p className="text-muted-foreground/70 text-xs font-mono mb-2">{description}</p>
+                  <p className="text-muted-foreground text-xs mb-2">{description}</p>
                   <a
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary/60 hover:text-primary text-xs font-mono flex items-center gap-1 w-fit"
+                    className="text-muted-foreground hover:text-foreground text-xs flex items-center gap-1 w-fit transition-colors"
                   >
                     <ExternalLink size={11} /> View on GitHub
                   </a>
@@ -755,21 +720,20 @@ const Index = () => {
       </section>
 
       {/* Contracting Section */}
-      <section id="contracting" className="py-16 px-4 bg-primary/5 relative z-10">
+      <section id="contracting" className="py-16 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
-            <Briefcase className="inline mr-2" size={24} />
-            [HIRE_ME_1099]
+          <h2 className="text-2xl font-bold mb-6 text-foreground">
+            Hire Me
           </h2>
-          
+
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="space-y-6">
-              <p className="text-muted-foreground font-mono text-sm leading-relaxed">
-                &gt; I am available for independent contractor (1099) roles. 
-                Whether you need AI integration, data pipeline engineering, or full-stack development, 
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                I am available for independent contractor (1099) roles.
+                Whether you need AI integration, data pipeline engineering, or full-stack development,
                 I can help scale your technical capabilities.
               </p>
-              
+
               <ul className="space-y-3">
                 {[
                   "AI Agent Development & Integration",
@@ -778,58 +742,58 @@ const Index = () => {
                   "Full-stack Web Applications",
                   "Process Automation & Optimization"
                 ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-2 text-primary/80 font-mono text-xs">
-                    <CheckCircle2 size={14} className="text-primary" />
+                  <li key={i} className="flex items-center gap-2 text-muted-foreground text-xs">
+                    <CheckCircle2 size={14} className="text-foreground/60" />
                     {item}
                   </li>
                 ))}
               </ul>
 
-              <div className="terminal-border p-4 rounded bg-background/40">
-                <h4 className="text-primary font-bold font-mono text-sm mb-2 flex items-center gap-2">
-                  <DollarSign size={16} /> HOURLY_RATE
+              <div className="border border-border p-4 rounded bg-card">
+                <h4 className="text-foreground font-semibold text-sm mb-2 flex items-center gap-2">
+                  <DollarSign size={16} /> Hourly Rate
                 </h4>
-                <div className="text-2xl font-bold text-white font-mono mb-1">$100<span className="text-xs text-muted-foreground ml-1">/hour</span></div>
-                <p className="text-muted-foreground/70 text-[10px] font-mono">
-                  &gt; Standard rate for 1099 independent contractor services.
+                <div className="text-2xl font-bold text-foreground mb-1">$100<span className="text-xs text-muted-foreground ml-1">/hour</span></div>
+                <p className="text-muted-foreground text-[10px]">
+                  Standard rate for 1099 independent contractor services.
                 </p>
               </div>
             </div>
 
-            <Card className="terminal-border bg-card/80 backdrop-blur-sm border-t-4 border-t-primary">
+            <Card className="border-border bg-card border-t-4 border-t-foreground/20">
               <CardContent className="p-6">
-                <h3 className="text-primary font-bold font-mono text-lg mb-4 text-center">CONTRACT_INITIATION</h3>
-                <p className="text-muted-foreground font-mono text-xs mb-6 text-center">
-                  Ready to start? You can pay the initial hours securely via Stripe to kick off our collaboration.
+                <h3 className="text-foreground font-semibold text-lg mb-4 text-center">Get Started</h3>
+                <p className="text-muted-foreground text-xs mb-6 text-center">
+                  Ready to start? Pay initial hours securely via Stripe to kick off our collaboration.
                 </p>
-                
+
                 <div className="space-y-4">
-                  <Button 
-                    className="w-full font-mono bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-sm"
+                  <Button
+                    className="w-full bg-foreground text-background hover:opacity-90 h-12 text-sm"
                     asChild
                   >
-                    <a 
-                      href="https://buy.stripe.com/test_6oU6oG0Na4vQ02N9od9R606" 
-                      target="_blank" 
+                    <a
+                      href="https://buy.stripe.com/test_6oU6oG0Na4vQ02N9od9R606"
+                      target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Briefcase className="mr-2" size={18} /> HIRE_AS_CONTRACTOR
+                      <Briefcase className="mr-2" size={18} /> Hire as Contractor
                     </a>
                   </Button>
-                  
+
                   <div className="flex items-center gap-2 justify-center py-2">
-                    <div className="h-[1px] bg-primary/20 flex-1"></div>
-                    <span className="text-[10px] font-mono text-primary/40">OR</span>
-                    <div className="h-[1px] bg-primary/20 flex-1"></div>
+                    <div className="h-[1px] bg-border flex-1"></div>
+                    <span className="text-[10px] text-muted-foreground">OR</span>
+                    <div className="h-[1px] bg-border flex-1"></div>
                   </div>
 
-                  <Button 
+                  <Button
                     variant="outline"
-                    className="w-full font-mono terminal-border text-primary border-primary hover:bg-primary/10 h-12 text-sm"
+                    className="w-full border-border text-foreground hover:bg-accent h-12 text-sm"
                     asChild
                   >
                     <a href="mailto:ian@allowayllc.com">
-                      <Mail className="mr-2" size={18} /> DISCUSS_PROJECT
+                      <Mail className="mr-2" size={18} /> Discuss Project
                     </a>
                   </Button>
                 </div>
@@ -846,53 +810,53 @@ const Index = () => {
       {/* Contact Section */}
       <section id="contact" className="py-16 px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
-            [CONTACT]
+          <h2 className="text-2xl font-bold mb-6 text-foreground">
+            Let's Build Something
           </h2>
-          
-          <p className="text-muted-foreground font-mono mb-6 text-sm">
-            &gt; Ready to collaborate? Let's connect.
+
+          <p className="text-muted-foreground mb-6 text-sm">
+            Looking for a data scientist, ML engineer, or research engineer? Reach out directly.
           </p>
-          
+
           <div className="flex flex-wrap justify-center gap-4 mb-8">
-            <a href="mailto:ian@allowayllc.com" className="flex items-center gap-2 text-primary hover:text-primary/70 font-mono text-sm">
+            <a href="mailto:ian@allowayllc.com" className="flex items-center gap-2 text-foreground hover:text-muted-foreground text-sm transition-colors">
               <Mail size={18} /> ian@allowayllc.com
             </a>
-            <a href="https://www.linkedin.com/in/ianit" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-primary hover:text-primary/70 font-mono text-sm">
+            <a href="https://www.linkedin.com/in/ianit" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-foreground hover:text-muted-foreground text-sm transition-colors">
               <Linkedin size={18} /> LinkedIn
             </a>
-            <a href="https://x.com/ianallowayxyz" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-primary hover:text-primary/70 font-mono text-sm">
+            <a href="https://x.com/ianallowayxyz" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-foreground hover:text-muted-foreground text-sm transition-colors">
               <Twitter size={18} /> @ianallowayxyz
             </a>
           </div>
 
-          <Button className="font-mono bg-primary text-primary-foreground hover:bg-primary/90" asChild>
-            <a href="mailto:ian@allowayllc.com">&gt; SEND_MESSAGE</a>
+          <Button className="bg-foreground text-background hover:opacity-90" asChild>
+            <a href="mailto:ian@allowayllc.com">Contact Me</a>
           </Button>
 
           {/* ETH Donation */}
-          <div className="mt-8 p-4 border border-primary/30 rounded-lg bg-background/50">
+          <div className="mt-8 p-4 border border-border rounded-lg bg-card">
             <div className="flex items-center justify-center gap-2 mb-2">
               <Heart size={16} className="text-red-400" />
-              <span className="text-primary font-mono text-sm">SUPPORT_MY_WORK</span>
+              <span className="text-foreground text-sm">Support My Work</span>
             </div>
-            <p className="text-muted-foreground text-xs font-mono mb-3">
-              &gt; If you find my projects helpful, consider donating ETH
+            <p className="text-muted-foreground text-xs mb-3">
+              If you find my projects helpful, consider donating ETH
             </p>
             <div className="flex items-center justify-center gap-2">
               <a
                 href={`https://etherscan.io/address/${ETH_DONATION_ADDRESS}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3 py-1.5 rounded bg-primary/10 text-primary text-xs font-mono hover:bg-primary/20 transition-colors"
+                className="px-3 py-1.5 rounded bg-accent text-muted-foreground text-xs hover:text-foreground transition-colors"
               >
                 {ETH_DONATION_ADDRESS.slice(0, 10)}...{ETH_DONATION_ADDRESS.slice(-8)}
               </a>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="sm"
                 onClick={copyEthAddress}
-                className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs"
+                className="border-border text-foreground hover:bg-accent text-xs"
               >
                 <Copy size={12} className="mr-1" /> Copy
               </Button>
@@ -907,16 +871,16 @@ const Index = () => {
       </div>
 
       {/* Footer */}
-      <footer className="py-6 px-4 border-t border-primary/30 relative z-10">
+      <footer className="py-6 px-4 border-t border-border relative z-10">
         <div className="max-w-4xl mx-auto text-center flex flex-col md:flex-row items-center justify-between gap-2">
-          <p className="text-primary/50 text-xs font-mono">
-            &gt; IAN.ALLOWAY.SYS // {new Date().getFullYear()} // Built with React + Tailwind
+          <p className="text-muted-foreground text-xs">
+            &copy; {new Date().getFullYear()} Ian Alloway. Built with React + Tailwind.
           </p>
-          <a 
+          <a
             href={`https://etherscan.io/address/${ETH_DONATION_ADDRESS}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary/50 hover:text-primary text-xs font-mono flex items-center gap-1"
+            className="text-muted-foreground hover:text-foreground text-xs flex items-center gap-1 transition-colors"
           >
             <Heart size={12} /> Donate ETH
           </a>
