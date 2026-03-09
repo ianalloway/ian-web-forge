@@ -83,17 +83,17 @@ function TestimonialCard({ t, active }: { t: Testimonial; active: boolean }) {
     <div
       className={`transition-all duration-500 rounded-2xl border p-6 flex flex-col gap-4 h-full
         ${active
-          ? 'border-primary/40 bg-primary/5 shadow-lg shadow-primary/10 scale-[1.02]'
+          ? 'border-muted-foreground/30 bg-card shadow-lg shadow-black/20 scale-[1.02]'
           : 'border-border bg-card/60 scale-100 opacity-70'}`}
     >
       {/* Tag */}
-      <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-primary/70 border border-primary/20 px-2 py-0.5 rounded-full w-fit">
+      <span className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground border border-border px-2 py-0.5 rounded-full w-fit">
         {t.tag}
       </span>
 
       {/* Quote */}
       <div className="relative">
-        <Quote className="absolute -top-1 -left-1 w-6 h-6 text-primary/20" />
+        <Quote className="absolute -top-1 -left-1 w-6 h-6 text-muted-foreground/20" />
         <p className="text-muted-foreground text-sm leading-relaxed pl-5 italic">
           "{t.text}"
         </p>
@@ -102,7 +102,7 @@ function TestimonialCard({ t, active }: { t: Testimonial; active: boolean }) {
       {/* Footer */}
       <div className="mt-auto flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-primary font-bold text-sm">
+          <div className="w-9 h-9 rounded-full bg-accent border border-border flex items-center justify-center text-foreground font-bold text-sm">
             {t.avatar}
           </div>
           <div>
@@ -150,7 +150,7 @@ const Testimonials = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <p className="text-primary font-mono text-sm uppercase tracking-widest mb-2">Social Proof</p>
+          <p className="text-muted-foreground text-sm uppercase tracking-widest mb-2">Social Proof</p>
           <h2 className="text-3xl font-bold mb-4">What People Are Saying</h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
             From quant analysts to DFS pros to Web3 builders — here's what collaborators and users have shared.
@@ -168,7 +168,7 @@ const Testimonials = () => {
         <div className="flex items-center justify-center gap-4">
           <button
             onClick={prev}
-            className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:border-primary/50 hover:text-primary transition-colors"
+            className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:border-muted-foreground hover:text-foreground transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
@@ -179,14 +179,14 @@ const Testimonials = () => {
                 key={i}
                 onClick={() => { setAutoplay(false); setActive(i); }}
                 className={`h-1.5 rounded-full transition-all duration-300
-                  ${i === active ? 'w-6 bg-primary' : 'w-1.5 bg-border hover:bg-primary/40'}`}
+                  ${i === active ? 'w-6 bg-foreground' : 'w-1.5 bg-border hover:bg-muted-foreground/40'}`}
               />
             ))}
           </div>
 
           <button
             onClick={next}
-            className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:border-primary/50 hover:text-primary transition-colors"
+            className="w-9 h-9 rounded-full border border-border flex items-center justify-center hover:border-muted-foreground hover:text-foreground transition-colors"
           >
             <ChevronRight className="w-4 h-4" />
           </button>

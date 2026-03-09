@@ -26,39 +26,33 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-20 bg-muted/30 relative">
+    <section id="about" className="py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <div className="text-primary font-mono text-sm mb-2">
-            <span className="animate-terminal-blink">_</span> ACCESSING_USER_DATA
-          </div>
-          <h2 className="text-4xl font-bold text-foreground mb-4 font-mono matrix-text">&gt; ABOUT.EXE</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-mono">
-            &gt; ML Engineer graduating B.S. Data Science from USF (May 2026)<br/>
-            &gt; Starting M.S. in Artificial Intelligence (Fall 2026)<br/>
-            &gt; Building production ML systems and shipping open source contributions
+          <h2 className="text-4xl font-bold text-foreground mb-4">About</h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            ML Engineer graduating B.S. Data Science from USF (May 2026). Starting M.S. in Artificial Intelligence (Fall 2026). Building production ML systems and shipping open source contributions.
           </p>
         </div>
-        
+
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {features.map((feature, index) => (
-            <Card key={index} className="bg-card/50 hover:bg-card/80 hover:shadow-glow transition-all duration-300 hover:-translate-y-1 terminal-border matrix-glow">
+            <Card key={index} className="bg-card hover:border-muted-foreground/30 transition-all duration-200 hover:-translate-y-1">
               <CardContent className="p-6 text-center">
-                <div className="w-12 h-12 mx-auto mb-4 bg-primary/20 rounded-lg flex items-center justify-center terminal-border">
-                  <feature.icon className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 mx-auto mb-4 bg-accent rounded-lg flex items-center justify-center">
+                  <feature.icon className="w-6 h-6 text-foreground" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2 text-foreground font-mono matrix-text">[{feature.title.toUpperCase()}]</h3>
-                <p className="text-muted-foreground text-sm font-mono">&gt; {feature.description}</p>
+                <h3 className="text-lg font-semibold mb-2 text-foreground">{feature.title}</h3>
+                <p className="text-muted-foreground text-sm">{feature.description}</p>
               </CardContent>
             </Card>
           ))}
         </div>
-        
+
         <div className="text-center">
-          <div className="terminal-border matrix-glow p-6 bg-background/50 backdrop-blur-sm font-mono">
-            <div className="text-primary mb-2">&gt; ADDITIONAL_INFO:</div>
+          <div className="border border-border p-6 rounded-lg bg-card">
             <p className="text-muted-foreground max-w-4xl mx-auto text-lg leading-relaxed">
-                Active open source contributor to OpenClaw (194k+ stars). Published 4 AI agent skills on ClawHub.
+                Active open source contributor to OpenClaw (194k+ stars). Published 9 AI agent skills on ClawHub.
                 Founder of Alloway LLC delivering data-driven solutions across sports analytics, fintech, and cybersecurity.
                 Proven track record of reducing fraud incidents by 30% and improving client operational efficiency by 40%.
             </p>

@@ -58,7 +58,7 @@ const Contact = () => {
         
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <Card className="bg-gradient-card">
+          <Card className="bg-card">
             <CardHeader>
               <CardTitle className="text-2xl text-foreground">Send a Message</CardTitle>
               <CardDescription>
@@ -102,7 +102,7 @@ const Contact = () => {
                 </div>
                 <Button 
                   type="submit" 
-                  className="w-full bg-gradient-primary hover:shadow-glow transition-all duration-300"
+                  className="w-full bg-foreground text-background hover:opacity-90 transition-all duration-200"
                 >
                   <Send size={16} className="mr-2" />
                   Send Message
@@ -123,11 +123,11 @@ const Contact = () => {
             
             <div className="space-y-6">
               {contactInfo.map((info, index) => (
-                <Card key={index} className="bg-gradient-card hover:shadow-card transition-all duration-300">
+                <Card key={index} className="bg-card hover:border-muted-foreground/30 transition-all duration-200">
                   <CardContent className="p-6">
                     <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center">
-                        <info.icon className="w-6 h-6 text-primary-foreground" />
+                      <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center">
+                        <info.icon className="w-6 h-6 text-foreground" />
                       </div>
                       <div>
                         <h4 className="font-semibold text-foreground">{info.title}</h4>

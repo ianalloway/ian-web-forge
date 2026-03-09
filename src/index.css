@@ -2,102 +2,100 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Matrix-style design system */
+/* Clean dark theme design system */
 @layer base {
   :root {
-    --background: 0 0% 0%;
-    --foreground: 120 100% 75%;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 93%;
 
-    --card: 0 0% 5%;
-    --card-foreground: 120 100% 75%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 93%;
 
-    --popover: 0 0% 5%;
-    --popover-foreground: 120 100% 75%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 93%;
 
-    --primary: 120 100% 50%;
-    --primary-foreground: 0 0% 0%;
-    --primary-glow: 120 100% 60%;
+    --primary: 0 0% 93%;
+    --primary-foreground: 0 0% 4%;
 
     --secondary: 0 0% 10%;
-    --secondary-foreground: 120 80% 60%;
+    --secondary-foreground: 0 0% 63%;
 
-    --muted: 0 0% 8%;
-    --muted-foreground: 120 50% 40%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 240 4% 46%;
 
-    --accent: 120 100% 40%;
-    --accent-foreground: 0 0% 0%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 93%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 120 30% 20%;
-    --input: 120 30% 15%;
-    --ring: 120 100% 50%;
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 0 0% 93%;
 
-    --radius: 0.5rem;
+    --radius: 0.375rem;
 
-    /* Tech-focused gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    /* Clean gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
     --gradient-card: linear-gradient(145deg, hsl(var(--background)), hsl(var(--muted)));
-    
-    /* Elegant shadows */
-    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.3);
-    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.4);
-    --shadow-card: 0 4px 20px -4px hsl(var(--foreground) / 0.1);
-    
+
+    /* Subtle shadows */
+    --shadow-elegant: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 4px 20px -4px rgba(0, 0, 0, 0.4);
+    --shadow-card: 0 4px 20px -4px rgba(0, 0, 0, 0.3);
+
     /* Smooth transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-    --sidebar-background: 0 0% 2%;
-    --sidebar-foreground: 120 80% 60%;
-    --sidebar-primary: 120 100% 50%;
-    --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 0 0% 8%;
-    --sidebar-accent-foreground: 120 80% 60%;
-    --sidebar-border: 120 30% 15%;
-    --sidebar-ring: 120 100% 50%;
+    --sidebar-background: 0 0% 3%;
+    --sidebar-foreground: 0 0% 63%;
+    --sidebar-primary: 0 0% 93%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 63%;
+    --sidebar-border: 240 4% 16%;
+    --sidebar-ring: 0 0% 93%;
   }
 
-  /* Light professional theme */
+  /* Light theme */
   .light {
     --background: 0 0% 98%;
-    --foreground: 222 47% 11%;
+    --foreground: 240 10% 4%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 240 10% 4%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 240 10% 4%;
 
-    --primary: 221 83% 53%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 221 83% 60%;
+    --primary: 240 6% 10%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 6% 10%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;
 
-    --accent: 210 40% 96%;
-    --accent-foreground: 222 47% 11%;
+    --accent: 240 5% 96%;
+    --accent-foreground: 240 6% 10%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 221 83% 53%;
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 240 6% 10%;
+
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 222 47% 11%;
-    --sidebar-primary: 221 83% 53%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 40% 96%;
-    --sidebar-accent-foreground: 222 47% 11%;
-    --sidebar-border: 214 32% 91%;
-    --sidebar-ring: 221 83% 53%;
+    --sidebar-foreground: 240 6% 10%;
+    --sidebar-primary: 240 6% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 5% 96%;
+    --sidebar-accent-foreground: 240 6% 10%;
+    --sidebar-border: 240 6% 90%;
+    --sidebar-ring: 240 6% 10%;
   }
 }
 
@@ -108,25 +106,25 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Fira Code', 'Courier Prime', 'Courier New', monospace;
-    font-variant-ligatures: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    line-height: 1.6;
   }
-  
-  /* Matrix-style effects */
-  .matrix-text {
-    text-shadow: 0 0 5px hsl(var(--primary));
-    font-family: 'Fira Code', 'Courier Prime', 'Courier New', monospace;
-  }
-  
+
+  /* Clean border style (replaces matrix terminal-border) */
   .terminal-border {
-    border: 1px solid hsl(var(--primary) / 0.3);
-    box-shadow: 0 0 10px hsl(var(--primary) / 0.2);
+    border: 1px solid hsl(var(--border));
   }
-  
+
+  /* Clean text (replaces matrix-text glow) */
+  .matrix-text {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  /* Subtle glow (replaces matrix-glow) */
   .matrix-glow {
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.3),
-                inset 0 0 20px hsl(var(--primary) / 0.1);
+    box-shadow: none;
   }
 
   @keyframes terminal-blink {
@@ -139,8 +137,8 @@
   }
 
   @keyframes glow-pulse {
-    0%, 100% { text-shadow: 0 0 5px hsl(var(--primary)); }
-    50% { text-shadow: 0 0 20px hsl(var(--primary)), 0 0 30px hsl(var(--primary)); }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
   }
 
   .animate-glow-pulse {
