@@ -282,6 +282,7 @@ const Index = () => {
             <a href="#opensource" className="text-primary hover:text-primary/70 transition-all">[OSS]</a>
             <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
             <a href="/now" className="text-primary hover:text-primary/70 transition-all">[/NOW]</a>
+            <a href="/hireme" className="text-primary hover:text-primary/70 transition-all">[/HIRE]</a>
             <button
               onClick={toggleTheme}
               className="ml-2 p-2 rounded-md border border-primary/30 hover:bg-primary/10 transition-all"
