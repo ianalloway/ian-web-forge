@@ -125,6 +125,13 @@ export default function Now() {
   });
 
   useEffect(() => {
+    document.documentElement.classList.remove('light');
+    if (theme === 'light') {
+      document.documentElement.classList.add('light');
+    }
+  }, [theme]);
+
+  useEffect(() => {
     document.title = '/now — Ian Alloway';
     return () => { document.title = 'Ian Alloway'; };
   }, []);

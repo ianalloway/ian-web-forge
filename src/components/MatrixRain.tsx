@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 
+const FALLBACK_PRIMARY_COLOR = '#00ff00';
+
 const MatrixRain = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -32,12 +34,20 @@ const MatrixRain = () => {
       drops[i] = 1;
     }
 
+    // Resolve the primary color from CSS custom properties at runtime
+    const getPrimaryColor = () => {
+      const raw = getComputedStyle(document.documentElement)
+        .getPropertyValue('--primary')
+        .trim();
+      return raw ? `hsl(${raw})` : FALLBACK_PRIMARY_COLOR;
+    };
+
     const draw = () => {
       // Create trailing effect
       ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = '#00ff00';
+      ctx.fillStyle = getPrimaryColor();
       ctx.font = `${fontSize}px 'Fira Code', 'Courier New', monospace`;
 
       for (let i = 0; i < drops.length; i++) {
