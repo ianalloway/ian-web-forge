@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot, Newspaper, Heart, Copy, Sun, Moon, Briefcase, DollarSign, CheckCircle2 } from 'lucide-react';
+import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot, Newspaper, Heart, Copy, Sun, Moon, Briefcase, DollarSign, CheckCircle2, Menu, X } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 import Testimonials from '@/components/Testimonials';
 import { useToast } from '@/components/ui/use-toast';
@@ -215,6 +215,7 @@ const Index = () => {
     }
     return 'matrix';
   });
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const fullText = 'IAN ALLOWAY';
   const { toast } = useToast();
 
@@ -273,7 +274,8 @@ const Index = () => {
             <Terminal className="inline mr-2" size={18} />
             IAN.SYS
           </div>
-          <div className="flex gap-4 text-sm font-mono items-center">
+          {/* Desktop nav */}
+          <div className="hidden md:flex gap-4 text-sm font-mono items-center">
             <a href="#about" className="text-primary hover:text-primary/70 transition-all">[ABOUT]</a>
             <a href="#skills" className="text-primary hover:text-primary/70 transition-all">[SKILLS]</a>
             <a href="#projects" className="text-primary hover:text-primary/70 transition-all">[PROJECTS]</a>
@@ -291,7 +293,49 @@ const Index = () => {
               {theme === 'matrix' ? <Sun size={16} className="text-primary" /> : <Moon size={16} className="text-primary" />}
             </button>
           </div>
+          {/* Mobile nav toggle */}
+          <div className="flex md:hidden items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-md border border-primary/30 hover:bg-primary/10 transition-all"
+              aria-label="Toggle theme"
+            >
+              {theme === 'matrix' ? <Sun size={16} className="text-primary" /> : <Moon size={16} className="text-primary" />}
+            </button>
+            <button
+              onClick={() => setMobileNavOpen(prev => !prev)}
+              className="p-2 rounded-md border border-primary/30 hover:bg-primary/10 transition-all"
+              aria-label="Toggle navigation"
+            >
+              {mobileNavOpen ? <X size={18} className="text-primary" /> : <Menu size={18} className="text-primary" />}
+            </button>
+          </div>
         </div>
+        {/* Mobile menu */}
+        {mobileNavOpen && (
+          <div className="md:hidden bg-background/95 border-t border-primary/20 px-4 py-3 flex flex-col gap-3 font-mono text-sm">
+            {[
+              { href: '#about', label: '[ABOUT]' },
+              { href: '#skills', label: '[SKILLS]' },
+              { href: '#projects', label: '[PROJECTS]' },
+              { href: '#bot', label: '[BOT]' },
+              { href: '#blog', label: '[BLOG]' },
+              { href: '#opensource', label: '[OSS]' },
+              { href: '#contact', label: '[CONTACT]' },
+              { href: '/now', label: '[/NOW]' },
+              { href: '/hireme', label: '[/HIRE]' },
+            ].map(({ href, label }) => (
+              <a
+                key={href}
+                href={href}
+                className="text-primary hover:text-primary/70 transition-all py-1"
+                onClick={() => setMobileNavOpen(false)}
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
