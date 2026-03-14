@@ -585,13 +585,21 @@ const Index = () => {
       {/* Academic Writing Section */}
       <section id="academic" className="py-16 px-4 bg-primary/5 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
+          <h2 className="text-2xl font-bold mb-2 matrix-text font-mono text-primary">
             <GraduationCap className="inline mr-2" size={24} />
             [ACADEMIC_WRITING]
           </h2>
 
+          <p className="text-lg font-semibold text-foreground/90 mb-1 font-mono">
+            BSIS in Information Science &mdash; Data Science &amp; Analytics Concentration
+          </p>
+          <p className="text-sm text-muted-foreground font-mono mb-1">
+            University of South Florida &nbsp;&bull;&nbsp; Senior Capstone &nbsp;&bull;&nbsp; Spring 2026
+          </p>
+          <div className="w-16 h-px bg-primary/50 mb-5" />
+
           <p className="text-muted-foreground font-mono mb-6 text-sm">
-            &gt; A collection of academic papers and research from my graduate studies.
+            &gt; A collection of academic papers, essays, and research from my undergraduate studies.
           </p>
 
           <div className="grid md:grid-cols-2 gap-4">
