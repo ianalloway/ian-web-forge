@@ -181,6 +181,12 @@ async function fetchSubstackPosts(): Promise<BlogPost[]> {
 
 const academicPapers: { title: string; description: string; file?: string; videoUrl?: string; category: string }[] = [
   {
+    title: 'Portfolio Conclusion — LIS 4934 Senior Capstone',
+    description: 'Reflective conclusion covering platform choices, design decisions, and career value of the portfolio. Includes a full account of all LIS 4934 assignments. University of South Florida, Spring 2026.',
+    file: '/papers/portfolio-conclusion-lis4934.pdf',
+    category: 'Capstone',
+  },
+  {
     title: 'The Ratepayer Protection Pledge & AI Data Center Energy Costs',
     description: 'Critical analysis of the Trump administration\'s voluntary pledge and state-level legislative responses to AI data center electricity demand. LIS 4934 — University of South Florida, March 2026.',
     file: '/papers/it-news-essay-ratepayer-protection.pdf',
