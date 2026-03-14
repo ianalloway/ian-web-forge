@@ -187,6 +187,12 @@ const academicPapers = [
     category: 'IT News Analysis',
   },
   {
+    title: 'BSIS Program Review',
+    description: 'Reflective review of the BSIS program at USF — covering Data Science & Analytics, Intelligence Studies, and key capstone assignments. Senior Capstone, April 2026.',
+    file: '/papers/bsis-program-review-alloway.pdf',
+    category: 'Capstone',
+  },
+  {
     title: 'Event Report Capstone',
     description: 'Comprehensive event analysis and reporting for capstone project',
     file: '/papers/event-report-capstone.pdf',
