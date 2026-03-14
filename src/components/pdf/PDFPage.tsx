@@ -5,10 +5,19 @@ interface PDFPageProps {
   page: PDFPageProxy;
   scale: number;
   rotation: number;
+  invertColors?: boolean;
+  searchText?: string;
   onLoad?: () => void;
 }
 
-export function PDFPage({ page, scale, rotation, onLoad }: PDFPageProps) {
+export function PDFPage({
+  page,
+  scale,
+  rotation,
+  invertColors,
+  searchText,
+  onLoad,
+}: PDFPageProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const textLayerRef = useRef<HTMLDivElement>(null);
   const renderTaskRef = useRef<{ cancel: () => void } | null>(null);
@@ -17,7 +26,6 @@ export function PDFPage({ page, scale, rotation, onLoad }: PDFPageProps) {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Cancel any ongoing render
     if (renderTaskRef.current) {
       renderTaskRef.current.cancel();
       renderTaskRef.current = null;
@@ -27,58 +35,64 @@ export function PDFPage({ page, scale, rotation, onLoad }: PDFPageProps) {
     const context = canvas.getContext("2d");
     if (!context) return;
 
-    const devicePixelRatio = window.devicePixelRatio || 1;
-    canvas.width = Math.floor(viewport.width * devicePixelRatio);
-    canvas.height = Math.floor(viewport.height * devicePixelRatio);
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.floor(viewport.width * dpr);
+    canvas.height = Math.floor(viewport.height * dpr);
     canvas.style.width = `${Math.floor(viewport.width)}px`;
     canvas.style.height = `${Math.floor(viewport.height)}px`;
-
-    context.scale(devicePixelRatio, devicePixelRatio);
-
-    const renderContext = {
-      canvasContext: context,
-      viewport,
-    };
+    context.scale(dpr, dpr);
 
     try {
-      const renderTask = page.render(renderContext);
+      const renderTask = page.render({ canvasContext: context, viewport });
       renderTaskRef.current = renderTask;
       await renderTask.promise;
       renderTaskRef.current = null;
 
-      // Render text layer
-      if (textLayerRef.current) {
-        const textLayer = textLayerRef.current;
+      // Text layer
+      const textLayer = textLayerRef.current;
+      if (textLayer) {
         textLayer.innerHTML = "";
         textLayer.style.width = `${Math.floor(viewport.width)}px`;
         textLayer.style.height = `${Math.floor(viewport.height)}px`;
 
         const textContent = await page.getTextContent();
 
-        // Simple text layer rendering
         for (const item of textContent.items) {
           if (!("str" in item) || !item.str.trim()) continue;
 
-          const tx = item.transform;
-          const span = document.createElement("span");
-          span.textContent = item.str;
-
-          const [a, b, c, d, e, f] = tx;
+          const [a, b, , d, e, f] = item.transform;
           const angle = Math.atan2(b, a);
-          const fontSize = Math.sqrt(a * a + b * b);
+          const fontSize = Math.sqrt(a * a + b * b) * scale;
+          const x = e * scale;
+          const y = viewport.height - f * scale - fontSize;
+          const width = item.width * scale;
+          const charWidth = item.str.length * fontSize * 0.6 || 1;
+
+          const span = document.createElement("span");
+
+          // Highlight search matches
+          if (searchText && item.str.toLowerCase().includes(searchText.toLowerCase())) {
+            span.innerHTML = item.str.replace(
+              new RegExp(`(${searchText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi"),
+              '<mark style="background:rgba(255,200,0,0.6);color:inherit">$1</mark>'
+            );
+          } else {
+            span.textContent = item.str;
+          }
 
           span.style.cssText = `
-            position: absolute;
-            left: ${e}px;
-            top: ${viewport.height - f - fontSize}px;
-            font-size: ${fontSize}px;
-            font-family: sans-serif;
-            transform-origin: 0% 100%;
-            transform: rotate(${angle}rad) scaleX(${item.width / (item.str.length * fontSize * 0.6 || 1)});
-            white-space: pre;
-            color: transparent;
-            cursor: text;
-            user-select: text;
+            position:absolute;
+            left:${x}px;
+            top:${y}px;
+            font-size:${fontSize}px;
+            font-family:sans-serif;
+            transform-origin:0% 100%;
+            transform:rotate(${angle}rad) scaleX(${width / charWidth});
+            white-space:pre;
+            color:transparent;
+            cursor:text;
+            user-select:text;
+            pointer-events:auto;
           `;
           textLayer.appendChild(span);
         }
@@ -90,14 +104,12 @@ export function PDFPage({ page, scale, rotation, onLoad }: PDFPageProps) {
         console.error("Page render error:", err);
       }
     }
-  }, [page, scale, rotation, onLoad]);
+  }, [page, scale, rotation, searchText, onLoad]);
 
   useEffect(() => {
     render();
     return () => {
-      if (renderTaskRef.current) {
-        renderTaskRef.current.cancel();
-      }
+      renderTaskRef.current?.cancel();
     };
   }, [render]);
 
@@ -105,17 +117,18 @@ export function PDFPage({ page, scale, rotation, onLoad }: PDFPageProps) {
 
   return (
     <div
-      className="relative shadow-lg bg-white"
+      className="relative shadow-md bg-white select-text"
       style={{
         width: Math.floor(viewport.width),
         height: Math.floor(viewport.height),
+        filter: invertColors ? "invert(1) hue-rotate(180deg)" : undefined,
       }}
     >
       <canvas ref={canvasRef} className="block" />
       <div
         ref={textLayerRef}
         className="absolute inset-0 overflow-hidden"
-        style={{ position: "absolute", top: 0, left: 0 }}
+        style={{ pointerEvents: "none" }}
       />
     </div>
   );

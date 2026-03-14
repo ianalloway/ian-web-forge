@@ -7,6 +7,12 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url
 ).toString();
 
+export interface OutlineItem {
+  title: string;
+  pageNumber: number | null;
+  items: OutlineItem[];
+}
+
 export interface PDFState {
   document: PDFDocumentProxy | null;
   numPages: number;
@@ -14,11 +20,15 @@ export interface PDFState {
   scale: number;
   rotation: number;
   isLoading: boolean;
+  loadProgress: number;
   error: string | null;
   fileName: string | null;
   searchText: string;
   searchResults: number[];
   currentSearchIndex: number;
+  outline: OutlineItem[];
+  scrollMode: "single" | "continuous";
+  invertColors: boolean;
 }
 
 const initialState: PDFState = {
@@ -28,12 +38,55 @@ const initialState: PDFState = {
   scale: 1.2,
   rotation: 0,
   isLoading: false,
+  loadProgress: 0,
   error: null,
   fileName: null,
   searchText: "",
   searchResults: [],
   currentSearchIndex: 0,
+  outline: [],
+  scrollMode: "continuous",
+  invertColors: false,
 };
+
+async function buildOutline(
+  pdf: PDFDocumentProxy
+): Promise<OutlineItem[]> {
+  try {
+    const raw = await pdf.getOutline();
+    if (!raw) return [];
+
+    const resolveItem = async (item: {
+      title: string;
+      dest: string | unknown[] | null;
+      items?: typeof raw;
+    }): Promise<OutlineItem> => {
+      let pageNumber: number | null = null;
+      try {
+        if (item.dest) {
+          let dest = item.dest;
+          if (typeof dest === "string") {
+            dest = await pdf.getDestination(dest);
+          }
+          if (Array.isArray(dest) && dest.length > 0) {
+            const ref = dest[0];
+            pageNumber = (await pdf.getPageIndex(ref as object)) + 1;
+          }
+        }
+      } catch {
+        // ignore
+      }
+      const children = await Promise.all(
+        (item.items ?? []).map(resolveItem)
+      );
+      return { title: item.title, pageNumber, items: children };
+    };
+
+    return Promise.all(raw.map(resolveItem));
+  } catch {
+    return [];
+  }
+}
 
 export function usePDF() {
   const [state, setState] = useState<PDFState>(initialState);
@@ -45,21 +98,27 @@ export function usePDF() {
 
   const loadFromFile = useCallback(
     async (file: File) => {
-      updateState({ isLoading: true, error: null, fileName: file.name });
+      updateState({ isLoading: true, error: null, fileName: file.name, loadProgress: 0 });
       try {
         const arrayBuffer = await file.arrayBuffer();
         const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+        loadingTask.onProgress = ({ loaded, total }) => {
+          if (total > 0) updateState({ loadProgress: Math.round((loaded / total) * 100) });
+        };
         const pdf = await loadingTask.promise;
         documentRef.current = pdf;
+        const outline = await buildOutline(pdf);
         updateState({
           document: pdf,
           numPages: pdf.numPages,
           currentPage: 1,
           isLoading: false,
+          loadProgress: 100,
           error: null,
           searchText: "",
           searchResults: [],
           currentSearchIndex: 0,
+          outline,
         });
       } catch (err) {
         updateState({
@@ -76,24 +135,28 @@ export function usePDF() {
       updateState({
         isLoading: true,
         error: null,
-        fileName: url.split("/").pop() || "document.pdf",
+        fileName: url.split("/").pop()?.split("?")[0] || "document.pdf",
+        loadProgress: 0,
       });
       try {
-        const loadingTask = pdfjsLib.getDocument({
-          url,
-          withCredentials: false,
-        });
+        const loadingTask = pdfjsLib.getDocument({ url, withCredentials: false });
+        loadingTask.onProgress = ({ loaded, total }) => {
+          if (total > 0) updateState({ loadProgress: Math.round((loaded / total) * 100) });
+        };
         const pdf = await loadingTask.promise;
         documentRef.current = pdf;
+        const outline = await buildOutline(pdf);
         updateState({
           document: pdf,
           numPages: pdf.numPages,
           currentPage: 1,
           isLoading: false,
+          loadProgress: 100,
           error: null,
           searchText: "",
           searchResults: [],
           currentSearchIndex: 0,
+          outline,
         });
       } catch (err) {
         updateState({
@@ -105,15 +168,12 @@ export function usePDF() {
     [updateState]
   );
 
-  const goToPage = useCallback(
-    (page: number) => {
-      setState((prev) => {
-        const clamped = Math.max(1, Math.min(page, prev.numPages));
-        return { ...prev, currentPage: clamped };
-      });
-    },
-    []
-  );
+  const goToPage = useCallback((page: number) => {
+    setState((prev) => ({
+      ...prev,
+      currentPage: Math.max(1, Math.min(page, prev.numPages)),
+    }));
+  }, []);
 
   const nextPage = useCallback(() => {
     setState((prev) => ({
@@ -134,37 +194,33 @@ export function usePDF() {
   }, [updateState]);
 
   const zoomIn = useCallback(() => {
-    setState((prev) => ({
-      ...prev,
-      scale: Math.min(prev.scale + 0.25, 4),
-    }));
+    setState((prev) => ({ ...prev, scale: Math.min(prev.scale + 0.25, 4) }));
   }, []);
 
   const zoomOut = useCallback(() => {
-    setState((prev) => ({
-      ...prev,
-      scale: Math.max(prev.scale - 0.25, 0.25),
-    }));
+    setState((prev) => ({ ...prev, scale: Math.max(prev.scale - 0.25, 0.25) }));
   }, []);
 
   const rotate = useCallback(() => {
-    setState((prev) => ({
-      ...prev,
-      rotation: (prev.rotation + 90) % 360,
-    }));
+    setState((prev) => ({ ...prev, rotation: (prev.rotation + 90) % 360 }));
   }, []);
 
-  const getPage = useCallback(
-    async (pageNum: number): Promise<PDFPageProxy | null> => {
-      if (!documentRef.current) return null;
-      try {
-        return await documentRef.current.getPage(pageNum);
-      } catch {
-        return null;
-      }
-    },
-    []
-  );
+  const setScrollMode = useCallback((mode: "single" | "continuous") => {
+    updateState({ scrollMode: mode });
+  }, [updateState]);
+
+  const toggleInvertColors = useCallback(() => {
+    setState((prev) => ({ ...prev, invertColors: !prev.invertColors }));
+  }, []);
+
+  const getPage = useCallback(async (pageNum: number): Promise<PDFPageProxy | null> => {
+    if (!documentRef.current) return null;
+    try {
+      return await documentRef.current.getPage(pageNum);
+    } catch {
+      return null;
+    }
+  }, []);
 
   const searchInDocument = useCallback(
     async (text: string) => {
@@ -182,42 +238,33 @@ export function usePDF() {
           .map((item) => ("str" in item ? item.str : ""))
           .join(" ")
           .toLowerCase();
-        if (pageText.includes(lowerText)) {
-          results.push(i);
-        }
+        if (pageText.includes(lowerText)) results.push(i);
       }
-      updateState({
+      setState((prev) => ({
+        ...prev,
         searchResults: results,
         currentSearchIndex: 0,
-        currentPage: results.length > 0 ? results[0] : state.currentPage,
-      });
+        currentPage: results.length > 0 ? results[0] : prev.currentPage,
+      }));
     },
-    [updateState, state.currentPage]
+    [updateState]
   );
 
   const nextSearchResult = useCallback(() => {
     setState((prev) => {
       if (prev.searchResults.length === 0) return prev;
-      const nextIndex = (prev.currentSearchIndex + 1) % prev.searchResults.length;
-      return {
-        ...prev,
-        currentSearchIndex: nextIndex,
-        currentPage: prev.searchResults[nextIndex],
-      };
+      const idx = (prev.currentSearchIndex + 1) % prev.searchResults.length;
+      return { ...prev, currentSearchIndex: idx, currentPage: prev.searchResults[idx] };
     });
   }, []);
 
   const prevSearchResult = useCallback(() => {
     setState((prev) => {
       if (prev.searchResults.length === 0) return prev;
-      const prevIndex =
+      const idx =
         (prev.currentSearchIndex - 1 + prev.searchResults.length) %
         prev.searchResults.length;
-      return {
-        ...prev,
-        currentSearchIndex: prevIndex,
-        currentPage: prev.searchResults[prevIndex],
-      };
+      return { ...prev, currentSearchIndex: idx, currentPage: prev.searchResults[idx] };
     });
   }, []);
 
@@ -240,6 +287,8 @@ export function usePDF() {
     zoomIn,
     zoomOut,
     rotate,
+    setScrollMode,
+    toggleInvertColors,
     getPage,
     searchInDocument,
     nextSearchResult,
