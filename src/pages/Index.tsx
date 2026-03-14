@@ -181,6 +181,12 @@ async function fetchSubstackPosts(): Promise<BlogPost[]> {
 
 const academicPapers = [
   {
+    title: 'The Ratepayer Protection Pledge & AI Data Center Energy Costs',
+    description: 'Critical analysis of the Trump administration\'s voluntary pledge and state-level legislative responses to AI data center electricity demand. LIS 4934 — University of South Florida, March 2026.',
+    file: '/papers/it-news-essay-ratepayer-protection.pdf',
+    category: 'IT News Analysis',
+  },
+  {
     title: 'Event Report Capstone',
     description: 'Comprehensive event analysis and reporting for capstone project',
     file: '/papers/event-report-capstone.pdf',
