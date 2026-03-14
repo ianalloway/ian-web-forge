@@ -283,6 +283,7 @@ const Index = () => {
             <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
             <a href="/now" className="text-primary hover:text-primary/70 transition-all">[/NOW]</a>
             <a href="/hireme" className="text-primary hover:text-primary/70 transition-all">[/HIRE]</a>
+            <a href="/pdf-reader" className="text-primary hover:text-primary/70 transition-all">[/PDF]</a>
             <button
               onClick={toggleTheme}
               className="ml-2 p-2 rounded-md border border-primary/30 hover:bg-primary/10 transition-all"
@@ -583,8 +584,8 @@ const Index = () => {
                   <p className="text-muted-foreground/70 text-xs mb-3 font-mono">{paper.description}</p>
                   <div className="flex gap-2">
                     <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
-                      <a href={paper.file} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="mr-1" size={12} /> View
+                      <a href={`/pdf-reader?url=${encodeURIComponent(paper.file)}`}>
+                        <FileText className="mr-1" size={12} /> Open in Reader
                       </a>
                     </Button>
                     <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
