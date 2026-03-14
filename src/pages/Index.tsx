@@ -303,6 +303,7 @@ const Index = () => {
             <a href="#projects" className="text-primary hover:text-primary/70 transition-all">[PROJECTS]</a>
             <a href="#bot" className="text-primary hover:text-primary/70 transition-all">[BOT]</a>
             <a href="#blog" className="text-primary hover:text-primary/70 transition-all">[BLOG]</a>
+            <a href="#academic" className="text-primary hover:text-primary/70 transition-all">[ACADEMIC]</a>
             <a href="#opensource" className="text-primary hover:text-primary/70 transition-all">[OSS]</a>
             <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
             <a href="/now" className="text-primary hover:text-primary/70 transition-all">[/NOW]</a>
