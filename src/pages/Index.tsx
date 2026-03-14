@@ -179,7 +179,7 @@ async function fetchSubstackPosts(): Promise<BlogPost[]> {
   }
 }
 
-const academicPapers = [
+const academicPapers: { title: string; description: string; file?: string; videoUrl?: string; category: string }[] = [
   {
     title: 'The Ratepayer Protection Pledge & AI Data Center Energy Costs',
     description: 'Critical analysis of the Trump administration\'s voluntary pledge and state-level legislative responses to AI data center electricity demand. LIS 4934 — University of South Florida, March 2026.',
@@ -203,6 +203,12 @@ const academicPapers = [
     description: 'Enhanced biography and career objectives statement',
     file: '/papers/bio-and-career-goals.pdf',
     category: 'Personal Statement',
+  },
+  {
+    title: 'GEA #2: Reflective Essay',
+    description: 'Video reflective essay on global economic analysis — recorded presentation covering key themes, personal takeaways, and real-world applications. LIS 4934, Spring 2026.',
+    videoUrl: 'https://www.youtube.com/watch?v=kzOzxch1-hE&t=236s',
+    category: 'GEA',
   },
   {
     title: 'GEA Capstone',
@@ -592,18 +598,45 @@ const Index = () => {
                       {paper.category}
                     </span>
                   </div>
+                  {paper.videoUrl && (
+                    <div className="mb-3 rounded overflow-hidden border border-primary/30">
+                      <a href={paper.videoUrl} target="_blank" rel="noopener noreferrer" className="block relative group">
+                        <img
+                          src={`https://img.youtube.com/vi/kzOzxch1-hE/hqdefault.jpg`}
+                          alt="Video thumbnail"
+                          className="w-full object-cover h-32"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/60 transition-colors">
+                          <div className="w-10 h-10 rounded-full bg-primary/90 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-black ml-0.5"><path d="M8 5v14l11-7z"/></svg>
+                          </div>
+                        </div>
+                        <span className="absolute bottom-1 right-1 bg-black/80 text-primary font-mono text-xs px-1 rounded">3:56</span>
+                      </a>
+                    </div>
+                  )}
                   <p className="text-muted-foreground/70 text-xs mb-3 font-mono">{paper.description}</p>
                   <div className="flex gap-2">
-                    <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
-                      <a href={paper.file} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="mr-1" size={12} /> View
-                      </a>
-                    </Button>
-                    <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
-                      <a href={paper.file} download>
-                        <Download className="mr-1" size={12} /> Download
-                      </a>
-                    </Button>
+                    {paper.videoUrl ? (
+                      <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
+                        <a href={paper.videoUrl} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="mr-1" size={12} /> Watch
+                        </a>
+                      </Button>
+                    ) : (
+                      <>
+                        <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
+                          <a href={paper.file} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="mr-1" size={12} /> View
+                          </a>
+                        </Button>
+                        <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
+                          <a href={paper.file} download>
+                            <Download className="mr-1" size={12} /> Download
+                          </a>
+                        </Button>
+                      </>
+                    )}
                   </div>
                 </CardContent>
               </Card>
