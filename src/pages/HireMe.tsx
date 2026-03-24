@@ -109,7 +109,8 @@ const HireMe = () => {
           <a href="/" className="text-xl font-bold tracking-tighter hover:text-green-300 transition-colors">
             IAN.ALLOWAY
           </a>
-          <nav className="flex gap-6 text-sm">
+          <nav className="flex flex-wrap gap-4 md:gap-6 text-sm">
+            <a href="/toolkit" className="hover:text-green-300 transition-colors">TOOLKIT</a>
             <a href="#skills" className="hover:text-green-300 transition-colors">SKILLS</a>
             <a href="#projects" className="hover:text-green-300 transition-colors">PROJECTS</a>
             <a href="#stats" className="hover:text-green-300 transition-colors">RESULTS</a>

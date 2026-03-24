@@ -8,6 +8,7 @@ import SEO from "./components/SEO";
 import Index from "./pages/Index";
 import Now from "./pages/Now";
 import HireMe from "./pages/HireMe";
+import Toolkit from "./pages/Toolkit";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -46,6 +47,19 @@ const App = () => (
                   <HireMe />
                 </>
               } 
+            />
+            <Route
+              path="/toolkit"
+              element={
+                <>
+                  <SEO
+                    title="Toolkit — Sports analytics & OSS"
+                    path="/toolkit"
+                    description="Public index of Ian Alloway’s sports ML stack, odds utilities, MLOps tools, and GitHub repos — nba-clv-dashboard, nba-ratings, line-shop-cli, closing-line-archive, odds-drift-watch, and more."
+                  />
+                  <Toolkit />
+                </>
+              }
             />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

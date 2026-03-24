@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot, Newspaper, Heart, Copy, Sun, Moon, Briefcase, DollarSign, CheckCircle2 } from 'lucide-react';
+import { Github, ExternalLink, Mail, Linkedin, Twitter, Terminal, Brain, Code, BookOpen, FileText, Download, GraduationCap, Bot, Newspaper, Heart, Copy, Sun, Moon, Briefcase, DollarSign, CheckCircle2, Package } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 import Testimonials from '@/components/Testimonials';
 import { useToast } from '@/components/ui/use-toast';
@@ -380,6 +380,7 @@ const Index = () => {
             <a href="#blog" className="text-primary hover:text-primary/70 transition-all">[BLOG]</a>
             <a href="#academic" className="text-primary hover:text-primary/70 transition-all">[ACADEMIC]</a>
             <a href="#opensource" className="text-primary hover:text-primary/70 transition-all">[OSS]</a>
+            <a href="/toolkit" className="text-primary hover:text-primary/70 transition-all">[TOOLKIT]</a>
             <a href="#contact" className="text-primary hover:text-primary/70 transition-all">[CONTACT]</a>
             <a href="/now" className="text-primary hover:text-primary/70 transition-all">[/NOW]</a>
             <a href="/hireme" className="text-primary hover:text-primary/70 transition-all">[/HIRE]</a>
@@ -426,6 +427,11 @@ const Index = () => {
             <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
               <a href="/papers/sports-ml-evaluation-case-study.html" target="_blank" rel="noopener noreferrer">
                 <FileText className="mr-2" size={18} /> Case study
+              </a>
+            </Button>
+            <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+              <a href="/toolkit">
+                <Package className="mr-2" size={18} /> Public toolkit
               </a>
             </Button>
             <Button className="font-mono bg-primary text-primary-foreground hover:bg-primary/90" asChild>
