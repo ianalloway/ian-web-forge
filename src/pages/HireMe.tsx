@@ -65,6 +65,13 @@ const HireMe = () => {
       tech: ['Bash', 'macOS', 'GitHub Actions'],
       url: 'https://github.com/ianalloway/macos-disk-cleanup',
     },
+    {
+      name: 'OSS toolkit (agents, MLOps, sports)',
+      description:
+        'Shipped 8 public repos: dev-setup-macos, model-cardgen, line-shop-cli, nba-ratings, agent-trace-kit, nba-clv-dashboard, fraud-anomaly-bench, substack-rag-local—each with README, MIT license, and CI.',
+      tech: ['Python', 'FastAPI', 'Bash', 'GitHub Actions'],
+      url: 'https://github.com/ianalloway?tab=repositories',
+    },
   ];
 
   const stats = [

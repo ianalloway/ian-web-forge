@@ -14,6 +14,70 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop"
     },
     {
+      title: "dev-setup-macos",
+      description: "One-command Homebrew Bundle bootstrap for a clean dev Mac—pairs with macOS Disk Cleanup.",
+      technologies: ["Bash", "Homebrew", "ShellCheck CI"],
+      github: "https://github.com/ianalloway/dev-setup-macos",
+      demo: "https://github.com/ianalloway/dev-setup-macos#readme",
+      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=250&fit=crop"
+    },
+    {
+      title: "model-cardgen",
+      description: "Turn metrics.json into Markdown model cards and data cards—MLOps documentation without extra deps.",
+      technologies: ["Python", "MLOps", "CLI"],
+      github: "https://github.com/ianalloway/model-cardgen",
+      demo: "https://github.com/ianalloway/model-cardgen#readme",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=250&fit=crop"
+    },
+    {
+      title: "line-shop-cli",
+      description: "Line shopping + CSV + optional Kelly sizing; demo odds fixture or The Odds API.",
+      technologies: ["Python", "Sports analytics"],
+      github: "https://github.com/ianalloway/line-shop-cli",
+      demo: "https://github.com/ianalloway/line-shop-cli#readme",
+      image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=250&fit=crop"
+    },
+    {
+      title: "nba-ratings",
+      description: "Installable Elo / logistic win-prob / Kelly primitives for NBA-style models.",
+      technologies: ["Python", "Elo", "Kelly"],
+      github: "https://github.com/ianalloway/nba-ratings",
+      demo: "https://github.com/ianalloway/nba-ratings#readme",
+      image: "https://images.unsplash.com/photo-1519861536423-041a8384d70d?w=400&h=250&fit=crop"
+    },
+    {
+      title: "agent-trace-kit",
+      description: "JSONL spans + HTML replay for debugging agent tool loops.",
+      technologies: ["Python", "Agents", "Observability"],
+      github: "https://github.com/ianalloway/agent-trace-kit",
+      demo: "https://github.com/ianalloway/agent-trace-kit#readme",
+      image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=250&fit=crop"
+    },
+    {
+      title: "nba-clv-dashboard",
+      description: "FastAPI + Chart.js: calibration, rolling accuracy, CLV summary (demo metrics you can swap).",
+      technologies: ["FastAPI", "Chart.js", "ML eval"],
+      github: "https://github.com/ianalloway/nba-clv-dashboard",
+      demo: "https://github.com/ianalloway/nba-clv-dashboard#readme",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop"
+    },
+    {
+      title: "fraud-anomaly-bench",
+      description: "Synthetic + OpenML baselines; RandomForest vs IsolationForest leaderboard.",
+      technologies: ["Python", "scikit-learn"],
+      github: "https://github.com/ianalloway/fraud-anomaly-bench",
+      demo: "https://github.com/ianalloway/fraud-anomaly-bench#readme",
+      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=400&h=250&fit=crop"
+    },
+    {
+      title: "substack-rag-local",
+      description: "Local RAG over Substack RSS—TF–IDF retrieval + Streamlit or CLI.",
+      technologies: ["Python", "RAG", "Streamlit"],
+      github: "https://github.com/ianalloway/substack-rag-local",
+      demo: "https://github.com/ianalloway/substack-rag-local#readme",
+      image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&h=250&fit=crop"
+    },
+    {
       title: "Money-maker-bot",
       description: "Financial intelligence agent forked from OpenClaw/Clawdbot. Built with an 8-component architecture: Brain, Soul, DNA, Muscles, Bones, Eyes, Heartbeat, and Nervous System.",
       technologies: ["Python", "OpenClaw", "Anthropic API"],

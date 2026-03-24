@@ -122,6 +122,70 @@ const projects = [
     url: 'https://github.com/ianalloway/macos-disk-cleanup',
     isGithub: true,
   },
+  {
+    name: 'Dev setup macOS',
+    description:
+      'One-command Homebrew Bundle bootstrap (git, gh, optional AI tooling). Pairs with macOS Disk Cleanup for a reproducible Mac hygiene story.',
+    tech: ['Bash', 'Homebrew', 'macOS'],
+    url: 'https://github.com/ianalloway/dev-setup-macos',
+    isGithub: true,
+  },
+  {
+    name: 'Model & data card generator',
+    description:
+      'Dependency-free Python CLI: metrics.json → Markdown model cards and data cards for MLOps / Hugging Face–style documentation.',
+    tech: ['Python', 'MLOps', 'CLI'],
+    url: 'https://github.com/ianalloway/model-cardgen',
+    isGithub: true,
+  },
+  {
+    name: 'Line shop CLI',
+    description:
+      'Stdlib Python CLI: flatten h2h moneylines (demo fixture or The Odds API), CSV export, optional fractional Kelly from your model edge.',
+    tech: ['Python', 'Sports analytics', 'Kelly'],
+    url: 'https://github.com/ianalloway/line-shop-cli',
+    isGithub: true,
+  },
+  {
+    name: 'NBA ratings (Elo / Kelly lib)',
+    description:
+      'Installable Python package: logistic win probability, Elo updates, Kelly/implied prob helpers for NBA-style models (PyPI-ready layout).',
+    tech: ['Python', 'Elo', 'Sports ML'],
+    url: 'https://github.com/ianalloway/nba-ratings',
+    isGithub: true,
+  },
+  {
+    name: 'Agent trace kit',
+    description:
+      'JSONL agent run traces with span timings + static HTML replay for debugging LLM tool loops (production-minded OSS).',
+    tech: ['Python', 'Agents', 'Observability'],
+    url: 'https://github.com/ianalloway/agent-trace-kit',
+    isGithub: true,
+  },
+  {
+    name: 'NBA CLV dashboard',
+    description:
+      'FastAPI + Chart.js demo: calibration curve, rolling accuracy, CLV summary block—swap JSON for your real backtest output.',
+    tech: ['FastAPI', 'Chart.js', 'ML eval'],
+    url: 'https://github.com/ianalloway/nba-clv-dashboard',
+    isGithub: true,
+  },
+  {
+    name: 'Fraud anomaly benchmark',
+    description:
+      'Sklearn harness: synthetic fraud-like data + OpenML German Credit; RandomForest vs IsolationForest → results.json + LEADERBOARD.md.',
+    tech: ['Python', 'scikit-learn', 'Benchmark'],
+    url: 'https://github.com/ianalloway/fraud-anomaly-bench',
+    isGithub: true,
+  },
+  {
+    name: 'Substack RAG (local)',
+    description:
+      'RSS → TF–IDF retrieval over your posts; Streamlit or CLI with cited chunks (no hosted vector DB required for v0.1).',
+    tech: ['Python', 'RAG', 'Streamlit'],
+    url: 'https://github.com/ianalloway/substack-rag-local',
+    isGithub: true,
+  },
 ];
 
 interface BlogPost {
