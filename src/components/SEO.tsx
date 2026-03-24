@@ -8,8 +8,8 @@ interface SEOProps {
 }
 
 const defaults = {
-  title: 'Ian Alloway | AI Engineer & Data Scientist',
-  description: 'AI Engineer and Data Scientist building ML pipelines, autonomous agents, and data-driven products. MS AI candidate at USF. View portfolio, projects, and resume.',
+  title: 'Ian Alloway | Sports ML & Evaluation · ML Engineer',
+  description: 'ML engineer focused on sports analytics, calibration-first evaluation, and production Python (FastAPI, test-backed primitives). Public flagship: NBA CLV dashboard + nba-edge library. MS AI candidate at USF.',
   url: 'https://ianalloway.xyz',
   image: '/og-image.png',
   siteName: 'Ian Alloway',
@@ -49,7 +49,7 @@ export default function SEO({ title, description, path = '', image }: SEOProps) 
           '@type': 'Person',
           name: 'Ian Alloway',
           url: defaults.url,
-          jobTitle: 'AI Engineer & Data Scientist',
+          jobTitle: 'ML Engineer — Sports analytics & model evaluation',
           alumniOf: {
             '@type': 'CollegeOrUniversity',
             name: 'University of South Florida',

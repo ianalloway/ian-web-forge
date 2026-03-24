@@ -52,6 +52,27 @@ const experience = [
 
 const projects = [
   {
+    name: 'NBA CLV dashboard (flagship)',
+    description: 'FastAPI + Chart.js: calibration, rolling accuracy, CLV summary — employer-facing eval demo. Swap JSON for your real backtest output.',
+    tech: ['FastAPI', 'Chart.js', 'Sports ML'],
+    url: 'https://github.com/ianalloway/nba-clv-dashboard',
+    isGithub: true,
+  },
+  {
+    name: 'NBA ratings (Elo / Kelly lib)',
+    description: 'Installable Python package (PyPI: nba-edge): logistic win probability, Elo updates, Kelly/implied prob helpers for NBA-style models.',
+    tech: ['Python', 'Elo', 'Sports ML'],
+    url: 'https://github.com/ianalloway/nba-ratings',
+    isGithub: true,
+  },
+  {
+    name: 'Line shop CLI',
+    description: 'Stdlib Python CLI: flatten h2h moneylines (demo fixture or The Odds API), CSV export, optional fractional Kelly from your model edge.',
+    tech: ['Python', 'Sports analytics', 'Kelly'],
+    url: 'https://github.com/ianalloway/line-shop-cli',
+    isGithub: true,
+  },
+  {
     name: 'Money-maker-bot',
     description: 'Financial intelligence agent forked from OpenClaw/Clawdbot. Built with an 8-component architecture: Brain, Soul, DNA, Muscles, Bones, Eyes, Heartbeat, and Nervous System.',
     tech: ['Python', 'OpenClaw', 'Anthropic API'],
@@ -139,35 +160,11 @@ const projects = [
     isGithub: true,
   },
   {
-    name: 'Line shop CLI',
-    description:
-      'Stdlib Python CLI: flatten h2h moneylines (demo fixture or The Odds API), CSV export, optional fractional Kelly from your model edge.',
-    tech: ['Python', 'Sports analytics', 'Kelly'],
-    url: 'https://github.com/ianalloway/line-shop-cli',
-    isGithub: true,
-  },
-  {
-    name: 'NBA ratings (Elo / Kelly lib)',
-    description:
-      'Installable Python package: logistic win probability, Elo updates, Kelly/implied prob helpers for NBA-style models (PyPI-ready layout).',
-    tech: ['Python', 'Elo', 'Sports ML'],
-    url: 'https://github.com/ianalloway/nba-ratings',
-    isGithub: true,
-  },
-  {
     name: 'Agent trace kit',
     description:
       'JSONL agent run traces with span timings + static HTML replay for debugging LLM tool loops (production-minded OSS).',
     tech: ['Python', 'Agents', 'Observability'],
     url: 'https://github.com/ianalloway/agent-trace-kit',
-    isGithub: true,
-  },
-  {
-    name: 'NBA CLV dashboard',
-    description:
-      'FastAPI + Chart.js demo: calibration curve, rolling accuracy, CLV summary block—swap JSON for your real backtest output.',
-    tech: ['FastAPI', 'Chart.js', 'ML eval'],
-    url: 'https://github.com/ianalloway/nba-clv-dashboard',
     isGithub: true,
   },
   {
@@ -252,6 +249,12 @@ async function fetchSubstackPosts(): Promise<BlogPost[]> {
 }
 
 const academicPapers: { title: string; description: string; file?: string; videoUrl?: string; category: string }[] = [
+  {
+    title: 'Sports ML — Evaluation & calibration (employer case study)',
+    description: 'One-pager: primitives library, line-shopping CLI, FastAPI + Chart.js dashboard for calibration, rolling accuracy, and CLV-style metrics. Print to PDF from browser.',
+    file: '/papers/sports-ml-evaluation-case-study.html',
+    category: 'Case study',
+  },
   {
     title: 'Portfolio Conclusion — LIS 4934 Senior Capstone',
     description: 'Reflective conclusion covering platform choices, design decisions, and career value of the portfolio. Includes a full account of all LIS 4934 assignments. University of South Florida, Spring 2026.',
@@ -404,10 +407,10 @@ const Index = () => {
           </h1>
 
           <p className="text-xl text-muted-foreground mb-2 font-mono">
-            Machine Learning Engineer &amp; Data Scientist
+            ML Engineer — Sports ML, calibration &amp; honest evaluation
           </p>
           <p className="text-muted-foreground font-mono mb-5 text-sm">
-            I build robust AI/ML pipelines, predictive models, and full-stack applications. I'm a builder focused on solving real-world problems with data.
+            I ship test-backed Python for forecasting-shaped problems: Elo/logistic/Kelly primitives, line-shopping tooling, and a FastAPI + Chart.js dashboard for calibration, rolling accuracy, and CLV-style metrics—not just headline accuracy.
           </p>
           <p className="text-muted-foreground font-mono mb-8 text-sm">
             B.S. Data Science @ USF (Dec 2025) | M.S. AI @ USF (Dec 2027) | Founder @ Alloway LLC
@@ -415,11 +418,16 @@ const Index = () => {
 
           <div className="inline-block px-4 py-2 mb-6 terminal-border rounded-lg bg-primary/5">
             <span className="text-primary text-sm font-semibold font-mono">OPEN TO WORK</span>
-            <span className="text-muted-foreground text-sm font-mono"> — Data Scientist / ML Engineer roles</span>
+            <span className="text-muted-foreground text-sm font-mono"> — ML / data roles (sports, fintech, forecasting)</span>
           </div>
 
           {/* Social Links */}
           <div className="flex flex-wrap justify-center gap-3 mb-10">
+            <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+              <a href="/papers/sports-ml-evaluation-case-study.html" target="_blank" rel="noopener noreferrer">
+                <FileText className="mr-2" size={18} /> Case study
+              </a>
+            </Button>
             <Button className="font-mono bg-primary text-primary-foreground hover:bg-primary/90" asChild>
               <a href="#contracting">
                 <Briefcase className="mr-2" size={18} /> Hire Me
@@ -474,9 +482,7 @@ const Index = () => {
           <Card className="terminal-border bg-card/80 backdrop-blur-sm mb-8">
             <CardContent className="p-6">
               <p className="text-muted-foreground leading-relaxed font-mono text-sm">
-                &gt; Machine Learning Engineer and Data Scientist. I build robust AI/ML pipelines, predictive models, and full-stack applications.
-                Open-source contributor to OpenClaw (194k+ stars) with 9 published skills on ClawHub. Founder of Alloway LLC, delivering data-driven solutions across sports analytics, fintech, and cybersecurity.
-                Proven track record of reducing fraud incidents by 30% through AI-based anomaly detection and improving client operational efficiency by 40%.
+                &gt; <strong className="text-primary/90">Flagship narrative — sports ML:</strong> public stack for calibration-first evaluation (FastAPI dashboard + Python primitives on PyPI). I also contribute to OpenClaw (194k+ stars) with 9 ClawHub skills, and founded Alloway LLC for data/ML consulting. Background includes anomaly detection that cut fraud incidents ~30% and client efficiency gains ~40%.
               </p>
             </CardContent>
           </Card>

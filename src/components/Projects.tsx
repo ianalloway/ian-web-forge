@@ -6,6 +6,30 @@ import { ExternalLink, Github } from 'lucide-react';
 const Projects = () => {
   const projects = [
     {
+      title: "nba-clv-dashboard (flagship)",
+      description: "FastAPI + Chart.js evaluation demo: calibration, rolling accuracy, CLV summary — swap in your backtest JSON.",
+      technologies: ["FastAPI", "Chart.js", "Sports ML"],
+      github: "https://github.com/ianalloway/nba-clv-dashboard",
+      demo: "https://ianalloway.xyz/papers/sports-ml-evaluation-case-study.html",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop"
+    },
+    {
+      title: "nba-ratings / nba-edge",
+      description: "Installable Elo / logistic win-prob / Kelly helpers; PyPI package name nba-edge.",
+      technologies: ["Python", "Elo", "Kelly"],
+      github: "https://github.com/ianalloway/nba-ratings",
+      demo: "https://github.com/ianalloway/nba-ratings#readme",
+      image: "https://images.unsplash.com/photo-1519861536423-041a8384d70d?w=400&h=250&fit=crop"
+    },
+    {
+      title: "line-shop-cli",
+      description: "Line shopping + CSV + optional Kelly sizing; demo odds fixture or The Odds API.",
+      technologies: ["Python", "Sports analytics"],
+      github: "https://github.com/ianalloway/line-shop-cli",
+      demo: "https://github.com/ianalloway/line-shop-cli#readme",
+      image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=250&fit=crop"
+    },
+    {
       title: "macOS Disk Cleanup",
       description: "Open-source Bash CLI that reclaims macOS disk space from regenerable caches only (Homebrew, Go, Chrome, npm/pip, optional Docker/Xcode). Documented algorithm, --dry-run, ShellCheck CI.",
       technologies: ["Bash", "macOS", "GitHub Actions"],
@@ -30,36 +54,12 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=250&fit=crop"
     },
     {
-      title: "line-shop-cli",
-      description: "Line shopping + CSV + optional Kelly sizing; demo odds fixture or The Odds API.",
-      technologies: ["Python", "Sports analytics"],
-      github: "https://github.com/ianalloway/line-shop-cli",
-      demo: "https://github.com/ianalloway/line-shop-cli#readme",
-      image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=250&fit=crop"
-    },
-    {
-      title: "nba-ratings",
-      description: "Installable Elo / logistic win-prob / Kelly primitives for NBA-style models.",
-      technologies: ["Python", "Elo", "Kelly"],
-      github: "https://github.com/ianalloway/nba-ratings",
-      demo: "https://github.com/ianalloway/nba-ratings#readme",
-      image: "https://images.unsplash.com/photo-1519861536423-041a8384d70d?w=400&h=250&fit=crop"
-    },
-    {
       title: "agent-trace-kit",
       description: "JSONL spans + HTML replay for debugging agent tool loops.",
       technologies: ["Python", "Agents", "Observability"],
       github: "https://github.com/ianalloway/agent-trace-kit",
       demo: "https://github.com/ianalloway/agent-trace-kit#readme",
       image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=250&fit=crop"
-    },
-    {
-      title: "nba-clv-dashboard",
-      description: "FastAPI + Chart.js: calibration, rolling accuracy, CLV summary (demo metrics you can swap).",
-      technologies: ["FastAPI", "Chart.js", "ML eval"],
-      github: "https://github.com/ianalloway/nba-clv-dashboard",
-      demo: "https://github.com/ianalloway/nba-clv-dashboard#readme",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop"
     },
     {
       title: "fraud-anomaly-bench",
@@ -141,7 +141,7 @@ const Projects = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-foreground mb-4">Featured Work</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Production ML systems, AI agents, Web3 apps, and open source contributions across LangChain, React.dev, and OpenClaw.
+            Flagship narrative: sports ML — calibration-first dashboards, PyPI primitives (Elo / Kelly), and line-shopping tooling; plus agents, MLOps OSS, and earlier shipped products.
           </p>
         </div>
 

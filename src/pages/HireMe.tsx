@@ -36,6 +36,24 @@ const HireMe = () => {
 
   const projects = [
     {
+      name: 'NBA CLV dashboard (flagship)',
+      description: 'Employer-facing eval UI: calibration, rolling accuracy, CLV block — demo JSON, swap for your backtests.',
+      tech: ['FastAPI', 'Chart.js', 'Python'],
+      url: 'https://github.com/ianalloway/nba-clv-dashboard',
+    },
+    {
+      name: 'NBA ratings / nba-edge',
+      description: 'Test-backed primitives: Elo, logistic win prob, Kelly helpers (PyPI package; repo nba-ratings).',
+      tech: ['Python', 'Elo', 'Kelly'],
+      url: 'https://github.com/ianalloway/nba-ratings',
+    },
+    {
+      name: 'Line shop CLI',
+      description: 'Odds normalization + CSV + optional fractional Kelly; demo fixture or Odds API.',
+      tech: ['Python', 'CLI', 'Sports'],
+      url: 'https://github.com/ianalloway/line-shop-cli',
+    },
+    {
       name: 'AI Advantage Sports',
       description: 'Sports betting platform with XGBoost ML predictions. 68.3% accuracy.',
       tech: ['Python', 'XGBoost', 'React'],
@@ -110,9 +128,12 @@ const HireMe = () => {
               <span className="text-green-500">/&gt;</span>
             </h1>
             <p className="text-xl md:text-2xl text-green-400/70 mb-8 max-w-2xl mx-auto">
-              AI/ML Engineer + Data Scientist building production systems that ship.
+              Flagship: sports ML stack — calibration-first evaluation (FastAPI + Chart.js), Elo/Kelly primitives (PyPI: <kbd className="text-green-300">nba-edge</kbd>), line-shopping CLI.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
+              <a href="/papers/sports-ml-evaluation-case-study.html" target="_blank" rel="noopener noreferrer" className="px-8 py-3 border border-green-500 text-green-400 hover:bg-green-500/10 transition-colors">
+                Case study (PDF via print)
+              </a>
               <a href="#contact" className="px-8 py-3 bg-green-500 text-black font-bold hover:bg-green-400 transition-colors">
                 Get In Touch
               </a>
