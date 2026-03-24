@@ -114,6 +114,14 @@ const projects = [
     url: 'https://github.com/ianalloway/stock-sentiment-analyzer',
     isGithub: true,
   },
+  {
+    name: 'macOS Disk Cleanup',
+    description:
+      'Open-source Bash CLI for selective macOS disk reclamation: regenerable caches only (Homebrew, npm/pip, Go, Chrome profiles, wallpaper payloads; optional Docker/Xcode). Documented algorithm, --dry-run, ShellCheck CI.',
+    tech: ['Bash', 'macOS', 'ShellCheck', 'GitHub Actions'],
+    url: 'https://github.com/ianalloway/macos-disk-cleanup',
+    isGithub: true,
+  },
 ];
 
 interface BlogPost {

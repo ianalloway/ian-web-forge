@@ -6,6 +6,14 @@ import { ExternalLink, Github } from 'lucide-react';
 const Projects = () => {
   const projects = [
     {
+      title: "macOS Disk Cleanup",
+      description: "Open-source Bash CLI that reclaims macOS disk space from regenerable caches only (Homebrew, Go, Chrome, npm/pip, optional Docker/Xcode). Documented algorithm, --dry-run, ShellCheck CI.",
+      technologies: ["Bash", "macOS", "GitHub Actions"],
+      github: "https://github.com/ianalloway/macos-disk-cleanup",
+      demo: "https://github.com/ianalloway/macos-disk-cleanup#readme",
+      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop"
+    },
+    {
       title: "Money-maker-bot",
       description: "Financial intelligence agent forked from OpenClaw/Clawdbot. Built with an 8-component architecture: Brain, Soul, DNA, Muscles, Bones, Eyes, Heartbeat, and Nervous System.",
       technologies: ["Python", "OpenClaw", "Anthropic API"],

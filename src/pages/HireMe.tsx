@@ -59,6 +59,12 @@ const HireMe = () => {
       tech: ['React', 'Web3.js', 'LLMs'],
       url: 'https://mutantintelligence.com',
     },
+    {
+      name: 'macOS Disk Cleanup',
+      description: 'Bash CLI + documented algorithm for safe cache cleanup on macOS; dry-run and ShellCheck CI.',
+      tech: ['Bash', 'macOS', 'GitHub Actions'],
+      url: 'https://github.com/ianalloway/macos-disk-cleanup',
+    },
   ];
 
   const stats = [
