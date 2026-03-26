@@ -1,0 +1,36 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#05140D"/>
+  <rect x="48" y="48" width="1504" height="804" rx="28" fill="#071C12" stroke="#1ED760" stroke-opacity="0.28" stroke-width="2"/>
+  <rect x="96" y="92" width="1408" height="72" rx="18" fill="#0C281A"/>
+  <circle cx="136" cy="128" r="8" fill="#1ED760"/>
+  <circle cx="166" cy="128" r="8" fill="#FACC15"/>
+  <circle cx="196" cy="128" r="8" fill="#F97316"/>
+  <text x="238" y="136" fill="#C7F9D4" font-family="Menlo, monospace" font-size="28">nba-clv-dashboard</text>
+  <text x="102" y="214" fill="#8DE7AE" font-family="Menlo, monospace" font-size="22">Calibration curve</text>
+  <text x="836" y="214" fill="#8DE7AE" font-family="Menlo, monospace" font-size="22">Rolling edge + CLV</text>
+  <rect x="96" y="238" width="640" height="272" rx="22" fill="#0A2116" stroke="#1ED760" stroke-opacity="0.2"/>
+  <path d="M132 446C176 412 210 392 252 378C286 367 326 362 372 348C425 331 456 304 503 290C542 278 593 281 639 274C676 268 702 248 710 230" stroke="#1ED760" stroke-width="6" stroke-linecap="round"/>
+  <path d="M132 470H710" stroke="#214C34" stroke-width="2" stroke-dasharray="8 8"/>
+  <path d="M164 486V266" stroke="#214C34" stroke-width="2" stroke-dasharray="8 8"/>
+  <circle cx="503" cy="290" r="10" fill="#1ED760"/>
+  <text x="513" y="280" fill="#E9FFF0" font-family="Menlo, monospace" font-size="18">model odds align with realized buckets</text>
+  <rect x="96" y="540" width="640" height="240" rx="22" fill="#0A2116" stroke="#1ED760" stroke-opacity="0.2"/>
+  <text x="132" y="590" fill="#8DE7AE" font-family="Menlo, monospace" font-size="18">Brier score</text>
+  <text x="132" y="634" fill="#E9FFF0" font-family="Menlo, monospace" font-size="42">0.191</text>
+  <text x="380" y="590" fill="#8DE7AE" font-family="Menlo, monospace" font-size="18">Rolling accuracy</text>
+  <text x="380" y="634" fill="#E9FFF0" font-family="Menlo, monospace" font-size="42">58.4%</text>
+  <text x="616" y="590" fill="#8DE7AE" font-family="Menlo, monospace" font-size="18">Median CLV</text>
+  <text x="616" y="634" fill="#E9FFF0" font-family="Menlo, monospace" font-size="42">+1.8%</text>
+  <text x="132" y="708" fill="#7BB991" font-family="Menlo, monospace" font-size="20">FastAPI + Chart.js dashboard built to evaluate model quality, not just advertise accuracy.</text>
+  <rect x="776" y="238" width="728" height="542" rx="22" fill="#0A2116" stroke="#1ED760" stroke-opacity="0.2"/>
+  <path d="M824 706V312" stroke="#214C34" stroke-width="2"/>
+  <path d="M824 706H1452" stroke="#214C34" stroke-width="2"/>
+  <rect x="858" y="512" width="78" height="194" rx="12" fill="#133726"/>
+  <rect x="962" y="472" width="78" height="234" rx="12" fill="#175032"/>
+  <rect x="1066" y="436" width="78" height="270" rx="12" fill="#1A6A3D"/>
+  <rect x="1170" y="388" width="78" height="318" rx="12" fill="#1ED760"/>
+  <rect x="1274" y="454" width="78" height="252" rx="12" fill="#22C55E" fill-opacity="0.8"/>
+  <text x="846" y="758" fill="#7BB991" font-family="Menlo, monospace" font-size="18">week 1</text>
+  <text x="1180" y="758" fill="#7BB991" font-family="Menlo, monospace" font-size="18">week 4</text>
+  <text x="846" y="298" fill="#E9FFF0" font-family="Menlo, monospace" font-size="26">Edge survives variance when the evaluation layer is honest.</text>
+</svg>
