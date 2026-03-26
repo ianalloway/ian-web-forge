@@ -31,7 +31,7 @@ const About = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-foreground mb-4">About</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            ML Engineer graduating B.S. Data Science from USF (May 2026). Starting M.S. in Artificial Intelligence (Fall 2026). Building production ML systems and shipping open source contributions.
+            ML Engineer finishing a B.S. in Information Science at USF in May 2026 and starting an M.S. in Artificial Intelligence in August 2026. Building production ML systems and shipping open source work people can actually use.
           </p>
         </div>
 

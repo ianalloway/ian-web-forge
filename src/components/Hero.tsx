@@ -20,7 +20,7 @@ const Hero = () => {
             ML Engineer | Data Scientist | AI Builder
           </p>
           <p className="text-muted-foreground mb-4 font-mono">
-            B.S. Data Science @ USF (May 2026) | M.S. AI @ USF (Fall 2026) | Founder @ Alloway LLC
+            B.S. Information Science @ USF (May 2026) | M.S. AI @ USF (Aug 2026) | Founder @ Alloway LLC
           </p>
 
           <div className="inline-block px-4 py-2 mb-8 border border-green-400/50 rounded-lg bg-green-400/10">

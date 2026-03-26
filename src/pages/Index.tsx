@@ -66,17 +66,17 @@ const projects = [
     isGithub: true,
   },
   {
-    name: 'Line shop CLI',
-    description: 'Stdlib Python CLI: flatten h2h moneylines (demo fixture or The Odds API), CSV export, optional fractional Kelly from your model edge.',
-    tech: ['Python', 'Sports analytics', 'Kelly'],
-    url: 'https://github.com/ianalloway/line-shop-cli',
+    name: 'Odds drift watch',
+    description: 'FastAPI + SQLite service for webhook alerts on meaningful sportsbook line movement.',
+    tech: ['Python', 'Sports analytics', 'FastAPI'],
+    url: 'https://github.com/ianalloway/odds-drift-watch',
     isGithub: true,
   },
   {
-    name: 'Money-maker-bot',
-    description: 'Financial intelligence agent forked from OpenClaw/Clawdbot. Built with an 8-component architecture: Brain, Soul, DNA, Muscles, Bones, Eyes, Heartbeat, and Nervous System.',
-    tech: ['Python', 'OpenClaw', 'Anthropic API'],
-    url: 'https://github.com/ianalloway/Money-maker-bot',
+    name: 'Repo health',
+    description: 'CLI that scores repo quality across README, CI, licensing, maintenance, and staleness signals.',
+    tech: ['Python', 'CLI', 'GitHub'],
+    url: 'https://github.com/ianalloway/repo-health',
     isGithub: true,
   },
   {
@@ -115,10 +115,10 @@ const projects = [
     isGithub: false,
   },
   {
-    name: 'Drone AI',
-    description: 'Autonomous navigation system: YOLOv8 obstacle detection, A*/RRT* path planning, behavior trees for mission logic, and MAVLink flight controller communication.',
-    tech: ['Python', 'PyTorch', 'MAVLink'],
-    url: 'https://github.com/ianalloway/ai-drone-auto-vehicle',
+    name: 'Backtest report gen',
+    description: 'Generate static HTML evaluation reports from metrics JSON, including calibration and CLV-style views.',
+    tech: ['Python', 'Reporting', 'MLOps'],
+    url: 'https://github.com/ianalloway/backtest-report-gen',
     isGithub: true,
   },
   {
@@ -144,43 +144,43 @@ const projects = [
     isGithub: true,
   },
   {
-    name: 'Dev setup macOS',
+    name: 'Backtest report generator',
     description:
-      'One-command Homebrew Bundle bootstrap (git, gh, optional AI tooling). Pairs with macOS Disk Cleanup for a reproducible Mac hygiene story.',
-    tech: ['Bash', 'Homebrew', 'macOS'],
-    url: 'https://github.com/ianalloway/dev-setup-macos',
+      'Evaluation JSON to static HTML with calibration, Brier score, CLV-style reporting, and optional ledger sections.',
+    tech: ['Python', 'Reporting', 'MLOps'],
+    url: 'https://github.com/ianalloway/backtest-report-gen',
     isGithub: true,
   },
   {
-    name: 'Model & data card generator',
+    name: 'Metric regression gate',
     description:
-      'Dependency-free Python CLI: metrics.json → Markdown model cards and data cards for MLOps / Hugging Face–style documentation.',
-    tech: ['Python', 'MLOps', 'CLI'],
-    url: 'https://github.com/ianalloway/model-cardgen',
+      'Composite GitHub Action that blocks PRs when metrics regress against a saved baseline.',
+    tech: ['GitHub Actions', 'CI', 'MLOps'],
+    url: 'https://github.com/ianalloway/metric-regression-gate',
     isGithub: true,
   },
   {
-    name: 'Agent trace kit',
+    name: 'Code stash',
     description:
-      'JSONL agent run traces with span timings + static HTML replay for debugging LLM tool loops (production-minded OSS).',
-    tech: ['Python', 'Agents', 'Observability'],
-    url: 'https://github.com/ianalloway/agent-trace-kit',
+      'SQLite-powered snippet manager with local LLM search for reusable code and command patterns.',
+    tech: ['Python', 'SQLite', 'Developer tools'],
+    url: 'https://github.com/ianalloway/code-stash',
     isGithub: true,
   },
   {
-    name: 'Fraud anomaly benchmark',
+    name: 'Repo health',
     description:
-      'Sklearn harness: synthetic fraud-like data + OpenML German Credit; RandomForest vs IsolationForest → results.json + LEADERBOARD.md.',
-    tech: ['Python', 'scikit-learn', 'Benchmark'],
-    url: 'https://github.com/ianalloway/fraud-anomaly-bench',
+      'Repository scoring tool for README quality, licensing, CI, topic coverage, issue hygiene, and staleness.',
+    tech: ['Python', 'GitHub', 'CLI'],
+    url: 'https://github.com/ianalloway/repo-health',
     isGithub: true,
   },
   {
-    name: 'Substack RAG (local)',
+    name: 'OpenClaw skills',
     description:
-      'RSS → TF–IDF retrieval over your posts; Streamlit or CLI with cited chunks (no hosted vector DB required for v0.1).',
-    tech: ['Python', 'RAG', 'Streamlit'],
-    url: 'https://github.com/ianalloway/substack-rag-local',
+      'Published skills for OpenClaw and ClawHub focused on sports odds, Kelly sizing, market sentiment, and agent workflows.',
+    tech: ['Python', 'Agents', 'Open source'],
+    url: 'https://github.com/ianalloway/openclaw-skills',
     isGithub: true,
   },
 ];
@@ -414,7 +414,7 @@ const Index = () => {
             I ship test-backed Python for forecasting-shaped problems: Elo/logistic/Kelly primitives, line-shopping tooling, and a FastAPI + Chart.js dashboard for calibration, rolling accuracy, and CLV-style metrics—not just headline accuracy.
           </p>
           <p className="text-muted-foreground font-mono mb-8 text-sm">
-            B.S. Data Science @ USF (Dec 2025) | M.S. AI @ USF (Dec 2027) | Founder @ Alloway LLC
+            B.S. Information Science @ USF (May 2026) | M.S. AI @ USF (starts Aug 2026) | Founder @ Alloway LLC
           </p>
 
           <div className="inline-block px-4 py-2 mb-6 terminal-border rounded-lg bg-primary/5">
@@ -586,41 +586,41 @@ const Index = () => {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold mb-6 matrix-text font-mono text-primary">
             <Bot className="inline mr-2" size={24} />
-            [START_YOUR_OWN_BOT]
+            [BUILD_WITH_MY_TOOLING]
           </h2>
 
           <Card className="terminal-border bg-card/80 backdrop-blur-sm">
             <CardContent className="p-6">
-              <h3 className="text-primary font-bold mb-3 font-mono text-lg">Money-maker-bot</h3>
+              <h3 className="text-primary font-bold mb-3 font-mono text-lg">openclaw-skills</h3>
               <p className="text-muted-foreground font-mono mb-4 text-sm">
-                &gt; Financial intelligence agent forked from OpenClaw/Clawdbot. Built with an 8-component architecture:
-                Brain, Soul, DNA, Muscles, Bones, Eyes, Heartbeat, and Nervous System. Fork it and build your own.
+                &gt; A public collection of OpenClaw and ClawHub skills covering sports odds, Kelly sizing, market sentiment,
+                screenshot workflows, and other agent-friendly tools. Use it as a starting point and extend what fits your stack.
               </p>
 
               <div className="grid md:grid-cols-3 gap-4 mb-6">
                 <div className="terminal-border p-3 rounded">
                   <h4 className="text-primary font-bold font-mono text-sm mb-1">Sports Odds</h4>
-                  <p className="text-muted-foreground/70 text-xs font-mono">Compare betting lines across sportsbooks to find value</p>
+                  <p className="text-muted-foreground/70 text-xs font-mono">Odds workflows, Kelly helpers, and line-monitoring utilities</p>
                 </div>
                 <div className="terminal-border p-3 rounded">
-                  <h4 className="text-primary font-bold font-mono text-sm mb-1">NFT Tracker</h4>
-                  <p className="text-muted-foreground/70 text-xs font-mono">Monitor floor prices and whale activity for top collections</p>
+                  <h4 className="text-primary font-bold font-mono text-sm mb-1">Agent Skills</h4>
+                  <p className="text-muted-foreground/70 text-xs font-mono">Reusable skills for OpenClaw and similar agent environments</p>
                 </div>
                 <div className="terminal-border p-3 rounded">
                   <h4 className="text-primary font-bold font-mono text-sm mb-1">Data Viz</h4>
-                  <p className="text-muted-foreground/70 text-xs font-mono">Generate terminal charts from your portfolio data</p>
+                  <p className="text-muted-foreground/70 text-xs font-mono">Reporting, dashboards, and tools that make model output legible</p>
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-3">
                 <Button className="font-mono bg-primary text-primary-foreground hover:bg-primary/90" asChild>
-                  <a href="https://github.com/ianalloway/Money-maker-bot" target="_blank" rel="noopener noreferrer">
-                    <Github className="mr-2" size={16} /> Fork on GitHub
+                  <a href="https://github.com/ianalloway/openclaw-skills" target="_blank" rel="noopener noreferrer">
+                    <Github className="mr-2" size={16} /> View on GitHub
                   </a>
                 </Button>
                 <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
-                  <a href="https://github.com/ianalloway/Money-maker-bot#quick-start" target="_blank" rel="noopener noreferrer">
-                    <Terminal className="mr-2" size={16} /> Quick Start Guide
+                  <a href="https://github.com/ianalloway/openclaw-skills#readme" target="_blank" rel="noopener noreferrer">
+                    <Terminal className="mr-2" size={16} /> Readme
                   </a>
                 </Button>
               </div>

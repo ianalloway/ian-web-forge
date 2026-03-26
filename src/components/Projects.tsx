@@ -22,11 +22,11 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1519861536423-041a8384d70d?w=400&h=250&fit=crop"
     },
     {
-      title: "line-shop-cli",
-      description: "Line shopping + CSV + optional Kelly sizing; demo odds fixture or The Odds API.",
-      technologies: ["Python", "Sports analytics"],
-      github: "https://github.com/ianalloway/line-shop-cli",
-      demo: "https://github.com/ianalloway/line-shop-cli#readme",
+      title: "odds-drift-watch",
+      description: "Webhook-based line-move monitoring with FastAPI and SQLite for alerting on meaningful market shifts.",
+      technologies: ["FastAPI", "SQLite", "Sports analytics"],
+      github: "https://github.com/ianalloway/odds-drift-watch",
+      demo: "https://github.com/ianalloway/odds-drift-watch#readme",
       image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=250&fit=crop"
     },
     {
@@ -38,51 +38,51 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop"
     },
     {
-      title: "dev-setup-macos",
-      description: "One-command Homebrew Bundle bootstrap for a clean dev Mac—pairs with macOS Disk Cleanup.",
-      technologies: ["Bash", "Homebrew", "ShellCheck CI"],
-      github: "https://github.com/ianalloway/dev-setup-macos",
-      demo: "https://github.com/ianalloway/dev-setup-macos#readme",
+      title: "closing-line-archive",
+      description: "CLI for historical odds snapshots and beat-close analysis using SQLite-backed sportsbook data.",
+      technologies: ["Python", "SQLite", "Sports data"],
+      github: "https://github.com/ianalloway/closing-line-archive",
+      demo: "https://github.com/ianalloway/closing-line-archive#readme",
       image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=250&fit=crop"
     },
     {
-      title: "model-cardgen",
-      description: "Turn metrics.json into Markdown model cards and data cards—MLOps documentation without extra deps.",
-      technologies: ["Python", "MLOps", "CLI"],
-      github: "https://github.com/ianalloway/model-cardgen",
-      demo: "https://github.com/ianalloway/model-cardgen#readme",
+      title: "backtest-report-gen",
+      description: "Turn evaluation JSON into static HTML backtest reports with calibration, Brier, CLV, and ledger views.",
+      technologies: ["Python", "Reporting", "MLOps"],
+      github: "https://github.com/ianalloway/backtest-report-gen",
+      demo: "https://github.com/ianalloway/backtest-report-gen#readme",
       image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=250&fit=crop"
     },
     {
-      title: "agent-trace-kit",
-      description: "JSONL spans + HTML replay for debugging agent tool loops.",
-      technologies: ["Python", "Agents", "Observability"],
-      github: "https://github.com/ianalloway/agent-trace-kit",
-      demo: "https://github.com/ianalloway/agent-trace-kit#readme",
+      title: "metric-regression-gate",
+      description: "Composite GitHub Action that fails CI when metrics regress against a baseline.",
+      technologies: ["GitHub Actions", "CI", "MLOps"],
+      github: "https://github.com/ianalloway/metric-regression-gate",
+      demo: "https://github.com/ianalloway/metric-regression-gate#readme",
       image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=250&fit=crop"
     },
     {
-      title: "fraud-anomaly-bench",
-      description: "Synthetic + OpenML baselines; RandomForest vs IsolationForest leaderboard.",
-      technologies: ["Python", "scikit-learn"],
-      github: "https://github.com/ianalloway/fraud-anomaly-bench",
-      demo: "https://github.com/ianalloway/fraud-anomaly-bench#readme",
+      title: "code-stash",
+      description: "CLI snippet manager with SQLite storage and local LLM-powered search for reusable code.",
+      technologies: ["Python", "SQLite", "Developer tools"],
+      github: "https://github.com/ianalloway/code-stash",
+      demo: "https://github.com/ianalloway/code-stash#readme",
       image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=400&h=250&fit=crop"
     },
     {
-      title: "substack-rag-local",
-      description: "Local RAG over Substack RSS—TF–IDF retrieval + Streamlit or CLI.",
-      technologies: ["Python", "RAG", "Streamlit"],
-      github: "https://github.com/ianalloway/substack-rag-local",
-      demo: "https://github.com/ianalloway/substack-rag-local#readme",
+      title: "stock-sentiment-analyzer",
+      description: "NLP-driven stock sentiment tool that combines news, Reddit, and filing signals into ticker-level sentiment views.",
+      technologies: ["Python", "NLP", "Analytics"],
+      github: "https://github.com/ianalloway/stock-sentiment-analyzer",
+      demo: "https://github.com/ianalloway/stock-sentiment-analyzer#readme",
       image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&h=250&fit=crop"
     },
     {
-      title: "Money-maker-bot",
-      description: "Financial intelligence agent forked from OpenClaw/Clawdbot. Built with an 8-component architecture: Brain, Soul, DNA, Muscles, Bones, Eyes, Heartbeat, and Nervous System.",
-      technologies: ["Python", "OpenClaw", "Anthropic API"],
-      github: "https://github.com/ianalloway/Money-maker-bot",
-      demo: "#",
+      title: "repo-health",
+      description: "Repo scoring CLI for README quality, licensing, CI, maintenance signals, and staleness.",
+      technologies: ["Python", "CLI", "Developer tools"],
+      github: "https://github.com/ianalloway/repo-health",
+      demo: "https://github.com/ianalloway/repo-health#readme",
       image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=250&fit=crop"
     },
     {
@@ -126,11 +126,11 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=250&fit=crop"
     },
     {
-      title: "Drone AI",
-      description: "Autonomous navigation system: YOLOv8 obstacle detection, A*/RRT* path planning, behavior trees for mission logic, and MAVLink flight controller communication.",
-      technologies: ["Python", "YOLOv8", "PyTorch", "MAVLink"],
-      github: "https://github.com/ianalloway/ai-drone-auto-vehicle",
-      demo: "#",
+      title: "openclaw-skills",
+      description: "Published OpenClaw and ClawHub skills spanning sports odds, Kelly sizing, portfolio tools, and market sentiment.",
+      technologies: ["OpenClaw", "Agents", "Open source"],
+      github: "https://github.com/ianalloway/openclaw-skills",
+      demo: "https://github.com/ianalloway/openclaw-skills#readme",
       image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400&h=250&fit=crop"
     }
   ];

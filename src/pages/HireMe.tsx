@@ -48,10 +48,10 @@ const HireMe = () => {
       url: 'https://github.com/ianalloway/nba-ratings',
     },
     {
-      name: 'Line shop CLI',
-      description: 'Odds normalization + CSV + optional fractional Kelly; demo fixture or Odds API.',
-      tech: ['Python', 'CLI', 'Sports'],
-      url: 'https://github.com/ianalloway/line-shop-cli',
+      name: 'Odds drift watch',
+      description: 'Webhook-based line-move monitoring with FastAPI and SQLite.',
+      tech: ['FastAPI', 'SQLite', 'Sports'],
+      url: 'https://github.com/ianalloway/odds-drift-watch',
     },
     {
       name: 'AI Advantage Sports',
@@ -60,16 +60,16 @@ const HireMe = () => {
       url: 'https://aiadvantagesports.com',
     },
     {
-      name: 'Money Maker Bot',
-      description: 'Financial intelligence agent. 8-component architecture.',
-      tech: ['Python', 'OpenClaw', 'Anthropic API'],
-      url: 'https://github.com/ianalloway/Money-maker-bot',
+      name: 'Repo Health',
+      description: 'CLI that scores repo quality across README, CI, licensing, and maintenance signals.',
+      tech: ['Python', 'CLI', 'GitHub'],
+      url: 'https://github.com/ianalloway/repo-health',
     },
     {
-      name: 'Drone AI',
-      description: 'Autonomous vehicle with YOLOv8, A*/RRT* path planning.',
-      tech: ['Python', 'PyTorch', 'MAVLink'],
-      url: 'https://github.com/ianalloway/ai-drone-auto-vehicle',
+      name: 'Backtest report generator',
+      description: 'Static HTML backtest reports from evaluation JSON with calibration and CLV views.',
+      tech: ['Python', 'Reporting', 'MLOps'],
+      url: 'https://github.com/ianalloway/backtest-report-gen',
     },
     {
       name: 'Mutant Intelligence',
@@ -86,7 +86,7 @@ const HireMe = () => {
     {
       name: 'OSS toolkit (agents, MLOps, sports)',
       description:
-        'Shipped 8 public repos: dev-setup-macos, model-cardgen, line-shop-cli, nba-ratings, agent-trace-kit, nba-clv-dashboard, fraud-anomaly-bench, substack-rag-local—each with README, MIT license, and CI.',
+        'Shipped public repos across sports analytics, evaluation dashboards, reporting, and developer tooling with clean READMEs and CI.',
       tech: ['Python', 'FastAPI', 'Bash', 'GitHub Actions'],
       url: 'https://github.com/ianalloway?tab=repositories',
     },
@@ -283,15 +283,15 @@ const HireMe = () => {
                 <GraduationCap className="w-8 h-8 text-green-400 mb-4" />
                 <h3 className="text-xl font-bold">MS in Artificial Intelligence</h3>
                 <p className="text-green-400/60">University of South Florida</p>
-                <p className="text-green-400/40 text-sm">Expected Dec 2027</p>
+                <p className="text-green-400/40 text-sm">Starting Aug 2026</p>
               </CardContent>
             </Card>
             <Card className="bg-green-500/5 border-green-500/20">
               <CardContent className="p-6">
                 <GraduationCap className="w-8 h-8 text-green-400 mb-4" />
-                <h3 className="text-xl font-bold">BS in Data Science & Analytics</h3>
+                <h3 className="text-xl font-bold">BS in Information Science</h3>
                 <p className="text-green-400/60">University of South Florida</p>
-                <p className="text-green-400/40 text-sm">Expected Dec 2025</p>
+                <p className="text-green-400/40 text-sm">Expected May 2026</p>
               </CardContent>
             </Card>
           </div>

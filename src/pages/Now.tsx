@@ -12,7 +12,7 @@ const NOW_DATA = {
     title: 'Main Focus',
     icon: Target,
     items: [
-      'Finishing my B.S. Data Science thesis — Adversarial robustness in sports prediction models',
+      'Finishing my B.S. Information Science degree and capstone work at USF',
       'Growing AI Advantage Sports to 500 premium subscribers',
       'Contributing weekly to OpenClaw — currently refactoring the skill resolution pipeline',
       'Preparing applications for MSAI program start (Aug 2026)',
@@ -25,7 +25,7 @@ const NOW_DATA = {
       'AI Advantage Sports — daily picks engine, leaderboard, and live odds integration',
       'openclaw-skills v2 — dfs-optimizer, bet-journal, market-sentiment, streak-tracker',
       'Personal RAG pipeline over my Substack posts for a "chat with my writing" feature',
-      'Drone AI — integrating YOLOv8 v10 for better real-time obstacle detection',
+      'Evaluation-first sports ML tooling — dashboards, backtests, and model reporting',
     ],
   },
   learning: {

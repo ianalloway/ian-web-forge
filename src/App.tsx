@@ -55,7 +55,7 @@ const App = () => (
                   <SEO
                     title="Toolkit — Sports analytics & OSS"
                     path="/toolkit"
-                    description="Public index of Ian Alloway’s sports ML stack, odds utilities, MLOps tools, and GitHub repos — nba-clv-dashboard, nba-ratings, line-shop-cli, closing-line-archive, odds-drift-watch, and more."
+                    description="Public index of Ian Alloway’s sports ML stack, odds utilities, reporting tools, and GitHub repos — nba-clv-dashboard, nba-ratings, odds-drift-watch, closing-line-archive, kelly-js, and more."
                   />
                   <Toolkit />
                 </>
