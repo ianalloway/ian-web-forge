@@ -7,6 +7,7 @@ import {
   BarChart3,
   Briefcase,
   CheckCircle2,
+  DollarSign,
   Download,
   ExternalLink,
   FileText,
@@ -74,6 +75,14 @@ const workStyle = [
   'I favor evaluation honesty over inflated metrics and glossy dashboards.',
   'I document and package work so another engineer can actually use it.',
   'I am comfortable turning vague ideas into something stakeholders can click, inspect, and discuss.',
+];
+
+const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/eVqeVffca12t5tWfZofAc00';
+
+const contractingDetails = [
+  '1099 contractor work for ML prototypes, dashboards, evaluation tooling, and analytics delivery.',
+  'Good fit for scoped build sprints, model evaluation cleanups, and product-facing data work.',
+  'Secure kickoff payment through Stripe if you want to start with paid contract work instead of a long email chain.',
 ];
 
 const education = [
@@ -265,6 +274,38 @@ const HireMe = () => {
 
             <Card className="border-green-500/20 bg-black/50">
               <CardContent className="p-6">
+                <p className="text-xs uppercase tracking-[0.2em] text-green-400/65 mb-3">Contracting</p>
+                <div className="space-y-3 mb-5">
+                  {contractingDetails.map((item) => (
+                    <div key={item} className="flex gap-3 rounded-2xl border border-green-500/15 bg-green-500/5 px-4 py-4">
+                      <CheckCircle2 size={16} className="text-green-300 mt-0.5 shrink-0" />
+                      <p className="text-sm text-green-400/75 leading-relaxed">{item}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="rounded-2xl border border-green-500/20 bg-green-500/5 p-4 mb-5">
+                  <div className="flex items-center gap-2 mb-2 text-green-300">
+                    <DollarSign size={16} />
+                    <p className="text-sm font-semibold text-white">Contract kickoff via Stripe</p>
+                  </div>
+                  <p className="text-sm text-green-400/70 leading-relaxed mb-4">
+                    If you already know you want to work together, you can use Stripe to pay for an initial contractor kickoff and then we can move straight into delivery.
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <Button className="bg-green-500 text-black hover:bg-green-400 font-mono" asChild>
+                      <a href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
+                        <Briefcase className="mr-2" size={16} /> Pay via Stripe
+                      </a>
+                    </Button>
+                    <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
+                      <a href="mailto:ian@allowayllc.com?subject=Contract%20Inquiry">
+                        <Mail className="mr-2" size={16} /> Discuss scope first
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+
                 <p className="text-xs uppercase tracking-[0.2em] text-green-400/65 mb-3">Quick Links</p>
                 <div className="space-y-3 text-sm">
                   <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">
