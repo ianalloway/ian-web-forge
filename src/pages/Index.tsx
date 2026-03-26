@@ -194,68 +194,143 @@ const caseStudyBullets = [
   'Next step: connect the same evaluation pattern to additional leagues and live data sources.',
 ];
 
-const academicAssignments: { title: string; description: string; file?: string; videoUrl?: string; category: string; missing?: boolean }[] = [
+type WritingAsset = {
+  label: string;
+  href: string;
+  download?: boolean;
+};
+
+type WritingEntry = {
+  title: string;
+  description: string;
+  category: string;
+  assets: WritingAsset[];
+  videoUrl?: string;
+  videoThumbnail?: string;
+  videoBadge?: string;
+  note?: string;
+};
+
+const academicAssignments: WritingEntry[] = [
   {
     title: 'Assignment: Information Policy/Technology in the News',
     description:
-      'The original IT news assignment focused on AI data center energy costs and ratepayer protection in a policy context.',
-    file: '/papers/it-news-essay-ratepayer-protection.pdf',
+      'Critical analysis of AI data center energy costs and ratepayer protection policy. Preserved in the submitted PDF format.',
     category: 'Assignment',
+    assets: [
+      { label: 'View PDF', href: '/papers/it-news-essay-ratepayer-protection.pdf' },
+      { label: 'Download PDF', href: '/papers/it-news-essay-ratepayer-protection.pdf', download: true },
+    ],
   },
   {
     title: 'Assignment: BSIS Program Review',
     description:
-      'The original BSIS program review assignment covering the program structure, strengths, concentration paths, and recommendations.',
-    file: '/papers/bsis-program-review-alloway.pdf',
+      'Program review assignment restored with both the submitted PDF and the original DOCX version.',
     category: 'Assignment',
+    assets: [
+      { label: 'View PDF', href: '/papers/bsis-program-review-alloway.pdf' },
+      { label: 'Download PDF', href: '/papers/bsis-program-review-alloway.pdf', download: true },
+      { label: 'Original DOCX', href: '/papers/originals/bsis-program-review-alloway.docx', download: true },
+    ],
   },
   {
     title: 'Discussion Question 2: Portfolio Peer Feedback and Support',
     description:
-      'The discussion assignment is listed here in the academic section, but the original source file is not currently in this repo.',
+      'Discussion artifact restored in its original DOCX format from your course files.',
     category: 'Discussion',
-    missing: true,
+    assets: [
+      { label: 'Original DOCX', href: '/papers/originals/discussion-question-2-peer-feedback.docx', download: true },
+    ],
   },
   {
     title: 'GEA#2 Assignment: Reflective Essay',
     description:
-      'The original reflective essay remains available in its video format, matching the earlier portfolio presentation style.',
-    videoUrl: 'https://www.youtube.com/watch?v=kzOzxch1-hE&t=236s',
+      'Reflective essay preserved in presentation form with the original video link and the script file included alongside it.',
     category: 'Assignment',
+    videoUrl: 'https://www.youtube.com/watch?v=kzOzxch1-hE&t=236s',
+    videoThumbnail: 'https://img.youtube.com/vi/kzOzxch1-hE/hqdefault.jpg',
+    videoBadge: '3:56',
+    assets: [
+      { label: 'Watch Video', href: 'https://www.youtube.com/watch?v=kzOzxch1-hE&t=236s' },
+      { label: 'Video Script', href: '/papers/originals/gea2-video-script.md', download: true },
+    ],
   },
   {
     title: 'Portfolio Presentations',
     description:
-      'The portfolio presentation entry is restored in the section, but the original presentation file or recording is not currently in this repo.',
+      'Portfolio presentation slides restored in the original PPTX format from your course presentation files.',
     category: 'Presentation',
-    missing: true,
+    assets: [
+      { label: 'Original PPTX', href: '/papers/originals/portfolio-presentations.pptx', download: true },
+    ],
+    note: 'The large local movie recording was not added to GitHub because it exceeds repository file size limits.',
   },
 ];
 
-const writingResources: { title: string; description: string; href: string; ctaLabel: string; category: string }[] = [
+const writingResources: WritingEntry[] = [
   {
     title: 'Portfolio Conclusion — LIS 4934 Senior Capstone',
     description:
-      'A reflective capstone conclusion that ties together the site, course work, and the portfolio as a whole.',
-    href: '/papers/portfolio-conclusion-lis4934.pdf',
-    ctaLabel: 'View PDF',
+      'Reflective capstone conclusion restored with both the web PDF and the original DOCX draft.',
     category: 'Capstone',
+    assets: [
+      { label: 'View PDF', href: '/papers/portfolio-conclusion-lis4934.pdf' },
+      { label: 'Download PDF', href: '/papers/portfolio-conclusion-lis4934.pdf', download: true },
+      { label: 'Original DOCX', href: '/papers/originals/portfolio-conclusion-lis4934.docx', download: true },
+    ],
   },
   {
     title: 'Bio and Career Goals',
     description:
-      'A supporting academic document with your biography, goals, and portfolio context.',
-    href: '/papers/bio-and-career-goals.pdf',
-    ctaLabel: 'View PDF',
+      'Biography and goals statement with the submitted PDF plus the original DOCX version you authored.',
     category: 'Portfolio',
+    assets: [
+      { label: 'View PDF', href: '/papers/bio-and-career-goals.pdf' },
+      { label: 'Download PDF', href: '/papers/bio-and-career-goals.pdf', download: true },
+      { label: 'Original DOCX', href: '/papers/originals/enhanced-bio-and-career-goals-alloway.docx', download: true },
+    ],
+  },
+  {
+    title: 'Event Report Capstone',
+    description:
+      'Capstone event report with both the PDF version and the original DOCX submission format.',
+    category: 'Capstone',
+    assets: [
+      { label: 'View PDF', href: '/papers/event-report-capstone.pdf' },
+      { label: 'Download PDF', href: '/papers/event-report-capstone.pdf', download: true },
+      { label: 'Original DOCX', href: '/papers/originals/event-report-capstone.docx', download: true },
+    ],
+  },
+  {
+    title: 'Case Study Capstone',
+    description:
+      'Case study capstone preserved with the PDF and the original DOCX version from your course files.',
+    category: 'Capstone',
+    assets: [
+      { label: 'View PDF', href: '/papers/case-study-capstone.pdf' },
+      { label: 'Download PDF', href: '/papers/case-study-capstone.pdf', download: true },
+      { label: 'Original DOCX', href: '/papers/originals/case-study-capstone.docx', download: true },
+    ],
+  },
+  {
+    title: 'GEA Capstone',
+    description:
+      'GEA capstone available in both PDF and original DOCX format.',
+    category: 'Capstone',
+    assets: [
+      { label: 'View PDF', href: '/papers/gea-capstone.pdf' },
+      { label: 'Download PDF', href: '/papers/gea-capstone.pdf', download: true },
+      { label: 'Original DOCX', href: '/papers/originals/gea-capstone-alloway.docx', download: true },
+    ],
   },
   {
     title: 'AllowayAI on Substack',
     description:
       'Your original long-form writing outlet for technical essays, build notes, and public-facing writing.',
-    href: 'https://allowayai.substack.com',
-    ctaLabel: 'Visit Substack',
     category: 'Writing',
+    assets: [
+      { label: 'Visit Substack', href: 'https://allowayai.substack.com' },
+    ],
   },
 ];
 
@@ -580,12 +655,12 @@ const Index = () => {
                           {paper.category}
                         </span>
                       </div>
-                      {paper.videoUrl && (
+                      {paper.videoUrl && paper.videoThumbnail && (
                         <div className="mb-3 rounded overflow-hidden border border-primary/30">
                           <a href={paper.videoUrl} target="_blank" rel="noopener noreferrer" className="block relative group">
                             <img
-                              src="https://img.youtube.com/vi/kzOzxch1-hE/hqdefault.jpg"
-                              alt="Reflective essay video thumbnail"
+                              src={paper.videoThumbnail}
+                              alt={`${paper.title} thumbnail`}
                               className="w-full object-cover h-32"
                             />
                             <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/60 transition-colors">
@@ -593,39 +668,25 @@ const Index = () => {
                                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-black ml-0.5"><path d="M8 5v14l11-7z"/></svg>
                               </div>
                             </div>
-                            <span className="absolute bottom-1 right-1 bg-black/80 text-primary font-mono text-xs px-1 rounded">3:56</span>
+                            {paper.videoBadge && (
+                              <span className="absolute bottom-1 right-1 bg-black/80 text-primary font-mono text-xs px-1 rounded">{paper.videoBadge}</span>
+                            )}
                           </a>
                         </div>
                       )}
                       <p className="text-muted-foreground/70 text-xs mb-3 font-mono">{paper.description}</p>
-                      {paper.missing ? (
-                        <div className="rounded border border-amber-500/40 bg-amber-500/10 px-3 py-2">
-                          <p className="text-[11px] font-mono text-amber-200">Original file not present in the repo yet.</p>
-                        </div>
-                      ) : (
-                        <div className="flex gap-2">
-                          {paper.videoUrl ? (
-                            <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
-                              <a href={paper.videoUrl} target="_blank" rel="noopener noreferrer">
-                                <ExternalLink className="mr-1" size={12} /> Watch
-                              </a>
-                            </Button>
-                          ) : (
-                            <>
-                              <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
-                                <a href={paper.file} target="_blank" rel="noopener noreferrer">
-                                  <ExternalLink className="mr-1" size={12} /> View
-                                </a>
-                              </Button>
-                              <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
-                                <a href={paper.file} download>
-                                  <Download className="mr-1" size={12} /> Download
-                                </a>
-                              </Button>
-                            </>
-                          )}
-                        </div>
+                      {paper.note && (
+                        <p className="text-[11px] font-mono text-primary/70 mb-3">{paper.note}</p>
                       )}
+                      <div className="flex flex-wrap gap-2">
+                        {paper.assets.map((asset) => (
+                          <Button key={asset.label} variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
+                            <a href={asset.href} target="_blank" rel="noopener noreferrer" download={asset.download}>
+                              <FileText className="mr-1" size={12} /> {asset.label}
+                            </a>
+                          </Button>
+                        ))}
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
@@ -644,22 +705,18 @@ const Index = () => {
                       </span>
                     </div>
                     <p className="text-muted-foreground/70 text-xs mb-4 font-mono">{item.description}</p>
-                    <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
-                      <a href={item.href} target="_blank" rel="noopener noreferrer">
-                        <FileText className="mr-1" size={12} /> {item.ctaLabel}
-                      </a>
-                    </Button>
+                    <div className="flex flex-wrap gap-2">
+                      {item.assets.map((asset) => (
+                        <Button key={asset.label} variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
+                          <a href={asset.href} target="_blank" rel="noopener noreferrer" download={asset.download}>
+                            <FileText className="mr-1" size={12} /> {asset.label}
+                          </a>
+                        </Button>
+                      ))}
+                    </div>
                   </CardContent>
                 </Card>
               ))}
-              <Card className="terminal-border bg-card/80 backdrop-blur-sm">
-                <CardContent className="p-5">
-                  <p className="text-xs uppercase tracking-[0.2em] text-primary/60 font-mono mb-3">What Still Needs Source Files</p>
-                  <p className="text-xs font-mono text-muted-foreground leading-relaxed">
-                    Two class items are now visible again in the section, but their original source artifacts are not present in this repo yet: the discussion post and the portfolio presentation. Once you give me those originals, I can wire them in exactly.
-                  </p>
-                </CardContent>
-              </Card>
             </div>
           </div>
         </div>
