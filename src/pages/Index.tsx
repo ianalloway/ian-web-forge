@@ -194,6 +194,50 @@ const caseStudyBullets = [
   'Next step: connect the same evaluation pattern to additional leagues and live data sources.',
 ];
 
+const academicWriting = [
+  {
+    title: 'BSIS Program Review',
+    description:
+      'A formal academic review of the BSIS program with recommendations, analysis, and structured written evaluation.',
+    href: '/papers/bsis-program-review-alloway.pdf',
+  },
+  {
+    title: 'IT News Essay',
+    description:
+      'A course essay focused on ratepayer protection, technology policy, and evidence-based argumentation.',
+    href: '/papers/it-news-essay-ratepayer-protection.pdf',
+  },
+  {
+    title: 'Capstone Event Report',
+    description:
+      'A polished class report connecting research, communication, and reflection into a final academic submission.',
+    href: '/papers/event-report-capstone.pdf',
+  },
+  {
+    title: 'Portfolio Conclusion',
+    description:
+      'A reflective wrap-up tying together course outcomes, writing growth, and professional direction.',
+    href: '/papers/portfolio-conclusion-lis4934.pdf',
+  },
+];
+
+const writingLinks = [
+  {
+    title: 'Bio and Career Goals',
+    description:
+      'A class-facing overview of academic goals, career direction, and the path behind this portfolio.',
+    href: '/papers/bio-and-career-goals.pdf',
+    ctaLabel: 'Read bio',
+  },
+  {
+    title: 'AllowayAI on Substack',
+    description:
+      'Long-form writing on ML, sports analytics, building products, and the occasional late-night idea that turned into a post.',
+    href: 'https://allowayai.substack.com',
+    ctaLabel: 'Visit Substack',
+  },
+];
+
 const quote = {
   text: 'Hired Ian to build a real-time data pipeline for our risk engine. He delivered ahead of schedule with FastAPI + Convex architecture that handles 50k events/min. Would hire again without hesitation.',
   person: 'Sarah K.',
@@ -261,6 +305,7 @@ const Index = () => {
           <div className="hidden md:flex items-center gap-5 text-sm font-mono">
             <a href="#featured" className="text-primary hover:text-primary/70 transition-colors">[WORK]</a>
             <a href="#case-study" className="text-primary hover:text-primary/70 transition-colors">[CASE_STUDY]</a>
+            <a href="#writing" className="text-primary hover:text-primary/70 transition-colors">[WRITING]</a>
             <a href="#why-hire-me" className="text-primary hover:text-primary/70 transition-colors">[WHY_ME]</a>
             <a href="#contact" className="text-primary hover:text-primary/70 transition-colors">[CONTACT]</a>
             <a href="/hireme" className="text-primary hover:text-primary/70 transition-colors">[/HIRE]</a>
@@ -486,6 +531,59 @@ const Index = () => {
         </div>
       </section>
 
+      <section id="writing" className="relative z-10 px-4 py-16">
+        <div className="mx-auto max-w-6xl grid gap-8 lg:grid-cols-[1.05fr_0.95fr] items-start">
+          <div>
+            <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-3">Writing</p>
+            <h2 className="text-3xl md:text-4xl font-semibold font-mono text-primary mb-4">Academic writing stays on the site for a reason</h2>
+            <p className="text-sm md:text-base font-mono text-muted-foreground leading-relaxed mb-6">
+              This portfolio is still hiring-focused, but it also needs to show the academic writing work behind it. These papers are here for class review, and the Substack stays visible because writing is part of how I think through technical work.
+            </p>
+            <div className="grid gap-4">
+              {academicWriting.map((item) => (
+                <Card key={item.title} className="border-primary/20 bg-card/70 backdrop-blur-sm">
+                  <CardContent className="p-5">
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h3 className="text-lg font-semibold font-mono text-primary">{item.title}</h3>
+                        <p className="text-sm font-mono text-muted-foreground leading-relaxed mt-2">{item.description}</p>
+                      </div>
+                      <a href={item.href} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/70 transition-colors shrink-0">
+                        <ExternalLink size={18} />
+                      </a>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+          <div className="space-y-4">
+            {writingLinks.map((item) => (
+              <Card key={item.title} className="border-primary/20 bg-card/80 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <p className="text-xs uppercase tracking-[0.2em] text-primary/60 font-mono mb-3">Writing Link</p>
+                  <h3 className="text-xl font-semibold font-mono text-primary mb-3">{item.title}</h3>
+                  <p className="text-sm font-mono text-muted-foreground leading-relaxed mb-5">{item.description}</p>
+                  <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+                    <a href={item.href} target="_blank" rel="noopener noreferrer">
+                      <FileText className="mr-2" size={16} /> {item.ctaLabel}
+                    </a>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+            <Card className="border-primary/20 bg-card/70 backdrop-blur-sm">
+              <CardContent className="p-5">
+                <p className="text-xs uppercase tracking-[0.2em] text-primary/60 font-mono mb-3">Class Context</p>
+                <p className="text-sm font-mono text-muted-foreground leading-relaxed">
+                  Keeping the academic writing visible here makes the portfolio useful in two directions at once: strong enough for hiring, and complete enough for class review.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       <section className="relative z-10 px-4 py-16">
         <div className="mx-auto max-w-6xl grid gap-8 lg:grid-cols-[0.95fr_1.05fr] items-start">
           <div>
@@ -598,6 +696,12 @@ const Index = () => {
           <div className="flex flex-wrap items-center gap-3">
             <a href="/papers/sports-ml-evaluation-case-study.html" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
               <FileText size={12} /> Case study
+            </a>
+            <a href="/papers/bsis-program-review-alloway.pdf" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
+              <GraduationCap size={12} /> Academic writing
+            </a>
+            <a href="https://allowayai.substack.com" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
+              <FileText size={12} /> AllowayAI
             </a>
             <a href="/toolkit" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
               <Package size={12} /> Toolkit
