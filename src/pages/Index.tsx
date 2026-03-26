@@ -194,47 +194,68 @@ const caseStudyBullets = [
   'Next step: connect the same evaluation pattern to additional leagues and live data sources.',
 ];
 
-const academicWriting = [
+const academicAssignments: { title: string; description: string; file?: string; videoUrl?: string; category: string; missing?: boolean }[] = [
   {
-    title: 'BSIS Program Review',
+    title: 'Assignment: Information Policy/Technology in the News',
     description:
-      'A formal academic review of the BSIS program with recommendations, analysis, and structured written evaluation.',
-    href: '/papers/bsis-program-review-alloway.pdf',
+      'The original IT news assignment focused on AI data center energy costs and ratepayer protection in a policy context.',
+    file: '/papers/it-news-essay-ratepayer-protection.pdf',
+    category: 'Assignment',
   },
   {
-    title: 'IT News Essay',
+    title: 'Assignment: BSIS Program Review',
     description:
-      'A course essay focused on ratepayer protection, technology policy, and evidence-based argumentation.',
-    href: '/papers/it-news-essay-ratepayer-protection.pdf',
+      'The original BSIS program review assignment covering the program structure, strengths, concentration paths, and recommendations.',
+    file: '/papers/bsis-program-review-alloway.pdf',
+    category: 'Assignment',
   },
   {
-    title: 'Capstone Event Report',
+    title: 'Discussion Question 2: Portfolio Peer Feedback and Support',
     description:
-      'A polished class report connecting research, communication, and reflection into a final academic submission.',
-    href: '/papers/event-report-capstone.pdf',
+      'The discussion assignment is listed here in the academic section, but the original source file is not currently in this repo.',
+    category: 'Discussion',
+    missing: true,
   },
   {
-    title: 'Portfolio Conclusion',
+    title: 'GEA#2 Assignment: Reflective Essay',
     description:
-      'A reflective wrap-up tying together course outcomes, writing growth, and professional direction.',
-    href: '/papers/portfolio-conclusion-lis4934.pdf',
+      'The original reflective essay remains available in its video format, matching the earlier portfolio presentation style.',
+    videoUrl: 'https://www.youtube.com/watch?v=kzOzxch1-hE&t=236s',
+    category: 'Assignment',
+  },
+  {
+    title: 'Portfolio Presentations',
+    description:
+      'The portfolio presentation entry is restored in the section, but the original presentation file or recording is not currently in this repo.',
+    category: 'Presentation',
+    missing: true,
   },
 ];
 
-const writingLinks = [
+const writingResources: { title: string; description: string; href: string; ctaLabel: string; category: string }[] = [
+  {
+    title: 'Portfolio Conclusion — LIS 4934 Senior Capstone',
+    description:
+      'A reflective capstone conclusion that ties together the site, course work, and the portfolio as a whole.',
+    href: '/papers/portfolio-conclusion-lis4934.pdf',
+    ctaLabel: 'View PDF',
+    category: 'Capstone',
+  },
   {
     title: 'Bio and Career Goals',
     description:
-      'A class-facing overview of academic goals, career direction, and the path behind this portfolio.',
+      'A supporting academic document with your biography, goals, and portfolio context.',
     href: '/papers/bio-and-career-goals.pdf',
-    ctaLabel: 'Read bio',
+    ctaLabel: 'View PDF',
+    category: 'Portfolio',
   },
   {
     title: 'AllowayAI on Substack',
     description:
-      'Long-form writing on ML, sports analytics, building products, and the occasional late-night idea that turned into a post.',
+      'Your original long-form writing outlet for technical essays, build notes, and public-facing writing.',
     href: 'https://allowayai.substack.com',
     ctaLabel: 'Visit Substack',
+    category: 'Writing',
   },
 ];
 
@@ -531,55 +552,115 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="writing" className="relative z-10 px-4 py-16">
-        <div className="mx-auto max-w-6xl grid gap-8 lg:grid-cols-[1.05fr_0.95fr] items-start">
-          <div>
-            <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-3">Writing</p>
-            <h2 className="text-3xl md:text-4xl font-semibold font-mono text-primary mb-4">Academic writing stays on the site for a reason</h2>
-            <p className="text-sm md:text-base font-mono text-muted-foreground leading-relaxed mb-6">
-              This portfolio is still hiring-focused, but it also needs to show the academic writing work behind it. These papers are here for class review, and the Substack stays visible because writing is part of how I think through technical work.
+      <section id="writing" className="py-16 px-4 bg-primary/5 relative z-10">
+        <div className="max-w-6xl mx-auto">
+          <div className="max-w-3xl mb-8">
+            <h2 className="text-2xl font-bold mb-4 matrix-text font-mono text-primary">
+              <GraduationCap className="inline mr-2" size={24} />
+              [ACADEMIC_WRITING]
+            </h2>
+            <p className="text-muted-foreground font-mono mb-3 text-sm">
+              &gt; Restored class-facing assignments and writing artifacts in the original portfolio card format.
             </p>
-            <div className="grid gap-4">
-              {academicWriting.map((item) => (
-                <Card key={item.title} className="border-primary/20 bg-card/70 backdrop-blur-sm">
-                  <CardContent className="p-5">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <h3 className="text-lg font-semibold font-mono text-primary">{item.title}</h3>
-                        <p className="text-sm font-mono text-muted-foreground leading-relaxed mt-2">{item.description}</p>
+            <p className="text-muted-foreground/80 font-mono text-xs">
+              The assignment names below match your class list so they are easy to verify during review.
+            </p>
+          </div>
+
+          <div className="grid xl:grid-cols-[1.15fr_0.85fr] gap-8 items-start">
+            <div>
+              <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-4">Assignments</p>
+              <div className="grid md:grid-cols-2 gap-4">
+                {academicAssignments.map((paper) => (
+                  <Card key={paper.title} className="terminal-border bg-card/80 backdrop-blur-sm hover:scale-[1.02] transition-transform">
+                    <CardContent className="p-4">
+                      <div className="flex justify-between items-start gap-3 mb-2">
+                        <h3 className="text-primary font-bold font-mono text-sm leading-snug">{paper.title}</h3>
+                        <span className="px-2 py-0.5 text-xs terminal-border rounded font-mono text-primary/80 shrink-0">
+                          {paper.category}
+                        </span>
                       </div>
-                      <a href={item.href} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/70 transition-colors shrink-0">
-                        <ExternalLink size={18} />
-                      </a>
+                      {paper.videoUrl && (
+                        <div className="mb-3 rounded overflow-hidden border border-primary/30">
+                          <a href={paper.videoUrl} target="_blank" rel="noopener noreferrer" className="block relative group">
+                            <img
+                              src="https://img.youtube.com/vi/kzOzxch1-hE/hqdefault.jpg"
+                              alt="Reflective essay video thumbnail"
+                              className="w-full object-cover h-32"
+                            />
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/60 transition-colors">
+                              <div className="w-10 h-10 rounded-full bg-primary/90 flex items-center justify-center">
+                                <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-black ml-0.5"><path d="M8 5v14l11-7z"/></svg>
+                              </div>
+                            </div>
+                            <span className="absolute bottom-1 right-1 bg-black/80 text-primary font-mono text-xs px-1 rounded">3:56</span>
+                          </a>
+                        </div>
+                      )}
+                      <p className="text-muted-foreground/70 text-xs mb-3 font-mono">{paper.description}</p>
+                      {paper.missing ? (
+                        <div className="rounded border border-amber-500/40 bg-amber-500/10 px-3 py-2">
+                          <p className="text-[11px] font-mono text-amber-200">Original file not present in the repo yet.</p>
+                        </div>
+                      ) : (
+                        <div className="flex gap-2">
+                          {paper.videoUrl ? (
+                            <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
+                              <a href={paper.videoUrl} target="_blank" rel="noopener noreferrer">
+                                <ExternalLink className="mr-1" size={12} /> Watch
+                              </a>
+                            </Button>
+                          ) : (
+                            <>
+                              <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
+                                <a href={paper.file} target="_blank" rel="noopener noreferrer">
+                                  <ExternalLink className="mr-1" size={12} /> View
+                                </a>
+                              </Button>
+                              <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
+                                <a href={paper.file} download>
+                                  <Download className="mr-1" size={12} /> Download
+                                </a>
+                              </Button>
+                            </>
+                          )}
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono">Supporting Writing</p>
+              {writingResources.map((item) => (
+                <Card key={item.title} className="terminal-border bg-card/80 backdrop-blur-sm">
+                  <CardContent className="p-5">
+                    <div className="flex justify-between items-start gap-3 mb-2">
+                      <h3 className="text-primary font-bold font-mono text-sm leading-snug">{item.title}</h3>
+                      <span className="px-2 py-0.5 text-xs terminal-border rounded font-mono text-primary/80 shrink-0">
+                        {item.category}
+                      </span>
                     </div>
+                    <p className="text-muted-foreground/70 text-xs mb-4 font-mono">{item.description}</p>
+                    <Button variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
+                      <a href={item.href} target="_blank" rel="noopener noreferrer">
+                        <FileText className="mr-1" size={12} /> {item.ctaLabel}
+                      </a>
+                    </Button>
                   </CardContent>
                 </Card>
               ))}
-            </div>
-          </div>
-          <div className="space-y-4">
-            {writingLinks.map((item) => (
-              <Card key={item.title} className="border-primary/20 bg-card/80 backdrop-blur-sm">
-                <CardContent className="p-6">
-                  <p className="text-xs uppercase tracking-[0.2em] text-primary/60 font-mono mb-3">Writing Link</p>
-                  <h3 className="text-xl font-semibold font-mono text-primary mb-3">{item.title}</h3>
-                  <p className="text-sm font-mono text-muted-foreground leading-relaxed mb-5">{item.description}</p>
-                  <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
-                    <a href={item.href} target="_blank" rel="noopener noreferrer">
-                      <FileText className="mr-2" size={16} /> {item.ctaLabel}
-                    </a>
-                  </Button>
+              <Card className="terminal-border bg-card/80 backdrop-blur-sm">
+                <CardContent className="p-5">
+                  <p className="text-xs uppercase tracking-[0.2em] text-primary/60 font-mono mb-3">What Still Needs Source Files</p>
+                  <p className="text-xs font-mono text-muted-foreground leading-relaxed">
+                    Two class items are now visible again in the section, but their original source artifacts are not present in this repo yet: the discussion post and the portfolio presentation. Once you give me those originals, I can wire them in exactly.
+                  </p>
                 </CardContent>
               </Card>
-            ))}
-            <Card className="border-primary/20 bg-card/70 backdrop-blur-sm">
-              <CardContent className="p-5">
-                <p className="text-xs uppercase tracking-[0.2em] text-primary/60 font-mono mb-3">Class Context</p>
-                <p className="text-sm font-mono text-muted-foreground leading-relaxed">
-                  Keeping the academic writing visible here makes the portfolio useful in two directions at once: strong enough for hiring, and complete enough for class review.
-                </p>
-              </CardContent>
-            </Card>
+            </div>
           </div>
         </div>
       </section>
