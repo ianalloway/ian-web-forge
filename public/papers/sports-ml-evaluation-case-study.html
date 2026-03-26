@@ -3,62 +3,284 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ian Alloway — Sports ML Evaluation &amp; Calibration (Case Study)</title>
+  <title>Ian Alloway — Sports ML Evaluation Case Study</title>
   <style>
-    @page { margin: 0.75in; size: letter; }
+    :root {
+      --bg: #07130d;
+      --panel: #0d1d15;
+      --panel-2: #10271b;
+      --text: #eafff1;
+      --muted: #a9cdb5;
+      --line: rgba(30, 215, 96, 0.24);
+      --accent: #1ed760;
+      --accent-2: #8df0b0;
+    }
+
+    @page { margin: 0.65in; size: letter; }
     * { box-sizing: border-box; }
+    html { background: var(--bg); }
     body {
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: 11pt;
-      line-height: 1.45;
-      color: #1a1a1a;
-      max-width: 700px;
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(30, 215, 96, 0.12), transparent 30%),
+        linear-gradient(180deg, #07130d 0%, #06100b 100%);
+      line-height: 1.55;
+      padding: 32px 20px 56px;
+    }
+
+    .page {
+      max-width: 880px;
       margin: 0 auto;
+    }
+
+    .hero,
+    .section,
+    .links {
+      background: rgba(13, 29, 21, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.26);
+    }
+
+    .hero {
+      padding: 30px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-family: "SFMono-Regular", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(31px, 5vw, 48px);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+    }
+
+    .lede {
+      margin: 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta span,
+    .meta a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1.05fr 0.95fr;
+      margin-bottom: 18px;
+    }
+
+    .section {
       padding: 24px;
     }
-    h1 { font-size: 18pt; margin: 0 0 6px; letter-spacing: -0.02em; }
-    .meta { font-size: 10pt; color: #444; margin-bottom: 18px; }
-    h2 { font-size: 12pt; margin: 18px 0 8px; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
-    p { margin: 0 0 10px; }
-    ul { margin: 0 0 10px; padding-left: 1.15em; }
-    li { margin-bottom: 4px; }
-    .links { font-size: 10pt; margin-top: 20px; padding-top: 12px; border-top: 1px solid #ddd; }
-    .links a { color: #0645ad; text-decoration: none; }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      font-family: "SFMono-Regular", ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    p { margin: 0 0 12px; color: var(--muted); }
+    p strong { color: var(--text); }
+    ul { margin: 0; padding-left: 18px; color: var(--muted); }
+    li { margin-bottom: 9px; }
+
+    .proof {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .proof-card {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(16, 39, 27, 0.88);
+      border: 1px solid var(--line);
+    }
+
+    .proof-card strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .proof-card span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .callout {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(30, 215, 96, 0.08);
+      border: 1px solid rgba(30, 215, 96, 0.18);
+      color: var(--text);
+    }
+
+    .stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: var(--accent-2);
+      font-family: "SFMono-Regular", ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: rgba(16, 39, 27, 0.75);
+    }
+
+    .links {
+      padding: 24px;
+    }
+
+    .links a {
+      color: var(--accent-2);
+      text-decoration: none;
+    }
+
     .links a:hover { text-decoration: underline; }
-    kbd { font-family: ui-monospace, monospace; font-size: 0.92em; }
+    .small { font-size: 13px; color: var(--muted); }
+
     @media print {
-      body { padding: 0; }
+      body {
+        background: #ffffff;
+        color: #111;
+        padding: 0;
+      }
+      .hero, .section, .links {
+        box-shadow: none;
+        background: #fff;
+        border-color: #d9d9d9;
+      }
+      .lede, p, li, .small, .meta span, .meta a, .proof-card span { color: #333; }
+      h1, strong { color: #111; }
+      h2, .eyebrow, .pill, .links a { color: #0a6a2f; }
+      .callout {
+        background: #f4fbf6;
+        border-color: #b9e4c7;
+        color: #111;
+      }
       a[href]:after { content: ""; }
+    }
+
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      .proof { grid-template-columns: 1fr; }
+      body { padding: 18px 14px 40px; }
+      .hero, .section, .links { border-radius: 18px; }
     }
   </style>
 </head>
 <body>
-  <h1>Sports ML: From Predictions to Honest Evaluation</h1>
-  <p class="meta"><strong>Ian Alloway</strong> — ML Engineer · <a href="mailto:ian@allowayllc.com">ian@allowayllc.com</a> · <a href="https://ianalloway.xyz">ianalloway.xyz</a><br />March 2026 · One-page employer case study</p>
+  <main class="page">
+    <section class="hero">
+      <div class="eyebrow">Employer Case Study</div>
+      <h1>Sports ML: evaluation before ego</h1>
+      <p class="lede">A compact example of how I build model-backed decision systems: reusable Python primitives, an evaluation dashboard, and reporting that surfaces calibration, rolling accuracy, and CLV-style behavior instead of hiding behind one flattering number.</p>
+      <div class="meta">
+        <span><strong>Ian Alloway</strong></span>
+        <span>ML Engineer / Data Scientist</span>
+        <a href="mailto:ian@allowayllc.com">ian@allowayllc.com</a>
+        <a href="https://ianalloway.xyz">ianalloway.xyz</a>
+        <span>March 2026</span>
+      </div>
+    </section>
 
-  <h2>Problem</h2>
-  <p>Sports and markets models are easy to oversell with a single headline number (for example “accuracy”). Hiring managers and traders need <strong>calibration</strong>, <strong>time stability</strong>, and <strong>closing-line-adjacent language</strong>—the same bar as serious forecasting and risk workflows.</p>
+    <div class="grid">
+      <section class="section">
+        <h2>Problem</h2>
+        <p>Sports models are easy to oversell with a headline accuracy number. That is rarely enough for a serious team. If the model is going to influence decisions, you need to know whether it is <strong>calibrated</strong>, whether the behavior is <strong>stable over time</strong>, and whether the evaluation language resembles the way real forecasting and risk work is reviewed.</p>
+        <div class="callout">
+          <strong>My working bias:</strong> if a dashboard makes the model look amazing but hides uncertainty, drift, or market context, it is probably a sales page, not an evaluation layer.
+        </div>
+      </section>
 
-  <h2>Approach</h2>
-  <p>I ship a small, production-shaped stack that separates <strong>model primitives</strong> from <strong>evaluation UX</strong>:</p>
-  <ul>
-    <li><strong>Primitives library</strong> (<kbd>nba-edge</kbd> on PyPI; source <a href="https://github.com/ianalloway/nba-ratings">nba-ratings</a>): Elo updates, logistic win probability, implied probability and Kelly helpers—stdlib-first, test-backed, reusable across services.</li>
-    <li><strong>Odds drift watch</strong> (<a href="https://github.com/ianalloway/odds-drift-watch">odds-drift-watch</a>): monitor sportsbook line movement via FastAPI and webhook alerts for research and decision-support workflows.</li>
-    <li><strong>Evaluation dashboard</strong> (<a href="https://github.com/ianalloway/nba-clv-dashboard">nba-clv-dashboard</a>): FastAPI serves metrics JSON; Chart.js surfaces calibration, rolling accuracy, and a CLV-oriented summary block. Swap in real backtest output without rewriting the UI.</li>
-  </ul>
+      <section class="section">
+        <h2>Outcome</h2>
+        <p>This project gives employers a fast way to see how I think. I did not just train a model. I built the layer around it so another person can inspect quality, reason about tradeoffs, and decide whether the signal is real enough to trust.</p>
+        <div class="proof">
+          <div class="proof-card">
+            <strong>1</strong>
+            <span>dashboard that prioritizes model honesty</span>
+          </div>
+          <div class="proof-card">
+            <strong>3</strong>
+            <span>public repos tied into one coherent workflow</span>
+          </div>
+          <div class="proof-card">
+            <strong>1</strong>
+            <span>clear hiring narrative: evaluation-first ML systems</span>
+          </div>
+        </div>
+      </section>
+    </div>
 
-  <h2>Outcome</h2>
-  <p>A coherent narrative for employers: I build <strong>correctness-minded ML</strong> in a domain where leakage and vanity metrics are common. The dashboard is deliberately an <strong>evaluation honesty demo</strong>—not a sports integration—mirroring how strong teams review models before production.</p>
+    <div class="grid">
+      <section class="section">
+        <h2>Approach</h2>
+        <ul>
+          <li><strong>Primitives library:</strong> <code>nba-ratings</code> / <code>nba-edge</code> packages Elo updates, logistic win probability, implied probability math, and Kelly helpers into reusable, test-backed Python primitives.</li>
+          <li><strong>Monitoring layer:</strong> <code>odds-drift-watch</code> tracks meaningful sportsbook movement via FastAPI and webhooks for research and decision-support use cases.</li>
+          <li><strong>Evaluation UI:</strong> <code>nba-clv-dashboard</code> surfaces calibration, rolling accuracy, Brier score, and CLV-oriented reporting in a way that can swap in real backtest output without rewriting the interface.</li>
+        </ul>
+      </section>
 
-  <h2>Stack</h2>
-  <p>Python · FastAPI · Chart.js · pytest · ruff · GitHub Actions</p>
+      <section class="section">
+        <h2>Why It Matters</h2>
+        <p>The strongest signal here is not “sports betting.” It is that I know how to build <strong>evaluation-first analytics</strong> in a noisy domain where leakage, overconfidence, and vanity metrics are common. The same thinking translates well to forecasting, experimentation, fraud, risk, and decision-support products.</p>
+        <div class="stack">
+          <span class="pill">Python</span>
+          <span class="pill">FastAPI</span>
+          <span class="pill">Chart.js</span>
+          <span class="pill">pytest</span>
+          <span class="pill">ruff</span>
+          <span class="pill">GitHub Actions</span>
+        </div>
+      </section>
+    </div>
 
-  <div class="links">
-    <strong>Links:</strong>
-    Dashboard repo — <a href="https://github.com/ianalloway/nba-clv-dashboard">github.com/ianalloway/nba-clv-dashboard</a><br />
-    Primitives — <a href="https://github.com/ianalloway/nba-ratings">github.com/ianalloway/nba-ratings</a><br />
-    Portfolio — <a href="https://ianalloway.xyz">ianalloway.xyz</a>
-  </div>
-  <p class="meta" style="margin-top:16px"><em>To save as PDF: File → Print → Save as PDF (Chrome or Safari).</em></p>
+    <section class="links">
+      <h2>Links</h2>
+      <p><a href="https://github.com/ianalloway/nba-clv-dashboard">Dashboard repo</a> · <a href="https://github.com/ianalloway/nba-ratings">Primitives repo</a> · <a href="https://github.com/ianalloway/odds-drift-watch">Odds monitoring repo</a></p>
+      <p class="small">To save as PDF: print this page from Chrome or Safari and choose “Save as PDF.”</p>
+    </section>
+  </main>
 </body>
 </html>

@@ -1,8 +1,93 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { Github, ExternalLink, Mail, Linkedin, Terminal, Brain, Code, GraduationCap, Bot, Download, CheckCircle2, Zap, Target, TrendingUp, Shield, Database, Cloud, Eye } from 'lucide-react';
+import {
+  ArrowRight,
+  BarChart3,
+  Briefcase,
+  CheckCircle2,
+  Download,
+  ExternalLink,
+  FileText,
+  Github,
+  GraduationCap,
+  Linkedin,
+  Mail,
+  ShieldCheck,
+  Target,
+  Terminal,
+} from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
+
+const fitPoints = [
+  'ML Engineer roles where evaluation quality matters as much as model lift.',
+  'Applied AI teams that need APIs, dashboards, and product-facing delivery around the model.',
+  'Data science or analytics engineering roles with forecasting, experimentation, risk, or decision-support work.',
+  'Teams that want someone who can ship clean public proof instead of just talking about what they could build.',
+];
+
+const outcomes = [
+  { label: '40%', detail: 'client efficiency improvement through analytics and automation work' },
+  { label: '30%', detail: 'fraud reduction support from anomaly detection and blockchain analytics work' },
+  { label: '4', detail: 'flagship public projects that show modeling, evaluation, deployment, and tooling' },
+  { label: '2026', detail: 'B.S. in Information Science completion, with M.S. in AI starting the same year' },
+];
+
+const featuredWork = [
+  {
+    name: 'AI Advantage Sports',
+    image: '/proof/ai-advantage-screenshot.png',
+    href: 'https://github.com/ianalloway/ai-advantage',
+    stack: 'Python, React, XGBoost, FastAPI',
+    whyItMatters:
+      'Shows product thinking and ML delivery together: model-backed recommendations, real UI, and something users can actually evaluate.',
+  },
+  {
+    name: 'NBA CLV Dashboard',
+    image: '/proof/nba-clv-dashboard.svg',
+    href: 'https://github.com/ianalloway/nba-clv-dashboard',
+    stack: 'FastAPI, Chart.js, Python',
+    whyItMatters:
+      'A concrete example of how I build evaluation-first systems instead of hiding behind headline accuracy.',
+  },
+  {
+    name: 'Sports Betting ML',
+    image: '/proof/sports-betting-ml-demo.gif',
+    href: 'https://github.com/ianalloway/sports-betting-ml',
+    stack: 'Python, FastAPI, MLOps, Hugging Face',
+    whyItMatters:
+      'Demonstrates full workflow ownership from feature engineering to deployment and public demo packaging.',
+  },
+  {
+    name: 'Repo Health',
+    image: '/proof/repo-health.svg',
+    href: 'https://github.com/ianalloway/repo-health',
+    stack: 'Python, CLI, GitHub APIs',
+    whyItMatters:
+      'Useful evidence that I can build practical tools with strong developer UX outside of ML too.',
+  },
+];
+
+const workStyle = [
+  'I build the layer around the model, not just the model itself.',
+  'I favor evaluation honesty over inflated metrics and glossy dashboards.',
+  'I document and package work so another engineer can actually use it.',
+  'I am comfortable turning vague ideas into something stakeholders can click, inspect, and discuss.',
+];
+
+const education = [
+  {
+    title: 'B.S. Information Science',
+    sub: 'University of South Florida',
+    meta: 'Expected May 2026',
+  },
+  {
+    title: 'M.S. Artificial Intelligence',
+    sub: 'University of South Florida',
+    meta: 'Starting August 2026',
+  },
+];
 
 const HireMe = () => {
   const [mounted, setMounted] = useState(false);
@@ -11,210 +96,130 @@ const HireMe = () => {
     setMounted(true);
   }, []);
 
-  const skills = [
-    { name: 'Python', level: 95 },
-    { name: 'Machine Learning', level: 90 },
-    { name: 'TensorFlow / PyTorch', level: 85 },
-    { name: 'SQL', level: 90 },
-    { name: 'Data Analytics', level: 95 },
-    { name: 'Deep Learning', level: 85 },
-    { name: 'Power BI / Tableau', level: 88 },
-    { name: 'Docker', level: 80 },
-    { name: 'Computer Vision (YOLOv8)', level: 82 },
-    { name: 'NLP', level: 85 },
-    { name: 'FastAPI / React', level: 88 },
-  ];
-
-  const stack = [
-    { icon: Brain, name: 'AI/ML', desc: 'TensorFlow, PyTorch, XGBoost, Scikit-learn' },
-    { icon: Code, name: 'Full-Stack', desc: 'Python, React, TypeScript, FastAPI' },
-    { icon: Database, name: 'Data', desc: 'PostgreSQL, SQL, Pandas, Redis' },
-    { icon: Cloud, name: 'Cloud', desc: 'AWS, Docker, Git' },
-    { icon: Eye, name: 'Vision', desc: 'YOLOv8, OpenCV, Computer Vision' },
-    { icon: Terminal, name: 'Automation', desc: 'OpenClaw, LangChain, Agents' },
-  ];
-
-  const projects = [
-    {
-      name: 'NBA CLV dashboard (flagship)',
-      description: 'Employer-facing eval UI: calibration, rolling accuracy, CLV block — demo JSON, swap for your backtests.',
-      tech: ['FastAPI', 'Chart.js', 'Python'],
-      url: 'https://github.com/ianalloway/nba-clv-dashboard',
-    },
-    {
-      name: 'NBA ratings / nba-edge',
-      description: 'Test-backed primitives: Elo, logistic win prob, Kelly helpers (PyPI package; repo nba-ratings).',
-      tech: ['Python', 'Elo', 'Kelly'],
-      url: 'https://github.com/ianalloway/nba-ratings',
-    },
-    {
-      name: 'Odds drift watch',
-      description: 'Webhook-based line-move monitoring with FastAPI and SQLite.',
-      tech: ['FastAPI', 'SQLite', 'Sports'],
-      url: 'https://github.com/ianalloway/odds-drift-watch',
-    },
-    {
-      name: 'AI Advantage Sports',
-      description: 'Sports betting platform with XGBoost ML predictions. 68.3% accuracy.',
-      tech: ['Python', 'XGBoost', 'React'],
-      url: 'https://aiadvantagesports.com',
-    },
-    {
-      name: 'Repo Health',
-      description: 'CLI that scores repo quality across README, CI, licensing, and maintenance signals.',
-      tech: ['Python', 'CLI', 'GitHub'],
-      url: 'https://github.com/ianalloway/repo-health',
-    },
-    {
-      name: 'Backtest report generator',
-      description: 'Static HTML backtest reports from evaluation JSON with calibration and CLV views.',
-      tech: ['Python', 'Reporting', 'MLOps'],
-      url: 'https://github.com/ianalloway/backtest-report-gen',
-    },
-    {
-      name: 'Mutant Intelligence',
-      description: 'MAYC NFT AI agents with trait-based personalities.',
-      tech: ['React', 'Web3.js', 'LLMs'],
-      url: 'https://mutantintelligence.com',
-    },
-    {
-      name: 'macOS Disk Cleanup',
-      description: 'Bash CLI + documented algorithm for safe cache cleanup on macOS; dry-run and ShellCheck CI.',
-      tech: ['Bash', 'macOS', 'GitHub Actions'],
-      url: 'https://github.com/ianalloway/macos-disk-cleanup',
-    },
-    {
-      name: 'OSS toolkit (agents, MLOps, sports)',
-      description:
-        'Shipped public repos across sports analytics, evaluation dashboards, reporting, and developer tooling with clean READMEs and CI.',
-      tech: ['Python', 'FastAPI', 'Bash', 'GitHub Actions'],
-      url: 'https://github.com/ianalloway?tab=repositories',
-    },
-  ];
-
-  const stats = [
-    { value: '68%', label: 'ML Model Accuracy' },
-    { value: '40%', label: 'Client Efficiency Boost' },
-    { value: '30%', label: 'Fraud Reduction' },
-    { value: '9', label: 'Open Source Skills' },
-  ];
-
   return (
-    <div className="min-h-screen bg-black text-green-400 font-mono">
+    <div className="min-h-screen bg-black text-green-400 font-mono overflow-x-hidden">
       <MatrixRain />
-      
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-green-500/30">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-          <a href="/" className="text-xl font-bold tracking-tighter hover:text-green-300 transition-colors">
-            IAN.ALLOWAY
+
+      <header className="fixed top-0 left-0 right-0 z-50 bg-black/82 backdrop-blur-md border-b border-green-500/20">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
+          <a href="/" className="text-lg md:text-xl font-bold tracking-tight hover:text-green-300 transition-colors flex items-center gap-2">
+            <Terminal size={18} /> IAN.ALLOWAY
           </a>
-          <nav className="flex flex-wrap gap-4 md:gap-6 text-sm">
-            <a href="/toolkit" className="hover:text-green-300 transition-colors">TOOLKIT</a>
-            <a href="#skills" className="hover:text-green-300 transition-colors">SKILLS</a>
-            <a href="#projects" className="hover:text-green-300 transition-colors">PROJECTS</a>
-            <a href="#stats" className="hover:text-green-300 transition-colors">RESULTS</a>
+          <nav className="hidden md:flex items-center gap-6 text-sm text-green-400/80">
+            <a href="#fit" className="hover:text-green-300 transition-colors">FIT</a>
+            <a href="#proof" className="hover:text-green-300 transition-colors">PROOF</a>
+            <a href="#approach" className="hover:text-green-300 transition-colors">APPROACH</a>
             <a href="#contact" className="hover:text-green-300 transition-colors">CONTACT</a>
           </nav>
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="pt-32 pb-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative z-10 px-4 pt-28 pb-16 md:pt-36 md:pb-24">
+        <div className="max-w-6xl mx-auto grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div className={`transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-              <span className="text-green-500">&lt;</span>
-              Hire Me
-              <span className="text-green-500">/&gt;</span>
+            <Badge className="mb-5 bg-green-500/10 text-green-300 border-green-500/30 hover:bg-green-500/10">
+              OPEN TO WORK • ML Engineer / Data Scientist
+            </Badge>
+            <h1 className="text-5xl md:text-7xl font-bold leading-[0.95] tracking-tight text-white mb-5">
+              Hire me for the part after the model too.
             </h1>
-            <p className="text-xl md:text-2xl text-green-400/70 mb-8 max-w-2xl mx-auto">
-              Flagship: sports ML stack — calibration-first evaluation (FastAPI + Chart.js), Elo/Kelly primitives (PyPI: <kbd className="text-green-300">nba-edge</kbd>), line-shopping CLI.
+            <p className="text-lg md:text-xl text-green-400/75 max-w-3xl mb-5">
+              I build evaluation-first analytics and decision-support products: models, APIs, dashboards, reporting, and the surrounding product layer that makes the work usable.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <a href="/papers/sports-ml-evaluation-case-study.html" target="_blank" rel="noopener noreferrer" className="px-8 py-3 border border-green-500 text-green-400 hover:bg-green-500/10 transition-colors">
-                Case study (PDF via print)
-              </a>
-              <a href="#contact" className="px-8 py-3 bg-green-500 text-black font-bold hover:bg-green-400 transition-colors">
-                Get In Touch
-              </a>
-              <a 
-                href="https://github.com/ianalloway/Resume/raw/main/Ian_Alloway_Resume_CV.docx" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-8 py-3 border border-green-500 text-green-400 hover:bg-green-500/10 transition-colors flex items-center gap-2"
-              >
-                <Download size={18} />
-                Download Resume
-              </a>
+            <p className="text-sm md:text-base text-green-400/65 max-w-2xl leading-relaxed mb-8">
+              Best fit: ML engineering, applied AI, analytics engineering, and data science roles where someone needs more than a notebook and a nice chart. That is probably also why my favorite project category is “things that keep dashboards honest.”
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Button className="bg-green-500 text-black hover:bg-green-400 font-mono" asChild>
+                <a href="mailto:ian@allowayllc.com">
+                  <Mail className="mr-2" size={16} /> Contact Me
+                </a>
+              </Button>
+              <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
+                <a href="/Ian_Alloway_Resume_CV.pdf" download>
+                  <Download className="mr-2" size={16} /> Download Resume
+                </a>
+              </Button>
+              <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
+                <a href="/papers/sports-ml-evaluation-case-study.html" target="_blank" rel="noopener noreferrer">
+                  <FileText className="mr-2" size={16} /> View Case Study
+                </a>
+              </Button>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Stats */}
-      <section id="stats" className="py-16 px-4 bg-green-500/5">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, i) => (
-              <div key={i} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-green-400 mb-2">{stat.value}</div>
-                <div className="text-green-400/60 text-sm">{stat.label}</div>
+          <Card className="border-green-500/20 bg-green-500/5 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <p className="text-xs uppercase tracking-[0.2em] text-green-400/65 mb-4">The Simple Pitch</p>
+              <div className="space-y-4 text-sm text-green-400/75 leading-relaxed">
+                <p>I build applied ML systems that are easier to trust because the evaluation layer is part of the work, not an afterthought.</p>
+                <p>My public proof is strongest in sports analytics, forecasting-style tooling, and developer utilities, but the underlying skill transfers well to risk, experimentation, fraud, and product analytics.</p>
+                <p>Currently finishing my B.S. in Information Science and starting an M.S. in Artificial Intelligence in August 2026.</p>
               </div>
-            ))}
-          </div>
+              <div className="mt-6 flex flex-wrap gap-3 text-sm">
+                <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">
+                  <Github size={15} /> GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/ianit" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">
+                  <Linkedin size={15} /> LinkedIn
+                </a>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
-      {/* Stack */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">
-            <span className="text-green-500">#</span> Tech Stack
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {stack.map((item, i) => (
-              <Card key={i} className="bg-green-500/5 border-green-500/20 hover:border-green-500/50 transition-colors">
-                <CardContent className="p-6">
-                  <item.icon className="w-8 h-8 text-green-400 mb-4" />
-                  <h3 className="text-lg font-bold mb-2">{item.name}</h3>
-                  <p className="text-green-400/60 text-sm">{item.desc}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+      <section id="fit" className="relative z-10 px-4 pb-16">
+        <div className="max-w-6xl mx-auto grid gap-4 md:grid-cols-2">
+          {fitPoints.map((point) => (
+            <div key={point} className="rounded-2xl border border-green-500/20 bg-green-500/5 px-5 py-5 backdrop-blur-sm flex gap-3">
+              <Target size={18} className="text-green-300 mt-0.5 shrink-0" />
+              <p className="text-sm text-green-400/78 leading-relaxed">{point}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Projects */}
-      <section id="projects" className="py-20 px-4 bg-green-500/5">
+      <section className="relative z-10 px-4 py-16 bg-green-500/5">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+          {outcomes.map((item) => (
+            <Card key={item.label} className="border-green-500/20 bg-black/50">
+              <CardContent className="p-5">
+                <div className="text-3xl md:text-4xl font-bold text-white mb-2">{item.label}</div>
+                <p className="text-sm text-green-400/70 leading-relaxed">{item.detail}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section id="proof" className="relative z-10 px-4 py-16">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">
-            <span className="text-green-500">#</span> Featured Projects
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {projects.map((project, i) => (
-              <Card key={i} className="bg-black border-green-500/20 hover:border-green-500/50 transition-colors group">
+          <div className="max-w-3xl mb-10">
+            <p className="text-xs uppercase tracking-[0.2em] text-green-400/65 mb-3">Proof</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">The work that makes the strongest hiring case</h2>
+            <p className="text-sm md:text-base text-green-400/72 leading-relaxed">
+              These projects show the combination I want teams to notice: applied ML, evaluation discipline, product-minded implementation, and clean developer delivery.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            {featuredWork.map((project) => (
+              <Card key={project.name} className="overflow-hidden border-green-500/20 bg-black/55 backdrop-blur-sm">
+                <div className="aspect-[16/10] overflow-hidden border-b border-green-500/20 bg-black/40">
+                  <img src={project.image} alt={project.name} className="h-full w-full object-cover object-top" />
+                </div>
                 <CardContent className="p-6">
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-xl font-bold group-hover:text-green-300 transition-colors">{project.name}</h3>
-                    <a 
-                      href={project.url} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-green-400 hover:text-green-300"
-                    >
-                      <ExternalLink size={20} />
+                  <div className="flex items-start justify-between gap-4 mb-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-2">{project.name}</h3>
+                      <p className="text-sm text-green-400/60">{project.stack}</p>
+                    </div>
+                    <a href={project.href} target="_blank" rel="noopener noreferrer" className="text-green-300 hover:text-green-200 transition-colors shrink-0">
+                      <ExternalLink size={18} />
                     </a>
                   </div>
-                  <p className="text-green-400/70 mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech, j) => (
-                      <span key={j} className="px-3 py-1 text-xs bg-green-500/10 text-green-400 rounded">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+                  <p className="text-sm text-green-400/78 leading-relaxed">{project.whyItMatters}</p>
                 </CardContent>
               </Card>
             ))}
@@ -222,152 +227,107 @@ const HireMe = () => {
         </div>
       </section>
 
-      {/* Skills Bar */}
-      <section id="skills" className="py-20 px-4">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">
-            <span className="text-green-500">#</span> Skills
-          </h2>
-          <div className="space-y-4">
-            {skills.map((skill, i) => (
-              <div key={i} className="flex items-center gap-4">
-                <span className="w-32 text-right text-green-400/80">{skill.name}</span>
-                <div className="flex-1 h-2 bg-green-500/10 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-green-500 transition-all duration-1000"
-                    style={{ width: `${skill.level}%` }}
-                  />
+      <section id="approach" className="relative z-10 px-4 py-16 bg-green-500/5">
+        <div className="max-w-6xl mx-auto grid gap-8 lg:grid-cols-[1fr_0.95fr] items-start">
+          <div>
+            <p className="text-xs uppercase tracking-[0.2em] text-green-400/65 mb-3">Approach</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">How I work when the goal is real trust, not just a good demo</h2>
+            <div className="space-y-4">
+              {workStyle.map((item) => (
+                <div key={item} className="flex gap-3 rounded-2xl border border-green-500/20 bg-black/40 px-5 py-5">
+                  <ShieldCheck size={18} className="text-green-300 mt-0.5 shrink-0" />
+                  <p className="text-sm text-green-400/78 leading-relaxed">{item}</p>
                 </div>
-                <span className="w-12 text-right text-green-400/60 text-sm">{skill.level}%</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Experience */}
-      <section className="py-20 px-4 bg-green-500/5">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">
-            <span className="text-green-500">#</span> Experience
-          </h2>
-          <div className="space-y-8">
-            <div className="border-l-2 border-green-500/30 pl-6">
-              <h3 className="text-xl font-bold">Founder & AI Engineer</h3>
-              <p className="text-green-400/60 mb-2">Alloway LLC | July 2023 - Present</p>
-              <p className="text-green-400/80">Built ML models improving client operational efficiency by 40%. Delivered AI solutions across sports analytics, fintech, and cybersecurity.</p>
-            </div>
-            <div className="border-l-2 border-green-500/30 pl-6">
-              <h3 className="text-xl font-bold">Data Auditor / AI Engineer</h3>
-              <p className="text-green-400/60 mb-2">Omniichain | Jan 2020 - Dec 2024</p>
-              <p className="text-green-400/80">AI-based anomaly detection reducing fraud by 30%. Multi-chain blockchain data extraction from Ethereum, Solana, Polkadot.</p>
-            </div>
-            <div className="border-l-2 border-green-500/30 pl-6">
-              <h3 className="text-xl font-bold">Task Force Manager</h3>
-              <p className="text-green-400/60 mb-2">Hilton Hotels | Aug 2020 - Sept 2023</p>
-              <p className="text-green-400/80">Directed operational improvements. Achieved 20% guest satisfaction increases. P&L management.</p>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Education */}
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">
-            <span className="text-green-500">#</span> Education
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <Card className="bg-green-500/5 border-green-500/20">
+          <div className="space-y-4">
+            <Card className="border-green-500/20 bg-black/50">
               <CardContent className="p-6">
-                <GraduationCap className="w-8 h-8 text-green-400 mb-4" />
-                <h3 className="text-xl font-bold">MS in Artificial Intelligence</h3>
-                <p className="text-green-400/60">University of South Florida</p>
-                <p className="text-green-400/40 text-sm">Starting Aug 2026</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-green-400/65 mb-3">Education</p>
+                <div className="space-y-4">
+                  {education.map((item) => (
+                    <div key={item.title} className="rounded-2xl border border-green-500/15 bg-green-500/5 px-4 py-4">
+                      <div className="flex items-start gap-3">
+                        <GraduationCap size={18} className="text-green-300 mt-0.5 shrink-0" />
+                        <div>
+                          <h3 className="text-white font-bold">{item.title}</h3>
+                          <p className="text-sm text-green-400/75">{item.sub}</p>
+                          <p className="text-sm text-green-400/55">{item.meta}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </CardContent>
             </Card>
-            <Card className="bg-green-500/5 border-green-500/20">
+
+            <Card className="border-green-500/20 bg-black/50">
               <CardContent className="p-6">
-                <GraduationCap className="w-8 h-8 text-green-400 mb-4" />
-                <h3 className="text-xl font-bold">BS in Information Science</h3>
-                <p className="text-green-400/60">University of South Florida</p>
-                <p className="text-green-400/40 text-sm">Expected May 2026</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-green-400/65 mb-3">Quick Links</p>
+                <div className="space-y-3 text-sm">
+                  <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">
+                    <Github size={15} /> GitHub profile
+                  </a>
+                  <a href="https://www.linkedin.com/in/ianit" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">
+                    <Linkedin size={15} /> LinkedIn
+                  </a>
+                  <a href="/papers/sports-ml-evaluation-case-study.html" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">
+                    <BarChart3 size={15} /> Sports ML case study
+                  </a>
+                  <a href="/" className="flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">
+                    <ArrowRight size={15} /> Back to portfolio
+                  </a>
+                </div>
               </CardContent>
             </Card>
           </div>
         </div>
       </section>
 
-      {/* Certifications */}
-      <section className="py-20 px-4 bg-green-500/5">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">
-            <span className="text-green-500">#</span> Certifications
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              'Deep Learning Specialization (Andrew Ng)',
-              'Machine Learning Engineering (Google Cloud)',
-              'AWS Certified Cloud Practitioner',
-              'Blockchain Fundamentals (UC Berkeley)',
-              'Tableau Desktop Certified Professional',
-              'Oracle Database SQL Certified',
-            ].map((cert, i) => (
-              <div key={i} className="flex items-center gap-3 p-4 bg-black/50 border border-green-500/20">
-                <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0" />
-                <span className="text-green-400/80 text-sm">{cert}</span>
+      <section id="contact" className="relative z-10 px-4 py-16">
+        <div className="max-w-5xl mx-auto rounded-[28px] border border-green-500/20 bg-green-500/5 p-8 md:p-10 backdrop-blur-sm">
+          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div>
+              <p className="text-xs uppercase tracking-[0.2em] text-green-400/65 mb-3">Contact</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">If your team needs honest evaluation and shipped product thinking, I’d love to talk.</h2>
+              <p className="text-sm md:text-base text-green-400/72 leading-relaxed mb-6 max-w-3xl">
+                I’m most interested in ML engineering, applied AI, analytics engineering, and data science roles. Full-time is the priority, but I’m also open to strong contract work where the scope is meaningful.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Button className="bg-green-500 text-black hover:bg-green-400 font-mono" asChild>
+                  <a href="mailto:ian@allowayllc.com">
+                    <Mail className="mr-2" size={16} /> Email Ian
+                  </a>
+                </Button>
+                <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
+                  <a href="/Ian_Alloway_Resume_CV.pdf" download>
+                    <Download className="mr-2" size={16} /> Resume PDF
+                  </a>
+                </Button>
+                <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
+                  <a href="https://www.linkedin.com/in/ianit" target="_blank" rel="noopener noreferrer">
+                    <Briefcase className="mr-2" size={16} /> LinkedIn
+                  </a>
+                </Button>
               </div>
-            ))}
+            </div>
+
+            <div className="space-y-3 min-w-[250px] text-sm text-green-400/72">
+              <a href="mailto:ian@allowayllc.com" className="flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">
+                <Mail size={15} /> ian@allowayllc.com
+              </a>
+              <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">
+                <Github size={15} /> github.com/ianalloway
+              </a>
+              <a href="https://www.linkedin.com/in/ianit" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">
+                <Linkedin size={15} /> linkedin.com/in/ianit
+              </a>
+            </div>
           </div>
         </div>
       </section>
-
-      {/* Contact */}
-      <section id="contact" className="py-20 px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-8">
-            <span className="text-green-500">#</span> Let's Talk
-          </h2>
-          <p className="text-green-400/70 mb-8">
-            Looking for ML engineers, data scientists, or AI talent. Or maybe you need someone to build your ML pipeline.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a 
-              href="mailto:ian@allowayllc.com"
-              className="px-6 py-3 bg-green-500 text-black font-bold hover:bg-green-400 transition-colors flex items-center gap-2"
-            >
-              <Mail size={18} />
-              ian@allowayllc.com
-            </a>
-            <a 
-              href="https://linkedin.com/in/ianit"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 border border-green-500 text-green-400 hover:bg-green-500/10 transition-colors flex items-center gap-2"
-            >
-              <Linkedin size={18} />
-              LinkedIn
-            </a>
-            <a 
-              href="https://github.com/ianalloway"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 border border-green-500 text-green-400 hover:bg-green-500/10 transition-colors flex items-center gap-2"
-            >
-              <Github size={18} />
-              GitHub
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-8 px-4 border-t border-green-500/20">
-        <div className="max-w-6xl mx-auto text-center text-green-400/40 text-sm">
-          <p>IAN.ALLOWAY — AI/ML Engineer & Data Scientist</p>
-          <p className="mt-2">Built with Python. Deployed with Vercel.⚡</p>
-        </div>
-      </footer>
     </div>
   );
 };
