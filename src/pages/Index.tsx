@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import {
   ArrowRight,
   BarChart3,
@@ -19,7 +18,6 @@ import {
   GraduationCap,
   Heart,
   Linkedin,
-  Loader2,
   Mail,
   Moon,
   Package,
@@ -27,9 +25,9 @@ import {
   Terminal,
 } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
+import SubstackEmbed from '@/components/SubstackEmbed';
 import { useToast } from '@/components/ui/use-toast';
 import { applyTheme, getStoredTheme, type SiteTheme } from '@/lib/theme';
-import { subscribeToNewsletter } from '@/lib/newsletter';
 
 const ETH_DONATION_ADDRESS = '0x6f278ce76ba5ed31fd9be646d074863e126836e9';
 
@@ -348,9 +346,6 @@ const quote = {
 const Index = () => {
   const [typedText, setTypedText] = useState('');
   const [theme, setTheme] = useState<SiteTheme>(() => getStoredTheme());
-  const [subscriberName, setSubscriberName] = useState('');
-  const [subscriberEmail, setSubscriberEmail] = useState('');
-  const [isSubscribing, setIsSubscribing] = useState(false);
   const { toast } = useToast();
   const fullText = 'IAN ALLOWAY';
 
@@ -389,33 +384,6 @@ const Index = () => {
         title: 'Failed to copy',
         variant: 'destructive',
       });
-    }
-  };
-
-  const handleNewsletterSignup = async () => {
-    setIsSubscribing(true);
-    const result = await subscribeToNewsletter({
-      name: subscriberName,
-      email: subscriberEmail,
-      site: 'ian-web-forge',
-      source: 'contact-newsletter',
-    });
-    setIsSubscribing(false);
-
-    toast({
-      title: result.success ? 'Saved' : 'Error',
-      description: result.message,
-      variant: result.success ? 'default' : 'destructive',
-    });
-
-    if (result.success) {
-      setSubscriberName('');
-      setSubscriberEmail('');
-      if (result.redirectUrl) {
-        window.setTimeout(() => {
-          window.location.assign(result.redirectUrl as string);
-        }, 900);
-      }
     }
   };
 
@@ -870,46 +838,21 @@ const Index = () => {
                 <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-2">Subscribe By Email</p>
                 <h3 className="text-xl font-semibold font-mono text-primary mb-2">Get new writing the minute it lands.</h3>
                 <p className="text-sm font-mono text-muted-foreground leading-relaxed mb-4">
-                  Drop your info here and I’ll log the signup, email myself the details, and hand you to the official Substack subscribe page to finish cleanly.
+                  This now uses the official embedded Substack signup, so people can subscribe right here in the contact section without leaving the site.
                 </p>
-                <form
-                  className="grid gap-3 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)_auto]"
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    void handleNewsletterSignup();
-                  }}
-                >
-                  <label className="sr-only" htmlFor="subscriber-name">Name</label>
-                  <Input
-                    id="subscriber-name"
-                    type="text"
-                    autoComplete="name"
-                    placeholder="Your name"
-                    value={subscriberName}
-                    onChange={(event) => setSubscriberName(event.target.value)}
-                    className="font-mono border-primary/25 bg-background/80 text-foreground placeholder:text-muted-foreground"
-                  />
-                  <label className="sr-only" htmlFor="subscriber-email">Email address</label>
-                  <Input
-                    id="subscriber-email"
-                    type="email"
-                    autoComplete="email"
-                    inputMode="email"
-                    spellCheck={false}
-                    placeholder="you@example.com"
-                    value={subscriberEmail}
-                    onChange={(event) => setSubscriberEmail(event.target.value)}
-                    className="font-mono border-primary/25 bg-background/80 text-foreground placeholder:text-muted-foreground"
-                  />
-                  <Button
-                    type="submit"
-                    disabled={isSubscribing}
-                    className="font-mono bg-primary text-primary-foreground hover:bg-primary/90"
+                <SubstackEmbed className="max-w-xl" />
+                <p className="mt-4 text-xs font-mono text-muted-foreground">
+                  If the embed does not load,{" "}
+                  <a
+                    href="https://allowayai.substack.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:text-primary/70 transition-colors"
                   >
-                    {isSubscribing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Mail className="mr-2" size={16} />}
-                    Subscribe
-                  </Button>
-                </form>
+                    open AllowayAI on Substack directly
+                  </a>
+                  .
+                </p>
               </div>
             </div>
 
