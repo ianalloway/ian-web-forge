@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import {
   ArrowRight,
   BarChart3,
@@ -17,6 +19,7 @@ import {
   GraduationCap,
   Heart,
   Linkedin,
+  Loader2,
   Mail,
   Moon,
   Package,
@@ -25,6 +28,8 @@ import {
 } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 import { useToast } from '@/components/ui/use-toast';
+import { applyTheme, getStoredTheme, type SiteTheme } from '@/lib/theme';
+import { subscribeToNewsletter } from '@/lib/newsletter';
 
 const ETH_DONATION_ADDRESS = '0x6f278ce76ba5ed31fd9be646d074863e126836e9';
 
@@ -342,24 +347,23 @@ const quote = {
 
 const Index = () => {
   const [typedText, setTypedText] = useState('');
-  const [theme, setTheme] = useState<'matrix' | 'light'>(() => {
-    if (typeof window !== 'undefined') {
-      return (localStorage.getItem('theme') as 'matrix' | 'light') || 'matrix';
-    }
-    return 'matrix';
-  });
+  const [theme, setTheme] = useState<SiteTheme>(() => getStoredTheme());
+  const [subscriberName, setSubscriberName] = useState('');
+  const [subscriberEmail, setSubscriberEmail] = useState('');
+  const [isSubscribing, setIsSubscribing] = useState(false);
   const { toast } = useToast();
   const fullText = 'IAN ALLOWAY';
 
   useEffect(() => {
-    document.documentElement.classList.remove('light');
-    if (theme === 'light') {
-      document.documentElement.classList.add('light');
-    }
-    localStorage.setItem('theme', theme);
+    applyTheme(theme);
   }, [theme]);
 
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setTypedText(fullText);
+      return;
+    }
+
     let index = 0;
     const timer = setInterval(() => {
       if (index <= fullText.length) {
@@ -388,8 +392,41 @@ const Index = () => {
     }
   };
 
+  const handleNewsletterSignup = async () => {
+    setIsSubscribing(true);
+    const result = await subscribeToNewsletter({
+      name: subscriberName,
+      email: subscriberEmail,
+      site: 'ian-web-forge',
+      source: 'contact-newsletter',
+    });
+    setIsSubscribing(false);
+
+    toast({
+      title: result.success ? 'Saved' : 'Error',
+      description: result.message,
+      variant: result.success ? 'default' : 'destructive',
+    });
+
+    if (result.success) {
+      setSubscriberName('');
+      setSubscriberEmail('');
+      if (result.redirectUrl) {
+        window.setTimeout(() => {
+          window.location.assign(result.redirectUrl as string);
+        }, 900);
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background relative overflow-x-hidden">
+      <a
+        href="#main-content"
+        className="sr-only z-50 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground focus:not-sr-only focus:absolute focus:left-4 focus:top-4"
+      >
+        Skip to main content
+      </a>
       {theme === 'matrix' && <MatrixRain />}
 
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-primary/20 bg-background/90 backdrop-blur-sm">
@@ -407,7 +444,7 @@ const Index = () => {
             <a href="/hireme" className="text-primary hover:text-primary/70 transition-colors">[/HIRE]</a>
             <button
               onClick={() => setTheme((prev) => (prev === 'matrix' ? 'light' : 'matrix'))}
-              className="rounded-md border border-primary/30 p-2 hover:bg-primary/10 transition-all"
+              className="rounded-md border border-primary/30 p-2 transition-colors hover:bg-primary/10"
               aria-label="Toggle theme"
             >
               {theme === 'matrix' ? <Sun size={16} className="text-primary" /> : <Moon size={16} className="text-primary" />}
@@ -416,6 +453,7 @@ const Index = () => {
         </div>
       </nav>
 
+      <main id="main-content">
       <section id="top" className="relative z-10 px-4 pt-28 pb-16 md:pt-36 md:pb-24">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
           <div>
@@ -521,7 +559,14 @@ const Index = () => {
             {featuredProjects.map((project) => (
               <Card key={project.name} className="overflow-hidden border-primary/20 bg-card/80 backdrop-blur-sm">
                 <div className="aspect-[16/10] overflow-hidden bg-black/30 border-b border-primary/20">
-                  <img src={project.image} alt={project.name} className="h-full w-full object-cover object-top" />
+                  <img
+                    src={project.image}
+                    alt={project.name}
+                    width="640"
+                    height="400"
+                    loading="lazy"
+                    className="h-full w-full object-cover object-top"
+                  />
                 </div>
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between gap-4 mb-4">
@@ -578,7 +623,14 @@ const Index = () => {
         <div className="mx-auto max-w-6xl grid gap-8 lg:grid-cols-[1.05fr_0.95fr] items-start">
           <Card className="border-primary/20 bg-card/80 backdrop-blur-sm overflow-hidden">
             <div className="aspect-[16/10] overflow-hidden border-b border-primary/20 bg-black/40">
-              <img src="/proof/sports-betting-ml-architecture.svg" alt="Sports Betting ML architecture" className="h-full w-full object-cover" />
+              <img
+                src="/proof/sports-betting-ml-architecture.svg"
+                alt="Sports Betting ML architecture"
+                width="1600"
+                height="900"
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
             </div>
             <CardContent className="p-6">
               <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-3">Case Study</p>
@@ -661,6 +713,9 @@ const Index = () => {
                             <img
                               src={paper.videoThumbnail}
                               alt={`${paper.title} thumbnail`}
+                              width="480"
+                              height="360"
+                              loading="lazy"
                               className="w-full object-cover h-32"
                             />
                             <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/60 transition-colors">
@@ -804,6 +859,57 @@ const Index = () => {
                     <Linkedin className="mr-2" size={16} /> LinkedIn
                   </a>
                 </Button>
+                <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+                  <a href="https://allowayai.substack.com" target="_blank" rel="noopener noreferrer">
+                    <FileText className="mr-2" size={16} /> Read Substack
+                  </a>
+                </Button>
+              </div>
+
+              <div className="mt-8 max-w-2xl rounded-2xl border border-primary/20 bg-background/70 p-5">
+                <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-2">Subscribe By Email</p>
+                <h3 className="text-xl font-semibold font-mono text-primary mb-2">Get new writing the minute it lands.</h3>
+                <p className="text-sm font-mono text-muted-foreground leading-relaxed mb-4">
+                  Drop your info here and I’ll log the signup, email myself the details, and hand you to the official Substack subscribe page to finish cleanly.
+                </p>
+                <form
+                  className="grid gap-3 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)_auto]"
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    void handleNewsletterSignup();
+                  }}
+                >
+                  <label className="sr-only" htmlFor="subscriber-name">Name</label>
+                  <Input
+                    id="subscriber-name"
+                    type="text"
+                    autoComplete="name"
+                    placeholder="Your name"
+                    value={subscriberName}
+                    onChange={(event) => setSubscriberName(event.target.value)}
+                    className="font-mono border-primary/25 bg-background/80 text-foreground placeholder:text-muted-foreground"
+                  />
+                  <label className="sr-only" htmlFor="subscriber-email">Email address</label>
+                  <Input
+                    id="subscriber-email"
+                    type="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    spellCheck={false}
+                    placeholder="you@example.com"
+                    value={subscriberEmail}
+                    onChange={(event) => setSubscriberEmail(event.target.value)}
+                    className="font-mono border-primary/25 bg-background/80 text-foreground placeholder:text-muted-foreground"
+                  />
+                  <Button
+                    type="submit"
+                    disabled={isSubscribing}
+                    className="font-mono bg-primary text-primary-foreground hover:bg-primary/90"
+                  >
+                    {isSubscribing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Mail className="mr-2" size={16} />}
+                    Subscribe
+                  </Button>
+                </form>
               </div>
             </div>
 
@@ -811,15 +917,18 @@ const Index = () => {
               <a href="mailto:ian@allowayllc.com" className="flex items-center gap-2 text-primary hover:text-primary/70 transition-colors">
                 <Mail size={15} /> ian@allowayllc.com
               </a>
+              <a href="https://allowayai.substack.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-primary hover:text-primary/70 transition-colors">
+                <FileText size={15} /> allowayai.substack.com
+              </a>
               <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-primary hover:text-primary/70 transition-colors">
                 <Github size={15} /> github.com/ianalloway
               </a>
               <a href="https://www.linkedin.com/in/ianit" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-primary hover:text-primary/70 transition-colors">
                 <Linkedin size={15} /> linkedin.com/in/ianit
               </a>
-              <a href="/hireme" className="flex items-center gap-2 text-primary hover:text-primary/70 transition-colors">
+              <Link to="/hireme" className="flex items-center gap-2 text-primary transition-colors hover:text-primary/70">
                 <Briefcase size={15} /> Hire / consulting page
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -858,6 +967,7 @@ const Index = () => {
           </div>
         </div>
       </footer>
+      </main>
     </div>
   );
 };

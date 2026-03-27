@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -102,18 +103,29 @@ const HireMe = () => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setMounted(true);
+      return;
+    }
+
     setMounted(true);
   }, []);
 
   return (
     <div className="min-h-screen bg-black text-green-400 font-mono overflow-x-hidden">
+      <a
+        href="#main-content"
+        className="sr-only z-50 rounded-md bg-green-500 px-4 py-2 text-sm font-semibold text-black focus:not-sr-only focus:absolute focus:left-4 focus:top-4"
+      >
+        Skip to main content
+      </a>
       <MatrixRain />
 
       <header className="fixed top-0 left-0 right-0 z-50 bg-black/82 backdrop-blur-md border-b border-green-500/20">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
-          <a href="/" className="text-lg md:text-xl font-bold tracking-tight hover:text-green-300 transition-colors flex items-center gap-2">
+          <Link to="/" className="text-lg md:text-xl font-bold tracking-tight hover:text-green-300 transition-colors flex items-center gap-2">
             <Terminal size={18} /> IAN.ALLOWAY
-          </a>
+          </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm text-green-400/80">
             <a href="#fit" className="hover:text-green-300 transition-colors">FIT</a>
             <a href="#proof" className="hover:text-green-300 transition-colors">PROOF</a>
@@ -123,9 +135,10 @@ const HireMe = () => {
         </div>
       </header>
 
+      <main id="main-content">
       <section className="relative z-10 px-4 pt-28 pb-16 md:pt-36 md:pb-24">
         <div className="max-w-6xl mx-auto grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-          <div className={`transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <div className={`transition-[opacity,transform] duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             <Badge className="mb-5 bg-green-500/10 text-green-300 border-green-500/30 hover:bg-green-500/10">
               OPEN TO WORK • ML Engineer / Data Scientist
             </Badge>
@@ -216,7 +229,14 @@ const HireMe = () => {
             {featuredWork.map((project) => (
               <Card key={project.name} className="overflow-hidden border-green-500/20 bg-black/55 backdrop-blur-sm">
                 <div className="aspect-[16/10] overflow-hidden border-b border-green-500/20 bg-black/40">
-                  <img src={project.image} alt={project.name} className="h-full w-full object-cover object-top" />
+                  <img
+                    src={project.image}
+                    alt={project.name}
+                    width="640"
+                    height="400"
+                    loading="lazy"
+                    className="h-full w-full object-cover object-top"
+                  />
                 </div>
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between gap-4 mb-4">
@@ -317,9 +337,9 @@ const HireMe = () => {
                   <a href="/papers/sports-ml-evaluation-case-study.html" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">
                     <BarChart3 size={15} /> Sports ML case study
                   </a>
-                  <a href="/" className="flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">
+                  <Link to="/" className="flex items-center gap-2 text-green-300 transition-colors hover:text-green-200">
                     <ArrowRight size={15} /> Back to portfolio
-                  </a>
+                  </Link>
                 </div>
               </CardContent>
             </Card>
@@ -369,6 +389,7 @@ const HireMe = () => {
           </div>
         </div>
       </section>
+      </main>
     </div>
   );
 };

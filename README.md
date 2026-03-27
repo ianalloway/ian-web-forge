@@ -49,7 +49,28 @@ const academicPapers = [
 
 ## Deployment
 
-The site is deployed via Lovable and connected to the custom domain https://ianalloway.xyz
+The live site is connected to https://ianalloway.xyz, and the repo now also includes `vercel.json` so preview deployments on Vercel can serve SPA routes like `/now`, `/hireme`, and `/toolkit` without a 404 while still routing `/api/*` to serverless functions.
+
+### Newsletter automation env vars
+
+The contact-area subscribe form now posts to `/api/newsletter-subscribe`. On each signup it:
+
+- creates a child page in Notion with the subscriber details
+- sends you a notification email
+- redirects the visitor into the official Substack subscribe page
+
+Set these env vars before turning the form on in production:
+
+```bash
+NOTION_API_KEY=secret_your_notion_integration_token
+NOTION_PARENT_PAGE_ID=your_notion_parent_page_id
+RESEND_API_KEY=re_your_resend_api_key
+RESEND_FROM_EMAIL="Ian Alloway <onboarding@yourdomain.com>"
+NOTIFY_EMAIL=ian@allowayllc.com
+SUBSTACK_PUBLICATION_URL=https://allowayai.substack.com
+```
+
+`NOTION_PARENT_PAGE_ID` should be the page where you want each new subscriber page to appear. Share that Notion page with your Notion integration before testing.
 
 ---
 

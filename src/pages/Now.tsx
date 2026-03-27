@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Terminal, ArrowLeft, Book, Code, Brain, Music, MapPin, Target, Zap, Coffee, GraduationCap } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import MatrixRain from '@/components/MatrixRain';
+import { applyTheme, getStoredTheme, type SiteTheme } from '@/lib/theme';
 
 const LAST_UPDATED = 'February 2026';
 
@@ -116,18 +117,16 @@ function NowCard({ section }: { section: NowSection }) {
 }
 
 export default function Now() {
-  const navigate = useNavigate();
-  const [theme] = useState<'matrix' | 'light'>(() => {
-    if (typeof window !== 'undefined') {
-      return (localStorage.getItem('theme') as 'matrix' | 'light') || 'matrix';
-    }
-    return 'matrix';
-  });
+  const [theme] = useState<SiteTheme>(() => getStoredTheme());
 
   useEffect(() => {
     document.title = '/now — Ian Alloway';
     return () => { document.title = 'Ian Alloway'; };
   }, []);
+
+  useEffect(() => {
+    applyTheme(theme);
+  }, [theme]);
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -137,11 +136,13 @@ export default function Now() {
         {/* Back nav */}
         <Button
           variant="ghost"
-          className="font-mono text-primary border border-primary/30 hover:bg-primary/10 mb-8 text-sm"
-          onClick={() => navigate('/')}
+          className="mb-8 border border-primary/30 font-mono text-sm text-primary hover:bg-primary/10"
+          asChild
         >
-          <ArrowLeft size={14} className="mr-2" />
-          [BACK]
+          <Link to="/">
+            <ArrowLeft size={14} className="mr-2" />
+            [BACK]
+          </Link>
         </Button>
 
         {/* Header */}
