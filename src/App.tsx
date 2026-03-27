@@ -12,6 +12,7 @@ const queryClient = new QueryClient();
 const Now = lazy(() => import("./pages/Now"));
 const HireMe = lazy(() => import("./pages/HireMe"));
 const Toolkit = lazy(() => import("./pages/Toolkit"));
+const Snake = lazy(() => import("./pages/Snake"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -60,6 +61,19 @@ const App = () => (
                       description="Public index of Ian Alloway’s sports ML stack, odds utilities, reporting tools, and GitHub repos — nba-clv-dashboard, nba-ratings, odds-drift-watch, closing-line-archive, kelly-js, and more."
                     />
                     <Toolkit />
+                  </>
+                }
+              />
+              <Route
+                path="/snake"
+                element={
+                  <>
+                    <SEO
+                      title="Snake"
+                      path="/snake"
+                      description="Play a classic Snake game on Ian Alloway's site: keyboard controls, score tracking, food spawn, restart, and mobile-friendly controls."
+                    />
+                    <Snake />
                   </>
                 }
               />
