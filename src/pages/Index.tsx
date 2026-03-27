@@ -169,24 +169,31 @@ const experience = [
 
 const selectedProjects = [
   {
+    name: 'snake-game',
+    description:
+      'Classic Snake with deterministic grid logic, keyboard controls, mobile buttons, score tracking, and restart flow. Play it on the site or inspect the standalone repo.',
+    codeHref: 'https://github.com/ianalloway/snake-game',
+    demoHref: '/snake',
+  },
+  {
     name: 'nba-ratings',
     description: 'Reusable Elo, logistic win probability, and Kelly helpers packaged for repeatable modeling work.',
-    href: 'https://github.com/ianalloway/nba-ratings',
+    codeHref: 'https://github.com/ianalloway/nba-ratings',
   },
   {
     name: 'kelly-js',
     description: 'Small, focused probability and bankroll utility package with clean API design.',
-    href: 'https://github.com/ianalloway/kelly-js',
+    codeHref: 'https://github.com/ianalloway/kelly-js',
   },
   {
     name: 'macos-disk-cleanup',
     description: 'A careful Bash tool for reclaiming disk space without the usual “hope this does not break anything” energy.',
-    href: 'https://github.com/ianalloway/macos-disk-cleanup',
+    codeHref: 'https://github.com/ianalloway/macos-disk-cleanup',
   },
   {
     name: 'openclaw-skills',
     description: 'Published skills and workflows around sports odds, reporting, developer tooling, and agent productivity.',
-    href: 'https://github.com/ianalloway/openclaw-skills',
+    codeHref: 'https://github.com/ianalloway/openclaw-skills',
   },
 ];
 
@@ -791,9 +798,27 @@ const Index = () => {
                       <h3 className="text-lg font-semibold font-mono text-primary">{project.name}</h3>
                       <p className="text-sm font-mono text-muted-foreground leading-relaxed mt-2">{project.description}</p>
                     </div>
-                    <a href={project.href} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/70 transition-colors shrink-0">
+                    <a
+                      href={project.demoHref ?? project.codeHref}
+                      {...(!project.demoHref ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      className="text-primary hover:text-primary/70 transition-colors shrink-0"
+                    >
                       <ExternalLink size={18} />
                     </a>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+                      <a href={project.codeHref} target="_blank" rel="noopener noreferrer">
+                        <Github className="mr-2" size={16} /> Code
+                      </a>
+                    </Button>
+                    {project.demoHref ? (
+                      <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+                        <Link to={project.demoHref}>
+                          <ExternalLink className="mr-2" size={16} /> Live Demo
+                        </Link>
+                      </Button>
+                    ) : null}
                   </div>
                 </CardContent>
               </Card>
