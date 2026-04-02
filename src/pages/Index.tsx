@@ -223,6 +223,16 @@ type WritingEntry = {
 
 const academicAssignments: WritingEntry[] = [
   {
+    title: 'The Ratepayer Protection Pledge and the Rising',
+    description:
+      'A critical examination of the policy implications and infrastructure costs associated with powering AI data centers in America.',
+    category: 'Academic Writing',
+    assets: [
+      { label: 'View PDF', href: '/papers/ratepayer-protection-pledge-rising.pdf' },
+      { label: 'Download PDF', href: '/papers/ratepayer-protection-pledge-rising.pdf', download: true },
+    ],
+  },
+  {
     title: 'Assignment: Information Policy/Technology in the News',
     description:
       'Critical analysis of AI data center energy costs and ratepayer protection policy. Preserved in the submitted PDF format.',
