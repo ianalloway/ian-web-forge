@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 
-/** One row in the condensed catalog (subset of ~40 public repos; rest on GitHub). */
+/** One row: active public repos + oss-archive hub (frozen copies of archived work). */
 type CatalogRow = {
   name: string;
   href: string;
@@ -43,7 +43,7 @@ const START_HERE: { label: string; href: string; note: string }[] = [
   {
     label: 'All public repositories',
     href: 'https://github.com/ianalloway?tab=repositories&q=&sort=updated',
-    note: '~40 repos · sorted by updated',
+    note: '8 active + archived read-only · sorted by updated',
   },
   {
     label: 'Profile README',
@@ -52,12 +52,14 @@ const START_HERE: { label: string; href: string; note: string }[] = [
   },
 ];
 
-/** Highlighted repos only; full account includes coursework, R, utilities, agents, etc. */
+const OSS = 'https://github.com/ianalloway/oss-archive/tree/archive';
+
+/** Active public repos (8). Older OSS lives on frozen branches in oss-archive. */
 const CORE_SECTION: CatalogSection = {
   id: 'core',
-  title: 'Core public repositories',
+  title: 'Active public repositories',
   blurb:
-    'Twelve repos I point people to first. The GitHub profile lists the same featured set; everything else public (~40 total) is on the full repository list.',
+    'Eight non-archived repos on this account. Dozens of additional projects were merged into branch-per-repo snapshots under oss-archive before archiving the originals read-only.',
   icon: LineChart,
   rows: [
     {
@@ -71,9 +73,9 @@ const CORE_SECTION: CatalogSection = {
       oneLine: 'NBA / NFL models, XGBoost, ensembles',
     },
     {
-      name: 'nba-clv-dashboard',
-      href: 'https://github.com/ianalloway/nba-clv-dashboard',
-      oneLine: 'FastAPI + Chart.js: calibration, CLV, rolling accuracy',
+      name: 'kelly-js',
+      href: 'https://github.com/ianalloway/kelly-js',
+      oneLine: 'TypeScript Kelly / CLV · npm',
     },
     {
       name: 'nba-ratings',
@@ -81,56 +83,36 @@ const CORE_SECTION: CatalogSection = {
       oneLine: 'Elo / logistic / Kelly · PyPI `nba-edge`',
     },
     {
-      name: 'kelly-js',
-      href: 'https://github.com/ianalloway/kelly-js',
-      oneLine: 'TypeScript Kelly / CLV · npm',
-    },
-    {
-      name: 'backtest-report-gen',
-      href: 'https://github.com/ianalloway/backtest-report-gen',
-      oneLine: 'metrics.json → static HTML report',
-    },
-    {
-      name: 'metric-regression-gate',
-      href: 'https://github.com/ianalloway/metric-regression-gate',
-      oneLine: 'CI: fail when metrics regress vs baseline',
-    },
-    {
-      name: 'odds-drift-watch',
-      href: 'https://github.com/ianalloway/odds-drift-watch',
-      oneLine: 'Webhook line-move alerts (Line Shock Index)',
-    },
-    {
-      name: 'closing-line-archive',
-      href: 'https://github.com/ianalloway/closing-line-archive',
-      oneLine: 'SQLite odds snapshots · beat-close analysis',
-    },
-    {
-      name: 'repo-health',
-      href: 'https://github.com/ianalloway/repo-health',
-      oneLine: 'CLI: README / CI / license / topic / staleness scoring',
-    },
-    {
-      name: 'macos-disk-cleanup',
-      href: 'https://github.com/ianalloway/macos-disk-cleanup',
-      oneLine: 'Safe Mac cache cleanup · dry-run · ShellCheck CI',
+      name: 'Resume',
+      href: 'https://github.com/ianalloway/Resume',
+      oneLine: 'CV source + PDF',
     },
     {
       name: 'ian-web-forge',
       href: 'https://github.com/ianalloway/ian-web-forge',
       oneLine: 'This portfolio site (source)',
     },
+    {
+      name: 'ianalloway',
+      href: 'https://github.com/ianalloway/ianalloway',
+      oneLine: 'Profile README (this account’s landing page)',
+    },
+    {
+      name: 'oss-archive',
+      href: 'https://github.com/ianalloway/oss-archive',
+      oneLine: 'Frozen default-branch snapshots: archive/<repo> for retired public OSS',
+    },
   ],
 };
 
 const FLOW_STEPS = [
   { label: 'Primitives', href: 'https://github.com/ianalloway/nba-ratings' },
-  { label: 'Drift alerts', href: 'https://github.com/ianalloway/odds-drift-watch' },
-  { label: 'Archive', href: 'https://github.com/ianalloway/closing-line-archive' },
+  { label: 'Drift alerts', href: `${OSS}/odds-drift-watch` },
+  { label: 'Archive', href: `${OSS}/closing-line-archive` },
   { label: 'Kelly math', href: 'https://github.com/ianalloway/kelly-js' },
-  { label: 'Eval UI', href: 'https://github.com/ianalloway/nba-clv-dashboard' },
-  { label: 'Report', href: 'https://github.com/ianalloway/backtest-report-gen' },
-  { label: 'CI gate', href: 'https://github.com/ianalloway/metric-regression-gate' },
+  { label: 'Eval UI', href: `${OSS}/nba-clv-dashboard` },
+  { label: 'Report', href: `${OSS}/backtest-report-gen` },
+  { label: 'CI gate', href: `${OSS}/metric-regression-gate` },
 ];
 
 function CatalogTable({ rows }: { rows: CatalogRow[] }) {
@@ -217,17 +199,16 @@ const Toolkit = () => {
             Sports analytics &amp; GitHub tools
           </h1>
           <p className="text-muted-foreground font-mono text-sm max-w-2xl mx-auto mb-2">
-            Condensed index: core repos below (12), same story as the{' '}
+            Active repos below (eight). Retired public OSS is preserved as branches on{' '}
             <a
-              href="https://github.com/ianalloway/ianalloway"
+              href="https://github.com/ianalloway/oss-archive"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary hover:underline"
             >
-              GitHub profile README
-            </a>
-            . About 40 public repos on this account—use &quot;All public repositories&quot; in Start here for the
-            rest.
+              oss-archive
+            </a>{' '}
+            (see profile README for the same story).
           </p>
           <p className="text-muted-foreground/80 font-mono text-xs max-w-xl mx-auto mb-6">
             MIT-licensed OSS unless noted; README + CI where applicable.
@@ -306,22 +287,38 @@ const Toolkit = () => {
         </section>
 
         <section id="more" className="mb-12 scroll-mt-24 terminal-border rounded-lg p-5 bg-card/30">
-          <h2 className="text-primary font-mono text-sm font-bold mb-2">The rest (same GitHub account)</h2>
+          <h2 className="text-primary font-mono text-sm font-bold mb-2">Retired OSS (read-only)</h2>
           <p className="text-muted-foreground font-mono text-xs mb-4">
-            Odds CLI, Hugging Face spaces, R packages (<code className="text-primary/90">allowayai</code>), OpenClaw
-            skills/patches, sentiment tools, coursework, and smaller experiments—open the full list and sort by
-            &quot;Updated&quot;.
-          </p>
-          <Button className="font-mono bg-primary text-primary-foreground" asChild>
+            Previous standalone repos (dashboard, metric gate, odds tools, coursework, agents, etc.) are{' '}
+            <strong className="text-primary/90">archived on GitHub</strong> but their default-branch trees were copied
+            to <code className="text-primary/90">archive/&lt;repo&gt;</code> on{' '}
             <a
-              href="https://github.com/ianalloway?tab=repositories&q=&sort=updated"
+              href="https://github.com/ianalloway/oss-archive"
               target="_blank"
               rel="noopener noreferrer"
+              className="text-primary hover:underline"
             >
-              <Github className="mr-2" size={16} />
-              All public repos @ianalloway
-            </a>
-          </Button>
+              ianalloway/oss-archive
+            </a>{' '}
+            first. Browse branches there, or the account repo list (includes archived).
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <Button className="font-mono bg-primary text-primary-foreground" asChild>
+              <a href="https://github.com/ianalloway/oss-archive/branches/all" target="_blank" rel="noopener noreferrer">
+                <Github className="mr-2" size={16} />
+                oss-archive branches
+              </a>
+            </Button>
+            <Button variant="outline" className="font-mono terminal-border text-primary border-primary" asChild>
+              <a
+                href="https://github.com/ianalloway?tab=repositories&q=&sort=updated&type=source"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                All repos (incl. archived)
+              </a>
+            </Button>
+          </div>
         </section>
 
         <section className="terminal-border rounded-lg p-6 bg-primary/5 text-center">

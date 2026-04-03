@@ -4,7 +4,7 @@
 
 | Date | Change |
 |------|--------|
-| **2026-03** | **`/toolkit`** is a **condensed** public index: `CORE_SECTION` (~12 repos) + links to the full **~40** public repos on GitHub. Keep narrative **Featured** copy on the profile README (`ianalloway/ianalloway`) aligned with that core set; use the GitHub repo list for the long tail. Optional: `scripts/apply-topics.sh` in the profile repo for topic tags. |
+| **2026-03** | **`/toolkit`** lists **8 active** public repos + **`oss-archive`**. Retired OSS was copied to `ianalloway/oss-archive` branches `archive/<repo>` then originals were **GitHub-archived**. Sync profile README + Toolkit. `scripts/apply-topics.sh` targets **active** repos only. |
 
 ## Overview
 
