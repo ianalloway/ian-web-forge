@@ -9,7 +9,7 @@ const Projects = () => {
       title: "nba-clv-dashboard (flagship)",
       description: "FastAPI + Chart.js evaluation demo: calibration, rolling accuracy, CLV summary — swap in your backtest JSON.",
       technologies: ["FastAPI", "Chart.js", "Sports ML"],
-      github: "https://github.com/ianalloway/nba-clv-dashboard",
+      github: "https://github.com/ianalloway/oss-archive/tree/archive/nba-clv-dashboard",
       demo: "https://ianalloway.xyz/papers/sports-ml-evaluation-case-study.html",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop"
     },
@@ -25,64 +25,64 @@ const Projects = () => {
       title: "odds-drift-watch",
       description: "Webhook-based line-move monitoring with FastAPI and SQLite for alerting on meaningful market shifts.",
       technologies: ["FastAPI", "SQLite", "Sports analytics"],
-      github: "https://github.com/ianalloway/odds-drift-watch",
-      demo: "https://github.com/ianalloway/odds-drift-watch#readme",
+      github: "https://github.com/ianalloway/oss-archive/tree/archive/odds-drift-watch",
+      demo: "https://github.com/ianalloway/oss-archive/tree/archive/odds-drift-watch#readme",
       image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&h=250&fit=crop"
     },
     {
       title: "macOS Disk Cleanup",
       description: "Open-source Bash CLI that reclaims macOS disk space from regenerable caches only (Homebrew, Go, Chrome, npm/pip, optional Docker/Xcode). Documented algorithm, --dry-run, ShellCheck CI.",
       technologies: ["Bash", "macOS", "GitHub Actions"],
-      github: "https://github.com/ianalloway/macos-disk-cleanup",
-      demo: "https://github.com/ianalloway/macos-disk-cleanup#readme",
+      github: "https://github.com/ianalloway/oss-archive/tree/archive/macos-disk-cleanup",
+      demo: "https://github.com/ianalloway/oss-archive/tree/archive/macos-disk-cleanup#readme",
       image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop"
     },
     {
       title: "closing-line-archive",
       description: "CLI for historical odds snapshots and beat-close analysis using SQLite-backed sportsbook data.",
       technologies: ["Python", "SQLite", "Sports data"],
-      github: "https://github.com/ianalloway/closing-line-archive",
-      demo: "https://github.com/ianalloway/closing-line-archive#readme",
+      github: "https://github.com/ianalloway/oss-archive/tree/archive/closing-line-archive",
+      demo: "https://github.com/ianalloway/oss-archive/tree/archive/closing-line-archive#readme",
       image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=250&fit=crop"
     },
     {
       title: "backtest-report-gen",
       description: "Turn evaluation JSON into static HTML backtest reports with calibration, Brier, CLV, and ledger views.",
       technologies: ["Python", "Reporting", "MLOps"],
-      github: "https://github.com/ianalloway/backtest-report-gen",
-      demo: "https://github.com/ianalloway/backtest-report-gen#readme",
+      github: "https://github.com/ianalloway/oss-archive/tree/archive/backtest-report-gen",
+      demo: "https://github.com/ianalloway/oss-archive/tree/archive/backtest-report-gen#readme",
       image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=250&fit=crop"
     },
     {
       title: "metric-regression-gate",
       description: "Composite GitHub Action that fails CI when metrics regress against a baseline.",
       technologies: ["GitHub Actions", "CI", "MLOps"],
-      github: "https://github.com/ianalloway/metric-regression-gate",
-      demo: "https://github.com/ianalloway/metric-regression-gate#readme",
+      github: "https://github.com/ianalloway/oss-archive/tree/archive/metric-regression-gate",
+      demo: "https://github.com/ianalloway/oss-archive/tree/archive/metric-regression-gate#readme",
       image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=250&fit=crop"
     },
     {
       title: "code-stash",
       description: "CLI snippet manager with SQLite storage and local LLM-powered search for reusable code.",
       technologies: ["Python", "SQLite", "Developer tools"],
-      github: "https://github.com/ianalloway/code-stash",
-      demo: "https://github.com/ianalloway/code-stash#readme",
+      github: "https://github.com/ianalloway/oss-archive/tree/archive/code-stash",
+      demo: "https://github.com/ianalloway/oss-archive/tree/archive/code-stash#readme",
       image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=400&h=250&fit=crop"
     },
     {
       title: "stock-sentiment-analyzer",
       description: "NLP-driven stock sentiment tool that combines news, Reddit, and filing signals into ticker-level sentiment views.",
       technologies: ["Python", "NLP", "Analytics"],
-      github: "https://github.com/ianalloway/stock-sentiment-analyzer",
-      demo: "https://github.com/ianalloway/stock-sentiment-analyzer#readme",
+      github: "https://github.com/ianalloway/oss-archive/tree/archive/stock-sentiment-analyzer",
+      demo: "https://github.com/ianalloway/oss-archive/tree/archive/stock-sentiment-analyzer#readme",
       image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&h=250&fit=crop"
     },
     {
       title: "repo-health",
       description: "Repo scoring CLI for README quality, licensing, CI, maintenance signals, and staleness.",
       technologies: ["Python", "CLI", "Developer tools"],
-      github: "https://github.com/ianalloway/repo-health",
-      demo: "https://github.com/ianalloway/repo-health#readme",
+      github: "https://github.com/ianalloway/oss-archive/tree/archive/repo-health",
+      demo: "https://github.com/ianalloway/oss-archive/tree/archive/repo-health#readme",
       image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=250&fit=crop"
     },
     {
@@ -129,8 +129,8 @@ const Projects = () => {
       title: "openclaw-skills",
       description: "Published OpenClaw and ClawHub skills spanning sports odds, Kelly sizing, portfolio tools, and market sentiment.",
       technologies: ["OpenClaw", "Agents", "Open source"],
-      github: "https://github.com/ianalloway/openclaw-skills",
-      demo: "https://github.com/ianalloway/openclaw-skills#readme",
+      github: "https://github.com/ianalloway/oss-archive/tree/archive/openclaw-skills",
+      demo: "https://github.com/ianalloway/oss-archive/tree/archive/openclaw-skills#readme",
       image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400&h=250&fit=crop"
     }
   ];
