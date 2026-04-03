@@ -1,5 +1,11 @@
 # AGENTS.md - AI Agent Guidelines for ian-web-forge
 
+## Changelog (maintainer notes)
+
+| Date | Change |
+|------|--------|
+| **2026-03** | **`/toolkit`** is the public index of sports + OSS repos. It uses the **same table catalog** as the GitHub profile README (`ianalloway/ianalloway`). When you add a public repo, update **both** `src/pages/Toolkit.tsx` (`CATALOG` / `START_HERE`) and `Projects/personal/ianalloway-profile-readme/README.md` so they stay in sync. Optional: run `scripts/apply-topics.sh` in the profile repo for GitHub topic tags. |
+
 ## Overview
 
 This repo uses a risk-aware CI/CD pipeline with policy gates and code review agents.
@@ -48,3 +54,4 @@ If code review finds issues:
 - CI Config: `.github/workflows/risk-policy-gate.yml`
 - Greptile: `.greptile.yml`
 - CodeRabbit: `coderabbit.yaml`
+- Public repo catalog: `src/pages/Toolkit.tsx` (must match profile README tables)
