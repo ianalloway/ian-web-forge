@@ -5,21 +5,16 @@ import {
   Github,
   ExternalLink,
   Terminal,
-  Activity,
   LineChart,
   Database,
   Shield,
-  Cpu,
-  Wrench,
   ArrowRight,
   Home,
-  BookMarked,
-  Archive,
   Gamepad2,
 } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 
-/** One row — mirrors github.com/ianalloway profile README catalog (March 2026). */
+/** One row in the condensed catalog (subset of ~40 public repos; rest on GitHub). */
 type CatalogRow = {
   name: string;
   href: string;
@@ -46,221 +41,87 @@ const START_HERE: { label: string; href: string; note: string }[] = [
     note: 'One-pager · print → PDF',
   },
   {
-    label: 'All repositories',
+    label: 'All public repositories',
     href: 'https://github.com/ianalloway?tab=repositories&q=&sort=updated',
-    note: 'GitHub · sorted by updated',
+    note: '~40 repos · sorted by updated',
   },
   {
     label: 'Profile README',
     href: 'https://github.com/ianalloway/ianalloway',
-    note: 'Same catalog as this page (tables)',
+    note: 'Featured work + condensed pointers (same story as this page)',
   },
 ];
 
-const CATALOG: CatalogSection[] = [
-  {
-    id: 'flagship',
-    title: 'Flagship — sports ML & evaluation',
-    blurb: 'Calibration-first stack: dashboard, primitives, reports, CI gate.',
-    icon: LineChart,
-    rows: [
-      {
-        name: 'nba-clv-dashboard',
-        href: 'https://github.com/ianalloway/nba-clv-dashboard',
-        oneLine: 'FastAPI + Chart.js: calibration, rolling accuracy, CLV block',
-      },
-      {
-        name: 'nba-ratings',
-        href: 'https://github.com/ianalloway/nba-ratings',
-        oneLine: 'Elo / logistic / Kelly primitives · PyPI package nba-edge',
-      },
-      {
-        name: 'backtest-report-gen',
-        href: 'https://github.com/ianalloway/backtest-report-gen',
-        oneLine: 'metrics.json → static HTML report',
-      },
-      {
-        name: 'metric-regression-gate',
-        href: 'https://github.com/ianalloway/metric-regression-gate',
-        oneLine: 'CI: fail when metrics regress vs baseline',
-      },
-    ],
-  },
-  {
-    id: 'odds-lines',
-    title: 'Odds, lines & data',
-    blurb: 'Shop lines, archive snapshots, drift alerts — BYOK Odds API where noted.',
-    icon: Activity,
-    rows: [
-      {
-        name: 'line-shop-cli',
-        href: 'https://github.com/ianalloway/line-shop-cli',
-        oneLine: 'Line shopping, CSV, optional Kelly · demo or Odds API',
-      },
-      {
-        name: 'closing-line-archive',
-        href: 'https://github.com/ianalloway/closing-line-archive',
-        oneLine: 'SQLite snapshots · beat-close vs cutoffs',
-      },
-      {
-        name: 'odds-drift-watch',
-        href: 'https://github.com/ianalloway/odds-drift-watch',
-        oneLine:
-          'Webhook alerts when sportsbook odds move past a threshold (Line Shock Index)',
-      },
-      {
-        name: 'odds-cli',
-        href: 'https://github.com/ianalloway/odds-cli',
-        oneLine: 'Terminal odds + Kelly',
-      },
-      {
-        name: 'kelly-js',
-        href: 'https://github.com/ianalloway/kelly-js',
-        oneLine: 'TypeScript Kelly / CLV · npm',
-      },
-    ],
-  },
-  {
-    id: 'mlops-research',
-    title: 'MLOps, agents & research',
-    blurb: 'Model cards, traces, benchmarks, RAG — README + CI on each.',
-    icon: Cpu,
-    rows: [
-      {
-        name: 'model-cardgen',
-        href: 'https://github.com/ianalloway/model-cardgen',
-        oneLine: 'metrics.json → Markdown model/data cards',
-      },
-      {
-        name: 'agent-trace-kit',
-        href: 'https://github.com/ianalloway/agent-trace-kit',
-        oneLine: 'JSONL traces + HTML replay for agents',
-      },
-      {
-        name: 'fraud-anomaly-bench',
-        href: 'https://github.com/ianalloway/fraud-anomaly-bench',
-        oneLine: 'Sklearn benchmark harness + leaderboard',
-      },
-      {
-        name: 'substack-rag-local',
-        href: 'https://github.com/ianalloway/substack-rag-local',
-        oneLine: 'Local RAG over Substack posts',
-      },
-    ],
-  },
-  {
-    id: 'dev-mac',
-    title: 'Dev & Mac',
-    blurb: 'Reproducible Mac setup and safe disk cleanup.',
-    icon: Wrench,
-    rows: [
-      {
-        name: 'macos-disk-cleanup',
-        href: 'https://github.com/ianalloway/macos-disk-cleanup',
-        oneLine: 'Safe cache cleanup · documented algorithm · ShellCheck CI',
-      },
-      {
-        name: 'dev-setup-macos',
-        href: 'https://github.com/ianalloway/dev-setup-macos',
-        oneLine: 'Homebrew Bundle bootstrap',
-      },
-    ],
-  },
-  {
-    id: 'shipped-products',
-    title: 'Shipped products & demos',
-    blurb: 'Live products and larger demos beyond small OSS libs.',
-    icon: ExternalLink,
-    rows: [
-      {
-        name: 'ai-advantage',
-        href: 'https://github.com/ianalloway/ai-advantage',
-        oneLine: 'Sports ML product codebase',
-      },
-      {
-        name: 'AI Advantage Sports (live)',
-        href: 'https://aiadvantagesports.com',
-        oneLine: 'XGBoost + Kelly · live app',
-      },
-      {
-        name: 'sports-betting-ml',
-        href: 'https://github.com/ianalloway/sports-betting-ml',
-        oneLine: 'Models / Hugging Face Spaces',
-      },
-      {
-        name: 'tf-object-detection',
-        href: 'https://github.com/ianalloway/tf-object-detection',
-        oneLine: 'TensorFlow.js COCO-SSD in the browser',
-      },
-      {
-        name: 'ai-drone-auto-vehicle',
-        href: 'https://github.com/ianalloway/ai-drone-auto-vehicle',
-        oneLine: 'YOLOv8 + path planning + MAVLink',
-      },
-      {
-        name: 'Money-maker-bot',
-        href: 'https://github.com/ianalloway/Money-maker-bot',
-        oneLine: 'OpenClaw financial / odds agent',
-      },
-      {
-        name: 'deathcon-api',
-        href: 'https://github.com/ianalloway/deathcon-api',
-        oneLine: 'FastAPI AI + webhooks',
-      },
-    ],
-  },
-  {
-    id: 'legacy',
-    title: 'Legacy / reference',
-    blurb: 'Superseded or split elsewhere — kept for links and history.',
-    icon: Archive,
-    rows: [
-      {
-        name: 'nba-edge',
-        href: 'https://github.com/ianalloway/nba-edge',
-        oneLine: 'Older CLI repo · library source of truth is nba-ratings',
-      },
-      {
-        name: 'repo-health',
-        href: 'https://github.com/ianalloway/repo-health',
-        oneLine: 'CLI: README quality, licensing, CI, topics, maintenance signals',
-      },
-      {
-        name: 'code-stash',
-        href: 'https://github.com/ianalloway/code-stash',
-        oneLine: 'SQLite snippet manager with local LLM search',
-      },
-      {
-        name: 'stock-sentiment-analyzer',
-        href: 'https://github.com/ianalloway/stock-sentiment-analyzer',
-        oneLine: 'NLP sentiment across Reddit, headlines, filings',
-      },
-      {
-        name: 'openclaw-skills',
-        href: 'https://github.com/ianalloway/openclaw-skills',
-        oneLine: 'OpenClaw / ClawHub skills for sports, Kelly, markets, agents',
-      },
-    ],
-  },
-  {
-    id: 'site-cv',
-    title: 'Site & CV',
-    blurb: 'This portfolio and resume source.',
-    icon: BookMarked,
-    rows: [
-      {
-        name: 'ian-web-forge',
-        href: 'https://github.com/ianalloway/ian-web-forge',
-        oneLine: 'Portfolio site (this deployment)',
-      },
-      {
-        name: 'Resume',
-        href: 'https://github.com/ianalloway/Resume',
-        oneLine: 'CV source + PDF',
-      },
-    ],
-  },
-];
+/** Highlighted repos only; full account includes coursework, R, utilities, agents, etc. */
+const CORE_SECTION: CatalogSection = {
+  id: 'core',
+  title: 'Core public repositories',
+  blurb:
+    'Twelve repos I point people to first. The GitHub profile lists the same featured set; everything else public (~40 total) is on the full repository list.',
+  icon: LineChart,
+  rows: [
+    {
+      name: 'ai-advantage',
+      href: 'https://github.com/ianalloway/ai-advantage',
+      oneLine: 'Sports ML product codebase (flagship app)',
+    },
+    {
+      name: 'sports-betting-ml',
+      href: 'https://github.com/ianalloway/sports-betting-ml',
+      oneLine: 'NBA / NFL models, XGBoost, ensembles',
+    },
+    {
+      name: 'nba-clv-dashboard',
+      href: 'https://github.com/ianalloway/nba-clv-dashboard',
+      oneLine: 'FastAPI + Chart.js: calibration, CLV, rolling accuracy',
+    },
+    {
+      name: 'nba-ratings',
+      href: 'https://github.com/ianalloway/nba-ratings',
+      oneLine: 'Elo / logistic / Kelly · PyPI `nba-edge`',
+    },
+    {
+      name: 'kelly-js',
+      href: 'https://github.com/ianalloway/kelly-js',
+      oneLine: 'TypeScript Kelly / CLV · npm',
+    },
+    {
+      name: 'backtest-report-gen',
+      href: 'https://github.com/ianalloway/backtest-report-gen',
+      oneLine: 'metrics.json → static HTML report',
+    },
+    {
+      name: 'metric-regression-gate',
+      href: 'https://github.com/ianalloway/metric-regression-gate',
+      oneLine: 'CI: fail when metrics regress vs baseline',
+    },
+    {
+      name: 'odds-drift-watch',
+      href: 'https://github.com/ianalloway/odds-drift-watch',
+      oneLine: 'Webhook line-move alerts (Line Shock Index)',
+    },
+    {
+      name: 'closing-line-archive',
+      href: 'https://github.com/ianalloway/closing-line-archive',
+      oneLine: 'SQLite odds snapshots · beat-close analysis',
+    },
+    {
+      name: 'repo-health',
+      href: 'https://github.com/ianalloway/repo-health',
+      oneLine: 'CLI: README / CI / license / topic / staleness scoring',
+    },
+    {
+      name: 'macos-disk-cleanup',
+      href: 'https://github.com/ianalloway/macos-disk-cleanup',
+      oneLine: 'Safe Mac cache cleanup · dry-run · ShellCheck CI',
+    },
+    {
+      name: 'ian-web-forge',
+      href: 'https://github.com/ianalloway/ian-web-forge',
+      oneLine: 'This portfolio site (source)',
+    },
+  ],
+};
 
 const FLOW_STEPS = [
   { label: 'Primitives', href: 'https://github.com/ianalloway/nba-ratings' },
@@ -317,6 +178,9 @@ function CatalogTable({ rows }: { rows: CatalogRow[] }) {
 }
 
 const Toolkit = () => {
+  const section = CORE_SECTION;
+  const Icon = section.icon;
+
   return (
     <div className="min-h-screen bg-background relative">
       <MatrixRain />
@@ -331,16 +195,9 @@ const Toolkit = () => {
             <a href="#start" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               Start
             </a>
-            {CATALOG.map((s) => (
-              <a
-                key={s.id}
-                href={`#${s.id}`}
-                className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded max-w-[10rem] truncate"
-                title={s.title}
-              >
-                {s.title.split(' —')[0]}
-              </a>
-            ))}
+            <a href="#core" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
+              Core
+            </a>
             <a href="#more" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               More
             </a>
@@ -360,7 +217,7 @@ const Toolkit = () => {
             Sports analytics &amp; GitHub tools
           </h1>
           <p className="text-muted-foreground font-mono text-sm max-w-2xl mx-auto mb-2">
-            Same catalog as the{' '}
+            Condensed index: core repos below (12), same story as the{' '}
             <a
               href="https://github.com/ianalloway/ianalloway"
               target="_blank"
@@ -369,7 +226,8 @@ const Toolkit = () => {
             >
               GitHub profile README
             </a>
-            — tables below for quick scanning.
+            . About 40 public repos on this account—use &quot;All public repositories&quot; in Start here for the
+            rest.
           </p>
           <p className="text-muted-foreground/80 font-mono text-xs max-w-xl mx-auto mb-6">
             MIT-licensed OSS unless noted; README + CI where applicable.
@@ -438,40 +296,30 @@ const Toolkit = () => {
           </Card>
         </section>
 
-        {CATALOG.map((section) => {
-          const Icon = section.icon;
-          return (
-            <section key={section.id} id={section.id} className="mb-12 scroll-mt-24">
-              <h2 className="text-xl font-bold matrix-text font-mono text-primary mb-2 flex items-center gap-2">
-                <Icon size={22} className="text-primary shrink-0" />
-                {section.title}
-              </h2>
-              <p className="text-muted-foreground font-mono text-sm mb-4">{section.blurb}</p>
-              <CatalogTable rows={section.rows} />
-            </section>
-          );
-        })}
+        <section key={section.id} id={section.id} className="mb-12 scroll-mt-24">
+          <h2 className="text-xl font-bold matrix-text font-mono text-primary mb-2 flex items-center gap-2">
+            <Icon size={22} className="text-primary shrink-0" />
+            {section.title}
+          </h2>
+          <p className="text-muted-foreground font-mono text-sm mb-4">{section.blurb}</p>
+          <CatalogTable rows={section.rows} />
+        </section>
 
         <section id="more" className="mb-12 scroll-mt-24 terminal-border rounded-lg p-5 bg-card/30">
-          <h2 className="text-primary font-mono text-sm font-bold mb-2">More utilities</h2>
+          <h2 className="text-primary font-mono text-sm font-bold mb-2">The rest (same GitHub account)</h2>
           <p className="text-muted-foreground font-mono text-xs mb-4">
-            Smaller tools (e.g. <code className="text-primary/90">code-stash</code>,{' '}
-            <code className="text-primary/90">repo-health</code>,{' '}
-            <code className="text-primary/90">stock-sentiment-analyzer</code>)—browse the full{' '}
+            Odds CLI, Hugging Face spaces, R packages (<code className="text-primary/90">allowayai</code>), OpenClaw
+            skills/patches, sentiment tools, coursework, and smaller experiments—open the full list and sort by
+            &quot;Updated&quot;.
+          </p>
+          <Button className="font-mono bg-primary text-primary-foreground" asChild>
             <a
               href="https://github.com/ianalloway?tab=repositories&q=&sort=updated"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary hover:underline"
             >
-              repository list
-            </a>
-            .
-          </p>
-          <Button className="font-mono bg-primary text-primary-foreground" asChild>
-            <a href="https://github.com/ianalloway?tab=repositories&q=&sort=updated" target="_blank" rel="noopener noreferrer">
               <Github className="mr-2" size={16} />
-              All repos @ianalloway
+              All public repos @ianalloway
             </a>
           </Button>
         </section>

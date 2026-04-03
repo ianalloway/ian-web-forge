@@ -4,7 +4,7 @@
 
 | Date | Change |
 |------|--------|
-| **2026-03** | **`/toolkit`** is the public index of sports + OSS repos. It uses the **same table catalog** as the GitHub profile README (`ianalloway/ianalloway`). When you add a public repo, update **both** `src/pages/Toolkit.tsx` (`CATALOG` / `START_HERE`) and `Projects/personal/ianalloway-profile-readme/README.md` so they stay in sync. Optional: run `scripts/apply-topics.sh` in the profile repo for GitHub topic tags. |
+| **2026-03** | **`/toolkit`** is a **condensed** public index: `CORE_SECTION` (~12 repos) + links to the full **~40** public repos on GitHub. Keep narrative **Featured** copy on the profile README (`ianalloway/ianalloway`) aligned with that core set; use the GitHub repo list for the long tail. Optional: `scripts/apply-topics.sh` in the profile repo for topic tags. |
 
 ## Overview
 
@@ -54,4 +54,4 @@ If code review finds issues:
 - CI Config: `.github/workflows/risk-policy-gate.yml`
 - Greptile: `.greptile.yml`
 - CodeRabbit: `coderabbit.yaml`
-- Public repo catalog: `src/pages/Toolkit.tsx` (must match profile README tables)
+- Public repo catalog: `src/pages/Toolkit.tsx` (`CORE_SECTION` + `START_HERE`; condensed, matches profile “featured” story)
