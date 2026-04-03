@@ -77,7 +77,7 @@ const featuredProjects = [
     subtitle: 'Evaluation dashboard',
     stack: ['FastAPI', 'Chart.js', 'Python'],
     image: '/proof/nba-clv-dashboard.svg',
-    href: 'https://github.com/ianalloway/nba-clv-dashboard',
+    href: 'https://github.com/ianalloway/oss-archive/tree/archive/nba-clv-dashboard',
     ctaLabel: 'View repository',
     detail:
       'Calibration, rolling accuracy, Brier score, and CLV-style reporting in one dashboard built to explain whether a model is actually useful.',
@@ -101,7 +101,7 @@ const featuredProjects = [
     subtitle: 'Developer tooling / maintenance intelligence',
     stack: ['Python', 'CLI', 'GitHub APIs'],
     image: '/proof/repo-health.svg',
-    href: 'https://github.com/ianalloway/repo-health',
+    href: 'https://github.com/ianalloway/oss-archive/tree/archive/repo-health',
     ctaLabel: 'View repository',
     detail:
       'A practical scoring tool for README quality, CI, licensing, issue hygiene, and maintenance signals.',
@@ -172,7 +172,7 @@ const selectedProjects = [
     name: 'snake-game',
     description:
       'Classic Snake with deterministic grid logic, keyboard controls, mobile buttons, score tracking, and restart flow. Play it on the site or inspect the standalone repo.',
-    codeHref: 'https://github.com/ianalloway/snake-game',
+    codeHref: 'https://github.com/ianalloway/oss-archive/tree/archive/snake-game',
     demoHref: '/snake',
   },
   {
@@ -188,12 +188,12 @@ const selectedProjects = [
   {
     name: 'macos-disk-cleanup',
     description: 'A careful Bash tool for reclaiming disk space without the usual “hope this does not break anything” energy.',
-    codeHref: 'https://github.com/ianalloway/macos-disk-cleanup',
+    codeHref: 'https://github.com/ianalloway/oss-archive/tree/archive/macos-disk-cleanup',
   },
   {
     name: 'openclaw-skills',
     description: 'Published skills and workflows around sports odds, reporting, developer tooling, and agent productivity.',
-    codeHref: 'https://github.com/ianalloway/openclaw-skills',
+    codeHref: 'https://github.com/ianalloway/oss-archive/tree/archive/openclaw-skills',
   },
 ];
 
@@ -635,7 +635,7 @@ const Index = () => {
                   </a>
                 </Button>
                 <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
-                  <a href="https://github.com/ianalloway/nba-clv-dashboard" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/ianalloway/oss-archive/tree/archive/nba-clv-dashboard" target="_blank" rel="noopener noreferrer">
                     <ArrowRight className="mr-2" size={16} /> See the dashboard repo
                   </a>
                 </Button>

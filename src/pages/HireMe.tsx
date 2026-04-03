@@ -48,7 +48,7 @@ const featuredWork = [
   {
     name: 'NBA CLV Dashboard',
     image: '/proof/nba-clv-dashboard.svg',
-    href: 'https://github.com/ianalloway/nba-clv-dashboard',
+    href: 'https://github.com/ianalloway/oss-archive/tree/archive/nba-clv-dashboard',
     stack: 'FastAPI, Chart.js, Python',
     whyItMatters:
       'A concrete example of how I build evaluation-first systems instead of hiding behind headline accuracy.',
@@ -64,7 +64,7 @@ const featuredWork = [
   {
     name: 'Repo Health',
     image: '/proof/repo-health.svg',
-    href: 'https://github.com/ianalloway/repo-health',
+    href: 'https://github.com/ianalloway/oss-archive/tree/archive/repo-health',
     stack: 'Python, CLI, GitHub APIs',
     whyItMatters:
       'Useful evidence that I can build practical tools with strong developer UX outside of ML too.',
