@@ -1,5 +1,5 @@
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import type { LucideIcon } from 'lucide-react';
 import {
   Github,
@@ -11,160 +11,252 @@ import {
   Shield,
   Cpu,
   Wrench,
-  FileText,
   ArrowRight,
+  Home,
+  BookMarked,
+  Archive,
   Gamepad2,
 } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 
-type Tool = {
+/** One row — mirrors github.com/ianalloway profile README catalog (March 2026). */
+type CatalogRow = {
   name: string;
-  description: string;
-  url: string;
-  tags: string[];
+  href: string;
+  oneLine: string;
 };
 
-const SECTIONS: { id: string; title: string; blurb: string; icon: LucideIcon; tools: Tool[] }[] = [
+type CatalogSection = {
+  id: string;
+  title: string;
+  blurb: string;
+  icon: LucideIcon;
+  rows: CatalogRow[];
+};
+
+const START_HERE: { label: string; href: string; note: string }[] = [
   {
-    id: 'sports-ml',
-    title: 'Sports ML — evaluation & primitives',
-    blurb:
-      'Calibration-first story: dashboard + library + reports. Swap demo JSON for your own backtests.',
+    label: 'Portfolio home',
+    href: '/',
+    note: 'Main site & sections',
+  },
+  {
+    label: 'Sports ML case study',
+    href: '/papers/sports-ml-evaluation-case-study.html',
+    note: 'One-pager · print → PDF',
+  },
+  {
+    label: 'All repositories',
+    href: 'https://github.com/ianalloway?tab=repositories&q=&sort=updated',
+    note: 'GitHub · sorted by updated',
+  },
+  {
+    label: 'Profile README',
+    href: 'https://github.com/ianalloway/ianalloway',
+    note: 'Same catalog as this page (tables)',
+  },
+];
+
+const CATALOG: CatalogSection[] = [
+  {
+    id: 'flagship',
+    title: 'Flagship — sports ML & evaluation',
+    blurb: 'Calibration-first stack: dashboard, primitives, reports, CI gate.',
     icon: LineChart,
-    tools: [
+    rows: [
       {
         name: 'nba-clv-dashboard',
-        description: 'FastAPI + Chart.js: calibration, rolling accuracy, CLV summary block.',
-        url: 'https://github.com/ianalloway/nba-clv-dashboard',
-        tags: ['FastAPI', 'Chart.js', 'flagship'],
+        href: 'https://github.com/ianalloway/nba-clv-dashboard',
+        oneLine: 'FastAPI + Chart.js: calibration, rolling accuracy, CLV block',
       },
       {
-        name: 'nba-ratings (PyPI: nba-edge)',
-        description: 'Elo updates, logistic win probability, Kelly / implied prob helpers.',
-        url: 'https://github.com/ianalloway/nba-ratings',
-        tags: ['Python', 'PyPI', 'tests'],
+        name: 'nba-ratings',
+        href: 'https://github.com/ianalloway/nba-ratings',
+        oneLine: 'Elo / logistic / Kelly primitives · PyPI package nba-edge',
       },
       {
         name: 'backtest-report-gen',
-        description: 'metrics.json → static HTML report (print to PDF). Same shape as the dashboard demo.',
-        url: 'https://github.com/ianalloway/backtest-report-gen',
-        tags: ['CLI', 'HTML', 'eval'],
+        href: 'https://github.com/ianalloway/backtest-report-gen',
+        oneLine: 'metrics.json → static HTML report',
       },
       {
         name: 'metric-regression-gate',
-        description: 'CI gate: fail PRs when metrics.json regresses vs baseline; composite GitHub Action.',
-        url: 'https://github.com/ianalloway/metric-regression-gate',
-        tags: ['GitHub Actions', 'MLOps'],
+        href: 'https://github.com/ianalloway/metric-regression-gate',
+        oneLine: 'CI: fail when metrics regress vs baseline',
       },
     ],
   },
   {
-    id: 'odds-data',
-    title: 'Odds, lines & closing-line data',
-    blurb: 'Shop lines, archive snapshots, alert on drift — BYOK for The Odds API where noted.',
+    id: 'odds-lines',
+    title: 'Odds, lines & data',
+    blurb: 'Shop lines, archive snapshots, drift alerts — BYOK Odds API where noted.',
     icon: Activity,
-    tools: [
+    rows: [
       {
-        name: 'odds-drift-watch',
-        description: 'Webhook alerts when sportsbook odds move past a threshold (Line Shock Index).',
-        url: 'https://github.com/ianalloway/odds-drift-watch',
-        tags: ['FastAPI', 'webhooks'],
+        name: 'line-shop-cli',
+        href: 'https://github.com/ianalloway/line-shop-cli',
+        oneLine: 'Line shopping, CSV, optional Kelly · demo or Odds API',
       },
       {
         name: 'closing-line-archive',
-        description: 'SQLite CLI: append JSONL snapshots; export CSV; beat-close vs open/close cutoffs.',
-        url: 'https://github.com/ianalloway/closing-line-archive',
-        tags: ['SQLite', 'data'],
+        href: 'https://github.com/ianalloway/closing-line-archive',
+        oneLine: 'SQLite snapshots · beat-close vs cutoffs',
       },
       {
-        name: 'kelly-js',
-        description: 'Zero-dep TypeScript Kelly, CLV helpers, odds conversion (npm).',
-        url: 'https://github.com/ianalloway/kelly-js',
-        tags: ['TypeScript', 'npm'],
+        name: 'odds-drift-watch',
+        href: 'https://github.com/ianalloway/odds-drift-watch',
+        oneLine:
+          'Webhook alerts when sportsbook odds move past a threshold (Line Shock Index)',
       },
       {
         name: 'odds-cli',
-        description: 'Terminal odds comparison and Kelly sizing (legacy companion CLI).',
-        url: 'https://github.com/ianalloway/odds-cli',
-        tags: ['CLI'],
+        href: 'https://github.com/ianalloway/odds-cli',
+        oneLine: 'Terminal odds + Kelly',
+      },
+      {
+        name: 'kelly-js',
+        href: 'https://github.com/ianalloway/kelly-js',
+        oneLine: 'TypeScript Kelly / CLV · npm',
+      },
+    ],
+  },
+  {
+    id: 'mlops-research',
+    title: 'MLOps, agents & research',
+    blurb: 'Model cards, traces, benchmarks, RAG — README + CI on each.',
+    icon: Cpu,
+    rows: [
+      {
+        name: 'model-cardgen',
+        href: 'https://github.com/ianalloway/model-cardgen',
+        oneLine: 'metrics.json → Markdown model/data cards',
+      },
+      {
+        name: 'agent-trace-kit',
+        href: 'https://github.com/ianalloway/agent-trace-kit',
+        oneLine: 'JSONL traces + HTML replay for agents',
+      },
+      {
+        name: 'fraud-anomaly-bench',
+        href: 'https://github.com/ianalloway/fraud-anomaly-bench',
+        oneLine: 'Sklearn benchmark harness + leaderboard',
+      },
+      {
+        name: 'substack-rag-local',
+        href: 'https://github.com/ianalloway/substack-rag-local',
+        oneLine: 'Local RAG over Substack posts',
+      },
+    ],
+  },
+  {
+    id: 'dev-mac',
+    title: 'Dev & Mac',
+    blurb: 'Reproducible Mac setup and safe disk cleanup.',
+    icon: Wrench,
+    rows: [
+      {
+        name: 'macos-disk-cleanup',
+        href: 'https://github.com/ianalloway/macos-disk-cleanup',
+        oneLine: 'Safe cache cleanup · documented algorithm · ShellCheck CI',
+      },
+      {
+        name: 'dev-setup-macos',
+        href: 'https://github.com/ianalloway/dev-setup-macos',
+        oneLine: 'Homebrew Bundle bootstrap',
       },
     ],
   },
   {
     id: 'shipped-products',
-    title: 'Shipped sports products',
-    blurb: 'Live apps and models beyond the OSS toolkit.',
+    title: 'Shipped products & demos',
+    blurb: 'Live products and larger demos beyond small OSS libs.',
     icon: ExternalLink,
-    tools: [
+    rows: [
       {
-        name: 'AI Advantage Sports',
-        description: 'XGBoost pipeline, Kelly sizing, live product experience.',
-        url: 'https://aiadvantagesports.com',
-        tags: ['product', 'XGBoost'],
+        name: 'ai-advantage',
+        href: 'https://github.com/ianalloway/ai-advantage',
+        oneLine: 'Sports ML product codebase',
       },
       {
-        name: 'sports-betting-ml (Hugging Face)',
-        description: 'Sports ML models and spaces.',
-        url: 'https://github.com/ianalloway/sports-betting-ml',
-        tags: ['Hugging Face'],
+        name: 'AI Advantage Sports (live)',
+        href: 'https://aiadvantagesports.com',
+        oneLine: 'XGBoost + Kelly · live app',
       },
       {
-        name: 'nba-edge (legacy CLI repo)',
-        description: 'Older edge-finder CLI; library source of truth is nba-ratings.',
-        url: 'https://github.com/ianalloway/nba-edge',
-        tags: ['legacy'],
+        name: 'sports-betting-ml',
+        href: 'https://github.com/ianalloway/sports-betting-ml',
+        oneLine: 'Models / Hugging Face Spaces',
+      },
+      {
+        name: 'tf-object-detection',
+        href: 'https://github.com/ianalloway/tf-object-detection',
+        oneLine: 'TensorFlow.js COCO-SSD in the browser',
+      },
+      {
+        name: 'ai-drone-auto-vehicle',
+        href: 'https://github.com/ianalloway/ai-drone-auto-vehicle',
+        oneLine: 'YOLOv8 + path planning + MAVLink',
+      },
+      {
+        name: 'Money-maker-bot',
+        href: 'https://github.com/ianalloway/Money-maker-bot',
+        oneLine: 'OpenClaw financial / odds agent',
+      },
+      {
+        name: 'deathcon-api',
+        href: 'https://github.com/ianalloway/deathcon-api',
+        oneLine: 'FastAPI AI + webhooks',
       },
     ],
   },
   {
-    id: 'mlops-agents',
-    title: 'MLOps, agents & research utilities',
-    blurb: 'Documentation, benchmarks, traces, RAG — same engineering standards (README + CI).',
-    icon: Cpu,
-    tools: [
+    id: 'legacy',
+    title: 'Legacy / reference',
+    blurb: 'Superseded or split elsewhere — kept for links and history.',
+    icon: Archive,
+    rows: [
+      {
+        name: 'nba-edge',
+        href: 'https://github.com/ianalloway/nba-edge',
+        oneLine: 'Older CLI repo · library source of truth is nba-ratings',
+      },
       {
         name: 'repo-health',
-        description: 'CLI that scores README quality, licensing, CI, topic coverage, and maintenance signals.',
-        url: 'https://github.com/ianalloway/repo-health',
-        tags: ['CLI', 'developer tooling'],
+        href: 'https://github.com/ianalloway/repo-health',
+        oneLine: 'CLI: README quality, licensing, CI, topics, maintenance signals',
       },
       {
         name: 'code-stash',
-        description: 'SQLite-backed code snippet manager with local LLM search.',
-        url: 'https://github.com/ianalloway/code-stash',
-        tags: ['SQLite', 'developer tooling'],
+        href: 'https://github.com/ianalloway/code-stash',
+        oneLine: 'SQLite snippet manager with local LLM search',
       },
       {
         name: 'stock-sentiment-analyzer',
-        description: 'NLP-powered stock sentiment scoring across Reddit, headlines, and filings.',
-        url: 'https://github.com/ianalloway/stock-sentiment-analyzer',
-        tags: ['NLP', 'analytics'],
+        href: 'https://github.com/ianalloway/stock-sentiment-analyzer',
+        oneLine: 'NLP sentiment across Reddit, headlines, filings',
       },
       {
         name: 'openclaw-skills',
-        description: 'Published OpenClaw and ClawHub skills for sports, Kelly sizing, market sentiment, and agent workflows.',
-        url: 'https://github.com/ianalloway/openclaw-skills',
-        tags: ['agents', 'open source'],
+        href: 'https://github.com/ianalloway/openclaw-skills',
+        oneLine: 'OpenClaw / ClawHub skills for sports, Kelly, markets, agents',
       },
     ],
   },
   {
-    id: 'dev-tooling',
-    title: 'Dev & Mac hygiene',
-    blurb: 'Reproducible environments and safe cleanup.',
-    icon: Wrench,
-    tools: [
+    id: 'site-cv',
+    title: 'Site & CV',
+    blurb: 'This portfolio and resume source.',
+    icon: BookMarked,
+    rows: [
       {
-        name: 'macos-disk-cleanup',
-        description: 'Bash CLI: regenerable caches only; documented algorithm; ShellCheck CI.',
-        url: 'https://github.com/ianalloway/macos-disk-cleanup',
-        tags: ['Bash', 'macOS'],
+        name: 'ian-web-forge',
+        href: 'https://github.com/ianalloway/ian-web-forge',
+        oneLine: 'Portfolio site (this deployment)',
       },
       {
-        name: 'repo-health',
-        description: 'Repository scoring and maintenance auditing for public OSS hygiene.',
-        url: 'https://github.com/ianalloway/repo-health',
-        tags: ['CLI', 'GitHub'],
+        name: 'Resume',
+        href: 'https://github.com/ianalloway/Resume',
+        oneLine: 'CV source + PDF',
       },
     ],
   },
@@ -180,6 +272,50 @@ const FLOW_STEPS = [
   { label: 'CI gate', href: 'https://github.com/ianalloway/metric-regression-gate' },
 ];
 
+function CatalogTable({ rows }: { rows: CatalogRow[] }) {
+  return (
+    <div className="overflow-x-auto rounded-md border border-primary/30 bg-card/50">
+      <table className="w-full text-left text-xs font-mono">
+        <thead>
+          <tr className="border-b border-primary/30 bg-primary/5 text-primary/90">
+            <th className="px-3 py-2 font-semibold w-[min(40%,220px)]">Repo / link</th>
+            <th className="px-3 py-2 font-semibold">One line</th>
+            <th className="px-3 py-2 w-16 text-right"> </th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.href} className="border-b border-primary/15 last:border-0 hover:bg-primary/5">
+              <td className="px-3 py-2.5 text-primary align-top">
+                <a
+                  href={r.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold hover:underline break-all"
+                >
+                  {r.name}
+                </a>
+              </td>
+              <td className="px-3 py-2.5 text-muted-foreground align-top">{r.oneLine}</td>
+              <td className="px-3 py-2.5 text-right align-top">
+                <a
+                  href={r.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary/70 hover:text-primary inline-flex"
+                  aria-label={`Open ${r.name}`}
+                >
+                  <ExternalLink size={14} />
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 const Toolkit = () => {
   return (
     <div className="min-h-screen bg-background relative">
@@ -192,15 +328,22 @@ const Toolkit = () => {
             IAN.SYS
           </a>
           <div className="flex flex-wrap gap-2 text-xs font-mono justify-end">
-            {SECTIONS.map((s) => (
+            <a href="#start" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
+              Start
+            </a>
+            {CATALOG.map((s) => (
               <a
                 key={s.id}
                 href={`#${s.id}`}
-                className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded"
+                className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded max-w-[10rem] truncate"
+                title={s.title}
               >
                 {s.title.split(' —')[0]}
               </a>
             ))}
+            <a href="#more" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
+              More
+            </a>
             <a href="/" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               [HOME]
             </a>
@@ -209,39 +352,43 @@ const Toolkit = () => {
       </nav>
 
       <main className="relative z-10 max-w-5xl mx-auto px-4 pt-24 pb-20">
-        <header className="mb-12 text-center">
+        <header className="mb-10 text-center">
           <p className="text-primary text-xs font-mono mb-2 terminal-border inline-block px-2 py-1">
             PUBLIC_TOOLKIT
           </p>
           <h1 className="text-3xl md:text-4xl font-bold matrix-text font-mono text-primary mb-4">
             Sports analytics &amp; GitHub tools
           </h1>
-          <p className="text-muted-foreground font-mono text-sm max-w-2xl mx-auto mb-6">
-            One page on the open internet listing the repos I ship: evaluation-first sports ML, odds data
-            utilities, MLOps CLIs, and Mac dev hygiene. All MIT-licensed unless noted; each has a README and CI
-            where applicable.
+          <p className="text-muted-foreground font-mono text-sm max-w-2xl mx-auto mb-2">
+            Same catalog as the{' '}
+            <a
+              href="https://github.com/ianalloway/ianalloway"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              GitHub profile README
+            </a>
+            — tables below for quick scanning.
           </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            <Button className="font-mono bg-primary text-primary-foreground" asChild>
-              <a href="https://github.com/ianalloway?tab=repositories" target="_blank" rel="noopener noreferrer">
-                <Github className="mr-2" size={16} />
-                All repos @ianalloway
-              </a>
-            </Button>
-            <Button variant="outline" className="font-mono terminal-border text-primary border-primary" asChild>
-              <a href="/papers/sports-ml-evaluation-case-study.html" target="_blank" rel="noopener noreferrer">
-                <FileText className="mr-2" size={16} />
-                Sports ML case study
-              </a>
-            </Button>
-            <Button variant="outline" className="font-mono terminal-border text-primary border-primary" asChild>
-              <a href="https://github.com/ianalloway/ianalloway" target="_blank" rel="noopener noreferrer">
-                <Github className="mr-2" size={16} />
-                GitHub profile README
-              </a>
-            </Button>
-          </div>
+          <p className="text-muted-foreground/80 font-mono text-xs max-w-xl mx-auto mb-6">
+            MIT-licensed OSS unless noted; README + CI where applicable.
+          </p>
         </header>
+
+        <section id="start" className="mb-12 scroll-mt-24">
+          <h2 className="text-primary font-mono text-sm font-bold mb-3 flex items-center gap-2">
+            <Home size={16} />
+            [START_HERE]
+          </h2>
+          <CatalogTable
+            rows={START_HERE.map((s) => ({
+              name: s.label,
+              href: s.href.startsWith('http') || s.href.startsWith('/') ? s.href : `/${s.href}`,
+              oneLine: s.note,
+            }))}
+          />
+        </section>
 
         <section className="mb-14 terminal-border rounded-lg p-4 bg-card/40 backdrop-blur-sm">
           <h2 className="text-primary font-mono text-sm font-bold mb-3 flex items-center gap-2">
@@ -249,7 +396,7 @@ const Toolkit = () => {
             [PIPELINE_AT_A_GLANCE]
           </h2>
           <p className="text-muted-foreground font-mono text-xs mb-4">
-            How the pieces connect — use what you need; no single vendor lock-in.
+            How the flagship pieces connect — optional path through the stack.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-1 md:gap-2 font-mono text-xs text-primary">
             {FLOW_STEPS.map((step, i) => (
@@ -291,61 +438,49 @@ const Toolkit = () => {
           </Card>
         </section>
 
-        {SECTIONS.map((section) => {
+        {CATALOG.map((section) => {
           const Icon = section.icon;
           return (
-            <section key={section.id} id={section.id} className="mb-14 scroll-mt-24">
+            <section key={section.id} id={section.id} className="mb-12 scroll-mt-24">
               <h2 className="text-xl font-bold matrix-text font-mono text-primary mb-2 flex items-center gap-2">
                 <Icon size={22} className="text-primary shrink-0" />
                 {section.title}
               </h2>
-              <p className="text-muted-foreground font-mono text-sm mb-6">{section.blurb}</p>
-              <div className="grid md:grid-cols-2 gap-4">
-                {section.tools.map((t) => (
-                  <Card
-                    key={t.url}
-                    className="terminal-border bg-card/80 backdrop-blur-sm hover:border-primary/50 transition-colors"
-                  >
-                    <CardContent className="p-4">
-                      <h3 className="text-primary font-bold font-mono text-sm mb-2">{t.name}</h3>
-                      <p className="text-muted-foreground/90 text-xs font-mono mb-3 leading-relaxed">
-                        {t.description}
-                      </p>
-                      <div className="flex flex-wrap gap-1 mb-3">
-                        {t.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2 py-0.5 text-[10px] terminal-border rounded font-mono text-primary/80"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="font-mono terminal-border text-primary border-primary text-xs h-8"
-                        asChild
-                      >
-                        <a href={t.url} target="_blank" rel="noopener noreferrer">
-                          <Github className="mr-1" size={12} />
-                          Open
-                        </a>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+              <p className="text-muted-foreground font-mono text-sm mb-4">{section.blurb}</p>
+              <CatalogTable rows={section.rows} />
             </section>
           );
         })}
+
+        <section id="more" className="mb-12 scroll-mt-24 terminal-border rounded-lg p-5 bg-card/30">
+          <h2 className="text-primary font-mono text-sm font-bold mb-2">More utilities</h2>
+          <p className="text-muted-foreground font-mono text-xs mb-4">
+            Smaller tools (e.g. <code className="text-primary/90">code-stash</code>,{' '}
+            <code className="text-primary/90">repo-health</code>,{' '}
+            <code className="text-primary/90">stock-sentiment-analyzer</code>)—browse the full{' '}
+            <a
+              href="https://github.com/ianalloway?tab=repositories&q=&sort=updated"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              repository list
+            </a>
+            .
+          </p>
+          <Button className="font-mono bg-primary text-primary-foreground" asChild>
+            <a href="https://github.com/ianalloway?tab=repositories&q=&sort=updated" target="_blank" rel="noopener noreferrer">
+              <Github className="mr-2" size={16} />
+              All repos @ianalloway
+            </a>
+          </Button>
+        </section>
 
         <section className="terminal-border rounded-lg p-6 bg-primary/5 text-center">
           <Shield className="mx-auto mb-3 text-primary" size={28} />
           <h2 className="text-primary font-mono font-bold mb-2">Hire / collaborate</h2>
           <p className="text-muted-foreground font-mono text-xs mb-4 max-w-lg mx-auto">
-            If you want this stack applied to your data pipeline, eval story, or product, use the main site or
-            hire page.
+            If you want this stack applied to your pipeline or product, use the main site or hire page.
           </p>
           <Button variant="outline" className="font-mono terminal-border text-primary border-primary" asChild>
             <a href="/hireme">[/HIRE]</a>
