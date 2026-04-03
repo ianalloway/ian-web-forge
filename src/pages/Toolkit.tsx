@@ -43,7 +43,7 @@ const START_HERE: { label: string; href: string; note: string }[] = [
   {
     label: 'All public repositories',
     href: 'https://github.com/ianalloway?tab=repositories&q=&sort=updated',
-    note: '8 active + archived read-only · sorted by updated',
+    note: '9 active + archived read-only · sorted by updated',
   },
   {
     label: 'Profile README',
@@ -59,7 +59,7 @@ const CORE_SECTION: CatalogSection = {
   id: 'core',
   title: 'Active public repositories',
   blurb:
-    'Eight non-archived repos on this account. Dozens of additional projects were merged into branch-per-repo snapshots under oss-archive before archiving the originals read-only.',
+    'Nine non-archived repos on this account. Dozens of additional projects were merged into branch-per-repo snapshots under oss-archive before archiving the originals read-only.',
   icon: LineChart,
   rows: [
     {
@@ -71,6 +71,11 @@ const CORE_SECTION: CatalogSection = {
       name: 'sports-betting-ml',
       href: 'https://github.com/ianalloway/sports-betting-ml',
       oneLine: 'NBA / NFL models, XGBoost, ensembles',
+    },
+    {
+      name: 'ai-sports-monorepo',
+      href: 'https://github.com/ianalloway/ai-sports-monorepo',
+      oneLine: 'Combined monorepo for ai-advantage + sports-betting-ml',
     },
     {
       name: 'kelly-js',
@@ -199,7 +204,7 @@ const Toolkit = () => {
             Sports analytics &amp; GitHub tools
           </h1>
           <p className="text-muted-foreground font-mono text-sm max-w-2xl mx-auto mb-2">
-            Active repos below (eight). Retired public OSS is preserved as branches on{' '}
+            Active repos below (nine). Retired public OSS is preserved as branches on{' '}
             <a
               href="https://github.com/ianalloway/oss-archive"
               target="_blank"
