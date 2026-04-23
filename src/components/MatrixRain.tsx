@@ -2,6 +2,13 @@ import { useEffect, useRef } from 'react';
 
 const CHARS = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
 
+interface Column {
+  y: number;
+  speed: number;
+  opacity: number;
+  length: number;
+}
+
 const MatrixRain = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -11,51 +18,69 @@ const MatrixRain = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const fontSize = 14;
-    let columns: number[] = [];
+    const fontSize = 13;
+    let columns: Column[] = [];
     let animId: number;
+    let lastTime = 0;
 
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       const cols = Math.floor(canvas.width / fontSize);
-      columns = Array.from({ length: cols }, () => Math.random() * -canvas.height);
+      columns = Array.from({ length: cols }, () => ({
+        y: Math.random() * -canvas.height,
+        speed: 0.5 + Math.random() * 1.5,
+        opacity: 0.4 + Math.random() * 0.6,
+        length: 8 + Math.floor(Math.random() * 20),
+      }));
     };
 
     resize();
     window.addEventListener('resize', resize);
 
-    const draw = () => {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.055)';
+    const draw = (time: number) => {
+      const delta = time - lastTime;
+      if (delta < 28) { // ~35fps cap
+        animId = requestAnimationFrame(draw);
+        return;
+      }
+      lastTime = time;
+
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      columns.forEach((y, i) => {
-        const char = CHARS[Math.floor(Math.random() * CHARS.length)];
+      columns.forEach((col, i) => {
         const x = i * fontSize;
 
-        // Lead character — bright white-green
-        if (y > 0 && y < canvas.height) {
-          ctx.fillStyle = 'rgba(180, 255, 180, 0.95)';
+        // Lead character — bright
+        if (col.y > 0 && col.y < canvas.height) {
+          ctx.fillStyle = `rgba(200, 255, 200, ${col.opacity})`;
           ctx.font = `bold ${fontSize}px "Fira Code", monospace`;
-          ctx.fillText(char, x, y);
+          ctx.fillText(CHARS[Math.floor(Math.random() * CHARS.length)], x, col.y);
         }
 
-        // Trail character — standard green, occasional cyan accent
-        const trailChar = CHARS[Math.floor(Math.random() * CHARS.length)];
-        const trailY = y - fontSize;
-        if (trailY > 0 && trailY < canvas.height) {
-          const isCyan = Math.random() < 0.04;
-          ctx.fillStyle = isCyan
-            ? 'rgba(0, 220, 220, 0.7)'
-            : 'rgba(0, 200, 80, 0.55)';
+        // Trail characters
+        for (let t = 1; t < col.length; t++) {
+          const ty = col.y - t * fontSize;
+          if (ty < 0 || ty > canvas.height) continue;
+          const fade = 1 - t / col.length;
+          // 3% chance of cyan accent
+          const isCyan = Math.random() < 0.03;
+          if (isCyan) {
+            ctx.fillStyle = `rgba(0, 210, 210, ${fade * col.opacity * 0.7})`;
+          } else {
+            ctx.fillStyle = `rgba(0, 200, 70, ${fade * col.opacity * 0.6})`;
+          }
           ctx.font = `${fontSize}px "Fira Code", monospace`;
-          ctx.fillText(trailChar, x, trailY);
+          ctx.fillText(CHARS[Math.floor(Math.random() * CHARS.length)], x, ty);
         }
 
-        if (y > canvas.height && Math.random() > 0.975) {
-          columns[i] = 0;
-        } else {
-          columns[i] = y + fontSize;
+        col.y += fontSize * col.speed;
+        if (col.y > canvas.height + col.length * fontSize && Math.random() > 0.97) {
+          col.y = -col.length * fontSize;
+          col.speed = 0.5 + Math.random() * 1.5;
+          col.opacity = 0.4 + Math.random() * 0.6;
+          col.length = 8 + Math.floor(Math.random() * 20);
         }
       });
 
@@ -74,7 +99,7 @@ const MatrixRain = () => {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0"
-      style={{ opacity: 0.18 }}
+      style={{ opacity: 0.16 }}
     />
   );
 };
