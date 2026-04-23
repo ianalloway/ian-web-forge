@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ExternalLink, Github, Star } from 'lucide-react';
+import { ExternalLink, Github, Star, Zap } from 'lucide-react';
 
 type Category = 'All' | 'Sports ML' | 'AI Agents' | 'MLOps' | 'Tools' | 'Web3';
 
@@ -15,48 +13,18 @@ interface Project {
   image: string;
   category: Category;
   featured?: boolean;
-  stars?: string;
 }
 
 const PROJECTS: Project[] = [
   {
     title: 'nba-clv-dashboard',
-    description: 'FastAPI + Chart.js evaluation demo: calibration, rolling accuracy, CLV summary — swap in your backtest JSON. Flagship sports ML showcase.',
+    description: 'FastAPI + Chart.js evaluation demo: calibration, rolling accuracy, CLV summary. Swap in your backtest JSON. Flagship sports ML showcase.',
     technologies: ['FastAPI', 'Chart.js', 'Sports ML', 'Python'],
     github: 'https://github.com/ianalloway/nba-clv-dashboard',
     demo: 'https://ianalloway.xyz/papers/sports-ml-evaluation-case-study.html',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=350&fit=crop',
     category: 'Sports ML',
     featured: true,
-    stars: '⭐ Flagship',
-  },
-  {
-    title: 'nba-ratings / nba-edge',
-    description: 'Installable Elo / logistic win-prob / Kelly helpers. Published to PyPI as nba-edge. 68.3% model accuracy.',
-    technologies: ['Python', 'Elo', 'Kelly Criterion', 'PyPI'],
-    github: 'https://github.com/ianalloway/nba-ratings',
-    demo: 'https://github.com/ianalloway/nba-ratings#readme',
-    image: 'https://images.unsplash.com/photo-1519861536423-041a8384d70d?w=600&h=350&fit=crop',
-    category: 'Sports ML',
-    featured: true,
-  },
-  {
-    title: 'odds-drift-watch',
-    description: 'Webhook-based line-move monitoring with FastAPI and SQLite. Alerts on meaningful market shifts using Line Shock Index.',
-    technologies: ['FastAPI', 'SQLite', 'Sports Analytics', 'Webhooks'],
-    github: 'https://github.com/ianalloway/odds-drift-watch',
-    demo: 'https://github.com/ianalloway/odds-drift-watch#readme',
-    image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&h=350&fit=crop',
-    category: 'Sports ML',
-  },
-  {
-    title: 'closing-line-archive',
-    description: 'CLI for historical odds snapshots and beat-close analysis using SQLite-backed sportsbook data.',
-    technologies: ['Python', 'SQLite', 'Sports Data', 'CLI'],
-    github: 'https://github.com/ianalloway/closing-line-archive',
-    demo: 'https://github.com/ianalloway/closing-line-archive#readme',
-    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=350&fit=crop',
-    category: 'Sports ML',
   },
   {
     title: 'NBA Sports Betting Pipeline',
@@ -69,13 +37,22 @@ const PROJECTS: Project[] = [
     featured: true,
   },
   {
-    title: 'Booperbot',
-    description: 'Autonomous AI agent with Notion diary integration, memory, and task automation. Built on LLMs with tool-use.',
-    technologies: ['Python', 'LLMs', 'Notion API', 'Agents'],
-    github: 'https://github.com/ianalloway',
-    demo: '#',
-    image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&h=350&fit=crop',
-    category: 'AI Agents',
+    title: 'nba-ratings / nba-edge',
+    description: 'Installable Elo / logistic win-prob / Kelly helpers. Published to PyPI as nba-edge.',
+    technologies: ['Python', 'Elo', 'Kelly Criterion', 'PyPI'],
+    github: 'https://github.com/ianalloway/nba-ratings',
+    demo: 'https://github.com/ianalloway/nba-ratings#readme',
+    image: 'https://images.unsplash.com/photo-1519861536423-041a8384d70d?w=600&h=350&fit=crop',
+    category: 'Sports ML',
+  },
+  {
+    title: 'odds-drift-watch',
+    description: 'Webhook-based line-move monitoring with FastAPI and SQLite. Alerts on meaningful market shifts using Line Shock Index.',
+    technologies: ['FastAPI', 'SQLite', 'Sports Analytics', 'Webhooks'],
+    github: 'https://github.com/ianalloway/odds-drift-watch',
+    demo: 'https://github.com/ianalloway/odds-drift-watch#readme',
+    image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&h=350&fit=crop',
+    category: 'Sports ML',
   },
   {
     title: 'openclaw-skills',
@@ -86,6 +63,15 @@ const PROJECTS: Project[] = [
     image: 'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600&h=350&fit=crop',
     category: 'AI Agents',
     featured: true,
+  },
+  {
+    title: 'Booperbot',
+    description: 'Autonomous AI agent with Notion diary integration, memory, and task automation built on LLMs with tool-use.',
+    technologies: ['Python', 'LLMs', 'Notion API', 'Agents'],
+    github: 'https://github.com/ianalloway',
+    demo: '#',
+    image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&h=350&fit=crop',
+    category: 'AI Agents',
   },
   {
     title: 'Job Fit Analyzer',
@@ -125,7 +111,7 @@ const PROJECTS: Project[] = [
   },
   {
     title: 'macOS Disk Cleanup',
-    description: 'Open-source Bash CLI that reclaims macOS disk space from regenerable caches only. Documented algorithm, --dry-run, ShellCheck CI.',
+    description: 'Open-source Bash CLI that reclaims macOS disk space from regenerable caches only. ShellCheck CI, --dry-run flag.',
     technologies: ['Bash', 'macOS', 'GitHub Actions', 'CLI'],
     github: 'https://github.com/ianalloway/macos-disk-cleanup',
     demo: 'https://github.com/ianalloway/macos-disk-cleanup#readme',
@@ -163,107 +149,139 @@ const PROJECTS: Project[] = [
 
 const CATEGORIES: Category[] = ['All', 'Sports ML', 'AI Agents', 'MLOps', 'Tools', 'Web3'];
 
-const Projects = () => {
-  const [activeCategory, setActiveCategory] = useState<Category>('All');
+const CAT_COLORS: Record<Category, string> = {
+  'All': 'hsl(120 100% 50%)',
+  'Sports ML': 'hsl(120 100% 50%)',
+  'AI Agents': 'hsl(180 100% 50%)',
+  'MLOps': 'hsl(60 100% 55%)',
+  'Tools': 'hsl(300 100% 65%)',
+  'Web3': 'hsl(221 83% 60%)',
+};
 
-  const filtered = activeCategory === 'All'
-    ? PROJECTS
-    : PROJECTS.filter((p) => p.category === activeCategory);
+const Projects = () => {
+  const [active, setActive] = useState<Category>('All');
+  const filtered = active === 'All' ? PROJECTS : PROJECTS.filter(p => p.category === active);
 
   return (
-    <section id="projects" className="py-20">
+    <section id="projects" className="py-24">
       <div className="container mx-auto px-4">
+
         <div className="text-center mb-12">
-          <p className="text-muted-foreground text-xs uppercase tracking-widest font-mono mb-2">// SHIPPED_WORK</p>
-          <h2 className="text-4xl font-bold text-foreground mb-4 font-mono">Featured Projects</h2>
+          <p className="section-label">// SHIPPED_WORK</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 font-mono">Featured Projects</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto font-mono text-sm">
-            Sports ML · AI agents · MLOps tooling · and more. All production-grade, most open source.
+            Sports ML · AI agents · MLOps tooling · Developer tools. All production-grade, most open source.
           </p>
         </div>
 
         {/* Filter tabs */}
         <div className="flex flex-wrap justify-center gap-2 mb-10">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-1.5 rounded-full font-mono text-xs font-bold tracking-widest uppercase transition-all duration-200 border
-                ${activeCategory === cat
-                  ? 'bg-primary text-background border-primary shadow-[0_0_12px_hsl(120_100%_50%/0.4)]'
-                  : 'border-primary/20 text-muted-foreground hover:border-primary/50 hover:text-primary'
-                }`}
-            >
-              {cat}
-              <span className="ml-1.5 opacity-60">
-                ({cat === 'All' ? PROJECTS.length : PROJECTS.filter((p) => p.category === cat).length})
-              </span>
-            </button>
-          ))}
+          {CATEGORIES.map((cat) => {
+            const count = cat === 'All' ? PROJECTS.length : PROJECTS.filter(p => p.category === cat).length;
+            const color = CAT_COLORS[cat];
+            const isActive = active === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setActive(cat)}
+                className="px-4 py-1.5 rounded-full font-mono text-xs font-bold tracking-widest uppercase transition-all duration-200 border"
+                style={isActive ? {
+                  background: color,
+                  color: '#000',
+                  borderColor: color,
+                  boxShadow: `0 0 16px ${color}55`,
+                } : {
+                  borderColor: `${color}33`,
+                  color: 'hsl(var(--muted-foreground))',
+                }}
+              >
+                {cat}
+                <span className="ml-1.5 opacity-60">({count})</span>
+              </button>
+            );
+          })}
         </div>
 
-        {/* Project grid */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {filtered.map((project) => (
-            <Card
-              key={project.title}
-              className={`bg-card overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_24px_hsl(120_100%_50%/0.12)]
-                ${project.featured ? 'border-primary/30' : 'border-border hover:border-primary/30'}`}
-            >
-              <div className="aspect-video overflow-hidden relative">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-                <div className="absolute top-3 left-3 flex gap-2">
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border border-primary/40 bg-background/70 text-primary">
-                    {project.category}
-                  </span>
-                  {project.featured && (
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border border-yellow-400/40 bg-background/70 text-yellow-400 flex items-center gap-1">
-                      <Star size={9} className="fill-yellow-400" /> Featured
+        {/* Grid */}
+        <div className="grid md:grid-cols-2 gap-5">
+          {filtered.map((project) => {
+            const catColor = CAT_COLORS[project.category];
+            return (
+              <div
+                key={project.title}
+                className="glass-card rounded-xl overflow-hidden transition-all duration-300"
+                style={project.featured ? { borderColor: `${catColor}44` } : {}}
+              >
+                {/* Image */}
+                <div className="aspect-video overflow-hidden relative">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
+                  <div className="absolute top-3 left-3 flex gap-2">
+                    <span
+                      className="tag-pill"
+                      style={{ borderColor: `${catColor}44`, color: catColor, background: `${catColor}15` }}
+                    >
+                      {project.category}
                     </span>
-                  )}
+                    {project.featured && (
+                      <span className="tag-pill" style={{ borderColor: 'hsl(60 100% 55% / 0.4)', color: 'hsl(60 100% 55%)', background: 'hsl(60 100% 55% / 0.1)' }}>
+                        <Star size={8} className="mr-1 fill-current" />Featured
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-5">
+                  <h3 className="text-base font-bold text-foreground font-mono mb-2">{project.title}</h3>
+                  <p className="text-muted-foreground text-xs leading-relaxed mb-4">{project.description}</p>
+
+                  {/* Tech badges */}
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {project.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2 py-0.5 rounded-full border border-primary/15 bg-card/50 text-muted-foreground font-mono text-[10px]"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Buttons */}
+                  <div className="flex gap-2">
+                    {project.github !== '#' && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="font-mono text-xs border-primary/25 text-primary hover:bg-primary/10 hover:border-primary/50"
+                        asChild
+                      >
+                        <a href={project.github} target="_blank" rel="noopener noreferrer">
+                          <Github size={12} className="mr-1.5" /> Code
+                        </a>
+                      </Button>
+                    )}
+                    {project.demo !== '#' && (
+                      <Button
+                        size="sm"
+                        className="font-mono text-xs bg-primary text-background hover:bg-primary/85 hover:shadow-[0_0_12px_hsl(120_100%_50%/0.4)]"
+                        asChild
+                      >
+                        <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink size={12} className="mr-1.5" /> Live Demo
+                        </a>
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </div>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg text-foreground font-mono">{project.title}</CardTitle>
-                <CardDescription className="text-muted-foreground text-sm leading-relaxed">
-                  {project.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.technologies.map((tech) => (
-                    <Badge
-                      key={tech}
-                      variant="outline"
-                      className="text-[10px] font-mono border-primary/20 text-muted-foreground"
-                    >
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
-                <div className="flex gap-2">
-                  {project.github !== '#' && (
-                    <Button size="sm" variant="outline" className="font-mono text-xs terminal-border border-primary/30 text-primary hover:bg-primary/10" asChild>
-                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5">
-                        <Github size={13} /> Code
-                      </a>
-                    </Button>
-                  )}
-                  {project.demo !== '#' && (
-                    <Button size="sm" className="font-mono text-xs bg-primary text-background hover:bg-primary/80" asChild>
-                      <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5">
-                        <ExternalLink size={13} /> Live Demo
-                      </a>
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+            );
+          })}
         </div>
 
         {/* GitHub CTA */}
@@ -272,12 +290,14 @@ const Projects = () => {
             href="https://github.com/ianalloway"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 font-mono text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
+            className="inline-flex items-center gap-2 font-mono text-sm text-muted-foreground hover:text-primary transition-colors duration-200 group"
           >
-            <Github size={15} />
-            See all 60+ repos on GitHub →
+            <Github size={14} />
+            <span className="neon-underline">See all 60+ repos on GitHub</span>
+            <Zap size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
           </a>
         </div>
+
       </div>
     </section>
   );

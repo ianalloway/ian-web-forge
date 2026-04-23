@@ -496,10 +496,12 @@ const Index = () => {
       </section>
 
       <section id="top" className="relative z-10 px-4 pt-28 pb-16 md:pt-36 md:pb-24">
+        {/* Radial hero glow */}
+        <div className="absolute inset-0 pointer-events-none" style={{background:'radial-gradient(ellipse 60% 40% at 30% 50%, hsl(120 100% 50% / 0.05) 0%, transparent 70%)'}} />
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
           <div>
             <div className="mb-5 flex items-center gap-3 flex-wrap">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-green-400/40 bg-green-400/10 text-green-400 font-mono text-xs font-bold tracking-widest uppercase">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-green-400/40 bg-green-400/8 text-green-400 font-mono text-xs font-bold tracking-widest uppercase animate-border-glow shadow-[0_0_16px_hsl(120_100%_50%/0.1)]">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
@@ -507,11 +509,11 @@ const Index = () => {
                 Open to Work · ML Engineer / Data Scientist
               </span>
             </div>
-            <h1 className="mb-4 text-5xl md:text-7xl font-bold font-mono matrix-text text-primary leading-[0.95]">
-              {typedText}
-              <span className="animate-terminal-blink">_</span>
+            <h1 className="mb-4 text-5xl md:text-7xl font-bold font-mono leading-[0.95]">
+              <span className="gradient-text animate-glow-pulse">{typedText}</span>
+              <span className="animate-terminal-blink text-primary">_</span>
             </h1>
-            <p className="max-w-3xl text-xl md:text-2xl font-mono text-foreground/90 mb-4">
+            <p className="max-w-3xl text-xl md:text-2xl font-mono text-foreground/85 mb-4">
               ML Engineer / Data Scientist building evaluation-first analytics and decision-support products.
             </p>
             <p className="max-w-2xl text-sm md:text-base text-muted-foreground font-mono leading-relaxed mb-8">
@@ -546,7 +548,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-primary/20 bg-card/70 p-6 backdrop-blur-sm shadow-lg shadow-black/20">
+          <div className="glass-card rounded-3xl p-6 shadow-[0_8px_40px_hsl(0_0%_0%/0.5)] animate-float">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <p className="text-xs font-mono uppercase tracking-[0.2em] text-primary/70 mb-2">Current Narrative</p>
@@ -579,20 +581,18 @@ const Index = () => {
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-4 md:grid-cols-3">
             {proofCards.map((card) => (
-              <Card key={card.title} className="terminal-border bg-card/80 backdrop-blur-sm border-primary/20">
-                <CardContent className="p-6">
-                  <p className="text-xs uppercase tracking-[0.22em] text-primary/60 font-mono mb-4">proof</p>
-                  <h3 className="text-lg font-semibold text-primary font-mono mb-3">{card.title}</h3>
-                  <p className="text-xs font-mono text-primary/70 mb-3">{card.stack}</p>
-                  <p className="text-sm font-mono text-muted-foreground leading-relaxed">{card.impact}</p>
-                </CardContent>
-              </Card>
+              <div key={card.title} className="glass-card rounded-xl p-6 transition-all duration-300">
+                <p className="text-xs uppercase tracking-[0.22em] text-primary/60 font-mono mb-4">// proof</p>
+                <h3 className="text-base font-bold text-primary font-mono mb-2">{card.title}</h3>
+                <p className="text-xs font-mono text-primary/60 mb-3">{card.stack}</p>
+                <p className="text-sm font-mono text-muted-foreground leading-relaxed">{card.impact}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="featured" className="relative z-10 px-4 py-16 bg-primary/5">
+      <section id="featured" className="relative z-10 px-4 py-16" style={{background:'linear-gradient(180deg, transparent, hsl(120 100% 50% / 0.03) 50%, transparent)'}}>
         <div className="mx-auto max-w-6xl">
           <div className="max-w-3xl mb-10">
             <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-3">Featured Work</p>
@@ -604,7 +604,7 @@ const Index = () => {
 
           <div className="grid gap-6 md:grid-cols-2">
             {featuredProjects.map((project) => (
-              <Card key={project.name} className="overflow-hidden border-primary/20 bg-card/80 backdrop-blur-sm">
+              <div key={project.name} className="glass-card rounded-xl overflow-hidden transition-all duration-300">
                 <div className="aspect-[16/10] overflow-hidden bg-black/30 border-b border-primary/20">
                   <img
                     src={project.image}
@@ -634,13 +634,13 @@ const Index = () => {
                   </div>
                   <p className="text-sm font-mono text-muted-foreground leading-relaxed mb-3">{project.detail}</p>
                   <p className="text-sm font-mono text-foreground/90 leading-relaxed mb-5">{project.whyItMatters}</p>
-                  <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+                  <Button variant="outline" className="font-mono terminal-border text-primary border-primary/30 hover:bg-primary/10 hover:border-primary/60" asChild>
                     <a href={project.href} target="_blank" rel="noopener noreferrer">
                       <Github className="mr-2" size={16} /> {project.ctaLabel}
                     </a>
                   </Button>
                 </CardContent>
-              </Card>
+              </div>
             ))}
           </div>
         </div>
@@ -657,8 +657,8 @@ const Index = () => {
           </div>
           <div className="grid gap-4">
             {whyHireMe.map((item) => (
-              <div key={item} className="rounded-2xl border border-primary/20 bg-card/70 px-5 py-5 backdrop-blur-sm flex gap-4">
-                <CheckCircle2 size={18} className="text-primary mt-0.5 shrink-0" />
+              <div key={item} className="glass-card rounded-xl px-5 py-4 flex gap-4 transition-all duration-200">
+                <CheckCircle2 size={16} className="text-primary mt-0.5 shrink-0" />
                 <p className="text-sm font-mono text-muted-foreground leading-relaxed">{item}</p>
               </div>
             ))}
@@ -668,7 +668,7 @@ const Index = () => {
 
       <section id="case-study" className="relative z-10 px-4 py-16 bg-primary/5">
         <div className="mx-auto max-w-6xl grid gap-8 lg:grid-cols-[1.05fr_0.95fr] items-start">
-          <Card className="border-primary/20 bg-card/80 backdrop-blur-sm overflow-hidden">
+          <div className="glass-card rounded-xl overflow-hidden">
             <div className="aspect-[16/10] overflow-hidden border-b border-primary/20 bg-black/40">
               <img
                 src="/proof/sports-betting-ml-architecture.svg"
@@ -679,7 +679,7 @@ const Index = () => {
                 className="h-full w-full object-cover"
               />
             </div>
-            <CardContent className="p-6">
+            <div className="p-6">
               <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-3">Case Study</p>
               <h2 className="text-2xl md:text-3xl font-semibold font-mono text-primary mb-4">Sports ML evaluation and calibration</h2>
               <p className="text-sm font-mono text-muted-foreground leading-relaxed mb-5">
@@ -696,32 +696,28 @@ const Index = () => {
                     <FileText className="mr-2" size={16} /> Read Case Study
                   </a>
                 </Button>
-                <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
+                <Button variant="outline" className="font-mono terminal-border text-primary border-primary/30 hover:bg-primary/10" asChild>
                   <a href="https://github.com/ianalloway/nba-clv-dashboard" target="_blank" rel="noopener noreferrer">
                     <ArrowRight className="mr-2" size={16} /> See the dashboard repo
                   </a>
                 </Button>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
           <div className="space-y-4">
             <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono">Credibility Signals</p>
             {credibilitySignals.map((signal) => (
-              <Card key={signal.label} className="border-primary/20 bg-card/70 backdrop-blur-sm">
-                <CardContent className="p-5">
-                  <p className="text-xs uppercase tracking-[0.2em] text-primary/60 font-mono mb-2">{signal.label}</p>
-                  <p className="text-sm font-mono text-muted-foreground leading-relaxed">{signal.value}</p>
-                </CardContent>
-              </Card>
+              <div key={signal.label} className="glass-card rounded-xl p-5 transition-all duration-200">
+                <p className="text-xs uppercase tracking-[0.2em] text-primary/60 font-mono mb-2">{signal.label}</p>
+                <p className="text-sm font-mono text-muted-foreground leading-relaxed">{signal.value}</p>
+              </div>
             ))}
-            <Card className="border-primary/20 bg-card/70 backdrop-blur-sm">
-              <CardContent className="p-5">
-                <p className="text-xs uppercase tracking-[0.2em] text-primary/60 font-mono mb-3">One strong quote</p>
-                <p className="text-sm font-mono text-foreground/90 leading-relaxed mb-3">“{quote.text}”</p>
-                <p className="text-xs font-mono text-muted-foreground">{quote.person} • {quote.role}</p>
-              </CardContent>
-            </Card>
+            <div className="glass-card rounded-xl p-5">
+              <p className="text-xs uppercase tracking-[0.2em] text-primary/60 font-mono mb-3">One strong quote</p>
+              <p className="text-sm font-mono text-foreground/90 leading-relaxed mb-3">"{quote.text}"</p>
+              <p className="text-xs font-mono text-muted-foreground">{quote.person} • {quote.role}</p>
+            </div>
           </div>
         </div>
       </section>
@@ -925,7 +921,7 @@ const Index = () => {
                 href={repo.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block rounded-xl border border-primary/20 bg-card/70 p-4 hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-[0_0_16px_hsl(120_100%_50%/0.1)] transition-all duration-200"
+                className="block glass-card rounded-xl p-4 transition-all duration-200"
               >
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <span className="font-mono text-sm font-semibold text-primary neon-underline">{repo.name}</span>
@@ -946,7 +942,7 @@ const Index = () => {
       </section>
 
       <section id="contact" className="relative z-10 px-4 py-16">
-        <div className="mx-auto max-w-5xl rounded-[28px] border border-primary/20 bg-card/80 p-8 md:p-10 backdrop-blur-sm">
+        <div className="mx-auto max-w-5xl glass-card rounded-[28px] p-8 md:p-10 shadow-[0_20px_60px_hsl(0_0%_0%/0.5)]">
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
               <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-3">Contact</p>
