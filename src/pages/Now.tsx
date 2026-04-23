@@ -6,7 +6,7 @@ import { Terminal, ArrowLeft, Book, Code, Brain, Music, MapPin, Target, Zap, Cof
 import MatrixRain from '@/components/MatrixRain';
 import { applyTheme, getStoredTheme, type SiteTheme } from '@/lib/theme';
 
-const LAST_UPDATED = 'February 2026';
+const LAST_UPDATED = 'April 2026';
 
 const NOW_DATA = {
   focus: {

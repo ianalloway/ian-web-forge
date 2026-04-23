@@ -1,75 +1,80 @@
 import { useEffect, useRef } from 'react';
 
+const CHARS = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+
 const MatrixRain = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Set canvas size
-    const resizeCanvas = () => {
+    const fontSize = 14;
+    let columns: number[] = [];
+    let animId: number;
+
+    const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      const cols = Math.floor(canvas.width / fontSize);
+      columns = Array.from({ length: cols }, () => Math.random() * -canvas.height);
     };
-    
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
 
-    // Matrix characters (binary + some other characters for effect)
-    const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-    const charArray = chars.split('');
-
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops: number[] = [];
-
-    // Initialize drops
-    for (let i = 0; i < columns; i++) {
-      drops[i] = 1;
-    }
+    resize();
+    window.addEventListener('resize', resize);
 
     const draw = () => {
-      // Create trailing effect
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.055)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = '#00ff00';
-      ctx.font = `${fontSize}px 'Fira Code', 'Courier New', monospace`;
+      columns.forEach((y, i) => {
+        const char = CHARS[Math.floor(Math.random() * CHARS.length)];
+        const x = i * fontSize;
 
-      for (let i = 0; i < drops.length; i++) {
-        // Pick random character
-        const text = charArray[Math.floor(Math.random() * charArray.length)];
-        
-        // Draw character
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        // Reset drop randomly or when it reaches bottom
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
+        // Lead character — bright white-green
+        if (y > 0 && y < canvas.height) {
+          ctx.fillStyle = 'rgba(180, 255, 180, 0.95)';
+          ctx.font = `bold ${fontSize}px "Fira Code", monospace`;
+          ctx.fillText(char, x, y);
         }
-        drops[i]++;
-      }
+
+        // Trail character — standard green, occasional cyan accent
+        const trailChar = CHARS[Math.floor(Math.random() * CHARS.length)];
+        const trailY = y - fontSize;
+        if (trailY > 0 && trailY < canvas.height) {
+          const isCyan = Math.random() < 0.04;
+          ctx.fillStyle = isCyan
+            ? 'rgba(0, 220, 220, 0.7)'
+            : 'rgba(0, 200, 80, 0.55)';
+          ctx.font = `${fontSize}px "Fira Code", monospace`;
+          ctx.fillText(trailChar, x, trailY);
+        }
+
+        if (y > canvas.height && Math.random() > 0.975) {
+          columns[i] = 0;
+        } else {
+          columns[i] = y + fontSize;
+        }
+      });
+
+      animId = requestAnimationFrame(draw);
     };
 
-    const interval = setInterval(draw, 33);
+    animId = requestAnimationFrame(draw);
 
     return () => {
-      clearInterval(interval);
-      window.removeEventListener('resize', resizeCanvas);
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', resize);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 z-0 pointer-events-none opacity-20"
-      style={{
-        background: 'transparent',
-      }}
+      className="fixed inset-0 pointer-events-none z-0"
+      style={{ opacity: 0.18 }}
     />
   );
 };

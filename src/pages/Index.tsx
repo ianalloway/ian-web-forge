@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -30,6 +30,24 @@ import { useToast } from '@/components/ui/use-toast';
 import { applyTheme, getStoredTheme, type SiteTheme } from '@/lib/theme';
 
 const ETH_DONATION_ADDRESS = '0x6f278ce76ba5ed31fd9be646d074863e126836e9';
+
+// Animated counter
+function useCounter(target: number, visible: boolean, decimals = 0) {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (!visible) return;
+    const steps = 50;
+    const inc = target / steps;
+    let cur = 0;
+    const t = setInterval(() => {
+      cur += inc;
+      if (cur >= target) { setVal(target); clearInterval(t); }
+      else setVal(parseFloat(cur.toFixed(decimals)));
+    }, 1200 / steps);
+    return () => clearInterval(t);
+  }, [visible, target, decimals]);
+  return val;
+}
 
 const outcomes = [
   'Built ML/data products used by real users',
@@ -362,6 +380,12 @@ const quote = {
 
 const Index = () => {
   const [typedText, setTypedText] = useState('');
+  const statsRef = useRef<HTMLElement>(null);
+  const [statsVisible, setStatsVisible] = useState(false);
+  const c1 = useCounter(30, statsVisible);
+  const c2 = useCounter(40, statsVisible);
+  const c3 = useCounter(68.3, statsVisible, 1);
+  const c4 = useCounter(60, statsVisible);
   const [theme, setTheme] = useState<SiteTheme>(() => getStoredTheme());
   const { toast } = useToast();
   const fullText = 'IAN ALLOWAY';
@@ -369,6 +393,17 @@ const Index = () => {
   useEffect(() => {
     applyTheme(theme);
   }, [theme]);
+
+  useEffect(() => {
+    const el = statsRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setStatsVisible(true); obs.disconnect(); } },
+      { threshold: 0.2 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -427,6 +462,7 @@ const Index = () => {
             <a href="#why-hire-me" className="text-primary hover:text-primary/70 transition-colors">[WHY_ME]</a>
             <a href="#contact" className="text-primary hover:text-primary/70 transition-colors">[CONTACT]</a>
             <a href="/hireme" className="text-primary hover:text-primary/70 transition-colors">[/HIRE]</a>
+            <a href="/now" className="text-primary hover:text-primary/70 transition-colors">[/NOW]</a>
             <button
               onClick={() => setTheme((prev) => (prev === 'matrix' ? 'light' : 'matrix'))}
               className="rounded-md border border-primary/30 p-2 transition-colors hover:bg-primary/10"
@@ -439,12 +475,38 @@ const Index = () => {
       </nav>
 
       <main id="main-content">
+      {/* Animated stats bar */}
+      <section ref={statsRef as React.RefObject<HTMLElement>} className="relative z-10 border-b border-primary/10 bg-primary/5 px-4 py-4">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-wrap justify-center gap-8 md:gap-16">
+            {[
+              { label: 'Fraud Reduction', value: c1, suffix: '%', sub: 'for fintech client' },
+              { label: 'Ops Efficiency', value: c2, suffix: '%', sub: 'improvement delivered' },
+              { label: 'Model Accuracy', value: c3, suffix: '%', sub: 'NBA betting model' },
+              { label: 'GitHub Repos', value: c4, suffix: '+', sub: 'public repositories' },
+            ].map((s) => (
+              <div key={s.label} className="text-center">
+                <div className="text-2xl font-bold font-mono text-primary">{s.value}{s.suffix}</div>
+                <div className="text-xs font-mono font-semibold text-foreground/80 uppercase tracking-widest">{s.label}</div>
+                <div className="text-[10px] font-mono text-muted-foreground">{s.sub}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section id="top" className="relative z-10 px-4 pt-28 pb-16 md:pt-36 md:pb-24">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
           <div>
-            <Badge className="mb-5 bg-primary/10 text-primary border-primary/30 font-mono hover:bg-primary/10">
-              OPEN TO WORK • ML Engineer / Data Scientist
-            </Badge>
+            <div className="mb-5 flex items-center gap-3 flex-wrap">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-green-400/40 bg-green-400/10 text-green-400 font-mono text-xs font-bold tracking-widest uppercase">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
+                </span>
+                Open to Work · ML Engineer / Data Scientist
+              </span>
+            </div>
             <h1 className="mb-4 text-5xl md:text-7xl font-bold font-mono matrix-text text-primary leading-[0.95]">
               {typedText}
               <span className="animate-terminal-blink">_</span>
@@ -772,15 +834,15 @@ const Index = () => {
             </p>
           </div>
           <div className="space-y-3">
-            {experience.map((item) => (
-              <Card key={`${item.company}-${item.title}`} className="border-primary/20 bg-card/70 backdrop-blur-sm border-l-4 border-l-primary">
+            {experience.map((item, idx) => (
+              <Card key={`${item.company}-${item.title}`} className={`border-primary/20 bg-card/70 backdrop-blur-sm border-l-4 hover:-translate-y-0.5 hover:shadow-[0_0_16px_hsl(120_100%_50%/0.1)] transition-all duration-200 ${idx === 0 ? 'border-l-primary' : idx === 1 ? 'border-l-cyan-400' : idx === 2 ? 'border-l-yellow-400' : 'border-l-purple-400'}`}>
                 <CardContent className="p-5">
                   <div className="flex flex-wrap items-start justify-between gap-3 mb-2">
                     <div>
                       <h3 className="text-sm md:text-base font-mono font-semibold text-primary">{item.title}</h3>
                       <p className="text-xs md:text-sm font-mono text-muted-foreground">{item.company}</p>
                     </div>
-                    <span className="text-xs font-mono text-primary/70">{item.period}</span>
+                    <span className="text-xs font-mono text-primary/70 bg-primary/10 px-2 py-0.5 rounded-full">{item.period}</span>
                   </div>
                   <p className="text-sm font-mono text-muted-foreground leading-relaxed">{item.description}</p>
                 </CardContent>
@@ -832,6 +894,52 @@ const Index = () => {
                   </div>
                 </CardContent>
               </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* GitHub Activity Strip */}
+      <section className="relative z-10 px-4 py-10 border-t border-primary/10">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-1">// RECENT_ACTIVITY</p>
+              <h2 className="text-xl font-semibold font-mono text-primary">Latest on GitHub</h2>
+            </div>
+            <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-primary transition-colors">
+              <Github size={13} /> View all 60+ repos →
+            </a>
+          </div>
+          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              { name: 'oss-arc', desc: 'Snapshots of archived open-source work', lang: 'Python', updated: '1 day ago', href: 'https://github.com/ianalloway/oss-arc' },
+              { name: 'ai-advantage-sports', desc: 'Sports betting platform — ML picks engine', lang: 'TypeScript', updated: '1 day ago', href: 'https://github.com/ianalloway/ai-advantage-sports' },
+              { name: 'ian-web-forge', desc: 'This portfolio site — React + Tailwind', lang: 'TypeScript', updated: '5 days ago', href: 'https://github.com/ianalloway/ian-web-forge' },
+              { name: 'kana-dojo', desc: 'Aesthetic minimal Japanese learning app', lang: 'TypeScript', updated: '4 days ago', href: 'https://github.com/ianalloway/kana-dojo' },
+              { name: 'nba-ratings', desc: 'Elo / Kelly / win-prob PyPI package', lang: 'Python', updated: '5 days ago', href: 'https://github.com/ianalloway/nba-ratings' },
+              { name: 'kelly-js', desc: 'Kelly Criterion bankroll utility package', lang: 'JavaScript', updated: '4 days ago', href: 'https://github.com/ianalloway/kelly-js' },
+            ].map((repo) => (
+              <a
+                key={repo.name}
+                href={repo.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-xl border border-primary/20 bg-card/70 p-4 hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-[0_0_16px_hsl(120_100%_50%/0.1)] transition-all duration-200"
+              >
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <span className="font-mono text-sm font-semibold text-primary neon-underline">{repo.name}</span>
+                  <ExternalLink size={12} className="text-muted-foreground shrink-0 mt-0.5" />
+                </div>
+                <p className="text-xs font-mono text-muted-foreground leading-relaxed mb-3">{repo.desc}</p>
+                <div className="flex items-center justify-between">
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-muted-foreground">
+                    <span className={`w-2 h-2 rounded-full ${repo.lang === 'Python' ? 'bg-blue-400' : repo.lang === 'TypeScript' ? 'bg-cyan-400' : 'bg-yellow-400'}`} />
+                    {repo.lang}
+                  </span>
+                  <span className="text-[10px] font-mono text-muted-foreground/60">Updated {repo.updated}</span>
+                </div>
+              </a>
             ))}
           </div>
         </div>
@@ -917,6 +1025,13 @@ const Index = () => {
           <div>
             <p className="text-primary/70 text-sm font-mono">IAN.ALLOWAY.SYS</p>
             <p className="text-xs font-mono text-muted-foreground mt-1">Built with React + Tailwind. Calm UI, honest metrics, and a little bit of terminal theater.</p>
+            <p className="text-xs font-mono text-muted-foreground mt-1 flex items-center gap-1.5">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-400"></span>
+              </span>
+              Currently building: M.S. AI coursework + AI Advantage Sports v2
+            </p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <a href="/papers/sports-ml-evaluation-case-study.html" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
