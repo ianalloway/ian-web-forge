@@ -55,3 +55,12 @@ If code review finds issues:
 - Greptile: `.greptile.yml`
 - CodeRabbit: `coderabbit.yaml`
 - Public repo catalog: `src/pages/Toolkit.tsx` (`CORE_SECTION` + `START_HERE`; condensed, matches profile “featured” story)
+
+## Cursor Cloud specific instructions
+
+- **Dev server**: `npm run dev` starts Vite on port 8080 (configured in `vite.config.ts`).
+- **Lint**: `npm run lint` (ESLint). No `typecheck` or `harness:ui:smoke` scripts exist in `package.json` despite being listed above—use `npx tsc --noEmit` for type checking directly.
+- **Build**: `npm run build` produces output in `dist/`.
+- **Tests**: `npm test` is a no-op placeholder (`echo "No tests specified"`).
+- **Serverless API** (`/api/newsletter-subscribe`): requires Vercel CLI + env vars (`NOTION_API_KEY`, `RESEND_API_KEY`, etc.). Not needed for frontend development; the SPA runs standalone via Vite.
+- **No Docker or external services** required for the frontend.
