@@ -120,11 +120,6 @@ export default function Now() {
   const [theme] = useState<SiteTheme>(() => getStoredTheme());
 
   useEffect(() => {
-    document.title = '/now — Ian Alloway';
-    return () => { document.title = 'Ian Alloway'; };
-  }, []);
-
-  useEffect(() => {
     applyTheme(theme);
   }, [theme]);
 

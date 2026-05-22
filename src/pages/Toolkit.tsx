@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import type { LucideIcon } from 'lucide-react';
@@ -169,10 +170,10 @@ const Toolkit = () => {
 
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-sm border-b border-primary/30">
         <div className="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-2">
-          <a href="/" className="text-primary font-bold text-sm font-mono matrix-text flex items-center gap-2">
+          <Link to="/" className="text-primary font-bold text-sm font-mono matrix-text flex items-center gap-2">
             <Terminal size={16} />
             IAN.SYS
-          </a>
+          </Link>
           <div className="flex flex-wrap gap-2 text-xs font-mono justify-end">
             <a href="#start" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               Start
@@ -183,9 +184,9 @@ const Toolkit = () => {
             <a href="#more" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               More
             </a>
-            <a href="/" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
+            <Link to="/" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               [HOME]
-            </a>
+            </Link>
           </div>
         </div>
       </nav>
@@ -268,10 +269,10 @@ const Toolkit = () => {
                 </p>
               </div>
               <Button className="font-mono bg-primary text-primary-foreground shrink-0" asChild>
-                <a href="/snake">
+                <Link to="/snake">
                   Launch Snake
                   <ArrowRight className="ml-2" size={16} />
-                </a>
+                </Link>
               </Button>
             </CardContent>
           </Card>
@@ -328,7 +329,7 @@ const Toolkit = () => {
             If you want this stack applied to your pipeline or product, use the main site or hire page.
           </p>
           <Button variant="outline" className="font-mono terminal-border text-primary border-primary" asChild>
-            <a href="/hireme">[/HIRE]</a>
+            <Link to="/hireme">[/HIRE]</Link>
           </Button>
         </section>
       </main>

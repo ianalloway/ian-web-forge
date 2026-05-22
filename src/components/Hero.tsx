@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Github, Linkedin, Mail, Twitter, BookOpen, Download, Zap, ArrowDown } from 'lucide-react';
+import { Github, Linkedin, Mail, Twitter, BookOpen, Zap, ArrowDown } from 'lucide-react';
 
 const ROLES = [
   'ML Engineer',
@@ -26,7 +26,7 @@ const Hero = () => {
 
   useEffect(() => {
     const current = ROLES[roleIndex];
-    let timeout: ReturnType<typeof setTimeout>;
+    let timeout: ReturnType<typeof setTimeout> | undefined;
     if (!deleting && charIndex < current.length) {
       timeout = setTimeout(() => {
         setDisplayed(current.slice(0, charIndex + 1));
@@ -40,10 +40,14 @@ const Hero = () => {
         setCharIndex(c => c - 1);
       }, 30);
     } else if (deleting && charIndex === 0) {
-      setDeleting(false);
-      setRoleIndex(r => (r + 1) % ROLES.length);
+      timeout = setTimeout(() => {
+        setDeleting(false);
+        setRoleIndex(r => (r + 1) % ROLES.length);
+      }, 0);
     }
-    return () => clearTimeout(timeout);
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
   }, [charIndex, deleting, roleIndex]);
 
   return (
@@ -119,7 +123,7 @@ const Hero = () => {
               { href: 'https://github.com/ianalloway', icon: Github, label: 'GitHub', external: true },
               { href: 'https://allowayai.substack.com', icon: BookOpen, label: 'Blog', external: true },
               { href: 'mailto:ian@allowayllc.com', icon: Mail, label: 'Email', external: false },
-              { href: '/Ian_Alloway_Resume.pdf', icon: Download, label: 'Resume', external: false, download: true },
+              { href: 'mailto:ian@allowayllc.com?subject=Resume%20request', icon: Mail, label: 'Resume', external: false },
             ].map((link) => (
               <Button
                 key={link.label}
@@ -132,7 +136,6 @@ const Hero = () => {
                   href={link.href}
                   target={link.external ? '_blank' : undefined}
                   rel={link.external ? 'noopener noreferrer' : undefined}
-                  download={link.download ? true : undefined}
                 >
                   <link.icon className="mr-1.5" size={13} />
                   {link.label}

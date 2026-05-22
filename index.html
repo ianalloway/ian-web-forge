@@ -2,19 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
     <title>Ian Alloway - ML Engineer & Data Scientist | Open to Work</title>
     <meta name="description" content="Ian Alloway - Machine Learning Engineer and Data Scientist. B.S. Information Science at USF, graduating May 2026, with an M.S. in AI starting August 2026. Building production ML systems, analytics tooling, and open-source software." />
     <meta name="author" content="Ian Alloway" />
@@ -67,24 +56,6 @@
   </head>
 
   <body>
-    <form
-      name="ianalloway-newsletter"
-      method="POST"
-      action="/"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      hidden
-    >
-      <input type="hidden" name="form-name" value="ianalloway-newsletter" />
-      <input type="text" name="bot-field" />
-      <input type="email" name="email" />
-      <input type="text" name="name" />
-      <input type="text" name="site" />
-      <input type="text" name="source" />
-      <input type="text" name="page_url" />
-      <input type="text" name="referrer" />
-      <input type="text" name="user_agent" />
-    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
