@@ -35,6 +35,22 @@ const OPPOSITE_DIRECTIONS: Record<Direction, Direction> = {
   right: "left",
 };
 
+function getMovementDirection(snake: Position[], fallback: Direction): Direction {
+  if (snake.length < 2) {
+    return fallback;
+  }
+
+  const dx = snake[0].x - snake[1].x;
+  const dy = snake[0].y - snake[1].y;
+
+  if (dx === 1) return "right";
+  if (dx === -1) return "left";
+  if (dy === 1) return "down";
+  if (dy === -1) return "up";
+
+  return fallback;
+}
+
 function createInitialSnake(columns: number, rows: number): Position[] {
   const centerX = Math.floor(columns / 2);
   const centerY = Math.floor(rows / 2);
@@ -102,7 +118,16 @@ export function createGame({
 }
 
 export function setDirection(state: SnakeGameState, nextDirection: Direction) {
-  if (OPPOSITE_DIRECTIONS[state.direction] === nextDirection) {
+  // Validate against the snake's actual movement direction (derived from its
+  // segments), not `state.direction`. This prevents queued inputs between ticks
+  // from chaining into a 180° reversal that would crash the snake into itself
+  // (e.g. moving right → press "up" → press "left" before the next tick).
+  const movementDirection = getMovementDirection(state.snake, state.direction);
+  if (OPPOSITE_DIRECTIONS[movementDirection] === nextDirection) {
+    return state;
+  }
+
+  if (state.direction === nextDirection) {
     return state;
   }
 
