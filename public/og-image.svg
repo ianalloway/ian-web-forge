@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Ian Alloway portfolio preview">
+  <defs>
+    <radialGradient id="glow" cx="30%" cy="45%" r="65%">
+      <stop offset="0" stop-color="#22c55e" stop-opacity=".28"/>
+      <stop offset=".55" stop-color="#22c55e" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#020617" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#020617"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <g stroke="#22c55e" stroke-opacity=".16" stroke-width="1">
+    <path d="M0 110h1200M0 220h1200M0 330h1200M0 440h1200M0 550h1200"/>
+    <path d="M160 0v630M320 0v630M480 0v630M640 0v630M800 0v630M960 0v630"/>
+  </g>
+  <text x="96" y="220" fill="#86efac" font-family="Courier New, monospace" font-size="34" letter-spacing="6">IAN.ALLOWAY.SYS</text>
+  <text x="96" y="315" fill="#f8fafc" font-family="Courier New, monospace" font-size="72" font-weight="700">Sports ML &amp; Evaluation</text>
+  <text x="96" y="386" fill="#22c55e" font-family="Courier New, monospace" font-size="42">ML Engineer · Data Scientist</text>
+  <text x="96" y="472" fill="#cbd5e1" font-family="Courier New, monospace" font-size="28">Calibration-first analytics, FastAPI, Python, React</text>
+  <rect x="96" y="516" width="420" height="46" rx="8" fill="#22c55e" fill-opacity=".12" stroke="#22c55e" stroke-opacity=".55"/>
+  <text x="122" y="548" fill="#86efac" font-family="Courier New, monospace" font-size="24">ianalloway.xyz</text>
+</svg>

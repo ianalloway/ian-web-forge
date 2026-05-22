@@ -59,7 +59,7 @@ If code review finds issues:
 ## Cursor Cloud specific instructions
 
 - **Dev server**: `npm run dev` starts Vite on port 8080 (configured in `vite.config.ts`).
-- **Lint**: `npm run lint` (ESLint). No `typecheck` or `harness:ui:smoke` scripts exist in `package.json` despite being listed above—use `npx tsc --noEmit` for type checking directly.
+- **Lint/typecheck**: `npm run lint` (ESLint) and `npm run typecheck` (checks the Vite app, serverless API, and Vite config). No `harness:ui:smoke` script exists in `package.json`.
 - **Build**: `npm run build` produces output in `dist/`.
 - **Tests**: `npm test` is a no-op placeholder (`echo "No tests specified"`).
 - **Serverless API** (`/api/newsletter-subscribe`): requires Vercel CLI + env vars (`NOTION_API_KEY`, `RESEND_API_KEY`, etc.). Not needed for frontend development; the SPA runs standalone via Vite.

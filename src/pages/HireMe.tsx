@@ -9,7 +9,6 @@ import {
   Briefcase,
   CheckCircle2,
   DollarSign,
-  Download,
   ExternalLink,
   FileText,
   Github,
@@ -39,7 +38,7 @@ const outcomes = [
 const featuredWork = [
   {
     name: 'AI Advantage Sports',
-    image: '/proof/ai-advantage-screenshot.png',
+    image: '/proof/sports-betting-ml-architecture.svg',
     href: 'https://github.com/ianalloway/ai-advantage',
     stack: 'Python, React, XGBoost, FastAPI',
     whyItMatters:
@@ -55,7 +54,7 @@ const featuredWork = [
   },
   {
     name: 'Sports Betting ML',
-    image: '/proof/sports-betting-ml-demo.gif',
+    image: '/proof/sports-betting-ml-architecture.svg',
     href: 'https://github.com/ianalloway/sports-betting-ml',
     stack: 'Python, FastAPI, MLOps, Hugging Face',
     whyItMatters:
@@ -103,12 +102,8 @@ const HireMe = () => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setMounted(true);
-      return;
-    }
-
-    setMounted(true);
+    const timeout = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
@@ -158,8 +153,8 @@ const HireMe = () => {
                 </a>
               </Button>
               <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
-                <a href="/Ian_Alloway_Resume_CV.pdf" download>
-                  <Download className="mr-2" size={16} /> Download Resume
+                <a href="mailto:ian@allowayllc.com?subject=Resume%20request">
+                  <Mail className="mr-2" size={16} /> Request Resume
                 </a>
               </Button>
               <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
@@ -363,8 +358,8 @@ const HireMe = () => {
                   </a>
                 </Button>
                 <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
-                  <a href="/Ian_Alloway_Resume_CV.pdf" download>
-                    <Download className="mr-2" size={16} /> Resume PDF
+                  <a href="mailto:ian@allowayllc.com?subject=Resume%20request">
+                    <Mail className="mr-2" size={16} /> Request Resume
                   </a>
                 </Button>
                 <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>

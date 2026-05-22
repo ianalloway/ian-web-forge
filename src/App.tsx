@@ -1,6 +1,5 @@
 import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -15,14 +14,19 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Snake = lazy(() => import("./pages/Snake"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
+const RouteLoading = () => (
+  <div className="min-h-screen bg-background flex items-center justify-center">
+    <p className="font-mono text-sm text-primary animate-pulse">Loading...</p>
+  </div>
+);
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <HelmetProvider>
       <TooltipProvider>
         <Toaster />
-        <Sonner />
         <BrowserRouter>
-          <Suspense fallback={null}>
+          <Suspense fallback={<RouteLoading />}>
             <Routes>
               <Route 
                 path="/" 

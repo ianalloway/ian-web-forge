@@ -9,17 +9,28 @@ type SubscriberPayload = {
 };
 
 type HeaderMap = Record<string, string | string[] | undefined>;
+type RawSubscriberPayload = Partial<SubscriberPayload> & {
+  page_url?: string;
+  user_agent?: string;
+};
 
 export interface NewsletterResult {
   message: string;
   redirectUrl: string;
 }
 
+export class SubscriberPayloadError extends Error {
+  statusCode = 400;
+}
+
 const NOTION_VERSION = "2022-06-28";
 const DEFAULT_SUBSTACK_URL = "https://allowayai.substack.com";
 
 function getHeader(headers: HeaderMap, name: string) {
-  const value = headers[name];
+  const value =
+    headers[name] ||
+    headers[name.toLowerCase()] ||
+    Object.entries(headers).find(([key]) => key.toLowerCase() === name.toLowerCase())?.[1];
   return Array.isArray(value) ? value[0] : value;
 }
 
@@ -46,14 +57,26 @@ function normalizeText(value?: string) {
 }
 
 export function parseSubscriberPayload(body: unknown, headers: HeaderMap): SubscriberPayload {
-  const raw =
-    typeof body === "string"
-      ? (JSON.parse(body) as SubscriberPayload)
-      : ((body || {}) as SubscriberPayload);
+  const contentType = getHeader(headers, "content-type") || "";
+  let raw: RawSubscriberPayload;
+
+  if (typeof body === "string") {
+    if (contentType.includes("application/x-www-form-urlencoded")) {
+      raw = Object.fromEntries(new URLSearchParams(body)) as RawSubscriberPayload;
+    } else {
+      try {
+        raw = JSON.parse(body) as RawSubscriberPayload;
+      } catch {
+        throw new SubscriberPayloadError("Invalid newsletter signup payload.");
+      }
+    }
+  } else {
+    raw = ((body || {}) as RawSubscriberPayload);
+  }
 
   const email = raw.email?.trim().toLowerCase();
   if (!email || !email.includes("@")) {
-    throw new Error("Please enter a valid email address.");
+    throw new SubscriberPayloadError("Please enter a valid email address.");
   }
 
   return {
@@ -61,9 +84,9 @@ export function parseSubscriberPayload(body: unknown, headers: HeaderMap): Subsc
     name: normalizeText(raw.name),
     site: normalizeText(raw.site) || "unknown-site",
     source: normalizeText(raw.source) || "unknown-source",
-    pageUrl: normalizeText(raw.pageUrl),
+    pageUrl: normalizeText(raw.pageUrl || raw.page_url),
     referrer: normalizeText(raw.referrer),
-    userAgent: normalizeText(raw.userAgent) || getHeader(headers, "user-agent"),
+    userAgent: normalizeText(raw.userAgent || raw.user_agent) || getHeader(headers, "user-agent"),
   };
 }
 

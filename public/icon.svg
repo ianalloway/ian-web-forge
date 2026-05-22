@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Ian Alloway">
+  <rect width="64" height="64" rx="12" fill="#020617"/>
+  <path d="M12 18h40M12 46h40" stroke="#22c55e" stroke-width="3" stroke-linecap="round" opacity=".35"/>
+  <path d="M18 38 30 20h6l12 18h-7l-2.1-3.6H27.1L25 38h-7Zm12.2-8.9h5.6L33 24.3l-2.8 4.8Z" fill="#22c55e"/>
+  <path d="M11 32 20 23M44 41l9-9" stroke="#86efac" stroke-width="2" stroke-linecap="round"/>
+</svg>

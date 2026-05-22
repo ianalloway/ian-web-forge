@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   ArrowRight,
@@ -9,9 +8,7 @@ import {
   Brain,
   Briefcase,
   CheckCircle2,
-  Code,
   Copy,
-  Download,
   ExternalLink,
   FileText,
   Github,
@@ -30,6 +27,8 @@ import { useToast } from '@/components/ui/use-toast';
 import { applyTheme, getStoredTheme, type SiteTheme } from '@/lib/theme';
 
 const ETH_DONATION_ADDRESS = '0x6f278ce76ba5ed31fd9be646d074863e126836e9';
+const RESUME_REQUEST_URL = 'mailto:ian@allowayllc.com?subject=Resume%20request';
+const HERO_NAME = 'IAN ALLOWAY';
 
 // Animated counter
 function useCounter(target: number, visible: boolean, decimals = 0) {
@@ -82,7 +81,7 @@ const featuredProjects = [
     name: 'AI Advantage Sports',
     subtitle: 'Consumer-facing ML product',
     stack: ['Python', 'React', 'XGBoost', 'FastAPI'],
-    image: '/proof/ai-advantage-screenshot.png',
+    image: '/proof/sports-betting-ml-architecture.svg',
     href: 'https://github.com/ianalloway/ai-advantage',
     ctaLabel: 'View repository',
     detail:
@@ -106,7 +105,7 @@ const featuredProjects = [
     name: 'Sports Betting ML',
     subtitle: 'End-to-end pipeline + demo',
     stack: ['Python', 'FastAPI', 'Hugging Face', 'MLOps'],
-    image: '/proof/sports-betting-ml-demo.gif',
+    image: '/proof/sports-betting-ml-architecture.svg',
     href: 'https://github.com/ianalloway/sports-betting-ml',
     ctaLabel: 'View repository',
     detail:
@@ -372,6 +371,15 @@ const writingResources: WritingEntry[] = [
   },
 ];
 
+const availableWritingAssets = new Set([
+  '/papers/sports-ml-evaluation-case-study.html',
+  '/papers/originals/gea2-video-script.md',
+]);
+
+function isAvailableWritingAsset(asset: WritingAsset) {
+  return asset.href.startsWith('http') || availableWritingAssets.has(asset.href);
+}
+
 const quote = {
   text: 'Hired Ian to build a real-time data pipeline for our risk engine. He delivered ahead of schedule with FastAPI + Convex architecture that handles 50k events/min. Would hire again without hesitation.',
   person: 'Sarah K.',
@@ -379,7 +387,11 @@ const quote = {
 };
 
 const Index = () => {
-  const [typedText, setTypedText] = useState('');
+  const [typedText, setTypedText] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      ? HERO_NAME
+      : ''
+  );
   const statsRef = useRef<HTMLElement>(null);
   const [statsVisible, setStatsVisible] = useState(false);
   const c1 = useCounter(30, statsVisible);
@@ -388,7 +400,6 @@ const Index = () => {
   const c4 = useCounter(60, statsVisible);
   const [theme, setTheme] = useState<SiteTheme>(() => getStoredTheme());
   const { toast } = useToast();
-  const fullText = 'IAN ALLOWAY';
 
   useEffect(() => {
     applyTheme(theme);
@@ -407,14 +418,13 @@ const Index = () => {
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setTypedText(fullText);
       return;
     }
 
     let index = 0;
     const timer = setInterval(() => {
-      if (index <= fullText.length) {
-        setTypedText(fullText.slice(0, index));
+      if (index <= HERO_NAME.length) {
+        setTypedText(HERO_NAME.slice(0, index));
         index += 1;
       } else {
         clearInterval(timer);
@@ -461,8 +471,8 @@ const Index = () => {
             <a href="#writing" className="text-primary hover:text-primary/70 transition-colors">[WRITING]</a>
             <a href="#why-hire-me" className="text-primary hover:text-primary/70 transition-colors">[WHY_ME]</a>
             <a href="#contact" className="text-primary hover:text-primary/70 transition-colors">[CONTACT]</a>
-            <a href="/hireme" className="text-primary hover:text-primary/70 transition-colors">[/HIRE]</a>
-            <a href="/now" className="text-primary hover:text-primary/70 transition-colors">[/NOW]</a>
+            <Link to="/hireme" className="text-primary hover:text-primary/70 transition-colors">[/HIRE]</Link>
+            <Link to="/now" className="text-primary hover:text-primary/70 transition-colors">[/NOW]</Link>
             <button
               onClick={() => setTheme((prev) => (prev === 'matrix' ? 'light' : 'matrix'))}
               className="rounded-md border border-primary/30 p-2 transition-colors hover:bg-primary/10"
@@ -522,8 +532,8 @@ const Index = () => {
 
             <div className="flex flex-wrap gap-3 mb-8">
               <Button className="font-mono bg-primary text-primary-foreground hover:bg-primary/90" asChild>
-                <a href="/Ian_Alloway_Resume_CV.pdf" download>
-                  <Download className="mr-2" size={16} /> View Resume
+                <a href={RESUME_REQUEST_URL}>
+                  <Mail className="mr-2" size={16} /> Request Resume
                 </a>
               </Button>
               <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
@@ -777,7 +787,7 @@ const Index = () => {
                         <p className="text-[11px] font-mono text-primary/70 mb-3">{paper.note}</p>
                       )}
                       <div className="flex flex-wrap gap-2">
-                        {paper.assets.map((asset) => (
+                        {paper.assets.filter(isAvailableWritingAsset).map((asset) => (
                           <Button key={asset.label} variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
                             <a href={asset.href} target="_blank" rel="noopener noreferrer" download={asset.download}>
                               <FileText className="mr-1" size={12} /> {asset.label}
@@ -785,6 +795,11 @@ const Index = () => {
                           </Button>
                         ))}
                       </div>
+                      {!paper.assets.some(isAvailableWritingAsset) && (
+                        <p className="text-[11px] font-mono text-muted-foreground/70">
+                          Artifact files are not currently published.
+                        </p>
+                      )}
                     </CardContent>
                   </Card>
                 ))}
@@ -804,7 +819,7 @@ const Index = () => {
                     </div>
                     <p className="text-muted-foreground/70 text-xs mb-4 font-mono">{item.description}</p>
                     <div className="flex flex-wrap gap-2">
-                      {item.assets.map((asset) => (
+                      {item.assets.filter(isAvailableWritingAsset).map((asset) => (
                         <Button key={asset.label} variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
                           <a href={asset.href} target="_blank" rel="noopener noreferrer" download={asset.download}>
                             <FileText className="mr-1" size={12} /> {asset.label}
@@ -812,6 +827,11 @@ const Index = () => {
                         </Button>
                       ))}
                     </div>
+                    {!item.assets.some(isAvailableWritingAsset) && (
+                      <p className="text-[11px] font-mono text-muted-foreground/70">
+                        Artifact files are not currently published.
+                      </p>
+                    )}
                   </CardContent>
                 </Card>
               ))}
@@ -957,8 +977,8 @@ const Index = () => {
                   </a>
                 </Button>
                 <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
-                  <a href="/Ian_Alloway_Resume_CV.pdf" download>
-                    <Download className="mr-2" size={16} /> Download Resume
+                  <a href={RESUME_REQUEST_URL}>
+                    <Mail className="mr-2" size={16} /> Request Resume
                   </a>
                 </Button>
                 <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
@@ -1033,15 +1053,15 @@ const Index = () => {
             <a href="/papers/sports-ml-evaluation-case-study.html" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
               <FileText size={12} /> Case study
             </a>
-            <a href="/papers/bsis-program-review-alloway.pdf" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
+            <a href="#writing" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
               <GraduationCap size={12} /> Academic writing
             </a>
             <a href="https://allowayai.substack.com" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
               <FileText size={12} /> AllowayAI
             </a>
-            <a href="/toolkit" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
+            <Link to="/toolkit" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
               <Package size={12} /> Toolkit
-            </a>
+            </Link>
             <a href="https://etherscan.io/address/0x6F278Ce76BA5ED31Fd9bE646D074863e126836E9" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
               <Heart size={12} /> Crypto tips
             </a>

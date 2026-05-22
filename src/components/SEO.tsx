@@ -11,7 +11,7 @@ const defaults = {
   title: 'Ian Alloway | Sports ML & Evaluation · ML Engineer',
   description: 'ML engineer focused on sports analytics, calibration-first evaluation, and production Python (FastAPI, test-backed primitives). Public flagship: NBA CLV dashboard + nba-edge library. MS AI candidate at USF.',
   url: 'https://ianalloway.xyz',
-  image: '/og-image.png',
+  image: '/og-image.svg',
   siteName: 'Ian Alloway',
 };
 

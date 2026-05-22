@@ -151,7 +151,7 @@ export default function Snake() {
                 {Array.from({ length: CELL_COUNT }, (_, index) => {
                   const x = index % GRID_COLUMNS;
                   const y = Math.floor(index / GRID_COLUMNS);
-                  const key = `${x},${y}`;
+                  const key = `${x},${y}` as const;
                   const snakeIndex = snakeCells.get(key);
                   const isFood = game.food?.x === x && game.food?.y === y;
 

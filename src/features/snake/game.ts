@@ -101,7 +101,7 @@ export function createGame({
   };
 }
 
-export function setDirection(state: SnakeGameState, nextDirection: Direction) {
+export function setDirection(state: SnakeGameState, nextDirection: Direction): SnakeGameState {
   if (OPPOSITE_DIRECTIONS[state.direction] === nextDirection) {
     return state;
   }
@@ -112,7 +112,7 @@ export function setDirection(state: SnakeGameState, nextDirection: Direction) {
   };
 }
 
-export function togglePause(state: SnakeGameState) {
+export function togglePause(state: SnakeGameState): SnakeGameState {
   if (state.status === "game_over") {
     return state;
   }
@@ -123,7 +123,7 @@ export function togglePause(state: SnakeGameState) {
   };
 }
 
-export function restartGame(state: SnakeGameState) {
+export function restartGame(state: SnakeGameState): SnakeGameState {
   return createGame({
     columns: state.columns,
     rows: state.rows,
@@ -133,7 +133,7 @@ export function restartGame(state: SnakeGameState) {
 export function advanceGame(
   state: SnakeGameState,
   { random = Math.random }: { random?: () => number } = {},
-) {
+): SnakeGameState {
   if (state.status !== "running") {
     return state;
   }
