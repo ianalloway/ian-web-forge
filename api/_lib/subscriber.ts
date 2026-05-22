@@ -1,3 +1,10 @@
+export class SubscriberValidationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "SubscriberValidationError";
+  }
+}
+
 type SubscriberPayload = {
   email: string;
   name?: string;
@@ -46,14 +53,20 @@ function normalizeText(value?: string) {
 }
 
 export function parseSubscriberPayload(body: unknown, headers: HeaderMap): SubscriberPayload {
-  const raw =
-    typeof body === "string"
-      ? (JSON.parse(body) as SubscriberPayload)
-      : ((body || {}) as SubscriberPayload);
+  let raw: SubscriberPayload;
+  if (typeof body === "string") {
+    try {
+      raw = JSON.parse(body) as SubscriberPayload;
+    } catch {
+      throw new SubscriberValidationError("Invalid request body.");
+    }
+  } else {
+    raw = (body || {}) as SubscriberPayload;
+  }
 
   const email = raw.email?.trim().toLowerCase();
   if (!email || !email.includes("@")) {
-    throw new Error("Please enter a valid email address.");
+    throw new SubscriberValidationError("Please enter a valid email address.");
   }
 
   return {
@@ -232,7 +245,11 @@ export async function processSubscriberSignup(
   payload: SubscriberPayload,
 ): Promise<NewsletterResult> {
   const notionMeta = await createNotionSignupPage(payload);
-  await sendNotificationEmail(payload, notionMeta);
+  try {
+    await sendNotificationEmail(payload, notionMeta);
+  } catch (error) {
+    console.error("Notification email failed after Notion signup:", error);
+  }
 
   return {
     message:

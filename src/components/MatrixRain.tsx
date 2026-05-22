@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { prefersReducedMotion } from '@/lib/motion';
 
 const CHARS = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
 
@@ -15,6 +16,8 @@ const MatrixRain = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    if (prefersReducedMotion()) return;
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 

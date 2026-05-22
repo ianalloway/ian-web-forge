@@ -119,7 +119,7 @@ const Hero = () => {
               { href: 'https://github.com/ianalloway', icon: Github, label: 'GitHub', external: true },
               { href: 'https://allowayai.substack.com', icon: BookOpen, label: 'Blog', external: true },
               { href: 'mailto:ian@allowayllc.com', icon: Mail, label: 'Email', external: false },
-              { href: '/Ian_Alloway_Resume.pdf', icon: Download, label: 'Resume', external: false, download: true },
+              { href: '/Ian_Alloway_Resume_CV.pdf', icon: Download, label: 'Resume', external: false, download: true },
             ].map((link) => (
               <Button
                 key={link.label}

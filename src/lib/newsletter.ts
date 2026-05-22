@@ -25,43 +25,40 @@ export async function subscribeToNewsletter(
   }
 
   try {
-    const submission = new URLSearchParams({
-      "form-name": "ianalloway-newsletter",
-      email,
-      name: name || "",
-      site: input.site,
-      source: input.source,
-      page_url: typeof window !== "undefined" ? window.location.href : "",
-      referrer: typeof document !== "undefined" ? document.referrer : "",
-      user_agent: typeof navigator !== "undefined" ? navigator.userAgent : "",
-    });
-    const response = await fetch("/", {
+    const response = await fetch("/api/newsletter-subscribe", {
       method: "POST",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
       },
-      body: submission.toString(),
+      body: JSON.stringify({
+        email,
+        name: name || undefined,
+        site: input.site,
+        source: input.source,
+        pageUrl: typeof window !== "undefined" ? window.location.href : undefined,
+        referrer: typeof document !== "undefined" ? document.referrer : undefined,
+        userAgent: typeof navigator !== "undefined" ? navigator.userAgent : undefined,
+      }),
     });
+
+    const data = (await response.json().catch(() => ({}))) as {
+      message?: string;
+      redirectUrl?: string;
+    };
 
     if (!response.ok) {
       return {
         success: false,
-        message: "Netlify could not save your signup. Please try again.",
+        message: data.message || "Unable to save your signup. Please try again.",
       };
     }
 
-    const redirectUrl = new URL(
-      "/subscribe",
-      import.meta.env.VITE_SUBSTACK_PUBLICATION_URL || "https://allowayai.substack.com",
-    );
-    redirectUrl.searchParams.set("utm_source", input.source);
-    redirectUrl.searchParams.set("utm_medium", "website");
-    redirectUrl.searchParams.set("utm_campaign", "newsletter");
-
     return {
       success: true,
-      message: "Saved. We captured your signup and are taking you to the official Substack subscribe page.",
-      redirectUrl: redirectUrl.toString(),
+      message:
+        data.message ||
+        "Saved. We logged your signup and are taking you to the official Substack subscribe page.",
+      redirectUrl: data.redirectUrl,
     };
   } catch {
     return {

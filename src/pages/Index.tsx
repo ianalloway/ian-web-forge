@@ -27,6 +27,7 @@ import {
 import MatrixRain from '@/components/MatrixRain';
 import SubstackEmbed from '@/components/SubstackEmbed';
 import { useToast } from '@/components/ui/use-toast';
+import { prefersReducedMotion } from '@/lib/motion';
 import { applyTheme, getStoredTheme, type SiteTheme } from '@/lib/theme';
 
 const ETH_DONATION_ADDRESS = '0x6f278ce76ba5ed31fd9be646d074863e126836e9';
@@ -36,6 +37,10 @@ function useCounter(target: number, visible: boolean, decimals = 0) {
   const [val, setVal] = useState(0);
   useEffect(() => {
     if (!visible) return;
+    if (prefersReducedMotion()) {
+      setVal(target);
+      return;
+    }
     const steps = 50;
     const inc = target / steps;
     let cur = 0;
@@ -406,7 +411,7 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (prefersReducedMotion()) {
       setTypedText(fullText);
       return;
     }
@@ -455,12 +460,14 @@ const Index = () => {
             <Terminal size={18} />
             IAN.SYS
           </a>
-          <div className="hidden md:flex items-center gap-5 text-sm font-mono">
-            <a href="#featured" className="text-primary hover:text-primary/70 transition-colors">[WORK]</a>
-            <a href="#case-study" className="text-primary hover:text-primary/70 transition-colors">[CASE_STUDY]</a>
-            <a href="#writing" className="text-primary hover:text-primary/70 transition-colors">[WRITING]</a>
-            <a href="#why-hire-me" className="text-primary hover:text-primary/70 transition-colors">[WHY_ME]</a>
-            <a href="#contact" className="text-primary hover:text-primary/70 transition-colors">[CONTACT]</a>
+          <div className="flex items-center gap-3 text-xs font-mono md:gap-5 md:text-sm">
+            <div className="hidden md:flex items-center gap-5">
+              <a href="#featured" className="text-primary hover:text-primary/70 transition-colors">[WORK]</a>
+              <a href="#case-study" className="text-primary hover:text-primary/70 transition-colors">[CASE_STUDY]</a>
+              <a href="#writing" className="text-primary hover:text-primary/70 transition-colors">[WRITING]</a>
+              <a href="#why-hire-me" className="text-primary hover:text-primary/70 transition-colors">[WHY_ME]</a>
+              <a href="#contact" className="text-primary hover:text-primary/70 transition-colors">[CONTACT]</a>
+            </div>
             <a href="/hireme" className="text-primary hover:text-primary/70 transition-colors">[/HIRE]</a>
             <a href="/now" className="text-primary hover:text-primary/70 transition-colors">[/NOW]</a>
             <button
@@ -909,7 +916,7 @@ const Index = () => {
           </div>
           <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
             {[
-              { name: 'oss-arc', desc: 'Snapshots of archived open-source work', lang: 'Python', updated: '1 day ago', href: 'https://github.com/ianalloway/oss-arc' },
+              { name: 'oss-archive', desc: 'Snapshots of archived open-source work', lang: 'Python', updated: '1 day ago', href: 'https://github.com/ianalloway/oss-archive' },
               { name: 'ai-advantage-sports', desc: 'Sports betting platform — ML picks engine', lang: 'TypeScript', updated: '1 day ago', href: 'https://github.com/ianalloway/ai-advantage-sports' },
               { name: 'ian-web-forge', desc: 'This portfolio site — React + Tailwind', lang: 'TypeScript', updated: '5 days ago', href: 'https://github.com/ianalloway/ian-web-forge' },
               { name: 'kana-dojo', desc: 'Aesthetic minimal Japanese learning app', lang: 'TypeScript', updated: '4 days ago', href: 'https://github.com/ianalloway/kana-dojo' },
