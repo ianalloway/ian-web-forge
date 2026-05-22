@@ -15,6 +15,13 @@ export interface NewsletterResult {
   redirectUrl: string;
 }
 
+export class InvalidPayloadError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "InvalidPayloadError";
+  }
+}
+
 const NOTION_VERSION = "2022-06-28";
 const DEFAULT_SUBSTACK_URL = "https://allowayai.substack.com";
 
@@ -41,19 +48,37 @@ function escapeHtml(value: string) {
     .replaceAll("'", "&#39;");
 }
 
-function normalizeText(value?: string) {
-  return value?.trim() || undefined;
+function asString(value: unknown): string | undefined {
+  return typeof value === "string" ? value : undefined;
+}
+
+function normalizeText(value: unknown) {
+  const stringValue = asString(value);
+  return stringValue?.trim() || undefined;
 }
 
 export function parseSubscriberPayload(body: unknown, headers: HeaderMap): SubscriberPayload {
-  const raw =
-    typeof body === "string"
-      ? (JSON.parse(body) as SubscriberPayload)
-      : ((body || {}) as SubscriberPayload);
+  let raw: Record<string, unknown>;
 
-  const email = raw.email?.trim().toLowerCase();
+  if (typeof body === "string") {
+    if (body.trim() === "") {
+      throw new InvalidPayloadError("Request body is empty.");
+    }
+    try {
+      const parsed = JSON.parse(body);
+      raw = parsed && typeof parsed === "object" ? (parsed as Record<string, unknown>) : {};
+    } catch {
+      throw new InvalidPayloadError("Request body is not valid JSON.");
+    }
+  } else if (body && typeof body === "object") {
+    raw = body as Record<string, unknown>;
+  } else {
+    raw = {};
+  }
+
+  const email = asString(raw.email)?.trim().toLowerCase();
   if (!email || !email.includes("@")) {
-    throw new Error("Please enter a valid email address.");
+    throw new InvalidPayloadError("Please enter a valid email address.");
   }
 
   return {
