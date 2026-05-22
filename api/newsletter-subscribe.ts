@@ -1,4 +1,8 @@
-import { parseSubscriberPayload, processSubscriberSignup } from "./_lib/subscriber.js";
+import {
+  SubscriberValidationError,
+  parseSubscriberPayload,
+  processSubscriberSignup,
+} from "./_lib/subscriber.js";
 
 type RequestLike = {
   method?: string;
@@ -25,6 +29,11 @@ export default async function handler(req: RequestLike, res: ResponseLike) {
     const result = await processSubscriberSignup(payload);
     res.status(200).json(result);
   } catch (error) {
+    if (error instanceof SubscriberValidationError) {
+      res.status(400).json({ message: error.message });
+      return;
+    }
+
     const message =
       error instanceof Error ? error.message : "Unable to process newsletter signup.";
     res.status(500).json({ message });

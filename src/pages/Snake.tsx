@@ -131,13 +131,20 @@ export default function Snake() {
             <div className="grid grid-cols-2 gap-3 text-sm font-mono min-w-[220px]">
               <div className="rounded-lg border border-primary/30 bg-background/70 p-3">
                 <div className="text-primary/70 text-xs mb-1">SCORE</div>
-                <div className="text-primary text-2xl font-bold">{game.score}</div>
+                <div className="text-primary text-2xl font-bold" aria-live="polite">
+                  {game.score}
+                </div>
               </div>
               <div className="rounded-lg border border-primary/30 bg-background/70 p-3">
                 <div className="text-primary/70 text-xs mb-1">STATUS</div>
-                <div className="text-primary text-base font-bold">{statusLabel(game)}</div>
+                <div className="text-primary text-base font-bold" aria-live="polite">
+                  {statusLabel(game)}
+                </div>
               </div>
             </div>
+            <p className="sr-only" aria-live="polite">
+              Snake game status: {statusLabel(game)}. Score: {game.score}.
+            </p>
           </div>
 
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_240px] lg:items-start">
@@ -178,9 +185,15 @@ export default function Snake() {
                 <div className="flex flex-wrap gap-3">
                   <Button
                     className="font-mono flex-1 min-w-[120px]"
+                    disabled={game.status === "game_over"}
                     onClick={() => setGame((current) => togglePause(current))}
                   >
-                    {game.status === "paused" ? (
+                    {game.status === "game_over" ? (
+                      <>
+                        <Pause className="mr-2" />
+                        Game over
+                      </>
+                    ) : game.status === "paused" ? (
                       <>
                         <Play className="mr-2" />
                         Resume
