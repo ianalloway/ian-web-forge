@@ -81,7 +81,27 @@ const INCISION_OPTIONS = [
 
 const createId = () => `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
-const toDateInput = (date: Date) => date.toISOString().slice(0, 10);
+const padDatePart = (value: number) => String(value).padStart(2, '0');
+
+const toDateInput = (date: Date) =>
+  `${date.getFullYear()}-${padDatePart(date.getMonth() + 1)}-${padDatePart(date.getDate())}`;
+
+const parseDateInput = (value: string) => {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return null;
+
+  const [, year, month, day] = match;
+  const date = new Date(Number(year), Number(month) - 1, Number(day));
+  return toDateInput(date) === value ? date : null;
+};
+
+const isDateInput = (value: string) => Boolean(parseDateInput(value));
+
+const getWeekLabelFromStart = (startDate: Date) => {
+  const endDate = new Date(startDate);
+  endDate.setDate(startDate.getDate() + 6);
+  return `${toDateInput(startDate)} to ${toDateInput(endDate)}`;
+};
 
 const daysAgo = (days: number) => {
   const date = new Date();
@@ -89,11 +109,17 @@ const daysAgo = (days: number) => {
   return toDateInput(date);
 };
 
-const getCurrentWeekLabel = () => {
-  const now = new Date();
-  const next = new Date();
-  next.setDate(now.getDate() + 6);
-  return `${toDateInput(now)} to ${toDateInput(next)}`;
+const getCurrentWeekLabel = () => getWeekLabelFromStart(new Date());
+
+const normalizeGoalWeek = (week: unknown) => {
+  if (typeof week !== 'string') return getCurrentWeekLabel();
+
+  const trimmedWeek = week.trim();
+  const incompleteRange = /^(\d{4}-\d{2}-\d{2})\s+to\s*$/.exec(trimmedWeek);
+  const startDate = incompleteRange ? parseDateInput(incompleteRange[1]) : null;
+
+  if (startDate) return getWeekLabelFromStart(startDate);
+  return trimmedWeek || getCurrentWeekLabel();
 };
 
 const DEFAULT_LOGS: DailyLog[] = [
@@ -193,12 +219,18 @@ function readStoredArray<T>(key: string, fallback: T[]) {
   }
 }
 
+const normalizeDailyLogs = (logs: DailyLog[]) =>
+  logs.filter((log) => isDateInput(log.date)).sort((a, b) => b.date.localeCompare(a.date));
+
+const normalizeTherapyGoals = (goals: TherapyGoal[]) =>
+  goals.map((goal) => ({ ...goal, week: normalizeGoalWeek(goal.week) }));
+
 const RecoveryTracker = () => {
   const [dailyLogs, setDailyLogs] = useState<DailyLog[]>(() =>
-    readStoredArray(STORAGE_KEYS.logs, DEFAULT_LOGS),
+    normalizeDailyLogs(readStoredArray(STORAGE_KEYS.logs, DEFAULT_LOGS)),
   );
   const [therapyGoals, setTherapyGoals] = useState<TherapyGoal[]>(() =>
-    readStoredArray(STORAGE_KEYS.goals, DEFAULT_GOALS),
+    normalizeTherapyGoals(readStoredArray(STORAGE_KEYS.goals, DEFAULT_GOALS)),
   );
   const [questions, setQuestions] = useState<CheckupQuestion[]>(() =>
     readStoredArray(STORAGE_KEYS.questions, DEFAULT_QUESTIONS),
@@ -233,7 +265,10 @@ const RecoveryTracker = () => {
 
   const firstLog = sortedLogs[0];
   const latestLog = sortedLogs[sortedLogs.length - 1];
-  const flaggedLogs = useMemo(() => dailyLogs.filter((log) => log.symptoms.length > 0), [dailyLogs]);
+  const flaggedLogs = useMemo(
+    () => [...sortedLogs].reverse().filter((log) => log.symptoms.length > 0),
+    [sortedLogs],
+  );
   const avgPain = useMemo(() => {
     const recentLogs = sortedLogs.slice(-7);
     if (!recentLogs.length) return 0;
@@ -243,16 +278,20 @@ const RecoveryTracker = () => {
     ? latestLog.dorsiflexion + latestLog.plantarflexion - (firstLog.dorsiflexion + firstLog.plantarflexion)
     : 0;
 
-  const chartData = sortedLogs.map((log) => ({
-    date: new Date(`${log.date}T00:00:00`).toLocaleDateString(undefined, {
-      month: 'short',
-      day: 'numeric',
-    }),
-    pain: log.pain,
-    dorsiflexion: log.dorsiflexion,
-    plantarflexion: log.plantarflexion,
-    exerciseMinutes: log.exerciseMinutes,
-  }));
+  const chartData = useMemo(
+    () =>
+      sortedLogs.map((log) => ({
+        date: new Date(`${log.date}T00:00:00`).toLocaleDateString(undefined, {
+          month: 'short',
+          day: 'numeric',
+        }),
+        pain: log.pain,
+        dorsiflexion: log.dorsiflexion,
+        plantarflexion: log.plantarflexion,
+        exerciseMinutes: log.exerciseMinutes,
+      })),
+    [sortedLogs],
+  );
 
   const toggleSymptom = (symptom: string) => {
     setDailyForm((current) => {
@@ -265,11 +304,17 @@ const RecoveryTracker = () => {
 
   const addDailyLog = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!isDateInput(dailyForm.date)) return;
+
     const entry: DailyLog = { ...dailyForm, id: createId() };
 
-    setDailyLogs((current) =>
-      [entry, ...current.filter((log) => log.date !== entry.date)].sort((a, b) => b.date.localeCompare(a.date)),
-    );
+    setDailyLogs((current) => {
+      const nextLogs = [entry, ...current.filter((log) => log.date !== entry.date)].sort((a, b) =>
+        b.date.localeCompare(a.date),
+      );
+
+      return nextLogs;
+    });
     setDailyForm(getInitialLogForm());
   };
 
@@ -277,7 +322,10 @@ const RecoveryTracker = () => {
     event.preventDefault();
     if (!goalForm.goal.trim()) return;
 
-    setTherapyGoals((current) => [{ ...goalForm, id: createId() }, ...current]);
+    setTherapyGoals((current) => [
+      { ...goalForm, week: normalizeGoalWeek(goalForm.week), goal: goalForm.goal.trim(), id: createId() },
+      ...current,
+    ]);
     setGoalForm({ week: getCurrentWeekLabel(), goal: '', status: 'planned' });
   };
 
@@ -382,6 +430,7 @@ const RecoveryTracker = () => {
                     Date
                     <Input
                       type="date"
+                      required
                       value={dailyForm.date}
                       onChange={(event) => setDailyForm((current) => ({ ...current, date: event.target.value }))}
                     />
@@ -559,6 +608,7 @@ const RecoveryTracker = () => {
             <CardContent>
               <form onSubmit={addTherapyGoal} className="mb-5 grid gap-3 md:grid-cols-[0.85fr_1.4fr_0.7fr_auto]">
                 <Input
+                  required
                   value={goalForm.week}
                   aria-label="Goal week"
                   onChange={(event) => setGoalForm((current) => ({ ...current, week: event.target.value }))}
