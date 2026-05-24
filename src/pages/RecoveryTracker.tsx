@@ -388,13 +388,27 @@ const RecoveryTracker = () => {
                   </label>
                   <label className="space-y-2 text-sm text-muted-foreground">
                     Pain level: {dailyForm.pain}/10
-                    <Input
-                      type="range"
-                      min="0"
-                      max="10"
-                      value={dailyForm.pain}
-                      onChange={(event) => setDailyForm((current) => ({ ...current, pain: Number(event.target.value) }))}
-                    />
+                    <div className="flex items-center gap-3">
+                      <Input
+                        type="range"
+                        min="0"
+                        max="10"
+                        value={dailyForm.pain}
+                        onChange={(event) => setDailyForm((current) => ({ ...current, pain: Number(event.target.value) }))}
+                      />
+                      <Input
+                        type="number"
+                        min="0"
+                        max="10"
+                        value={dailyForm.pain}
+                        aria-label="Pain level number"
+                        onChange={(event) => {
+                          const pain = Math.max(0, Math.min(10, Number(event.target.value)));
+                          setDailyForm((current) => ({ ...current, pain }));
+                        }}
+                        className="w-20"
+                      />
+                    </div>
                   </label>
                 </div>
 
