@@ -5,6 +5,8 @@ interface SEOProps {
   description?: string;
   path?: string;
   image?: string;
+  /** When true, asks crawlers not to index the page (e.g. private health tools). */
+  noIndex?: boolean;
 }
 
 const defaults = {
@@ -15,7 +17,7 @@ const defaults = {
   siteName: 'Ian Alloway',
 };
 
-export default function SEO({ title, description, path = '', image }: SEOProps) {
+export default function SEO({ title, description, path = '', image, noIndex }: SEOProps) {
   const pageTitle = title ? `${title} | Ian Alloway` : defaults.title;
   const pageDescription = description || defaults.description;
   const pageUrl = `${defaults.url}${path}`;
@@ -72,7 +74,7 @@ export default function SEO({ title, description, path = '', image }: SEOProps) 
       </script>
 
       {/* Misc */}
-      <meta name="robots" content="index, follow" />
+      <meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow"} />
       <meta name="author" content="Ian Alloway" />
       <meta name="keywords" content="Ian Alloway, AI Engineer, Data Scientist, ML Engineer, Machine Learning, Portfolio, USF, Sports Analytics, AI Agents, XGBoost, Python, React" />
       <meta name="theme-color" content="#0f172a" />
