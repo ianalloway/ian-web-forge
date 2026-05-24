@@ -214,6 +214,12 @@ const selectedProjects = [
     codeHref: 'https://github.com/ianalloway/macos-disk-cleanup',
   },
   {
+    name: 'ankle-recovery-tracker',
+    description: 'A private-use dashboard for post-op pain, incision notes, range-of-motion work, PT goals, symptoms, and surgeon questions.',
+    codeHref: 'https://github.com/ianalloway/ian-web-forge',
+    demoHref: '/recovery',
+  },
+  {
     name: 'openclaw-skills',
     description: 'Published skills and workflows around sports odds, reporting, developer tooling, and agent productivity.',
     codeHref: 'https://github.com/ianalloway/openclaw-skills',
@@ -470,6 +476,7 @@ const Index = () => {
             </div>
             <a href="/hireme" className="text-primary hover:text-primary/70 transition-colors">[/HIRE]</a>
             <a href="/now" className="text-primary hover:text-primary/70 transition-colors">[/NOW]</a>
+            <Link to="/recovery" className="text-primary hover:text-primary/70 transition-colors">[/RECOVERY]</Link>
             <button
               onClick={() => setTheme((prev) => (prev === 'matrix' ? 'light' : 'matrix'))}
               className="rounded-md border border-primary/30 p-2 transition-colors hover:bg-primary/10"
