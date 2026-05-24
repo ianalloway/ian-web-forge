@@ -13,6 +13,7 @@ const Now = lazy(() => import("./pages/Now"));
 const HireMe = lazy(() => import("./pages/HireMe"));
 const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Snake = lazy(() => import("./pages/Snake"));
+const Recovery = lazy(() => import("./pages/Recovery"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -74,6 +75,19 @@ const App = () => (
                       description="Play a classic Snake game on Ian Alloway's site: keyboard controls, score tracking, food spawn, restart, and mobile-friendly controls."
                     />
                     <Snake />
+                  </>
+                }
+              />
+              <Route
+                path="/recovery"
+                element={
+                  <>
+                    <SEO
+                      title="Recovery Tracker"
+                      path="/recovery"
+                      description="Personal post-ankle-surgery recovery dashboard: log daily pain, swelling, range of motion, incision appearance; flag warning symptoms; track weekly PT goals; and organize questions for orthopedic check-ups."
+                    />
+                    <Recovery />
                   </>
                 }
               />
