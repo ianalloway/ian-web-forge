@@ -1,65 +1,51 @@
 # Ian Alloway Portfolio
 
-Personal portfolio website for Ian Alloway - Data Scientist and AI Specialist.
+Personal portfolio site for Ian Alloway — data scientist, ML engineer, and applied systems builder.
 
-**Live Site**: https://ianalloway.xyz
+**Live site:** https://ianalloway.xyz
 
-## Tech Stack
+## What this is
 
-- **Vite** - Build tool
-- **TypeScript** - Type safety
-- **React** - UI framework
-- **shadcn-ui** - Component library
-- **Tailwind CSS** - Styling
+A clean portfolio focused on:
 
-## Getting Started
+- selected projects
+- writing and Substack updates
+- a small toolkit/index for useful links
+- a simple place to present current work
+
+## Stack
+
+- Vite
+- React
+- TypeScript
+- shadcn-ui
+- Tailwind CSS
+
+## Local development
 
 ```bash
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
-
-# Build for production
 npm run build
 ```
 
-## Adding Academic Papers
+## Content updates
 
-To add new academic papers to the portfolio:
+### Adding academic papers
 
-1. **Add the PDF file** to `/public/papers/` directory with a clean filename (e.g., `my-paper-title.pdf`)
+1. Add the PDF to `/public/papers/` with a clean filename.
+2. Update the `academicPapers` array in `src/pages/Index.tsx`.
+3. Commit and deploy.
 
-2. **Update the papers array** in `src/pages/Index.tsx` by adding a new entry to the `academicPapers` array:
+### Newsletter / contact form
 
-```typescript
-const academicPapers = [
-  // ... existing papers ...
-  {
-    title: 'Your Paper Title',
-    description: 'Brief description of the paper',
-    file: '/papers/your-paper-filename.pdf',
-    category: 'Capstone',
-  },
-];
-```
+The contact-area subscribe form posts to `/api/newsletter-subscribe` and:
 
-3. **Commit and push** your changes - the site will automatically deploy.
+- creates a Notion entry
+- sends a notification email
+- redirects the visitor to the Substack subscribe flow
 
-## Deployment
-
-The live site is connected to https://ianalloway.xyz, and the repo now also includes `vercel.json` so preview deployments on Vercel can serve SPA routes like `/now`, `/hireme`, and `/toolkit` without a 404 while still routing `/api/*` to serverless functions.
-
-### Newsletter automation env vars
-
-The contact-area subscribe form now posts to `/api/newsletter-subscribe`. On each signup it:
-
-- creates a child page in Notion with the subscriber details
-- sends you a notification email
-- redirects the visitor into the official Substack subscribe page
-
-Set these env vars before turning the form on in production:
+Required env vars:
 
 ```bash
 NOTION_API_KEY=secret_your_notion_integration_token
@@ -70,8 +56,13 @@ NOTIFY_EMAIL=ian@allowayllc.com
 SUBSTACK_PUBLICATION_URL=https://allowayai.substack.com
 ```
 
-`NOTION_PARENT_PAGE_ID` should be the page where you want each new subscriber page to appear. Share that Notion page with your Notion integration before testing.
+## Deployment
 
----
+The repo includes `vercel.json` so preview deployments can serve SPA routes like `/now`, `/hireme`, and `/toolkit` without 404s while still routing `/api/*` to serverless functions.
+
+## Notes
+
+- Keep the homepage current and minimal.
+- This repo should feel like a polished landing page, not a feature dump.
 
 Built with ❤️ by Ian Alloway
