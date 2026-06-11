@@ -50,6 +50,12 @@ const Header = () => {
                 {label}
               </button>
             ))}
+            <a
+              href="/demos"
+              className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+            >
+              Live Demos
+            </a>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -83,6 +89,12 @@ const Header = () => {
                   {label}
                 </button>
               ))}
+              <a
+                href="/demos"
+                className="text-left text-muted-foreground hover:text-foreground transition-colors text-sm"
+              >
+                Live Demos
+              </a>
             </div>
           </nav>
         )}
