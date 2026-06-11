@@ -39,8 +39,8 @@ const TIMELINE = [
   { year: '2023', label: 'Founded Alloway LLC · First production ML system shipped', type: 'launch' },
   { year: '2024', label: 'Launched AI Advantage Sports · 68.3% model accuracy', type: 'launch' },
   { year: '2025', label: 'Published 9 OSS skills on ClawHub · nba-edge on PyPI', type: 'oss' },
-  { year: 'May 2026', label: 'B.S. Information Science graduation @ USF', type: 'edu' },
-  { year: 'Aug 2026', label: 'M.S. Artificial Intelligence begins @ USF', type: 'edu' },
+  { year: 'Completed', label: 'B.S. Information Science @ USF', type: 'edu' },
+  { year: 'In progress', label: 'M.S. Artificial Intelligence @ USF', type: 'edu' },
 ];
 
 const TYPE_COLORS: Record<string, string> = {
@@ -103,7 +103,7 @@ const About = () => {
           <p className="section-label">// WHO_AM_I</p>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 font-mono animate-glow-pulse">About</h2>
           <p className="text-muted-foreground max-w-3xl mx-auto font-mono text-sm leading-relaxed">
-            ML Engineer finishing a B.S. in Information Science at USF (May 2026) and starting an M.S. in Artificial Intelligence (Aug 2026).
+            ML Engineer with a B.S. in Information Science from USF, currently pursuing an M.S. in Artificial Intelligence at USF.
             Building production ML systems and shipping open-source work people can actually use.
           </p>
         </div>
