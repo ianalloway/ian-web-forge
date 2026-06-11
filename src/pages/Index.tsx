@@ -274,7 +274,7 @@ const academicAssignments: WritingEntry[] = [
   {
     title: 'Assignment: BSIS Program Review',
     description:
-      'Program review assignment restored with both the submitted PDF and the original DOCX version.',
+      'Program review assignment, with both the submitted PDF and the original DOCX version.',
     category: 'Assignment',
     assets: [
       { label: 'View PDF', href: '/papers/bsis-program-review-alloway.pdf' },
@@ -285,7 +285,7 @@ const academicAssignments: WritingEntry[] = [
   {
     title: 'Discussion Question 2: Portfolio Peer Feedback and Support',
     description:
-      'Discussion artifact restored in its original DOCX format from your course files.',
+      'Peer feedback discussion on portfolio development, available in the original DOCX format.',
     category: 'Discussion',
     assets: [
       { label: 'Original DOCX', href: '/papers/originals/discussion-question-2-peer-feedback.docx', download: true },
@@ -307,12 +307,12 @@ const academicAssignments: WritingEntry[] = [
   {
     title: 'Portfolio Presentations',
     description:
-      'Portfolio presentation slides restored in the original PPTX format from your course presentation files.',
+      'Final portfolio presentation slides, available in the original PPTX format.',
     category: 'Presentation',
     assets: [
       { label: 'Original PPTX', href: '/papers/originals/portfolio-presentations.pptx', download: true },
     ],
-    note: 'The large local movie recording was not added to GitHub because it exceeds repository file size limits.',
+    note: 'Slides only — the full video recording is too large to host here.',
   },
 ];
 
@@ -320,7 +320,7 @@ const writingResources: WritingEntry[] = [
   {
     title: 'Portfolio Conclusion — LIS 4934 Senior Capstone',
     description:
-      'Reflective capstone conclusion restored with both the web PDF and the original DOCX draft.',
+      'Reflective capstone conclusion, with both the web PDF and the original DOCX draft.',
     category: 'Capstone',
     assets: [
       { label: 'View PDF', href: '/papers/portfolio-conclusion-lis4934.pdf' },
@@ -331,7 +331,7 @@ const writingResources: WritingEntry[] = [
   {
     title: 'Bio and Career Goals',
     description:
-      'Biography and goals statement with the submitted PDF plus the original DOCX version you authored.',
+      'Biography and career goals statement, available as a submitted PDF plus the original DOCX draft.',
     category: 'Portfolio',
     assets: [
       { label: 'View PDF', href: '/papers/bio-and-career-goals.pdf' },
@@ -353,7 +353,7 @@ const writingResources: WritingEntry[] = [
   {
     title: 'Case Study Capstone',
     description:
-      'Case study capstone preserved with the PDF and the original DOCX version from your course files.',
+      'Case study capstone, available as a PDF along with the original DOCX version.',
     category: 'Capstone',
     assets: [
       { label: 'View PDF', href: '/papers/case-study-capstone.pdf' },
@@ -375,7 +375,7 @@ const writingResources: WritingEntry[] = [
   {
     title: 'AllowayAI on Substack',
     description:
-      'Your original long-form writing outlet for technical essays, build notes, and public-facing writing.',
+      'My long-form writing outlet for technical essays, build notes, and public-facing writing.',
     category: 'Writing',
     assets: [
       { label: 'Visit Substack', href: 'https://allowayai.substack.com' },
@@ -744,10 +744,10 @@ const Index = () => {
               [ACADEMIC_WRITING]
             </h2>
             <p className="text-muted-foreground font-mono mb-3 text-sm">
-              &gt; Restored class-facing assignments and writing artifacts in the original portfolio card format.
+              &gt; Selected assignments and writing artifacts from my Information Science coursework at USF, presented in their original formats.
             </p>
             <p className="text-muted-foreground/80 font-mono text-xs">
-              The assignment names below match your class list so they are easy to verify during review.
+              Each piece is listed under its original assignment name, with the submitted files available to read or download.
             </p>
           </div>
 
