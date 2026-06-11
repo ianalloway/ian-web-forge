@@ -6,17 +6,17 @@ import { Terminal, ArrowLeft, Book, Code, Brain, Music, MapPin, Target, Zap, Cof
 import MatrixRain from '@/components/MatrixRain';
 import { applyTheme, getStoredTheme, type SiteTheme } from '@/lib/theme';
 
-const LAST_UPDATED = 'April 2026';
+const LAST_UPDATED = 'June 2026';
 
 const NOW_DATA = {
   focus: {
     title: 'Main Focus',
     icon: Target,
     items: [
-      'Finishing my B.S. Information Science degree and capstone work at USF',
+      'Pursuing my M.S. in Artificial Intelligence at USF',
       'Growing AI Advantage Sports to 500 premium subscribers',
       'Contributing weekly to OpenClaw — currently refactoring the skill resolution pipeline',
-      'Preparing applications for MSAI program start (Aug 2026)',
+      'Building applied AI/evaluation projects alongside graduate AI coursework',
     ],
   },
   building: {
