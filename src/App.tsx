@@ -13,6 +13,7 @@ const Now = lazy(() => import("./pages/Now"));
 const HireMe = lazy(() => import("./pages/HireMe"));
 const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Snake = lazy(() => import("./pages/Snake"));
+const Demos = lazy(() => import("./pages/Demos"));
 const RecoveryTracker = lazy(() => import("./pages/RecoveryTracker"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -62,6 +63,19 @@ const App = () => (
                       description="Public index of Ian Alloway’s sports ML stack, odds utilities, reporting tools, and GitHub repos — nba-clv-dashboard, nba-ratings, odds-drift-watch, closing-line-archive, kelly-js, and more."
                     />
                     <Toolkit />
+                  </>
+                }
+              />
+              <Route
+                path="/demos"
+                element={
+                  <>
+                    <SEO
+                      title="Live demos — working products from my repos"
+                      path="/demos"
+                      description="Interactive demos of Ian Alloway's flagship projects: kelly-js bet sizing running in-browser, nba-edge Elo/win-probability live app, sports-betting-ml model pipeline, and the deployed AI Advantage platform."
+                    />
+                    <Demos />
                   </>
                 }
               />
