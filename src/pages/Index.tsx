@@ -120,7 +120,7 @@ const whyHireMe = [
 const credibilitySignals = [
   {
     label: 'Education',
-    value: 'B.S. Information Science expected May 2026; M.S. Artificial Intelligence starts August 2026',
+    value: 'B.S. Information Science from USF; M.S. Artificial Intelligence in progress at USF',
   },
   {
     label: 'Open source',
@@ -483,8 +483,8 @@ const Index = () => {
               <Brain size={26} className="text-primary/70" />
             </div>
             <div className="space-y-4 font-mono text-sm text-muted-foreground">
-              <p>B.S. Information Science at USF, expected May 2026.</p>
-              <p>M.S. Artificial Intelligence at USF, starting August 2026.</p>
+              <p>B.S. Information Science from USF.</p>
+              <p>M.S. Artificial Intelligence in progress at USF.</p>
               <p>Strongest public proof: sports analytics, ML evaluation, reporting, and developer tooling.</p>
               <p>Best fit roles: ML Engineer, Applied AI Engineer, Data Scientist, Analytics Engineer.</p>
             </div>

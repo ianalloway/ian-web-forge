@@ -90,12 +90,12 @@ const education = [
   {
     title: 'B.S. Information Science',
     sub: 'University of South Florida',
-    meta: 'Expected May 2026',
+    meta: 'Completed',
   },
   {
     title: 'M.S. Artificial Intelligence',
     sub: 'University of South Florida',
-    meta: 'Starting August 2026',
+    meta: 'In Progress',
   },
 ];
 
@@ -176,7 +176,7 @@ const HireMe = () => {
               <div className="space-y-4 text-sm text-green-400/75 leading-relaxed">
                 <p>I build applied ML systems that are easier to trust because the evaluation layer is part of the work, not an afterthought.</p>
                 <p>My public proof is strongest in sports analytics, forecasting-style tooling, and developer utilities, but the underlying skill transfers well to risk, experimentation, fraud, and product analytics.</p>
-                <p>Currently finishing my B.S. in Information Science and starting an M.S. in Artificial Intelligence in August 2026.</p>
+                <p>B.S. Information Science completed; currently pursuing an M.S. in Artificial Intelligence at USF.</p>
               </div>
               <div className="mt-6 flex flex-wrap gap-3 text-sm">
                 <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">
