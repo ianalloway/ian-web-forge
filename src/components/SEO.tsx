@@ -8,8 +8,8 @@ interface SEOProps {
 }
 
 const defaults = {
-  title: 'Ian Alloway | Sports ML & Evaluation · ML Engineer',
-  description: 'ML engineer focused on sports analytics, calibration-first evaluation, and production Python (FastAPI, test-backed primitives). Public flagship: NBA CLV dashboard + nba-edge library. MS AI candidate at USF.',
+  title: 'Ian Alloway | ML Engineer & Data Scientist',
+  description: 'ML engineer and data scientist building evaluation-first ML systems, sports analytics, dashboards, and developer tools. B.S. Information Science from USF; M.S. Artificial Intelligence in progress at USF.',
   url: 'https://ianalloway.xyz',
   image: '/og-image.png',
   siteName: 'Ian Alloway',
@@ -49,7 +49,8 @@ export default function SEO({ title, description, path = '', image }: SEOProps) 
           '@type': 'Person',
           name: 'Ian Alloway',
           url: defaults.url,
-          jobTitle: 'ML Engineer — Sports analytics & model evaluation',
+          jobTitle: 'ML Engineer and Data Scientist',
+          description: defaults.description,
           alumniOf: {
             '@type': 'CollegeOrUniversity',
             name: 'University of South Florida',
@@ -74,7 +75,7 @@ export default function SEO({ title, description, path = '', image }: SEOProps) 
       {/* Misc */}
       <meta name="robots" content="index, follow" />
       <meta name="author" content="Ian Alloway" />
-      <meta name="keywords" content="Ian Alloway, AI Engineer, Data Scientist, ML Engineer, Machine Learning, Portfolio, USF, Sports Analytics, AI Agents, XGBoost, Python, React" />
+      <meta name="keywords" content="Ian Alloway, AI Engineer, Data Scientist, ML Engineer, Machine Learning, Portfolio, USF, Sports Analytics, Model Evaluation, Applied AI, XGBoost, Python, React, FastAPI" />
       <meta name="theme-color" content="#0f172a" />
     </Helmet>
   );

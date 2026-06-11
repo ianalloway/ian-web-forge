@@ -26,7 +26,7 @@ const Hero = () => {
 
   useEffect(() => {
     const current = ROLES[roleIndex];
-    let timeout: ReturnType<typeof setTimeout>;
+    let timeout: ReturnType<typeof setTimeout> | undefined;
     if (!deleting && charIndex < current.length) {
       timeout = setTimeout(() => {
         setDisplayed(current.slice(0, charIndex + 1));
@@ -40,10 +40,14 @@ const Hero = () => {
         setCharIndex(c => c - 1);
       }, 30);
     } else if (deleting && charIndex === 0) {
-      setDeleting(false);
-      setRoleIndex(r => (r + 1) % ROLES.length);
+      timeout = setTimeout(() => {
+        setDeleting(false);
+        setRoleIndex(r => (r + 1) % ROLES.length);
+      }, 0);
     }
-    return () => clearTimeout(timeout);
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
   }, [charIndex, deleting, roleIndex]);
 
   return (

@@ -100,16 +100,18 @@ const education = [
 ];
 
 const HireMe = () => {
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setMounted(true);
+    if (mounted) {
       return;
     }
 
-    setMounted(true);
-  }, []);
+    const timer = window.setTimeout(() => setMounted(true), 0);
+    return () => window.clearTimeout(timer);
+  }, [mounted]);
 
   return (
     <div className="min-h-screen bg-black text-green-400 font-mono overflow-x-hidden">

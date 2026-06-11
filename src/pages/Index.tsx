@@ -38,8 +38,8 @@ function useCounter(target: number, visible: boolean, decimals = 0) {
   useEffect(() => {
     if (!visible) return;
     if (prefersReducedMotion()) {
-      setVal(target);
-      return;
+      const timeout = window.setTimeout(() => setVal(target), 0);
+      return () => window.clearTimeout(timeout);
     }
     const steps = 50;
     const inc = target / steps;
@@ -418,8 +418,8 @@ const Index = () => {
 
   useEffect(() => {
     if (prefersReducedMotion()) {
-      setTypedText(fullText);
-      return;
+      const timeout = window.setTimeout(() => setTypedText(fullText), 0);
+      return () => window.clearTimeout(timeout);
     }
 
     let index = 0;
@@ -490,7 +490,7 @@ const Index = () => {
 
       <main id="main-content">
       {/* Animated stats bar */}
-      <section ref={statsRef as React.RefObject<HTMLElement>} className="relative z-10 border-b border-primary/10 bg-primary/5 px-4 py-4">
+      <section ref={statsRef as React.RefObject<HTMLElement>} className="relative z-10 border-b border-primary/10 bg-primary/5 px-4 pb-4 pt-20">
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-wrap justify-center gap-8 md:gap-16">
             {[
@@ -635,7 +635,13 @@ const Index = () => {
                       <p className="text-xs uppercase tracking-[0.22em] text-primary/60 font-mono mb-2">{project.subtitle}</p>
                       <h3 className="text-xl font-semibold font-mono text-primary">{project.name}</h3>
                     </div>
-                    <a href={project.href} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/70 transition-colors shrink-0">
+                    <a
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Open ${project.name} repository`}
+                      className="text-primary hover:text-primary/70 transition-colors shrink-0"
+                    >
                       <ExternalLink size={18} />
                     </a>
                   </div>
@@ -882,6 +888,7 @@ const Index = () => {
                     </div>
                     <a
                       href={project.demoHref ?? project.codeHref}
+                      aria-label={`Open ${project.name} ${project.demoHref ? 'demo' : 'repository'}`}
                       {...(!project.demoHref ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                       className="text-primary hover:text-primary/70 transition-colors shrink-0"
                     >
