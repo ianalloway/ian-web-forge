@@ -32,27 +32,27 @@ import { applyTheme, getStoredTheme, type SiteTheme } from '@/lib/theme';
 const ETH_DONATION_ADDRESS = '0x6f278ce76ba5ed31fd9be646d074863e126836e9';
 
 const outcomes = [
-  'Built ML/data products used by real users',
-  'Shipped evaluation dashboards and analytics tooling',
-  'Production Python, FastAPI, SQL, and TypeScript',
-  'Open-source work across ML, reporting, and decision-support systems',
+  'Built applied AI and data products used by real users',
+  'Shipped evaluation tooling, dashboards, and developer utilities',
+  'Production Python, FastAPI, SQL, TypeScript, and R',
+  'Public work across AI evals, agent workflows, and decision-support systems',
 ];
 
 const proofCards = [
   {
-    title: 'Applied ML products, not notebook leftovers',
+    title: 'Applied AI products, not notebook leftovers',
     stack: 'Python, XGBoost, React, FastAPI',
     impact:
       'I build model-backed products people can actually open, evaluate, and use instead of one-off experiments that die in a folder.',
   },
   {
-    title: 'Evaluation-first analytics',
-    stack: 'FastAPI, Chart.js, reporting pipelines',
+    title: 'Evaluation-first software',
+    stack: 'Python, testing, reporting pipelines',
     impact:
-      'My best work focuses on calibration, CLV, regression gates, and model honesty so decision-makers can trust what they are seeing.',
+      'My best work focuses on audits, calibration, regression gates, and model honesty so decision-makers can trust what they are seeing.',
   },
   {
-    title: 'Developer tooling with clear business value',
+    title: 'Developer tooling with product taste',
     stack: 'Python, Bash, GitHub Actions, CLI UX',
     impact:
       'I like turning messy operational pain into usable tools, from repo quality scoring to safe cleanup scripts and reusable metrics workflows.',
@@ -111,8 +111,8 @@ const featuredProjects = [
 ];
 
 const whyHireMe = [
-  'I build applied ML systems end-to-end, from data prep and evaluation to APIs, dashboards, and delivery.',
-  'I care about evaluation, not just model accuracy, so the work holds up when someone depends on it.',
+  'I build applied AI systems end-to-end, from data prep and evaluation to APIs, dashboards, and delivery.',
+  'I care about logic and evaluation, not just model accuracy, so the work holds up when someone depends on it.',
   'I turn analytics into usable products with clear UX, practical reporting, and developer-friendly documentation.',
   'I communicate technical work clearly enough for engineers, recruiters, and stakeholders to stay aligned.',
 ];
@@ -120,11 +120,11 @@ const whyHireMe = [
 const credibilitySignals = [
   {
     label: 'Education',
-    value: 'B.S. Information Science from USF; M.S. Artificial Intelligence in progress at USF',
+    value: 'B.S. Information Science from USF, completed May 2026; M.S. Artificial Intelligence at USF in progress',
   },
   {
     label: 'Open source',
-    value: 'Public work across evaluation dashboards, ML utilities, repo tooling, and developer automation',
+    value: 'Public work across AI evals, agent workflows, repo tooling, and developer automation',
   },
   {
     label: 'Selected certifications',
@@ -132,7 +132,7 @@ const credibilitySignals = [
   },
   {
     label: 'Flagship case study',
-    value: 'Sports ML evaluation write-up with calibration, rolling accuracy, and CLV framing',
+    value: 'Public proof across AI evaluation, software quality, and analytics case-study work',
   },
 ];
 
@@ -176,9 +176,9 @@ const selectedProjects = [
     demoHref: '/snake',
   },
   {
-    name: 'nba-ratings',
-    description: 'Reusable Elo, logistic win probability, and Kelly helpers packaged for repeatable modeling work.',
-    codeHref: 'https://github.com/ianalloway/nba-ratings',
+    name: 'juryrig',
+    description: 'Zero-dependency Python toolkit for auditing LLM-as-judge pipelines across bias, consistency, injection risk, and calibration.',
+    codeHref: 'https://github.com/ianalloway/juryrig',
   },
   {
     name: 'kelly-js',
@@ -186,14 +186,86 @@ const selectedProjects = [
     codeHref: 'https://github.com/ianalloway/kelly-js',
   },
   {
+    name: 'repo-health',
+    description: 'Repository-quality CLI for README quality, CI, licensing, staleness, and maintenance signals.',
+    codeHref: 'https://github.com/ianalloway/repo-health',
+  },
+  {
     name: 'macos-disk-cleanup',
     description: 'A careful Bash tool for reclaiming disk space without the usual “hope this does not break anything” energy.',
     codeHref: 'https://github.com/ianalloway/macos-disk-cleanup',
   },
+];
+
+type RecentActivityItem = {
+  repo: string;
+  title: string;
+  detail: string;
+  href: string;
+  date: string;
+  signal: string;
+};
+
+type GitHubPublicEvent = {
+  type: string;
+  repo?: {
+    name?: string;
+  };
+  created_at?: string;
+  payload?: {
+    action?: string;
+    head?: string;
+    ref?: string;
+    ref_type?: string;
+    issue?: {
+      html_url?: string;
+      title?: string;
+    };
+    pull_request?: {
+      html_url?: string;
+      merged?: boolean;
+      title?: string;
+    };
+  };
+};
+
+// RECENT_ACTIVITY
+const recentActivityFallback: RecentActivityItem[] = [
   {
-    name: 'openclaw-skills',
-    description: 'Published skills and workflows around sports odds, reporting, developer tooling, and agent productivity.',
-    codeHref: 'https://github.com/ianalloway/openclaw-skills',
+    repo: 'juryrig',
+    title: 'LLM judge audit toolkit launched',
+    detail:
+      'Published a zero-dependency Python toolkit for auditing LLM-as-judge pipelines across bias, injection susceptibility, consistency, panels, and calibration.',
+    href: 'https://github.com/ianalloway/juryrig',
+    date: 'Latest GitHub feature',
+    signal: 'AI evals',
+  },
+  {
+    repo: 'ian-web-forge',
+    title: 'Portfolio updates shipped',
+    detail:
+      'Pushed today’s portfolio work: live-demo routing, education status sync, CI cleanup, and a cleaner terminal-style 404.',
+    href: 'https://github.com/ianalloway/ian-web-forge/commits/main',
+    date: 'Jun 11, 2026',
+    signal: 'portfolio source',
+  },
+  {
+    repo: 'sports-betting-ml',
+    title: 'ML pipeline quality fix merged',
+    detail:
+      'Merged the Docker/training workflow fix and closed the pipeline-quality issue around leakage, feature consolidation, and CI training.',
+    href: 'https://github.com/ianalloway/sports-betting-ml/commit/cfafca83288c587c3f8254c9a99d61a7a19c076a',
+    date: 'Jun 11, 2026',
+    signal: 'merged PR #30',
+  },
+  {
+    repo: 'Resume',
+    title: 'Public materials stayed aligned',
+    detail:
+      'Updated the resume repo’s education status so GitHub, the portfolio, and hiring materials keep telling the same current story.',
+    href: 'https://github.com/ianalloway/Resume/commit/1e1c984c0f22ae1e1646f2f6ac090faa17ec3c81',
+    date: 'Jun 11, 2026',
+    signal: 'resume sync',
   },
 ];
 
@@ -350,9 +422,143 @@ const quote = {
   role: 'Lead Engineer, fintech startup',
 };
 
+const formatActivityDate = (value?: string) => {
+  if (!value) return 'Latest';
+
+  const parsed = new Date(value);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return 'Latest';
+  }
+
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  }).format(parsed);
+};
+
+const getRepoLabel = (repoName: string) => repoName.replace('ianalloway/', '');
+
+const getBranchLabel = (ref?: string) => ref?.replace('refs/heads/', '') ?? 'main';
+
+const eventToActivity = (event: GitHubPublicEvent): RecentActivityItem | null => {
+  const repoName = event.repo?.name;
+
+  if (!repoName) {
+    return null;
+  }
+
+  const repoLabel = getRepoLabel(repoName);
+  const repoHref = `https://github.com/${repoName}`;
+  const date = formatActivityDate(event.created_at);
+
+  if (event.type === 'PushEvent') {
+    const branch = getBranchLabel(event.payload?.ref);
+    const href = event.payload?.head ? `${repoHref}/commit/${event.payload.head}` : repoHref;
+
+    if (repoLabel === 'ian-web-forge') {
+      return {
+        repo: repoLabel,
+        title: 'Portfolio updates shipped',
+        detail: `Pushed ${branch} updates to the portfolio source behind ianalloway.xyz.`,
+        href,
+        date,
+        signal: `push:${branch}`,
+      };
+    }
+
+    if (repoLabel === 'Resume') {
+      return {
+        repo: repoLabel,
+        title: 'Public materials stayed aligned',
+        detail: `Pushed ${branch} resume updates so the public hiring story stays current.`,
+        href,
+        date,
+        signal: `push:${branch}`,
+      };
+    }
+
+    return {
+      repo: repoLabel,
+      title: 'Code pushed',
+      detail: `Pushed ${branch} updates to ${repoLabel}.`,
+      href,
+      date,
+      signal: `push:${branch}`,
+    };
+  }
+
+  if (
+    event.type === 'PullRequestEvent' &&
+    (event.payload?.action === 'closed' || event.payload?.action === 'merged') &&
+    event.payload.pull_request?.merged
+  ) {
+    return {
+      repo: repoLabel,
+      title: 'Pull request merged',
+      detail: event.payload.pull_request.title
+        ? `Merged: ${event.payload.pull_request.title}`
+        : `Merged a pull request in ${repoLabel}.`,
+      href: event.payload.pull_request.html_url ?? repoHref,
+      date,
+      signal: 'merged PR',
+    };
+  }
+
+  if (event.type === 'IssuesEvent' && event.payload?.action === 'closed') {
+    return {
+      repo: repoLabel,
+      title: 'Issue closed',
+      detail: event.payload.issue?.title ? `Closed: ${event.payload.issue.title}` : `Closed an issue in ${repoLabel}.`,
+      href: event.payload.issue?.html_url ?? repoHref,
+      date,
+      signal: 'issue closed',
+    };
+  }
+
+  if (event.type === 'CreateEvent' && event.payload?.ref_type === 'branch') {
+    return {
+      repo: repoLabel,
+      title: 'Branch opened',
+      detail: `Opened ${event.payload.ref} for new ${repoLabel} work.`,
+      href: repoHref,
+      date,
+      signal: 'new branch',
+    };
+  }
+
+  return null;
+};
+
+const buildRecentActivity = (events: GitHubPublicEvent[]) => {
+  const activity: RecentActivityItem[] = [recentActivityFallback[0]];
+  const seenRepos = new Set<string>(activity.map((item) => item.repo));
+
+  for (const event of events) {
+    const item = eventToActivity(event);
+
+    if (!item || seenRepos.has(item.repo)) {
+      continue;
+    }
+
+    seenRepos.add(item.repo);
+    activity.push(item);
+
+    if (activity.length === 4) {
+      break;
+    }
+  }
+
+  return activity.length ? activity : recentActivityFallback;
+};
+
 const Index = () => {
   const [typedText, setTypedText] = useState('');
   const [theme, setTheme] = useState<SiteTheme>(() => getStoredTheme());
+  const [recentActivity, setRecentActivity] = useState<RecentActivityItem[]>(recentActivityFallback);
+  const [activityStatus, setActivityStatus] = useState('Verified Jun 11, 2026');
   const { toast } = useToast();
   const fullText = 'IAN ALLOWAY';
 
@@ -377,6 +583,42 @@ const Index = () => {
     }, 90);
 
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    let isMounted = true;
+
+    fetch('https://api.github.com/users/ianalloway/events/public', {
+      headers: {
+        Accept: 'application/vnd.github+json',
+      },
+      signal: controller.signal,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Unable to load GitHub activity');
+        }
+
+        return response.json() as Promise<GitHubPublicEvent[]>;
+      })
+      .then((events) => {
+        if (isMounted) {
+          setRecentActivity(buildRecentActivity(events));
+          setActivityStatus('Live public activity');
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setRecentActivity(recentActivityFallback);
+          setActivityStatus('Verified Jun 11, 2026');
+        }
+      });
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
   }, []);
 
   const copyEthAddress = async () => {
@@ -410,9 +652,10 @@ const Index = () => {
             <Terminal size={18} />
             IAN.SYS
           </a>
-          <div className="hidden md:flex items-center gap-5 text-sm font-mono">
+          <div className="hidden lg:flex items-center gap-5 text-sm font-mono">
             <a href="#featured" className="text-primary hover:text-primary/70 transition-colors">[WORK]</a>
             <a href="#case-study" className="text-primary hover:text-primary/70 transition-colors">[CASE_STUDY]</a>
+            <a href="#recent-activity" className="text-primary hover:text-primary/70 transition-colors">[ACTIVITY]</a>
             <a href="#writing" className="text-primary hover:text-primary/70 transition-colors">[WRITING]</a>
             <a href="#why-hire-me" className="text-primary hover:text-primary/70 transition-colors">[WHY_ME]</a>
             <a href="#contact" className="text-primary hover:text-primary/70 transition-colors">[CONTACT]</a>
@@ -433,17 +676,17 @@ const Index = () => {
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
           <div>
             <Badge className="mb-5 bg-primary/10 text-primary border-primary/30 font-mono hover:bg-primary/10">
-              OPEN TO WORK • ML Engineer / Data Scientist
+              OPEN TO WORK • Applied AI / Data Scientist / ML Engineer
             </Badge>
             <h1 className="mb-4 text-5xl md:text-7xl font-bold font-mono matrix-text text-primary leading-[0.95]">
               {typedText}
               <span className="animate-terminal-blink">_</span>
             </h1>
             <p className="max-w-3xl text-xl md:text-2xl font-mono text-foreground/90 mb-4">
-              ML Engineer / Data Scientist building evaluation-first analytics and decision-support products.
+              Applied AI Engineer / Data Scientist building evaluation-driven software, agent-developed apps, and data products.
             </p>
             <p className="max-w-2xl text-sm md:text-base text-muted-foreground font-mono leading-relaxed mb-8">
-              I build applied ML systems that survive contact with real users: APIs, dashboards, reporting layers, and developer tools that make model behavior easier to trust. Basically, I like useful models and I maintain a healthy suspicion of dashboards that look too good.
+              I build applied AI systems that survive contact with real users: APIs, dashboards, reporting layers, agent workflows, and developer tools that make model behavior easier to trust. I like useful models, clear logic, and software that still looks good after someone inspects it closely.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-8">
@@ -483,10 +726,10 @@ const Index = () => {
               <Brain size={26} className="text-primary/70" />
             </div>
             <div className="space-y-4 font-mono text-sm text-muted-foreground">
-              <p>B.S. Information Science from USF.</p>
-              <p>M.S. Artificial Intelligence in progress at USF.</p>
-              <p>Strongest public proof: sports analytics, ML evaluation, reporting, and developer tooling.</p>
-              <p>Best fit roles: ML Engineer, Applied AI Engineer, Data Scientist, Analytics Engineer.</p>
+                <p>B.S. Information Science from USF, completed May 2026.</p>
+                <p>M.S. Artificial Intelligence at USF, in progress.</p>
+                <p>Strongest public proof: AI evaluation, product-minded analytics, agent workflows, and developer tooling.</p>
+                <p>Best fit roles: Applied AI Engineer, ML Engineer, Data Scientist, Analytics Engineer.</p>
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
               <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-mono text-primary hover:text-primary/70 transition-colors">
@@ -780,11 +1023,11 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="relative z-10 px-4 py-16 bg-primary/5">
-        <div className="mx-auto max-w-6xl">
-          <div className="max-w-3xl mb-8">
-            <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-3">More Good Proof</p>
-            <h2 className="text-3xl md:text-4xl font-semibold font-mono text-primary mb-4">A few more repos worth clicking</h2>
+        <section className="relative z-10 px-4 py-16 bg-primary/5">
+          <div className="mx-auto max-w-6xl">
+            <div className="max-w-3xl mb-8">
+              <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-3">More Good Proof</p>
+              <h2 className="text-3xl md:text-4xl font-semibold font-mono text-primary mb-4">A few more repos worth clicking</h2>
             <p className="text-sm md:text-base font-mono text-muted-foreground leading-relaxed">
               These support the same hiring story without diluting it: reusable modeling utilities, practical tooling, and OSS work that looks like something a team could actually adopt.
             </p>
@@ -823,12 +1066,61 @@ const Index = () => {
                 </CardContent>
               </Card>
             ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="contact" className="relative z-10 px-4 py-16">
-        <div className="mx-auto max-w-5xl rounded-[28px] border border-primary/20 bg-card/80 p-8 md:p-10 backdrop-blur-sm">
+        <section id="recent-activity" className="relative z-10 px-4 py-16">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div className="max-w-3xl">
+                <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-3">// RECENT_ACTIVITY</p>
+                <h2 className="text-3xl md:text-4xl font-semibold font-mono text-primary mb-4">Latest on GitHub</h2>
+                <p className="text-sm md:text-base font-mono text-muted-foreground leading-relaxed">
+                  A current snapshot of the public work trail: portfolio source, model pipeline quality, and the hiring materials that keep the whole story synchronized.
+                </p>
+              </div>
+              <a
+                href="https://github.com/ianalloway"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-mono text-primary hover:text-primary/70 transition-colors"
+              >
+                <Github size={16} /> View GitHub
+              </a>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              {recentActivity.map((item) => (
+                <Card key={`${item.repo}-${item.title}`} className="terminal-border border-primary/20 bg-card/80 backdrop-blur-sm">
+                  <CardContent className="flex h-full flex-col p-5">
+                    <div className="mb-4 flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.2em] text-primary/60 font-mono mb-2">{item.signal}</p>
+                        <h3 className="text-lg font-semibold font-mono text-primary leading-snug">{item.title}</h3>
+                      </div>
+                      <a href={item.href} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/70 transition-colors shrink-0">
+                        <ExternalLink size={18} />
+                      </a>
+                    </div>
+                    <p className="text-sm font-mono text-muted-foreground leading-relaxed">{item.detail}</p>
+                    <div className="mt-auto flex items-center justify-between gap-3 pt-6 text-xs font-mono text-primary/70">
+                      <span className="min-w-0 truncate">{item.repo}</span>
+                      <span className="shrink-0">{item.date}</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <p className="mt-4 text-xs font-mono text-muted-foreground">
+              {activityStatus}
+            </p>
+          </div>
+        </section>
+
+        <section id="contact" className="relative z-10 px-4 py-16">
+          <div className="mx-auto max-w-5xl rounded-[28px] border border-primary/20 bg-card/80 p-8 md:p-10 backdrop-blur-sm">
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
               <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-3">Contact</p>

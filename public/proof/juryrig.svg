@@ -1,0 +1,18 @@
+<svg width="1280" height="800" viewBox="0 0 1280 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="800" fill="#081018"/>
+  <rect x="72" y="72" width="1136" height="656" rx="28" fill="#0E1724" stroke="#1EE785" stroke-width="2"/>
+  <rect x="116" y="126" width="1048" height="548" rx="20" fill="#09121D" stroke="#1EE785" stroke-opacity="0.25"/>
+  <circle cx="154" cy="154" r="10" fill="#1EE785"/>
+  <circle cx="186" cy="154" r="10" fill="#14B8A6"/>
+  <circle cx="218" cy="154" r="10" fill="#60A5FA"/>
+  <text x="148" y="236" fill="#F5F7FB" font-family="Menlo, Monaco, Consolas, monospace" font-size="74" font-weight="700">juryrig</text>
+  <text x="150" y="292" fill="#8CC7FF" font-family="Menlo, Monaco, Consolas, monospace" font-size="28">Audit LLM-as-judge pipelines before trusting the score.</text>
+  <rect x="150" y="350" width="322" height="86" rx="18" fill="#112133" stroke="#1EE785" stroke-opacity="0.35"/>
+  <text x="184" y="402" fill="#1EE785" font-family="Menlo, Monaco, Consolas, monospace" font-size="30">position_bias()</text>
+  <rect x="496" y="350" width="322" height="86" rx="18" fill="#112133" stroke="#60A5FA" stroke-opacity="0.35"/>
+  <text x="540" y="402" fill="#8CC7FF" font-family="Menlo, Monaco, Consolas, monospace" font-size="30">injection_test()</text>
+  <rect x="842" y="350" width="272" height="86" rx="18" fill="#112133" stroke="#14B8A6" stroke-opacity="0.35"/>
+  <text x="888" y="402" fill="#67E8F9" font-family="Menlo, Monaco, Consolas, monospace" font-size="30">calibrate()</text>
+  <rect x="150" y="500" width="964" height="112" rx="18" fill="#0C1622" stroke="#1EE785" stroke-opacity="0.22"/>
+  <text x="184" y="560" fill="#D7E5F5" font-family="Menlo, Monaco, Consolas, monospace" font-size="26">Zero-dependency Python toolkit for bias audits, consistency checks, judge panels, and calibration.</text>
+</svg>

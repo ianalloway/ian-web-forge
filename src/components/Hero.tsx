@@ -17,15 +17,15 @@ const Hero = () => {
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground mb-4 max-w-3xl mx-auto font-mono">
-            ML Engineer | Data Scientist | AI Builder
+            Applied AI Engineer | Data Scientist | Agent App Builder
           </p>
           <p className="text-muted-foreground mb-4 font-mono">
-            B.S. Information Science @ USF | M.S. AI in progress @ USF | Founder @ Alloway LLC
+            B.S. Information Science @ USF, completed May 2026 | M.S. AI in progress @ USF | Founder @ Alloway LLC
           </p>
 
           <div className="inline-block px-4 py-2 mb-8 border border-green-400/50 rounded-lg bg-green-400/10">
             <span className="text-green-400 font-mono text-sm font-bold">OPEN TO WORK</span>
-            <span className="text-muted-foreground font-mono text-sm"> - Data Scientist / ML Engineer roles</span>
+            <span className="text-muted-foreground font-mono text-sm"> - Applied AI / Data Scientist / AI Engineer roles</span>
           </div>
           
           <div className="flex flex-wrap justify-center gap-3 mb-8">
@@ -55,7 +55,7 @@ const Hero = () => {
               </a>
             </Button>
             <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
-              <a href="/Ian_Alloway_Resume.pdf" download>
+              <a href="/Ian_Alloway_Resume_CV.pdf" download>
                 <Download className="mr-2" size={16} /> Resume
               </a>
             </Button>

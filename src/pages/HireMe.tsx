@@ -23,10 +23,10 @@ import {
 import MatrixRain from '@/components/MatrixRain';
 
 const fitPoints = [
-  'ML Engineer roles where evaluation quality matters as much as model lift.',
-  'Applied AI teams that need APIs, dashboards, and product-facing delivery around the model.',
-  'Data science or analytics engineering roles with forecasting, experimentation, risk, or decision-support work.',
-  'Teams that want someone who can ship clean public proof instead of just talking about what they could build.',
+  'Applied AI roles where software judgment matters as much as model quality.',
+  'Agent-product teams that need clean logic, evaluation discipline, and product-facing implementation.',
+  'Data science or analytics engineering roles with forecasting, experimentation, audits, or decision-support work.',
+  'Teams that want polished public proof instead of vague claims about what could be built.',
 ];
 
 const outcomes = [
@@ -38,12 +38,28 @@ const outcomes = [
 
 const featuredWork = [
   {
+    name: 'juryrig',
+    image: '/proof/juryrig.svg',
+    href: 'https://github.com/ianalloway/juryrig',
+    stack: 'Python, AI evaluation, testing',
+    whyItMatters:
+      'Shows how I think about applied AI quality: audit the judge, pressure-test the logic, and ship something engineers can inspect quickly.',
+  },
+  {
     name: 'AI Advantage Sports',
     image: '/proof/ai-advantage-screenshot.png',
     href: 'https://github.com/ianalloway/ai-advantage',
     stack: 'Python, React, XGBoost, FastAPI',
     whyItMatters:
       'Shows product thinking and ML delivery together: model-backed recommendations, real UI, and something users can actually evaluate.',
+  },
+  {
+    name: 'Repo Health',
+    image: '/proof/repo-health.svg',
+    href: 'https://github.com/ianalloway/repo-health',
+    stack: 'Python, CLI, GitHub APIs',
+    whyItMatters:
+      'Useful proof that I can package software judgment into tooling, not just models, with a clear interface and maintenance-focused logic.',
   },
   {
     name: 'NBA CLV Dashboard',
@@ -53,29 +69,13 @@ const featuredWork = [
     whyItMatters:
       'A concrete example of how I build evaluation-first systems instead of hiding behind headline accuracy.',
   },
-  {
-    name: 'Sports Betting ML',
-    image: '/proof/sports-betting-ml-demo.gif',
-    href: 'https://github.com/ianalloway/sports-betting-ml',
-    stack: 'Python, FastAPI, MLOps, Hugging Face',
-    whyItMatters:
-      'Demonstrates full workflow ownership from feature engineering to deployment and public demo packaging.',
-  },
-  {
-    name: 'Repo Health',
-    image: '/proof/repo-health.svg',
-    href: 'https://github.com/ianalloway/repo-health',
-    stack: 'Python, CLI, GitHub APIs',
-    whyItMatters:
-      'Useful evidence that I can build practical tools with strong developer UX outside of ML too.',
-  },
 ];
 
 const workStyle = [
   'I build the layer around the model, not just the model itself.',
-  'I favor evaluation honesty over inflated metrics and glossy dashboards.',
+  'I care about logic, evaluation honesty, and product taste more than inflated metrics.',
   'I document and package work so another engineer can actually use it.',
-  'I am comfortable turning vague ideas into something stakeholders can click, inspect, and discuss.',
+  'I turn vague ideas into software people can click, inspect, and critique quickly.',
 ];
 
 const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/eVqeVffca12t5tWfZofAc00';
@@ -90,7 +90,7 @@ const education = [
   {
     title: 'B.S. Information Science',
     sub: 'University of South Florida',
-    meta: 'Completed',
+    meta: 'Completed May 2026',
   },
   {
     title: 'M.S. Artificial Intelligence',
@@ -140,16 +140,16 @@ const HireMe = () => {
         <div className="max-w-6xl mx-auto grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div className={`transition-[opacity,transform] duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             <Badge className="mb-5 bg-green-500/10 text-green-300 border-green-500/30 hover:bg-green-500/10">
-              OPEN TO WORK • ML Engineer / Data Scientist
+              OPEN TO WORK • Applied AI / Data Scientist / ML Engineer
             </Badge>
             <h1 className="text-5xl md:text-7xl font-bold leading-[0.95] tracking-tight text-white mb-5">
-              Hire me for the part after the model too.
+              Hire me for the software judgment around the model too.
             </h1>
             <p className="text-lg md:text-xl text-green-400/75 max-w-3xl mb-5">
-              I build evaluation-first analytics and decision-support products: models, APIs, dashboards, reporting, and the surrounding product layer that makes the work usable.
+              I build evaluation-driven software, agent-developed apps, and decision-support products: models, APIs, dashboards, reporting, and the product layer that makes the work usable.
             </p>
             <p className="text-sm md:text-base text-green-400/65 max-w-2xl leading-relaxed mb-8">
-              Best fit: ML engineering, applied AI, analytics engineering, and data science roles where someone needs more than a notebook and a nice chart. That is probably also why my favorite project category is “things that keep dashboards honest.”
+              Best fit: applied AI, ML engineering, analytics engineering, and data science roles where someone needs more than a notebook and a nice chart. I care a lot about logic, taste, and software that stands up to a closer look.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button className="bg-green-500 text-black hover:bg-green-400 font-mono" asChild>
@@ -175,8 +175,8 @@ const HireMe = () => {
               <p className="text-xs uppercase tracking-[0.2em] text-green-400/65 mb-4">The Simple Pitch</p>
               <div className="space-y-4 text-sm text-green-400/75 leading-relaxed">
                 <p>I build applied ML systems that are easier to trust because the evaluation layer is part of the work, not an afterthought.</p>
-                <p>My public proof is strongest in sports analytics, forecasting-style tooling, and developer utilities, but the underlying skill transfers well to risk, experimentation, fraud, and product analytics.</p>
-                <p>B.S. Information Science completed; currently pursuing an M.S. in Artificial Intelligence at USF.</p>
+                <p>My public proof is strongest in AI evaluation, developer tooling, product-minded analytics, and agent-workflow projects, with sports analytics as one visible proving ground.</p>
+                <p>B.S. Information Science completed May 2026; M.S. Artificial Intelligence at USF in progress.</p>
               </div>
               <div className="mt-6 flex flex-wrap gap-3 text-sm">
                 <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">

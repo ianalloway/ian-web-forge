@@ -5,23 +5,23 @@ const About = () => {
   const features = [
     {
       icon: Brain,
-      title: "Machine Learning",
-      description: "Production ML systems with XGBoost, PyTorch, TensorFlow. From training to deployment."
+      title: "AI Evaluation",
+      description: "LLM judge audits, calibration, adversarial checks, and reporting that makes model behavior easier to trust."
     },
     {
       icon: Database,
-      title: "Data Engineering",
-      description: "ETL pipelines, multi-chain blockchain data, SQL optimization, and real-time analytics."
+      title: "Data Systems",
+      description: "Data auditing, ETL pipelines, SQL analysis, predictive analytics, and dashboards that survive real use."
     },
     {
       icon: Bot,
-      title: "AI Systems",
-      description: "Computer vision (YOLOv8), NLP, autonomous navigation, and AI agent development."
+      title: "Agent Apps",
+      description: "Agent-developed tools and workflows with clean logic, practical automation, and interfaces people can actually use."
     },
     {
       icon: BarChart3,
-      title: "Analytics",
-      description: "Tableau, Power BI dashboards. Turning complex datasets into decisions that move the needle."
+      title: "Product Delivery",
+      description: "From rough idea to polished demo, docs, public proof, and software that feels intentionally built."
     }
   ];
 
@@ -31,7 +31,7 @@ const About = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-foreground mb-4">About</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            ML Engineer with a B.S. in Information Science from USF, currently pursuing an M.S. in Artificial Intelligence at USF. Building production ML systems and shipping open source work people can actually use.
+            Applied AI engineer with a B.S. in Information Science from USF, completed May 2026, and an M.S. in Artificial Intelligence at USF in progress. Building evaluation-driven software, agent apps, and analytics products that hold up under scrutiny.
           </p>
         </div>
 
@@ -52,8 +52,8 @@ const About = () => {
         <div className="text-center">
           <div className="border border-border p-6 rounded-lg bg-card">
             <p className="text-muted-foreground max-w-4xl mx-auto text-lg leading-relaxed">
-                Active open source contributor to OpenClaw (194k+ stars). Published 9 AI agent skills on ClawHub.
-                Founder of Alloway LLC delivering data-driven solutions across sports analytics, fintech, and cybersecurity.
+                Contributor to OpenClaw and builder of public AI evaluation, developer tooling, and agent-workflow projects.
+                Founder of Alloway LLC delivering data-driven solutions across analytics, fintech, and operational workflows.
                 Proven track record of reducing fraud incidents by 30% and improving client operational efficiency by 40%.
             </p>
           </div>
