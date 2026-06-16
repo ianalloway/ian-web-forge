@@ -163,6 +163,11 @@ const HireMe = () => {
                 </a>
               </Button>
               <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
+                <a href="/Ian_Alloway_Cover_Letter.pdf" download>
+                  <FileText className="mr-2" size={16} /> Cover Letter
+                </a>
+              </Button>
+              <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
                 <a href="/papers/sports-ml-evaluation-case-study.html" target="_blank" rel="noopener noreferrer">
                   <FileText className="mr-2" size={16} /> View Case Study
                 </a>
@@ -176,7 +181,7 @@ const HireMe = () => {
               <div className="space-y-4 text-sm text-green-400/75 leading-relaxed">
                 <p>I build applied ML systems that are easier to trust because the evaluation layer is part of the work, not an afterthought.</p>
                 <p>My public proof is strongest in sports analytics, forecasting-style tooling, and developer utilities, but the underlying skill transfers well to risk, experimentation, fraud, and product analytics.</p>
-                <p>B.S. Information Science completed; currently pursuing an M.S. in Artificial Intelligence at USF.</p>
+                <p>B.S. Information Science, USF (May 2026, Magna Cum Laude, 3.5 GPA); M.S. in Artificial Intelligence at USF (August 2026). Currently Technical Staff at OpenAI evaluating agent-built software.</p>
               </div>
               <div className="mt-6 flex flex-wrap gap-3 text-sm">
                 <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">

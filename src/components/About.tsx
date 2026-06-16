@@ -33,14 +33,13 @@ const FEATURES = [
 ];
 
 const TIMELINE = [
-  { year: '2018', label: 'Sales & Purchasing Manager — IT Parts and Spares Ltd.', type: 'work' },
-  { year: '2020', label: 'Data Auditor / AI Engineer — Omniichain blockchain analytics', type: 'work' },
-  { year: '2022', label: 'Started B.S. Information Science @ USF', type: 'edu' },
-  { year: '2023', label: 'Founded Alloway LLC · First production ML system shipped', type: 'launch' },
-  { year: '2024', label: 'Launched AI Advantage Sports · 68.3% model accuracy', type: 'launch' },
-  { year: '2025', label: 'Published 9 OSS skills on ClawHub · nba-edge on PyPI', type: 'oss' },
-  { year: 'Completed', label: 'B.S. Information Science @ USF', type: 'edu' },
-  { year: 'In progress', label: 'M.S. Artificial Intelligence @ USF', type: 'edu' },
+  { year: '2022', label: 'Hillsborough Community College', type: 'edu' },
+  { year: '2023', label: 'Founded Alloway LLC · production ML and analytics consulting', type: 'launch' },
+  { year: '2024', label: 'Senior Auditor — Omniichain · WVU data science contractor', type: 'work' },
+  { year: '2024', label: 'B.S. Information Science @ USF', type: 'edu' },
+  { year: '2025', label: 'Shipped AI Advantage Sports, juryrig, and repo-health', type: 'launch' },
+  { year: '2026', label: 'Technical Staff @ OpenAI · B.S. completed (Magna Cum Laude, 3.5 GPA)', type: 'work' },
+  { year: '2026', label: 'M.S. Artificial Intelligence @ USF', type: 'edu' },
 ];
 
 const TYPE_COLORS: Record<string, string> = {
