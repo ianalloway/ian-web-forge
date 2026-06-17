@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Terminal, ExternalLink, Github, Calculator, LineChart, Cpu, Trophy } from 'lucide-react';
+import { Terminal, ExternalLink, Github, Calculator, LineChart, Cpu, Trophy, Coins } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 import { kelly, convertOdds, arbitrage } from '@ianalloway/kelly-js';
 
@@ -236,6 +236,9 @@ const Demos = () => {
             <a href="#kelly" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               kelly-js
             </a>
+            <a href="#solvent" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
+              solvent
+            </a>
             <a href="#nba-edge" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               nba-edge
             </a>
@@ -278,6 +281,43 @@ const Demos = () => {
         >
           <KellyCalculator />
           <ArbChecker />
+        </SectionShell>
+
+        <SectionShell
+          id="solvent"
+          icon={Coins}
+          title="solvent-agent — self-funding business agent"
+          repo="ianalloway/solvent-agent"
+          blurb="Autonomous AI analyst agent that earns via Stripe, spends own revenue to provision compute under policy guardrails, and books profits to SQLite."
+        >
+          <div className="space-y-4">
+            <div className="relative rounded border border-primary/20 bg-background/40 overflow-hidden">
+              <video
+                src="/demos/solvent/solvent_demo.mp4"
+                controls
+                autoPlay
+                muted
+                loop
+                className="w-full rounded"
+                style={{ maxHeight: '480px' }}
+              />
+            </div>
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-2">
+              <p className="text-sm text-muted-foreground font-mono">
+                Watch the agent handle inbound orders, price jobs, collect money, execute reasoning, screen spends, and track books dynamically.
+              </p>
+              <div className="flex gap-2 shrink-0">
+                <a
+                  href="/demos/solvent/solvent_dashboard_actual.png"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded border border-primary/40 bg-background/50 px-3 py-1.5 font-mono text-xs text-primary hover:bg-primary/10"
+                >
+                  View Screenshot <ExternalLink size={12} />
+                </a>
+              </div>
+            </div>
+          </div>
         </SectionShell>
 
         <SectionShell
