@@ -19,7 +19,9 @@ type ResponseLike = {
 const MAX_BODY_BYTES = 10_000;
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 5;
+const MAX_RATE_LIMIT_BUCKETS = 1_000;
 const IDEMPOTENCY_WINDOW_MS = 24 * 60 * 60 * 1000;
+const MAX_SIGNUP_RESULTS = 1_000;
 const rateLimitBuckets = new Map<string, { count: number; resetAt: number }>();
 const signupResults = new Map<
   string,
@@ -97,10 +99,39 @@ function assertBodySize(req: RequestLike) {
   }
 }
 
+function isTrustedProxyHeaderSource() {
+  return Boolean(process.env.VERCEL || process.env.TRUST_PROXY_HEADERS === "true");
+}
+
+function normalizeClientKey(value: string | undefined) {
+  const key = value?.split(",")[0]?.trim();
+  return key && key.length <= 64 ? key : "unknown-ip";
+}
+
 function getClientKey(req: RequestLike) {
-  const forwardedFor = getHeader(req.headers, "x-forwarded-for") || "unknown-ip";
-  const ip = forwardedFor.split(",")[0]?.trim() || "unknown-ip";
-  return ip;
+  if (!isTrustedProxyHeaderSource()) {
+    return "unknown-ip";
+  }
+
+  return normalizeClientKey(getHeader(req.headers, "x-forwarded-for"));
+}
+
+function sweepExpiredEntries<T extends { resetAt: number }>(
+  entries: Map<string, T>,
+  now: number,
+) {
+  for (const [key, value] of entries) {
+    if (value.resetAt <= now) {
+      entries.delete(key);
+    }
+  }
+}
+
+function deleteOldestEntry<T>(entries: Map<string, T>) {
+  const oldestKey = entries.keys().next().value as string | undefined;
+  if (oldestKey) {
+    entries.delete(oldestKey);
+  }
 }
 
 function getIdempotencyKey(req: RequestLike, email: string) {
@@ -128,9 +159,15 @@ function cacheSignupResult(
   email: string,
   result: Awaited<ReturnType<typeof processSubscriberSignup>>,
 ) {
+  const now = Date.now();
+  sweepExpiredEntries(signupResults, now);
+  if (signupResults.size >= MAX_SIGNUP_RESULTS) {
+    deleteOldestEntry(signupResults);
+  }
+
   signupResults.set(getIdempotencyKey(req, email), {
     result,
-    resetAt: Date.now() + IDEMPOTENCY_WINDOW_MS,
+    resetAt: now + IDEMPOTENCY_WINDOW_MS,
   });
 }
 
@@ -140,6 +177,14 @@ function assertRateLimit(req: RequestLike) {
   const bucket = rateLimitBuckets.get(key);
 
   if (!bucket || bucket.resetAt <= now) {
+    if (!bucket) {
+      sweepExpiredEntries(rateLimitBuckets, now);
+    }
+
+    if (!bucket && rateLimitBuckets.size >= MAX_RATE_LIMIT_BUCKETS) {
+      throw new SubscriberValidationError("Too many signup attempts. Please try again later.");
+    }
+
     rateLimitBuckets.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
     return;
   }
@@ -162,8 +207,8 @@ export default async function handler(req: RequestLike, res: ResponseLike) {
   try {
     assertAllowedOrigin(req);
     assertBodySize(req);
-    assertRateLimit(req);
     const payload = parseSubscriberPayload(req.body, req.headers);
+    assertRateLimit(req);
     const cachedResult = getCachedSignupResult(req, payload.email);
     if (cachedResult) {
       res.status(200).json(cachedResult);
