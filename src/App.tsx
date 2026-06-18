@@ -114,6 +114,7 @@ const App = () => (
                       title="Ankle Surgery Recovery Tracker"
                       path="/recovery"
                       description="Track post-ankle surgery pain, incision notes, range-of-motion exercises, physical therapy goals, symptoms to discuss with a surgeon, and appointment questions."
+                      noIndex
                     />
                     <RecoveryTracker />
                   </>
