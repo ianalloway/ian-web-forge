@@ -24,10 +24,14 @@ export interface NewsletterResult {
 
 const NOTION_VERSION = "2022-06-28";
 const DEFAULT_SUBSTACK_URL = "https://allowayai.substack.com";
+const MAX_EMAIL_LENGTH = 254;
+const MAX_TEXT_LENGTH = 200;
+const MAX_URL_LENGTH = 2048;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function getHeader(headers: HeaderMap, name: string) {
-  const value = headers[name];
-  return Array.isArray(value) ? value[0] : value;
+  const directValue = headers[name] || headers[name.toLowerCase()];
+  return Array.isArray(directValue) ? directValue[0] : directValue;
 }
 
 function requireEnv(name: string) {
@@ -48,24 +52,57 @@ function escapeHtml(value: string) {
     .replaceAll("'", "&#39;");
 }
 
-function normalizeText(value?: string) {
-  return value?.trim() || undefined;
+function normalizeText(value: unknown, maxLength = MAX_TEXT_LENGTH) {
+  if (typeof value !== "string") {
+    return undefined;
+  }
+
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return undefined;
+  }
+
+  if (trimmed.length > maxLength) {
+    throw new SubscriberValidationError("Request fields are too long.");
+  }
+
+  return trimmed;
+}
+
+function normalizeUrl(value: unknown) {
+  const text = normalizeText(value, MAX_URL_LENGTH);
+  if (!text) {
+    return undefined;
+  }
+
+  try {
+    const url = new URL(text);
+    if (url.protocol !== "https:" && url.protocol !== "http:") {
+      throw new SubscriberValidationError("Invalid request URL.");
+    }
+  } catch {
+    throw new SubscriberValidationError("Invalid request URL.");
+  }
+
+  return text;
 }
 
 export function parseSubscriberPayload(body: unknown, headers: HeaderMap): SubscriberPayload {
-  let raw: SubscriberPayload;
+  let raw: Record<string, unknown>;
   if (typeof body === "string") {
     try {
-      raw = JSON.parse(body) as SubscriberPayload;
+      raw = JSON.parse(body) as Record<string, unknown>;
     } catch {
       throw new SubscriberValidationError("Invalid request body.");
     }
+  } else if (body && typeof body === "object" && !Array.isArray(body)) {
+    raw = body as Record<string, unknown>;
   } else {
-    raw = (body || {}) as SubscriberPayload;
+    raw = {};
   }
 
-  const email = raw.email?.trim().toLowerCase();
-  if (!email || !email.includes("@")) {
+  const email = normalizeText(raw.email, MAX_EMAIL_LENGTH)?.toLowerCase();
+  if (!email || !EMAIL_PATTERN.test(email)) {
     throw new SubscriberValidationError("Please enter a valid email address.");
   }
 
@@ -74,9 +111,9 @@ export function parseSubscriberPayload(body: unknown, headers: HeaderMap): Subsc
     name: normalizeText(raw.name),
     site: normalizeText(raw.site) || "unknown-site",
     source: normalizeText(raw.source) || "unknown-source",
-    pageUrl: normalizeText(raw.pageUrl),
-    referrer: normalizeText(raw.referrer),
-    userAgent: normalizeText(raw.userAgent) || getHeader(headers, "user-agent"),
+    pageUrl: normalizeUrl(raw.pageUrl),
+    referrer: normalizeUrl(raw.referrer),
+    userAgent: normalizeText(raw.userAgent, 500) || getHeader(headers, "user-agent"),
   };
 }
 
