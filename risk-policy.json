@@ -1,0 +1,36 @@
+{
+  "tiers": {
+    "high": [
+      "app/api/**",
+      "api/**",
+      "lib/tools/**",
+      "db/**",
+      "**/auth*",
+      "**/payment*",
+      "**/admin*"
+    ],
+    "medium": [
+      "app/components/**",
+      "src/components/**",
+      "lib/**",
+      "services/**"
+    ],
+    "low": ["**"]
+  },
+  "mergePolicy": {
+    "high": {
+      "requiredChecks": [
+        "risk-policy-gate",
+        "harness-smoke",
+        "Browser Evidence",
+        "CI Pipeline"
+      ]
+    },
+    "medium": {
+      "requiredChecks": ["risk-policy-gate", "CI Pipeline"]
+    },
+    "low": {
+      "requiredChecks": ["risk-policy-gate", "CI Pipeline"]
+    }
+  }
+}
