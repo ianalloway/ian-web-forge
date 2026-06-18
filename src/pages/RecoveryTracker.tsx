@@ -208,32 +208,81 @@ const getInitialLogForm = (): Omit<DailyLog, 'id'> => ({
   notes: '',
 });
 
-function readStoredArray<T>(key: string, fallback: T[]) {
-  if (typeof window === 'undefined') return fallback;
+function readStoredArray(key: string) {
+  if (typeof window === 'undefined') return null;
 
   try {
     const stored = window.localStorage.getItem(key);
-    return stored ? (JSON.parse(stored) as T[]) : fallback;
+    const parsed = stored ? JSON.parse(stored) : null;
+    return Array.isArray(parsed) ? parsed : null;
   } catch {
-    return fallback;
+    return null;
   }
 }
 
-const normalizeDailyLogs = (logs: DailyLog[]) =>
-  logs.filter((log) => isDateInput(log.date)).sort((a, b) => b.date.localeCompare(a.date));
+const clampNumber = (value: unknown, fallback: number, min: number, max: number) => {
+  if (typeof value !== 'number' || !Number.isFinite(value)) return fallback;
+  return Math.min(Math.max(value, min), max);
+};
 
-const normalizeTherapyGoals = (goals: TherapyGoal[]) =>
-  goals.map((goal) => ({ ...goal, week: normalizeGoalWeek(goal.week) }));
+const normalizeText = (value: unknown, fallback = '') =>
+  typeof value === 'string' ? value : fallback;
+
+const normalizeSymptoms = (value: unknown) =>
+  Array.isArray(value) ? value.filter((symptom): symptom is string => typeof symptom === 'string') : [];
+
+const normalizeDailyLogs = (logs: unknown[] | null) =>
+  (logs ?? DEFAULT_LOGS)
+    .filter((log): log is Record<string, unknown> => typeof log === 'object' && log !== null)
+    .map((log) => ({
+      id: normalizeText(log.id, createId()),
+      date: normalizeText(log.date),
+      pain: clampNumber(log.pain, 0, 0, 10),
+      incision: normalizeText(log.incision, 'Not recorded'),
+      dorsiflexion: clampNumber(log.dorsiflexion, 0, -90, 90),
+      plantarflexion: clampNumber(log.plantarflexion, 0, -90, 90),
+      exerciseMinutes: clampNumber(log.exerciseMinutes, 0, 0, 1440),
+      symptoms: normalizeSymptoms(log.symptoms),
+      notes: normalizeText(log.notes),
+    }))
+    .filter((log) => isDateInput(log.date))
+    .sort((a, b) => b.date.localeCompare(a.date));
+
+const GOAL_STATUSES: TherapyGoal['status'][] = ['planned', 'in-progress', 'done'];
+const QUESTION_PRIORITIES: CheckupQuestion['priority'][] = ['routine', 'important', 'urgent'];
+
+const normalizeTherapyGoals = (goals: unknown[] | null) =>
+  (goals ?? DEFAULT_GOALS)
+    .filter((goal): goal is Record<string, unknown> => typeof goal === 'object' && goal !== null)
+    .map((goal) => ({
+      id: normalizeText(goal.id, createId()),
+      week: normalizeGoalWeek(goal.week),
+      goal: normalizeText(goal.goal, 'Recovery goal'),
+      status: GOAL_STATUSES.includes(goal.status as TherapyGoal['status'])
+        ? (goal.status as TherapyGoal['status'])
+        : 'planned',
+    }));
+
+const normalizeCheckupQuestions = (questions: unknown[] | null) =>
+  (questions ?? DEFAULT_QUESTIONS)
+    .filter((question): question is Record<string, unknown> => typeof question === 'object' && question !== null)
+    .map((question) => ({
+      id: normalizeText(question.id, createId()),
+      question: normalizeText(question.question, 'Check-up question'),
+      priority: QUESTION_PRIORITIES.includes(question.priority as CheckupQuestion['priority'])
+        ? (question.priority as CheckupQuestion['priority'])
+        : 'routine',
+    }));
 
 const RecoveryTracker = () => {
   const [dailyLogs, setDailyLogs] = useState<DailyLog[]>(() =>
-    normalizeDailyLogs(readStoredArray(STORAGE_KEYS.logs, DEFAULT_LOGS)),
+    normalizeDailyLogs(readStoredArray(STORAGE_KEYS.logs)),
   );
   const [therapyGoals, setTherapyGoals] = useState<TherapyGoal[]>(() =>
-    normalizeTherapyGoals(readStoredArray(STORAGE_KEYS.goals, DEFAULT_GOALS)),
+    normalizeTherapyGoals(readStoredArray(STORAGE_KEYS.goals)),
   );
   const [questions, setQuestions] = useState<CheckupQuestion[]>(() =>
-    readStoredArray(STORAGE_KEYS.questions, DEFAULT_QUESTIONS),
+    normalizeCheckupQuestions(readStoredArray(STORAGE_KEYS.questions)),
   );
   const [dailyForm, setDailyForm] = useState<Omit<DailyLog, 'id'>>(() => getInitialLogForm());
   const [goalForm, setGoalForm] = useState<Omit<TherapyGoal, 'id'>>({
