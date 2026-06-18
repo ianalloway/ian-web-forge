@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import {
   ArrowRight,
   BarChart3,
+  Bot,
   Brain,
   Briefcase,
   CheckCircle2,
@@ -1073,6 +1074,9 @@ const Index = () => {
             </a>
             <a href="/demos" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
               <Terminal size={12} /> Live demos
+            </a>
+            <a href="/bots" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
+              <Bot size={12} /> Start bots
             </a>
             <a href="https://etherscan.io/address/0x6F278Ce76BA5ED31Fd9bE646D074863e126836E9" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
               <Heart size={12} /> Crypto tips

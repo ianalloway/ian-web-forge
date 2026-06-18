@@ -13,6 +13,7 @@ const Now = lazy(() => import("./pages/Now"));
 const HireMe = lazy(() => import("./pages/HireMe"));
 const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
+const Bots = lazy(() => import("./pages/Bots"));
 const Snake = lazy(() => import("./pages/Snake"));
 const RecoveryTracker = lazy(() => import("./pages/RecoveryTracker"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -76,6 +77,19 @@ const App = () => (
                       description="Working product demos: SOLVENT self-funding agent, kelly-js calculator, nba-edge Streamlit, sports-betting-ml, and AI Advantage."
                     />
                     <Demos />
+                  </>
+                }
+              />
+              <Route
+                path="/bots"
+                element={
+                  <>
+                    <SEO
+                      title="How to Start the Bots — SOLVENT, juryrig, OpenClaw skills"
+                      path="/bots"
+                      description="Copy-paste commands to run SOLVENT, juryrig, and OpenClaw agent skills locally. No API keys needed for the SOLVENT demo."
+                    />
+                    <Bots />
                   </>
                 }
               />

@@ -248,6 +248,9 @@ const Demos = () => {
             <a href="#product" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               Product
             </a>
+            <a href="/bots" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
+              [BOTS]
+            </a>
             <a href="/toolkit" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               [TOOLKIT]
             </a>

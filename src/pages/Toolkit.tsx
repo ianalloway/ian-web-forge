@@ -41,6 +41,11 @@ const START_HERE: { label: string; href: string; note: string }[] = [
     note: 'SOLVENT agent, kelly-js, Streamlit apps',
   },
   {
+    label: 'Start the bots',
+    href: '/bots',
+    note: 'Copy-paste commands for SOLVENT, juryrig, OpenClaw skills',
+  },
+  {
     label: 'Sports ML case study',
     href: '/papers/sports-ml-evaluation-case-study.html',
     note: 'One-pager · print → PDF',
@@ -204,6 +209,9 @@ const Toolkit = () => {
             IAN.SYS
           </a>
           <div className="flex flex-wrap gap-2 text-xs font-mono justify-end">
+            <a href="/bots" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
+              [BOTS]
+            </a>
             <a href="#start" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               Start
             </a>
