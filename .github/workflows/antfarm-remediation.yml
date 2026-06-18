@@ -15,9 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger fix workflow
+        env:
+          ANTFARM_RUN_ID: ${{ github.event.inputs.run-id }}
+          ANTFARM_ISSUE: ${{ github.event.inputs.issue }}
         run: |
-          echo "Remediating issues from run: ${{ github.event.inputs.run-id }}"
-          echo "Issues: ${{ github.event.inputs.issue }}"
+          printf 'Remediating issues from run: %s\n' "$ANTFARM_RUN_ID"
+          printf 'Issues: %s\n' "$ANTFARM_ISSUE"
           
           # In full implementation, this would:
           # 1. Trigger Antfarm to fix the issues
@@ -31,7 +34,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Post remediation summary
+        env:
+          ANTFARM_RUN_ID: ${{ github.event.inputs.run-id }}
         run: |
-          echo "## 🔧 Remediation Complete"
-          echo "Run: ${{ github.event.inputs.run-id }}"
-          echo "A fix has been pushed. The PR will auto-rerun verification."
+          printf '%s\n' '## 🔧 Remediation Complete'
+          printf 'Run: %s\n' "$ANTFARM_RUN_ID"
+          printf '%s\n' 'A fix has been pushed. The PR will auto-rerun verification.'
