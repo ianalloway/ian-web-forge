@@ -484,6 +484,7 @@ const Index = () => {
               <a href="#contact" className="text-primary hover:text-primary/70 transition-colors">[CONTACT]</a>
             </div>
             <a href="/hireme" className="text-primary hover:text-primary/70 transition-colors">[/HIRE]</a>
+            <Link to="/bots" className="text-primary hover:text-primary/70 transition-colors">[/BOTS]</Link>
             <a href="/now" className="text-primary hover:text-primary/70 transition-colors">[/NOW]</a>
             <Link to="/recovery" className="text-primary hover:text-primary/70 transition-colors">[/RECOVERY]</Link>
             <button

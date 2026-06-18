@@ -133,6 +133,7 @@ const HireMe = () => {
             <a href="#proof" className="hover:text-green-300 transition-colors">PROOF</a>
             <a href="#approach" className="hover:text-green-300 transition-colors">APPROACH</a>
             <a href="#contact" className="hover:text-green-300 transition-colors">CONTACT</a>
+            <Link to="/bots" className="hover:text-green-300 transition-colors">BOTS</Link>
           </nav>
         </div>
       </header>
