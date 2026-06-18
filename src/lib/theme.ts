@@ -13,8 +13,12 @@ export function getStoredTheme(): SiteTheme {
     return "matrix";
   }
 
-  const stored = localStorage.getItem(STORAGE_KEY);
-  return isSiteTheme(stored) ? stored : "matrix";
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    return isSiteTheme(stored) ? stored : "matrix";
+  } catch {
+    return "matrix";
+  }
 }
 
 export function applyTheme(theme: SiteTheme) {
@@ -23,5 +27,10 @@ export function applyTheme(theme: SiteTheme) {
   }
 
   document.documentElement.classList.toggle("light", theme === "light");
-  localStorage.setItem(STORAGE_KEY, theme);
+
+  try {
+    window.localStorage.setItem(STORAGE_KEY, theme);
+  } catch {
+    // Ignore storage failures so theme changes still apply in restricted contexts.
+  }
 }
