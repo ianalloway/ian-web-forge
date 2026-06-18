@@ -1,0 +1,79 @@
+Ian Alloway
+Fairmont, WV (Remote-Friendly)
+727-470-8666 | ian@allowayllc.com
+LinkedIn: https://linkedin.com/in/ianit
+GitHub: https://github.com/ianalloway
+Portfolio: https://ianalloway.xyz
+Substack: https://allowayai.substack.com
+
+SUMMARY
+Applied AI engineer and data scientist building evaluation-driven software, agent-developed apps, and analytics products. Contract AI evaluator via Handshake AI, including OpenAI Project Sunflower; founder of Alloway LLC. Accelerated B.S./M.S. pathway at USF: B.S. Information Science (May 2026, GPA 3.5, Magna Cum Laude); M.S. Artificial Intelligence (August 2026). Strongest proof in LLM evaluation, blockchain analytics, cybersecurity data science, and decision-support systems built with Python, SQL, TypeScript, and FastAPI.
+
+TECHNICAL SKILLS
+Languages: Python, SQL, TypeScript, JavaScript, R, Bash
+ML / AI: Scikit-learn, XGBoost, PyTorch, TensorFlow, NLP, LLM-as-judge audits, model evaluation, calibration, forecasting
+Data / Analytics: Pandas, NumPy, Tableau, Power BI, statistical analysis, experimentation, dashboarding, predictive analytics
+Backend / Infra: FastAPI, React, Node.js, PostgreSQL, SQLite, Redis, Docker, Git, GitHub Actions, AWS
+Focus Areas: AI evaluation, agent-developed apps, blockchain analytics, fraud detection, cybersecurity data science
+
+EXPERIENCE
+Contract AI Evaluator, Handshake AI
+June 2026 - Present | Remote
+
+AI Trainer - Software Engineering / Coding
+- Evaluate and score high volumes of frontier LLM responses on multi-turn software-engineering and coding tasks for quality, helpfulness, and communication.
+- Apply structured rubrics (1-7 scale) across helpfulness, technical clarity, tone, response structure, and user collaboration.
+- Author detailed score rationales and comparative preference evaluations across multiple candidate responses to complex programming prompts.
+- Maintain high inter-rater agreement after passing rigorous calibration screening; contribute production human-feedback data that improves AI coding assistants.
+
+Member of Technical Staff - OpenAI, Project Sunflower (via Handshake AI)
+- Evaluate high volumes of agent-built software and ChatGPT app development on Project Sunflower across engineering practices, logic, aesthetics, design taste, and overall product quality.
+- Score Codex coding-agent completions on communication quality, tone, voice, and personality, including preambles, structure, and collaboration style, to improve how models interact with users.
+- Apply rubric-based review to assess code quality, UX gaps, and failure modes in autonomously generated applications.
+- Deliver detailed written feedback and comparative evaluations to improve model performance on real-world software development and app-building workflows.
+
+Founder & Data Consultant, Alloway LLC
+July 2023 - Present | Morgantown, WV
+- Deliver applied ML, analytics, and automation solutions for sports, fintech, and business operations clients.
+- Built ML-driven decision tools and dashboards that improved client operational efficiency by 40%.
+- Lead engagements end to end from requirements through deployment and client handoff.
+
+Data Science Contractor, West Virginia University
+Dec 2024 - Dec 2025 | Morgantown, WV
+- Built data science deliverables across cybersecurity and hospitality analytics use cases.
+- Developed predictive modeling workflows and analytics prototypes for applied research projects.
+
+Senior Auditor, Omniichain
+Oct 2024 - Dec 2025 | Remote
+- Analyzed multi-chain blockchain data across Ethereum, Solana, and Polkadot to improve omnichain monitoring.
+- Implemented AI-powered anomaly detection and cross-chain analytics tooling; reduced fraud incidents by 30%.
+- Partnered with engineering teams to integrate analytics into production workflows and optimize cross-chain performance.
+
+PROJECTS
+juryrig: Toolkit for auditing LLM-as-judge pipelines across position bias, prompt-injection susceptibility, calibration, and judge panels. Python. https://github.com/ianalloway/juryrig
+
+SOLVENT: Self-funding analyst agent that sells research briefs, collects Stripe payments, provisions its own compute and data spend under margin guardrails, and tracks P&L via a treasury dashboard. Python, Stripe, Nemotron. https://github.com/ianalloway/solvent-agent
+
+AI Advantage Sports (https://aiadvantagesports.com): Sports analytics platform with ML predictions, Kelly-based bet sizing, and live NBA workflows. React, Python, XGBoost.
+
+NBA CLV Dashboard: FastAPI dashboard for calibration, rolling accuracy, and CLV-style evaluation reporting. Python, FastAPI. https://github.com/ianalloway/nba-clv-dashboard
+
+repo-health: CLI scoring repository quality across README, CI, licensing, and maintenance signals. Python CLI. https://github.com/ianalloway/repo-health
+
+OPEN SOURCE
+OpenClaw: Contributor to the OpenClaw AI agent framework, including bug fixes, skill-system improvements, and published agent skills on ClawHub. https://github.com/openclaw/openclaw
+
+WRITING
+Alloway AI: Public writing on applied AI, model behavior, and evaluation-focused software. https://allowayai.substack.com
+
+EDUCATION
+M.S. Artificial Intelligence, University of South Florida (Accelerated B.S./M.S. pathway)
+August 2026
+
+B.S. Information Science, University of South Florida
+August 2024 - May 2026 | GPA 3.5, Magna Cum Laude
+
+CERTIFICATIONS
+Professional: AWS Certified Machine Learning - Specialty; Google Cloud Professional Machine Learning Engineer; Databricks Certified Machine Learning Associate; AWS Certified Cloud Practitioner; Oracle Database SQL Certified Associate; Tableau Desktop Certified Professional
+
+Coursework: Deep Learning Specialization (Andrew Ng, Coursera); Machine Learning Engineering in Production (Google Cloud, Coursera); Blockchain Fundamentals (UC Berkeley)

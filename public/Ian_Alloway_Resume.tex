@@ -1,0 +1,163 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[margin=0.55in]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{fontenc}
+\usepackage{xcolor}
+\usepackage{tabularx}
+
+\definecolor{linkblue}{HTML}{0969DA}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=linkblue,
+    urlcolor=linkblue,
+    pdfborder={0 0 0}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+\titleformat{\section}{\large\bfseries\scshape}{}{0pt}{}[\titlerule]
+\titlespacing{\section}{0pt}{8pt}{4pt}
+
+\titleformat{\subsection}[runin]{\bfseries}{}{0pt}{}
+\titlespacing{\subsection}{0pt}{4pt}{4pt}
+
+\newcommand{\resumeitem}[1]{\item[\textbullet] #1}
+
+\begin{document}
+
+% ===== HEADER =====
+\begin{center}
+    {\LARGE\bfseries Ian Alloway} \\[4pt]
+    727-470-8666 \,$\vert$\,
+    \href{mailto:ian@allowayllc.com}{ian@allowayllc.com} \,$\vert$\,
+    \href{https://linkedin.com/in/ianit}{linkedin.com/in/ianit} \,$\vert$\,
+    \href{https://github.com/ianalloway}{github.com/ianalloway} \\[2pt]
+    \href{https://ianalloway.xyz}{ianalloway.xyz} \,$\vert$\,
+    \href{https://allowayai.substack.com}{allowayai.substack.com} \,$\vert$\,
+    Fairmont, WV (Remote-Friendly)
+\end{center}
+
+\vspace{-2pt}
+
+% ===== SUMMARY =====
+\section{Summary}
+ML Engineer and Data Scientist building production ML systems, model evaluation workflows, and analytics products. Contract AI evaluator via Handshake AI, including OpenAI Project Sunflower and software-engineering LLM training work. Founder of Alloway LLC, with work across applied ML, blockchain analytics, cybersecurity data science, and decision-support systems. Accelerated B.S./M.S. pathway at USF: B.S. Information Science (May 2026, Magna Cum Laude, 3.5 GPA); M.S. Artificial Intelligence (August 2026).
+
+% ===== TECHNICAL SKILLS =====
+\section{Technical Skills}
+\begin{tabularx}{\textwidth}{@{}l X@{}}
+\textbf{Languages:} & Python, SQL, TypeScript, JavaScript, R, Bash \\
+\textbf{ML / AI:} & Scikit-learn, XGBoost, PyTorch, TensorFlow, NLP, model \& agent evaluation, rubric-based code review, calibration, forecasting, computer vision \\
+\textbf{Data / Analytics:} & Pandas, NumPy, Tableau, Power BI, statistical analysis, experimentation, dashboarding \\
+\textbf{Backend / Infra:} & FastAPI, React, Node.js, PostgreSQL, SQLite, Redis, Docker, Git, GitHub Actions, AWS \\
+\textbf{Domain Experience:} & Sports analytics, blockchain analytics, fraud detection, decision-support systems \\
+\end{tabularx}
+
+% ===== EXPERIENCE =====
+\section{Experience}
+
+\textbf{Contract AI Evaluator} \hfill June 2026 -- Present \\
+\textit{Handshake AI} \hfill Remote
+
+\vspace{2pt}
+
+\textbf{\textit{AI Trainer --- Software Engineering / Coding}}
+\begin{itemize}[nosep, leftmargin=16pt, topsep=2pt]
+    \resumeitem{Evaluate and score high volumes of frontier LLM responses on multi-turn software-engineering and coding tasks for quality, helpfulness, and communication}
+    \resumeitem{Apply structured rubrics (1--7 scale) across helpfulness, technical clarity, tone, response structure, and user collaboration}
+    \resumeitem{Author detailed score rationales and comparative preference evaluations across multiple candidate responses to complex programming prompts}
+    \resumeitem{Maintain high inter-rater agreement after passing rigorous calibration screening; contribute production human-feedback data that improves AI coding assistants}
+\end{itemize}
+
+\vspace{2pt}
+
+\textbf{\textit{Member of Technical Staff --- OpenAI, Project Sunflower}}
+\begin{itemize}[nosep, leftmargin=16pt, topsep=2pt]
+    \resumeitem{Evaluate high volumes of agent-built software and ChatGPT app development on Project Sunflower across engineering practices, logic, aesthetics, design taste, and overall product quality}
+    \resumeitem{Score Codex coding-agent completions on communication quality, tone, voice, and personality---including preambles, structure, and collaboration style---to improve how models interact with users}
+    \resumeitem{Apply rubric-based review to assess code quality, UX gaps, and failure modes in autonomously generated applications}
+    \resumeitem{Deliver detailed written feedback and comparative evaluations to improve model performance on real-world software development and app-building workflows}
+\end{itemize}
+
+\vspace{4pt}
+
+\textbf{Founder \& Data Consultant} \hfill July 2023 -- Present \\
+\textit{Alloway LLC} \hfill Morgantown, WV
+\begin{itemize}[nosep, leftmargin=16pt, topsep=2pt]
+    \resumeitem{Deliver applied ML, analytics, and automation solutions for sports, fintech, and business operations clients}
+    \resumeitem{Built ML-driven decision tools and dashboards that improved client operational efficiency by 40\%}
+    \resumeitem{Lead engagements end to end: requirements, implementation, deployment, and client handoff}
+\end{itemize}
+
+\vspace{4pt}
+
+\textbf{Data Science Contractor} \hfill Dec 2024 -- Dec 2025 \\
+\textit{West Virginia University} \hfill Morgantown, WV
+\begin{itemize}[nosep, leftmargin=16pt, topsep=2pt]
+    \resumeitem{Built data science deliverables across cybersecurity and hospitality analytics use cases}
+    \resumeitem{Developed predictive modeling workflows and analytics prototypes for applied research projects}
+\end{itemize}
+
+\vspace{4pt}
+
+\textbf{Senior Auditor} \hfill Oct 2024 -- Dec 2025 \\
+\textit{Omniichain} \hfill Remote
+\begin{itemize}[nosep, leftmargin=16pt, topsep=2pt]
+    \resumeitem{Analyzed multi-chain blockchain data across Ethereum, Solana, and Polkadot to improve omnichain monitoring}
+    \resumeitem{Implemented AI-powered anomaly detection and cross-chain analytics tooling; reduced fraud incidents by 30\%}
+    \resumeitem{Partnered with engineering teams to integrate analytics into production workflows and optimize cross-chain performance}
+\end{itemize}
+
+% ===== PROJECTS =====
+\section{Projects}
+
+\textbf{\href{https://github.com/ianalloway/juryrig}{juryrig}} --- Toolkit for auditing LLM-as-judge pipelines: position bias, prompt-injection susceptibility, calibration, and judge panels. \textit{(Python)}
+
+\vspace{3pt}
+
+\textbf{\href{https://github.com/ianalloway/solvent-agent}{SOLVENT}} --- Self-funding analyst agent that sells research briefs, collects Stripe payments, provisions its own compute and data spend under margin guardrails, and tracks P\&L via a treasury dashboard. \textit{(Python, Stripe, Nemotron)}
+
+\vspace{3pt}
+
+\textbf{AI Advantage Sports} \,$\vert$\, \href{https://aiadvantagesports.com}{aiadvantagesports.com} --- Sports analytics platform with ML predictions, Kelly-based bet sizing, and live NBA workflows. \textit{(React, Python, XGBoost)}
+
+\vspace{3pt}
+
+\textbf{\href{https://github.com/ianalloway/nba-clv-dashboard}{NBA CLV Dashboard}} --- FastAPI dashboard for calibration, rolling accuracy, and CLV-style evaluation reporting. \textit{(Python, FastAPI)}
+
+\vspace{3pt}
+
+\textbf{\href{https://github.com/ianalloway/repo-health}{Repo Health}} --- CLI scoring repository quality across README, CI, licensing, and maintenance signals. \textit{(Python, CLI)}
+
+% ===== OPEN SOURCE =====
+\section{Open Source}
+\textbf{\href{https://github.com/openclaw/openclaw}{OpenClaw}} --- Contributor to the OpenClaw AI agent framework, including bug fixes, skill-system improvements, and published agent skills on \href{https://clawhub.ai}{ClawHub}.
+
+% ===== EDUCATION =====
+\section{Education}
+
+\textbf{M.S. Artificial Intelligence} \hfill Aug 2026 \\
+\textit{University of South Florida --- Accelerated B.S./M.S. pathway}
+
+\vspace{3pt}
+
+\textbf{B.S. Information Science} \hfill Aug 2024 -- May 2026 \\
+\textit{University of South Florida} \\
+\textit{GPA 3.5, Magna Cum Laude}
+
+\vspace{3pt}
+
+\section{Certifications}
+\textbf{Professional:} AWS Certified Machine Learning -- Specialty \,$\vert$\, Google Cloud Professional Machine Learning Engineer \,$\vert$\, Databricks Certified Machine Learning Associate \,$\vert$\, AWS Certified Cloud Practitioner \,$\vert$\, Oracle Database SQL Certified Associate \,$\vert$\, Tableau Desktop Certified Professional
+
+\vspace{3pt}
+
+\textbf{Coursework:} Deep Learning Specialization (Andrew Ng, Coursera) \,$\vert$\, Machine Learning Engineering in Production (Google Cloud, Coursera) \,$\vert$\, Blockchain Fundamentals (UC Berkeley)
+
+\end{document}
