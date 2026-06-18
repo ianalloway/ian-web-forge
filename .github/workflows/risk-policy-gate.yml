@@ -28,13 +28,15 @@ jobs:
           if [ -n "${BASE_REF:-}" ]; then
             git fetch --no-tags --depth=1 origin "${BASE_REF}"
             git diff --name-only "origin/${BASE_REF}...HEAD" > changed-files.txt
+            git show "origin/${BASE_REF}:risk-policy.json" > trusted-risk-policy.json
           else
             git diff --name-only HEAD~1..HEAD > changed-files.txt
+            cp risk-policy.json trusted-risk-policy.json
           fi
 
           node <<'NODE'
           const fs = require('fs');
-          const policy = JSON.parse(fs.readFileSync('risk-policy.json', 'utf8'));
+          const policy = JSON.parse(fs.readFileSync('trusted-risk-policy.json', 'utf8'));
           const files = fs.readFileSync('changed-files.txt', 'utf8')
             .split('\n')
             .map((line) => line.trim())
@@ -71,7 +73,7 @@ jobs:
           output.write(`changed_files=${files.join(',')}\n`);
           output.write(`required_checks=${requiredChecks.join(', ')}\n`);
           output.end();
-          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `## Risk Assessment\n**Tier:** ${tier}\n\n**Changed files:** ${files.length ? files.join(', ') : 'none'}\n\n**Required checks:** ${requiredChecks.join(', ')}\n`);
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `## Risk Assessment\n**Policy source:** trusted base branch\n\n**Tier:** ${tier}\n\n**Changed files:** ${files.length ? files.join(', ') : 'none'}\n\n**Required checks:** ${requiredChecks.join(', ')}\n`);
           NODE
 
   risk-policy-gate:
