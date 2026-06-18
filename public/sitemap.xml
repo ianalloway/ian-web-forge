@@ -31,12 +31,6 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://ianalloway.xyz/recovery</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
     <loc>https://ianalloway.xyz/papers/sports-ml-evaluation-case-study.html</loc>
     <lastmod>2026-06-11</lastmod>
     <changefreq>monthly</changefreq>

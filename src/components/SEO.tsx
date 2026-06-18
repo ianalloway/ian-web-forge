@@ -5,6 +5,7 @@ interface SEOProps {
   description?: string;
   path?: string;
   image?: string;
+  noIndex?: boolean;
 }
 
 const defaults = {
@@ -15,7 +16,7 @@ const defaults = {
   siteName: 'Ian Alloway',
 };
 
-export default function SEO({ title, description, path = '', image }: SEOProps) {
+export default function SEO({ title, description, path = '', image, noIndex = false }: SEOProps) {
   const pageTitle = title ? `${title} | Ian Alloway` : defaults.title;
   const pageDescription = description || defaults.description;
   const pageUrl = `${defaults.url}${path}`;
@@ -73,7 +74,7 @@ export default function SEO({ title, description, path = '', image }: SEOProps) 
       </script>
 
       {/* Misc */}
-      <meta name="robots" content="index, follow" />
+      <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow'} />
       <meta name="author" content="Ian Alloway" />
       <meta name="keywords" content="Ian Alloway, AI Engineer, Data Scientist, ML Engineer, Machine Learning, Portfolio, USF, Sports Analytics, Model Evaluation, Applied AI, XGBoost, Python, React, FastAPI" />
       <meta name="theme-color" content="#0f172a" />
