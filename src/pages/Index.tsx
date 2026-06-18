@@ -84,6 +84,18 @@ const proofCards = [
 
 const featuredProjects = [
   {
+    name: 'SOLVENT',
+    subtitle: 'Self-funding AI agent · Hermes Hackathon',
+    stack: ['Python', 'Stripe', 'NVIDIA Nemotron', 'SQLite'],
+    image: '/demos/solvent/solvent_dashboard_actual.png',
+    href: 'https://github.com/ianalloway/solvent-agent',
+    ctaLabel: 'View repository',
+    detail:
+      'An agent that earns via Stripe, verifies payment before fulfilment, pays its own vendor bills under guardrails, and refuses unprofitable work — with a live treasury dashboard.',
+    whyItMatters:
+      'Shows agentic systems with economic self-awareness: not just tool-calling, but a business with books.',
+  },
+  {
     name: 'AI Advantage Sports',
     subtitle: 'Consumer-facing ML product',
     stack: ['Python', 'React', 'XGBoost', 'FastAPI'],
@@ -94,18 +106,6 @@ const featuredProjects = [
       'Prediction and DFS tooling with a real deployed product surface, model-backed recommendations, and a presentation layer that looks like something users would actually trust.',
     whyItMatters:
       'Shows I can take a model from feature engineering to an interface that feels like a product, not just a benchmark.',
-  },
-  {
-    name: 'NBA CLV Dashboard',
-    subtitle: 'Evaluation dashboard',
-    stack: ['FastAPI', 'Chart.js', 'Python'],
-    image: '/proof/nba-clv-dashboard.svg',
-    href: 'https://github.com/ianalloway/nba-clv-dashboard',
-    ctaLabel: 'View repository',
-    detail:
-      'Calibration, rolling accuracy, Brier score, and CLV-style reporting in one dashboard built to explain whether a model is actually useful.',
-    whyItMatters:
-      'This is the clearest example of the way I think: honest evaluation beats vanity metrics.',
   },
   {
     name: 'Sports Betting ML',
@@ -120,16 +120,16 @@ const featuredProjects = [
       'It demonstrates end-to-end ownership across data, modeling, packaging, and deployment.',
   },
   {
-    name: 'Repo Health',
-    subtitle: 'Developer tooling / maintenance intelligence',
-    stack: ['Python', 'CLI', 'GitHub APIs'],
+    name: 'juryrig',
+    subtitle: 'LLM judge audit toolkit',
+    stack: ['Python', 'Evaluation', 'Zero dependencies'],
     image: '/proof/repo-health.svg',
-    href: 'https://github.com/ianalloway/repo-health',
+    href: 'https://github.com/ianalloway/juryrig',
     ctaLabel: 'View repository',
     detail:
-      'A practical scoring tool for README quality, CI, licensing, issue hygiene, and maintenance signals.',
+      'Audit LLM-as-judge pipelines for position bias, verbosity bias, self-consistency, judge panels, and calibration before you trust automated evals.',
     whyItMatters:
-      'It shows product thinking outside of ML too: I can package operational judgment into tools teams can use.',
+      'Evaluation infrastructure for the agentic era — the same rigor I bring to sports ML, applied to judges.',
   },
 ];
 
@@ -192,10 +192,17 @@ const experience = [
 
 const selectedProjects = [
   {
+    name: 'solvent-agent',
+    description:
+      'Self-funding analyst agent: Stripe earn/spend loop, payment verification, Nemotron fulfilment, Issuing guardrails, live treasury dashboard.',
+    codeHref: 'https://github.com/ianalloway/solvent-agent',
+    demoHref: '/demos#solvent',
+  },
+  {
     name: 'snake-game',
     description:
       'Classic Snake with deterministic grid logic, keyboard controls, mobile buttons, score tracking, and restart flow. Play it on the site or inspect the standalone repo.',
-    codeHref: 'https://github.com/ianalloway/snake-game',
+    codeHref: 'https://github.com/ianalloway/oss-archive/tree/archive/snake-game',
     demoHref: '/snake',
   },
   {
@@ -207,11 +214,12 @@ const selectedProjects = [
     name: 'kelly-js',
     description: 'Small, focused probability and bankroll utility package with clean API design.',
     codeHref: 'https://github.com/ianalloway/kelly-js',
+    demoHref: '/demos#kelly',
   },
   {
-    name: 'macos-disk-cleanup',
-    description: 'A careful Bash tool for reclaiming disk space without the usual “hope this does not break anything” energy.',
-    codeHref: 'https://github.com/ianalloway/macos-disk-cleanup',
+    name: 'juryrig',
+    description: 'Audit LLM-as-judge pipelines for bias, calibration, and panel consistency before you trust automated evals.',
+    codeHref: 'https://github.com/ianalloway/juryrig',
   },
   {
     name: 'ankle-recovery-tracker',
@@ -717,7 +725,7 @@ const Index = () => {
                   </a>
                 </Button>
                 <Button variant="outline" className="font-mono terminal-border text-primary border-primary/30 hover:bg-primary/10" asChild>
-                  <a href="https://github.com/ianalloway/nba-clv-dashboard" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/ianalloway/oss-archive/tree/archive/nba-clv-dashboard" target="_blank" rel="noopener noreferrer">
                     <ArrowRight className="mr-2" size={16} /> See the dashboard repo
                   </a>
                 </Button>
@@ -930,12 +938,12 @@ const Index = () => {
           </div>
           <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
             {[
-              { name: 'oss-archive', desc: 'Snapshots of archived open-source work', lang: 'Python', updated: '1 day ago', href: 'https://github.com/ianalloway/oss-archive' },
-              { name: 'ai-advantage-sports', desc: 'Sports betting platform — ML picks engine', lang: 'TypeScript', updated: '1 day ago', href: 'https://github.com/ianalloway/ai-advantage-sports' },
-              { name: 'ian-web-forge', desc: 'This portfolio site — React + Tailwind', lang: 'TypeScript', updated: '5 days ago', href: 'https://github.com/ianalloway/ian-web-forge' },
-              { name: 'kana-dojo', desc: 'Aesthetic minimal Japanese learning app', lang: 'TypeScript', updated: '4 days ago', href: 'https://github.com/ianalloway/kana-dojo' },
-              { name: 'nba-ratings', desc: 'Elo / Kelly / win-prob PyPI package', lang: 'Python', updated: '5 days ago', href: 'https://github.com/ianalloway/nba-ratings' },
-              { name: 'kelly-js', desc: 'Kelly Criterion bankroll utility package', lang: 'JavaScript', updated: '4 days ago', href: 'https://github.com/ianalloway/kelly-js' },
+              { name: 'solvent-agent', desc: 'Self-funding AI agent — Stripe × Nemotron hackathon project', lang: 'Python', updated: 'today', href: 'https://github.com/ianalloway/solvent-agent' },
+              { name: 'openclaw-skills', desc: '9+ agent skills for OpenClaw / ClawHub', lang: 'Python', updated: '1 day ago', href: 'https://github.com/ianalloway/openclaw-skills' },
+              { name: 'ai-advantage', desc: 'Sports betting platform — ML picks engine', lang: 'TypeScript', updated: '3 days ago', href: 'https://github.com/ianalloway/ai-advantage' },
+              { name: 'juryrig', desc: 'Audit LLM-as-judge pipelines before you trust them', lang: 'Python', updated: '3 days ago', href: 'https://github.com/ianalloway/juryrig' },
+              { name: 'onchain-risk-scanner', desc: 'Read-only EVM contract risk & proxy scanner', lang: 'Python', updated: '3 days ago', href: 'https://github.com/ianalloway/onchain-risk-scanner' },
+              { name: 'ian-web-forge', desc: 'This portfolio site — React + Tailwind', lang: 'TypeScript', updated: 'today', href: 'https://github.com/ianalloway/ian-web-forge' },
             ].map((repo) => (
               <a
                 key={repo.name}
@@ -1062,6 +1070,9 @@ const Index = () => {
             </a>
             <a href="/toolkit" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
               <Package size={12} /> Toolkit
+            </a>
+            <a href="/demos" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
+              <Terminal size={12} /> Live demos
             </a>
             <a href="https://etherscan.io/address/0x6F278Ce76BA5ED31Fd9bE646D074863e126836E9" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
               <Heart size={12} /> Crypto tips

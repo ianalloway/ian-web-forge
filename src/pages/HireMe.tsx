@@ -38,20 +38,20 @@ const outcomes = [
 
 const featuredWork = [
   {
+    name: 'SOLVENT',
+    image: '/demos/solvent/solvent_dashboard_actual.png',
+    href: 'https://github.com/ianalloway/solvent-agent',
+    stack: 'Python, Stripe, Nemotron, SQLite',
+    whyItMatters:
+      'A self-funding agent that earns, verifies payment, pays vendors under guardrails, and refuses unprofitable work — agentic systems with a balance sheet.',
+  },
+  {
     name: 'AI Advantage Sports',
     image: '/proof/ai-advantage-screenshot.png',
     href: 'https://github.com/ianalloway/ai-advantage',
     stack: 'Python, React, XGBoost, FastAPI',
     whyItMatters:
       'Shows product thinking and ML delivery together: model-backed recommendations, real UI, and something users can actually evaluate.',
-  },
-  {
-    name: 'NBA CLV Dashboard',
-    image: '/proof/nba-clv-dashboard.svg',
-    href: 'https://github.com/ianalloway/nba-clv-dashboard',
-    stack: 'FastAPI, Chart.js, Python',
-    whyItMatters:
-      'A concrete example of how I build evaluation-first systems instead of hiding behind headline accuracy.',
   },
   {
     name: 'Sports Betting ML',
@@ -62,12 +62,12 @@ const featuredWork = [
       'Demonstrates full workflow ownership from feature engineering to deployment and public demo packaging.',
   },
   {
-    name: 'Repo Health',
+    name: 'juryrig',
     image: '/proof/repo-health.svg',
-    href: 'https://github.com/ianalloway/repo-health',
-    stack: 'Python, CLI, GitHub APIs',
+    href: 'https://github.com/ianalloway/juryrig',
+    stack: 'Python, Evaluation, Zero deps',
     whyItMatters:
-      'Useful evidence that I can build practical tools with strong developer UX outside of ML too.',
+      'Audit LLM judges for bias and calibration before you trust automated evals — evaluation rigor for the agent era.',
   },
 ];
 

@@ -36,6 +36,11 @@ const START_HERE: { label: string; href: string; note: string }[] = [
     note: 'Main site & sections',
   },
   {
+    label: 'Live demos',
+    href: '/demos',
+    note: 'SOLVENT agent, kelly-js, Streamlit apps',
+  },
+  {
     label: 'Sports ML case study',
     href: '/papers/sports-ml-evaluation-case-study.html',
     note: 'One-pager · print → PDF',
@@ -43,7 +48,7 @@ const START_HERE: { label: string; href: string; note: string }[] = [
   {
     label: 'All public repositories',
     href: 'https://github.com/ianalloway?tab=repositories&q=&sort=updated',
-    note: '8 active + archived read-only · sorted by updated',
+    note: '17+ active · archived copies in oss-archive',
   },
   {
     label: 'Profile README',
@@ -54,14 +59,19 @@ const START_HERE: { label: string; href: string; note: string }[] = [
 
 const OSS = 'https://github.com/ianalloway/oss-archive/tree/archive';
 
-/** Active public repos (8). Older OSS lives on frozen branches in oss-archive. */
+/** Active public repos. Older OSS lives on frozen branches in oss-archive. */
 const CORE_SECTION: CatalogSection = {
   id: 'core',
   title: 'Active public repositories',
   blurb:
-    'Eight non-archived repos on this account. Dozens of additional projects were merged into branch-per-repo snapshots under oss-archive before archiving the originals read-only.',
+    'Current non-archived repos on this account. Retired projects live as branch-per-repo snapshots under oss-archive before the originals were archived read-only.',
   icon: LineChart,
   rows: [
+    {
+      name: 'solvent-agent',
+      href: 'https://github.com/ianalloway/solvent-agent',
+      oneLine: 'Self-funding AI agent — Stripe earn/spend, Nemotron, guardrails (Hackathon)',
+    },
     {
       name: 'ai-advantage',
       href: 'https://github.com/ianalloway/ai-advantage',
@@ -81,6 +91,26 @@ const CORE_SECTION: CatalogSection = {
       name: 'nba-ratings',
       href: 'https://github.com/ianalloway/nba-ratings',
       oneLine: 'Elo / logistic / Kelly · PyPI `nba-edge`',
+    },
+    {
+      name: 'juryrig',
+      href: 'https://github.com/ianalloway/juryrig',
+      oneLine: 'Audit LLM-as-judge pipelines — bias, calibration, panels',
+    },
+    {
+      name: 'onchain-risk-scanner',
+      href: 'https://github.com/ianalloway/onchain-risk-scanner',
+      oneLine: 'EVM contract risk, proxy, and upgrade timeline scanner',
+    },
+    {
+      name: 'evm-sentry',
+      href: 'https://github.com/ianalloway/evm-sentry',
+      oneLine: 'On-chain anomaly & honeypot signal scanner',
+    },
+    {
+      name: 'openclaw-skills',
+      href: 'https://github.com/ianalloway/openclaw-skills',
+      oneLine: '9+ agent skills for OpenClaw / ClawHub',
     },
     {
       name: 'Resume',

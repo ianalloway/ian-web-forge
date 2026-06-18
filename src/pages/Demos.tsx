@@ -288,9 +288,31 @@ const Demos = () => {
           icon={Coins}
           title="solvent-agent — self-funding business agent"
           repo="ianalloway/solvent-agent"
-          blurb="Autonomous AI analyst agent that earns via Stripe, spends own revenue to provision compute under policy guardrails, and books profits to SQLite."
+          blurb="Hermes Hackathon project (NVIDIA × Stripe × Nous): earns via Stripe Payment Links, verifies Checkout Sessions before fulfilment, fulfils on Nemotron, pays vendors through Issuing guardrails, and books P&L to SQLite."
         >
-          <div className="space-y-4">
+          <div className="space-y-5">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <Stat label="Margin" value="94%" accent="good" />
+              <Stat label="Revenue / run" value="$223" accent="good" />
+              <Stat label="Jobs declined" value="1" accent="bad" />
+              <Stat label="Treasury" value="$310" />
+            </div>
+
+            <ul className="grid md:grid-cols-2 gap-2 text-xs font-mono text-muted-foreground">
+              <li className="rounded border border-primary/15 bg-background/40 px-3 py-2">
+                <span className="text-primary">Onboarding</span> — first-run wizard picks model + interaction mode
+              </li>
+              <li className="rounded border border-primary/15 bg-background/40 px-3 py-2">
+                <span className="text-primary">Payment verify</span> — polls Checkout Session until paid before compute
+              </li>
+              <li className="rounded border border-primary/15 bg-background/40 px-3 py-2">
+                <span className="text-primary">Audit trail</span> — records PaymentIntent + Session IDs, not just plink_
+              </li>
+              <li className="rounded border border-primary/15 bg-background/40 px-3 py-2">
+                <span className="text-primary">Issuing spend</span> — capped virtual cards per vendor (test mode)
+              </li>
+            </ul>
+
             <div className="relative rounded border border-primary/20 bg-background/40 overflow-hidden">
               <video
                 src="/demos/solvent/solvent_demo.mp4"
@@ -299,21 +321,44 @@ const Demos = () => {
                 muted
                 loop
                 className="w-full rounded"
-                style={{ maxHeight: '480px' }}
+                style={{ maxHeight: '420px' }}
               />
             </div>
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-2">
-              <p className="text-sm text-muted-foreground font-mono">
-                Watch the agent handle inbound orders, price jobs, collect money, execute reasoning, screen spends, and track books dynamically.
-              </p>
-              <div className="flex gap-2 shrink-0">
+
+            <a
+              href="/demos/solvent/solvent_dashboard_actual.png"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block rounded border border-primary/20 overflow-hidden hover:border-primary/40 transition-colors"
+            >
+              <img
+                src="/demos/solvent/solvent_dashboard_actual.png"
+                alt="SOLVENT treasury dashboard — revenue, spend, job cards, transaction log"
+                className="w-full"
+                loading="lazy"
+              />
+            </a>
+
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pt-1">
+              <code className="text-[11px] font-mono text-primary/80 bg-background/60 border border-primary/20 rounded px-3 py-2">
+                git clone github.com/ianalloway/solvent-agent && python3 run_demo.py
+              </code>
+              <div className="flex flex-wrap gap-2 shrink-0">
+                <a
+                  href="https://github.com/ianalloway/solvent-agent"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded border border-primary/40 bg-background/50 px-3 py-1.5 font-mono text-xs text-primary hover:bg-primary/10"
+                >
+                  <Github size={12} /> Repository
+                </a>
                 <a
                   href="/demos/solvent/solvent_dashboard_actual.png"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded border border-primary/40 bg-background/50 px-3 py-1.5 font-mono text-xs text-primary hover:bg-primary/10"
                 >
-                  View Screenshot <ExternalLink size={12} />
+                  Full screenshot <ExternalLink size={12} />
                 </a>
               </div>
             </div>

@@ -12,6 +12,7 @@ const queryClient = new QueryClient();
 const Now = lazy(() => import("./pages/Now"));
 const HireMe = lazy(() => import("./pages/HireMe"));
 const Toolkit = lazy(() => import("./pages/Toolkit"));
+const Demos = lazy(() => import("./pages/Demos"));
 const Snake = lazy(() => import("./pages/Snake"));
 const RecoveryTracker = lazy(() => import("./pages/RecoveryTracker"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -59,9 +60,22 @@ const App = () => (
                     <SEO
                       title="Toolkit — Sports analytics & OSS"
                       path="/toolkit"
-                      description="Public index of Ian Alloway’s sports ML stack, odds utilities, reporting tools, and GitHub repos — nba-clv-dashboard, nba-ratings, odds-drift-watch, closing-line-archive, kelly-js, and more."
+                      description="Public index of Ian Alloway’s sports ML stack, odds utilities, reporting tools, and GitHub repos — solvent-agent, ai-advantage, nba-ratings, kelly-js, juryrig, and more."
                     />
                     <Toolkit />
+                  </>
+                }
+              />
+              <Route
+                path="/demos"
+                element={
+                  <>
+                    <SEO
+                      title="Live Demos — SOLVENT, kelly-js, sports ML"
+                      path="/demos"
+                      description="Working product demos: SOLVENT self-funding agent, kelly-js calculator, nba-edge Streamlit, sports-betting-ml, and AI Advantage."
+                    />
+                    <Demos />
                   </>
                 }
               />
