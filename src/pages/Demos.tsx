@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
 import { Terminal, ExternalLink, Github, Calculator, LineChart, Cpu, Trophy, Coins } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
-import { kelly, convertOdds, arbitrage } from '@ianalloway/kelly-js';
+import { kelly, convertOdds, arbitrage } from '@/lib/kelly';
 
 /** Live product demos for the flagship repos.
- *  kelly-js runs IN THIS PAGE (real package, installed from GitHub).
+ *  kelly-js math runs IN THIS PAGE (vendored helper, no install-time GitHub dependency).
  *  nba-ratings + sports-betting-ml are live Streamlit apps (real backends).
  *  ai-advantage is the production site. */
 
