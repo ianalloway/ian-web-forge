@@ -112,6 +112,19 @@
     );
   }
 
+  /* ── Redesigned homepage: opt out of the CRT scanline + matrix shell ── */
+  body.home-redesign { background: #0a0b0a; }
+  body.home-redesign::after { display: none; }
+
+  @keyframes home-pulse-ring {
+    0%   { transform: scale(0.9); opacity: 0.7; }
+    70%, 100% { transform: scale(2.2); opacity: 0; }
+  }
+  @keyframes home-caret-blink {
+    0%, 50%   { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
   /* ── Matrix text glow ── */
   .matrix-text {
     text-shadow: 0 0 8px hsl(var(--primary) / 0.8),

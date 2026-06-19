@@ -68,6 +68,9 @@ export default {
 			fontFamily: {
 				'matrix': ['Fira Code', 'Courier Prime', 'Courier New', 'monospace'],
 				'mono': ['Fira Code', 'Courier Prime', 'Courier New', 'monospace'],
+				'display': ['Space Grotesk', 'system-ui', 'sans-serif'],
+				'plex': ['IBM Plex Sans', 'system-ui', 'sans-serif'],
+				'jet': ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
 			},
 			backgroundImage: {
 				'gradient-primary': 'var(--gradient-primary)',
