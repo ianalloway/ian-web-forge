@@ -1,1099 +1,801 @@
-import { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import {
-  ArrowRight,
-  BarChart3,
-  Bot,
-  Brain,
-  Briefcase,
-  CheckCircle2,
-  Code,
-  Copy,
-  Download,
-  ExternalLink,
-  FileText,
-  Github,
-  GraduationCap,
-  Heart,
-  Linkedin,
-  Mail,
-  Moon,
-  Package,
-  Sun,
-  Terminal,
-} from 'lucide-react';
-import MatrixRain from '@/components/MatrixRain';
-import SubstackEmbed from '@/components/SubstackEmbed';
-import { useToast } from '@/components/ui/use-toast';
-import { prefersReducedMotion } from '@/lib/motion';
-import { applyTheme, getStoredTheme, type SiteTheme } from '@/lib/theme';
+import { useEffect, useRef, useState } from 'react';
 
-const ETH_DONATION_ADDRESS = '0x6f278ce76ba5ed31fd9be646d074863e126836e9';
+/* ──────────────────────────────────────────────────────────────────────────
+   Portfolio homepage redesign — data-forward, restrained terminal aesthetic.
+   Single scrolling page: Nav → Hero → Selected Work → Capabilities →
+   Measured Impact + Timeline → Agents → Contact → Footer.
+   Styling is intentionally self-contained (explicit hex tokens) so the rest of
+   the site keeps its existing matrix theme.
+   ────────────────────────────────────────────────────────────────────────── */
 
-// Animated counter
-function useCounter(target: number, visible: boolean, decimals = 0) {
-  const [val, setVal] = useState(0);
-  useEffect(() => {
-    if (!visible) return;
-    if (prefersReducedMotion()) {
-      const timeout = window.setTimeout(() => setVal(target), 0);
-      return () => window.clearTimeout(timeout);
-    }
-    const steps = 50;
-    const inc = target / steps;
-    let cur = 0;
-    const t = setInterval(() => {
-      cur += inc;
-      if (cur >= target) { setVal(target); clearInterval(t); }
-      else setVal(parseFloat(cur.toFixed(decimals)));
-    }, 1200 / steps);
-    return () => clearInterval(t);
-  }, [visible, target, decimals]);
-  return val;
+const ACCENT = '#5be49b';
+
+const CATEGORY_COLORS: Record<string, string> = {
+  'Sports ML': '#5be49b',
+  'AI Agents': '#4fd6e0',
+  MLOps: '#e9c14a',
+  Tools: '#c79bf0',
+  Web3: '#7aa2f0',
+};
+
+type Category = 'Sports ML' | 'AI Agents' | 'MLOps' | 'Tools' | 'Web3';
+type Filter = 'All' | Category;
+
+interface Project {
+  title: string;
+  category: Category;
+  description: string;
+  tech: string[];
+  code?: string;
+  demo?: string;
+  featured?: boolean;
 }
 
-const outcomes = [
-  'Built ML/data products used by real users',
-  'Shipped evaluation dashboards and analytics tooling',
-  'Production Python, FastAPI, SQL, and TypeScript',
-  'Open-source work across ML, reporting, and decision-support systems',
+const PROJECTS: Project[] = [
+  {
+    title: 'NBA Sports Betting Pipeline',
+    category: 'Sports ML',
+    featured: true,
+    description:
+      'XGBoost model hitting 68.3% accuracy with Kelly Criterion bet sizing. Live in production at aiadvantagesports.com and published on Hugging Face.',
+    tech: ['XGBoost', 'Kelly', 'Python'],
+    code: 'https://github.com/ianalloway/sports-betting-ml',
+    demo: 'https://aiadvantagesports.com',
+  },
+  {
+    title: 'nba-clv-dashboard',
+    category: 'Sports ML',
+    description:
+      'FastAPI + Chart.js evaluation demo: calibration, rolling accuracy, and CLV summary. Drop in your own backtest JSON. The flagship sports-ML showcase.',
+    tech: ['FastAPI', 'Chart.js', 'Calibration'],
+    code: 'https://github.com/ianalloway/oss-archive/tree/archive/nba-clv-dashboard',
+    demo: 'https://ianalloway.xyz/papers/sports-ml-evaluation-case-study.html',
+  },
+  {
+    title: 'nba-ratings / nba-edge',
+    category: 'Sports ML',
+    description:
+      'Installable Elo, logistic win-probability, and Kelly helpers for NBA-style models. Published to PyPI as nba-edge.',
+    tech: ['Elo', 'PyPI', 'Python'],
+    code: 'https://github.com/ianalloway/nba-ratings',
+  },
+  {
+    title: 'solvent-agent',
+    category: 'AI Agents',
+    featured: true,
+    description:
+      'Self-funding AI analyst: quotes jobs, collects Stripe payment, fulfils work on Nemotron, pays its own vendor bills under guardrails, and books P&L.',
+    tech: ['Stripe', 'Nemotron', 'Python'],
+    code: 'https://github.com/ianalloway/solvent-agent',
+  },
+  {
+    title: 'juryrig',
+    category: 'AI Agents',
+    description:
+      'Audit LLM-as-judge pipelines for position bias, verbosity bias, prompt-injection, calibration, and panel agreement before you trust automated evals. Zero dependencies.',
+    tech: ['Evals', 'LLM-judge', 'Python'],
+    code: 'https://github.com/ianalloway/juryrig',
+  },
+  {
+    title: 'openclaw-skills',
+    category: 'AI Agents',
+    description:
+      'Nine published open-source skills — sports odds, Kelly sizing, DFS optimizer, bet journal, market sentiment, and more — that extend the OpenClaw assistant.',
+    tech: ['Skills', 'OpenClaw', 'Python'],
+    code: 'https://github.com/ianalloway/openclaw-skills',
+  },
+  {
+    title: 'backtest-report-gen',
+    category: 'MLOps',
+    description:
+      'Turn evaluation JSON into static HTML backtest reports with calibration, Brier, CLV, and ledger views. No server required.',
+    tech: ['HTML', 'Eval', 'CLV'],
+    code: 'https://github.com/ianalloway/oss-archive/tree/archive/backtest-report-gen',
+  },
+  {
+    title: 'metric-regression-gate',
+    category: 'MLOps',
+    description:
+      'Composite GitHub Action that fails CI when metrics regress against a baseline. Plug-and-play for any ML project.',
+    tech: ['GitHub Action', 'CI', 'YAML'],
+    code: 'https://github.com/ianalloway/oss-archive/tree/archive/metric-regression-gate',
+  },
+  {
+    title: 'repo-health',
+    category: 'Tools',
+    description:
+      'Repo-scoring CLI for README quality, licensing, CI, maintenance signals, and staleness detection. Rich terminal output with score deltas.',
+    tech: ['CLI', 'Python', 'Scoring'],
+    code: 'https://github.com/ianalloway/oss-archive/tree/archive/repo-health',
+  },
+  {
+    title: 'onchain-risk-scanner',
+    category: 'Web3',
+    description:
+      'Read-only risk, proxy, and upgrade-timeline scanner for Ethereum, Base, Optimism, and Arbitrum contracts.',
+    tech: ['EVM', 'Solidity', 'Risk'],
+    code: 'https://github.com/ianalloway/onchain-risk-scanner',
+  },
 ];
 
-const proofCards = [
+const FILTERS: Filter[] = ['All', 'Sports ML', 'AI Agents', 'MLOps', 'Tools', 'Web3'];
+
+const HERO_METRICS = [
+  { value: '68.3%', label: 'Model accuracy', sub: 'NBA betting model' },
+  { value: '60+', label: 'GitHub repos', sub: 'public' },
+  { value: '9', label: 'OSS skills', sub: 'on ClawHub' },
+  { value: 'PyPI', label: 'nba-edge', sub: 'installable' },
+];
+
+const CAPABILITIES = [
   {
-    title: 'Applied ML products, not notebook leftovers',
-    stack: 'Python, XGBoost, React, FastAPI',
-    impact:
-      'I build model-backed products people can actually open, evaluate, and use instead of one-off experiments that die in a folder.',
+    n: '01',
+    title: 'Machine Learning',
+    desc: 'Production ML with XGBoost, PyTorch, and scikit-learn — from feature engineering through deployment and monitoring.',
+    tags: ['XGBoost', 'PyTorch', 'scikit-learn'],
   },
   {
-    title: 'Evaluation-first analytics',
-    stack: 'FastAPI, Chart.js, reporting pipelines',
-    impact:
-      'My best work focuses on calibration, CLV, regression gates, and model honesty so decision-makers can trust what they are seeing.',
+    n: '02',
+    title: 'Data Engineering',
+    desc: 'ETL pipelines, multi-chain blockchain analytics, SQL optimization, and real-time event processing.',
+    tags: ['FastAPI', 'PostgreSQL', 'SQL'],
   },
   {
-    title: 'Developer tooling with clear business value',
-    stack: 'Python, Bash, GitHub Actions, CLI UX',
-    impact:
-      'I like turning messy operational pain into usable tools, from repo quality scoring to safe cleanup scripts and reusable metrics workflows.',
+    n: '03',
+    title: 'AI Systems',
+    desc: 'Autonomous agents, LLM-powered apps, NLP, computer vision, and the evaluation tooling that keeps them honest.',
+    tags: ['LLMs', 'Agents', 'Eval'],
+  },
+  {
+    n: '04',
+    title: 'Analytics',
+    desc: 'Calibration dashboards, A/B testing, and reporting layers that turn messy data into decisions people trust.',
+    tags: ['Tableau', 'Power BI', 'Streamlit'],
   },
 ];
 
-const featuredProjects = [
+const IMPACT = [
+  { num: '68.3%', label: 'NBA betting model accuracy', sub: 'XGBoost + Kelly sizing, live in production' },
+  { num: '30%', label: 'Fraud reduction', sub: 'delivered for a fintech client' },
+  { num: '40%', label: 'Ops efficiency gain', sub: 'improvement delivered to clients' },
+  { num: '194k+', label: 'OpenClaw stars', sub: 'active open-source contributor' },
+];
+
+const TIMELINE = [
+  { year: '2020', color: '#7aa2f0', label: 'Data Auditor / AI Engineer — Omniichain blockchain analytics' },
+  { year: '2023', color: '#e9c14a', label: 'Founded Alloway LLC · first production ML system shipped' },
+  { year: '2024', color: '#e9c14a', label: 'Launched AI Advantage Sports · 68.3% model accuracy' },
+  { year: '2025', color: '#c79bf0', label: 'Published 9 OSS skills on ClawHub · nba-edge on PyPI' },
+  { year: '2025', color: '#7aa2f0', label: 'Completed B.S. Information Science @ USF' },
+  { year: '2026', color: '#5be49b', label: 'M.S. Artificial Intelligence @ USF — in progress' },
+];
+
+const AGENTS = [
   {
+    id: 'solvent',
     name: 'SOLVENT',
-    subtitle: 'Self-funding AI agent · Hermes Hackathon',
-    stack: ['Python', 'Stripe', 'NVIDIA Nemotron', 'SQLite'],
-    image: '/demos/solvent/solvent_dashboard_actual.png',
-    href: 'https://github.com/ianalloway/solvent-agent',
-    ctaLabel: 'View repository',
-    detail:
-      'An agent that earns via Stripe, verifies payment before fulfilment, pays its own vendor bills under guardrails, and refuses unprofitable work — with a live treasury dashboard.',
-    whyItMatters:
-      'Shows agentic systems with economic self-awareness: not just tool-calling, but a business with books.',
+    accent: '#5be49b',
+    tagline: 'Self-funding business agent',
+    repo: 'ianalloway/solvent-agent',
+    repoUrl: 'https://github.com/ianalloway/solvent-agent',
+    desc: 'An AI analyst that quotes jobs, collects Stripe payment, fulfils work on Nemotron, pays its own vendor bills under guardrails, and books P&L — declining work that does not clear margin.',
+    command: 'git clone https://github.com/ianalloway/solvent-agent.git\ncd solvent-agent\npython3 run_demo.py',
   },
   {
-    name: 'AI Advantage Sports',
-    subtitle: 'Consumer-facing ML product',
-    stack: ['Python', 'React', 'XGBoost', 'FastAPI'],
-    image: '/proof/ai-advantage-screenshot.png',
-    href: 'https://github.com/ianalloway/ai-advantage',
-    ctaLabel: 'View repository',
-    detail:
-      'Prediction and DFS tooling with a real deployed product surface, model-backed recommendations, and a presentation layer that looks like something users would actually trust.',
-    whyItMatters:
-      'Shows I can take a model from feature engineering to an interface that feels like a product, not just a benchmark.',
-  },
-  {
-    name: 'Sports Betting ML',
-    subtitle: 'End-to-end pipeline + demo',
-    stack: ['Python', 'FastAPI', 'Hugging Face', 'MLOps'],
-    image: '/proof/sports-betting-ml-demo.gif',
-    href: 'https://github.com/ianalloway/sports-betting-ml',
-    ctaLabel: 'View repository',
-    detail:
-      'A full workflow for sports prediction with feature engineering, model training, serving, and a public-facing demo tied to a clear architecture.',
-    whyItMatters:
-      'It demonstrates end-to-end ownership across data, modeling, packaging, and deployment.',
-  },
-  {
+    id: 'juryrig',
     name: 'juryrig',
-    subtitle: 'LLM judge audit toolkit',
-    stack: ['Python', 'Evaluation', 'Zero dependencies'],
-    image: '/proof/repo-health.svg',
-    href: 'https://github.com/ianalloway/juryrig',
-    ctaLabel: 'View repository',
-    detail:
-      'Audit LLM-as-judge pipelines for position bias, verbosity bias, self-consistency, judge panels, and calibration before you trust automated evals.',
-    whyItMatters:
-      'Evaluation infrastructure for the agentic era — the same rigor I bring to sports ML, applied to judges.',
-  },
-];
-
-const whyHireMe = [
-  'I build applied ML systems end-to-end, from data prep and evaluation to APIs, dashboards, and delivery.',
-  'I care about evaluation, not just model accuracy, so the work holds up when someone depends on it.',
-  'I turn analytics into usable products with clear UX, practical reporting, and developer-friendly documentation.',
-  'I communicate technical work clearly enough for engineers, recruiters, and stakeholders to stay aligned.',
-];
-
-const credibilitySignals = [
-  {
-    label: 'Education',
-    value: 'B.S. Information Science from USF; M.S. Artificial Intelligence in progress at USF',
+    accent: '#4fd6e0',
+    tagline: 'Audit LLM-as-judge pipelines',
+    repo: 'ianalloway/juryrig',
+    repoUrl: 'https://github.com/ianalloway/juryrig',
+    desc: 'A zero-dependency toolkit that tests your LLM judge for position bias, verbosity bias, prompt-injection, calibration, and panel agreement before you trust automated evals.',
+    command: 'git clone https://github.com/ianalloway/juryrig.git\ncd juryrig\npython3 examples/audit_demo.py',
   },
   {
-    label: 'Open source',
-    value: 'Public work across evaluation dashboards, ML utilities, repo tooling, and developer automation',
-  },
-  {
-    label: 'Selected certifications',
-    value: 'Deep Learning Specialization, Google ML Engineering, AWS Cloud Practitioner, Oracle SQL',
-  },
-  {
-    label: 'Flagship case study',
-    value: 'Sports ML evaluation write-up with calibration, rolling accuracy, and CLV framing',
-  },
-];
-
-const experience = [
-  {
-    title: 'Founder & Business Owner',
-    company: 'Alloway LLC',
-    period: 'July 2023 - Present',
-    description:
-      'Built AI and analytics solutions for client workflows, including dashboarding, ML prototypes, and operational tooling that improved efficiency by roughly 40%.',
-  },
-  {
-    title: 'Data Auditor / AI Engineer',
-    company: 'Omniichain',
-    period: 'Jan 2020 - Dec 2024',
-    description:
-      'Worked on anomaly detection and blockchain analytics workflows that helped reduce fraud incidents while making transactional health easier to inspect.',
-  },
-  {
-    title: 'Task Force Manager',
-    company: 'Hilton Hotels',
-    period: 'Aug 2020 - Sept 2023',
-    description:
-      'Led operational improvement work across multiple properties, with real ownership over process quality, budgets, and service outcomes.',
-  },
-  {
-    title: 'Sales & Purchasing Manager',
-    company: 'IT Parts and Spares Ltd.',
-    period: 'Sept 2018 - Aug 2020',
-    description:
-      'Managed purchasing relationships and process improvements across international hardware vendors, building the operations discipline I still bring to technical work.',
-  },
-];
-
-const selectedProjects = [
-  {
-    name: 'solvent-agent',
-    description:
-      'Self-funding analyst agent: Stripe earn/spend loop, payment verification, Nemotron fulfilment, Issuing guardrails, live treasury dashboard.',
-    codeHref: 'https://github.com/ianalloway/solvent-agent',
-    demoHref: '/demos#solvent',
-  },
-  {
-    name: 'snake-game',
-    description:
-      'Classic Snake with deterministic grid logic, keyboard controls, mobile buttons, score tracking, and restart flow. Play it on the site or inspect the standalone repo.',
-    codeHref: 'https://github.com/ianalloway/oss-archive/tree/archive/snake-game',
-    demoHref: '/snake',
-  },
-  {
-    name: 'nba-ratings',
-    description: 'Reusable Elo, logistic win probability, and Kelly helpers packaged for repeatable modeling work.',
-    codeHref: 'https://github.com/ianalloway/nba-ratings',
-  },
-  {
-    name: 'kelly-js',
-    description: 'Small, focused probability and bankroll utility package with clean API design.',
-    codeHref: 'https://github.com/ianalloway/kelly-js',
-    demoHref: '/demos#kelly',
-  },
-  {
-    name: 'juryrig',
-    description: 'Audit LLM-as-judge pipelines for bias, calibration, and panel consistency before you trust automated evals.',
-    codeHref: 'https://github.com/ianalloway/juryrig',
-  },
-  {
-    name: 'ankle-recovery-tracker',
-    description: 'A private-use dashboard for post-op pain, incision notes, range-of-motion work, PT goals, symptoms, and surgeon questions.',
-    codeHref: 'https://github.com/ianalloway/ian-web-forge',
-    demoHref: '/recovery',
-  },
-  {
+    id: 'openclaw',
     name: 'openclaw-skills',
-    description: 'Published skills and workflows around sports odds, reporting, developer tooling, and agent productivity.',
-    codeHref: 'https://github.com/ianalloway/openclaw-skills',
+    accent: '#c79bf0',
+    tagline: 'Agent skills for OpenClaw',
+    repo: 'ianalloway/openclaw-skills',
+    repoUrl: 'https://github.com/ianalloway/openclaw-skills',
+    desc: 'A collection of skills — sports odds, Kelly sizing, DFS optimizer, bet journal, market sentiment, and more — that extend the OpenClaw AI assistant when relevant tasks come up.',
+    command: 'git clone https://github.com/ianalloway/openclaw-skills.git\ncd openclaw-skills\ncp -r kelly-criterion ~/.openclaw/skills/',
   },
 ];
 
-const caseStudyBullets = [
-  'Problem: sports models are often pitched on a single win-rate number that hides whether the edge is stable or trustworthy.',
-  'Approach: package reusable primitives, build a reporting layer, and expose calibration, rolling accuracy, and CLV in one place.',
-  'Tradeoff: honest reporting makes the results look less flashy, but much more useful for real decision-making.',
-  'Next step: connect the same evaluation pattern to additional leagues and live data sources.',
+const TYPEWRITER_PHRASES = [
+  'ship them, watch them, fix them.',
+  'measure them honestly.',
+  'earn user trust.',
+  'survive production.',
 ];
 
-type WritingAsset = {
-  label: string;
-  href: string;
-  download?: boolean;
-};
+const HAIRLINE = 'rgba(255,255,255,0.08)';
 
-type WritingEntry = {
-  title: string;
-  description: string;
-  category: string;
-  assets: WritingAsset[];
-  videoUrl?: string;
-  videoThumbnail?: string;
-  videoBadge?: string;
-  note?: string;
-};
+/* ── Hero typewriter ── */
+function useTypewriter(phrases: string[]) {
+  const [text, setText] = useState('');
+  const idx = useRef(0);
+  const char = useRef(0);
+  const deleting = useRef(false);
 
-const academicAssignments: WritingEntry[] = [
-  {
-    title: 'The Ratepayer Protection Pledge and the Rising',
-    description:
-      'A critical examination of the policy implications and infrastructure costs associated with powering AI data centers in America.',
-    category: 'Academic Writing',
-    assets: [
-      { label: 'View PDF', href: '/papers/ratepayer-protection-pledge-rising.pdf' },
-      { label: 'Download PDF', href: '/papers/ratepayer-protection-pledge-rising.pdf', download: true },
-    ],
-  },
-  {
-    title: 'Assignment: Information Policy/Technology in the News',
-    description:
-      'Critical analysis of AI data center energy costs and ratepayer protection policy. Preserved in the submitted PDF format.',
-    category: 'Assignment',
-    assets: [
-      { label: 'View PDF', href: '/papers/it-news-essay-ratepayer-protection.pdf' },
-      { label: 'Download PDF', href: '/papers/it-news-essay-ratepayer-protection.pdf', download: true },
-    ],
-  },
-  {
-    title: 'Assignment: BSIS Program Review',
-    description:
-      'Program review assignment, with both the submitted PDF and the original DOCX version.',
-    category: 'Assignment',
-    assets: [
-      { label: 'View PDF', href: '/papers/bsis-program-review-alloway.pdf' },
-      { label: 'Download PDF', href: '/papers/bsis-program-review-alloway.pdf', download: true },
-      { label: 'Original DOCX', href: '/papers/originals/bsis-program-review-alloway.docx', download: true },
-    ],
-  },
-  {
-    title: 'Discussion Question 2: Portfolio Peer Feedback and Support',
-    description:
-      'Peer feedback discussion on portfolio development, available in the original DOCX format.',
-    category: 'Discussion',
-    assets: [
-      { label: 'Original DOCX', href: '/papers/originals/discussion-question-2-peer-feedback.docx', download: true },
-    ],
-  },
-  {
-    title: 'GEA#2 Assignment: Reflective Essay',
-    description:
-      'Reflective essay preserved in presentation form with the original video link and the script file included alongside it.',
-    category: 'Assignment',
-    videoUrl: 'https://www.youtube.com/watch?v=kzOzxch1-hE&t=236s',
-    videoThumbnail: 'https://img.youtube.com/vi/kzOzxch1-hE/hqdefault.jpg',
-    videoBadge: '3:56',
-    assets: [
-      { label: 'Watch Video', href: 'https://www.youtube.com/watch?v=kzOzxch1-hE&t=236s' },
-      { label: 'Video Script', href: '/papers/originals/gea2-video-script.md', download: true },
-    ],
-  },
-  {
-    title: 'Portfolio Presentations',
-    description:
-      'Final portfolio presentation slides, available in the original PPTX format.',
-    category: 'Presentation',
-    assets: [
-      { label: 'Original PPTX', href: '/papers/originals/portfolio-presentations.pptx', download: true },
-    ],
-    note: 'Slides only — the full video recording is too large to host here.',
-  },
-];
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    const tick = () => {
+      const phrase = phrases[idx.current];
+      if (!deleting.current) {
+        char.current += 1;
+        setText(phrase.slice(0, char.current));
+        if (char.current === phrase.length) {
+          deleting.current = true;
+          timer = setTimeout(tick, 2200);
+          return;
+        }
+        timer = setTimeout(tick, 55);
+      } else {
+        char.current -= 1;
+        setText(phrase.slice(0, char.current));
+        if (char.current === 0) {
+          deleting.current = false;
+          idx.current = (idx.current + 1) % phrases.length;
+          timer = setTimeout(tick, 350);
+          return;
+        }
+        timer = setTimeout(tick, 28);
+      }
+    };
+    timer = setTimeout(tick, 600);
+    return () => clearTimeout(timer);
+  }, [phrases]);
 
-const writingResources: WritingEntry[] = [
-  {
-    title: 'Portfolio Conclusion — LIS 4934 Senior Capstone',
-    description:
-      'Reflective capstone conclusion, with both the web PDF and the original DOCX draft.',
-    category: 'Capstone',
-    assets: [
-      { label: 'View PDF', href: '/papers/portfolio-conclusion-lis4934.pdf' },
-      { label: 'Download PDF', href: '/papers/portfolio-conclusion-lis4934.pdf', download: true },
-      { label: 'Original DOCX', href: '/papers/originals/portfolio-conclusion-lis4934.docx', download: true },
-    ],
-  },
-  {
-    title: 'Bio and Career Goals',
-    description:
-      'Biography and career goals statement, available as a submitted PDF plus the original DOCX draft.',
-    category: 'Portfolio',
-    assets: [
-      { label: 'View PDF', href: '/papers/bio-and-career-goals.pdf' },
-      { label: 'Download PDF', href: '/papers/bio-and-career-goals.pdf', download: true },
-      { label: 'Original DOCX', href: '/papers/originals/enhanced-bio-and-career-goals-alloway.docx', download: true },
-    ],
-  },
-  {
-    title: 'Event Report Capstone',
-    description:
-      'Capstone event report with both the PDF version and the original DOCX submission format.',
-    category: 'Capstone',
-    assets: [
-      { label: 'View PDF', href: '/papers/event-report-capstone.pdf' },
-      { label: 'Download PDF', href: '/papers/event-report-capstone.pdf', download: true },
-      { label: 'Original DOCX', href: '/papers/originals/event-report-capstone.docx', download: true },
-    ],
-  },
-  {
-    title: 'Case Study Capstone',
-    description:
-      'Case study capstone, available as a PDF along with the original DOCX version.',
-    category: 'Capstone',
-    assets: [
-      { label: 'View PDF', href: '/papers/case-study-capstone.pdf' },
-      { label: 'Download PDF', href: '/papers/case-study-capstone.pdf', download: true },
-      { label: 'Original DOCX', href: '/papers/originals/case-study-capstone.docx', download: true },
-    ],
-  },
-  {
-    title: 'GEA Capstone',
-    description:
-      'GEA capstone available in both PDF and original DOCX format.',
-    category: 'Capstone',
-    assets: [
-      { label: 'View PDF', href: '/papers/gea-capstone.pdf' },
-      { label: 'Download PDF', href: '/papers/gea-capstone.pdf', download: true },
-      { label: 'Original DOCX', href: '/papers/originals/gea-capstone-alloway.docx', download: true },
-    ],
-  },
-  {
-    title: 'AllowayAI on Substack',
-    description:
-      'My long-form writing outlet for technical essays, build notes, and public-facing writing.',
-    category: 'Writing',
-    assets: [
-      { label: 'Visit Substack', href: 'https://allowayai.substack.com' },
-    ],
-  },
-];
+  return text;
+}
 
-const quote = {
-  text: 'Hired Ian to build a real-time data pipeline for our risk engine. He delivered ahead of schedule with FastAPI + Convex architecture that handles 50k events/min. Would hire again without hesitation.',
-  person: 'Sarah K.',
-  role: 'Lead Engineer, fintech startup',
-};
+const Caret = () => (
+  <span
+    aria-hidden
+    style={{
+      display: 'inline-block',
+      width: 2,
+      height: '0.9em',
+      marginLeft: 2,
+      transform: 'translateY(2px)',
+      background: ACCENT,
+      animation: 'home-caret-blink 1s step-end infinite',
+    }}
+  />
+);
+
+const Eyebrow = ({ children }: { children: string }) => (
+  <p
+    className="font-jet uppercase"
+    style={{ fontSize: 12, fontWeight: 500, letterSpacing: '0.18em', color: ACCENT, marginBottom: 12 }}
+  >
+    {children}
+  </p>
+);
 
 const Index = () => {
-  const [typedText, setTypedText] = useState('');
-  const statsRef = useRef<HTMLElement>(null);
-  const [statsVisible, setStatsVisible] = useState(false);
-  const c1 = useCounter(30, statsVisible);
-  const c2 = useCounter(40, statsVisible);
-  const c3 = useCounter(68.3, statsVisible, 1);
-  const c4 = useCounter(60, statsVisible);
-  const [theme, setTheme] = useState<SiteTheme>(() => getStoredTheme());
-  const { toast } = useToast();
-  const fullText = 'IAN ALLOWAY';
+  const [filter, setFilter] = useState<Filter>('All');
+  const [copied, setCopied] = useState<string | null>(null);
+  const typed = useTypewriter(TYPEWRITER_PHRASES);
 
   useEffect(() => {
-    applyTheme(theme);
-  }, [theme]);
-
-  useEffect(() => {
-    const el = statsRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setStatsVisible(true); obs.disconnect(); } },
-      { threshold: 0.2 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
+    document.body.classList.add('home-redesign');
+    return () => document.body.classList.remove('home-redesign');
   }, []);
 
-  useEffect(() => {
-    if (prefersReducedMotion()) {
-      const timeout = window.setTimeout(() => setTypedText(fullText), 0);
-      return () => window.clearTimeout(timeout);
-    }
-
-    let index = 0;
-    const timer = setInterval(() => {
-      if (index <= fullText.length) {
-        setTypedText(fullText.slice(0, index));
-        index += 1;
-      } else {
-        clearInterval(timer);
-      }
-    }, 90);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const copyEthAddress = async () => {
-    try {
-      await navigator.clipboard.writeText(ETH_DONATION_ADDRESS);
-      toast({
-        title: 'Address Copied!',
-        description: 'ETH donation address copied to clipboard',
-      });
-    } catch {
-      toast({
-        title: 'Failed to copy',
-        variant: 'destructive',
-      });
-    }
+  const visible = filter === 'All' ? PROJECTS : PROJECTS.filter((p) => p.category === filter);
+  const counts: Record<Filter, number> = {
+    All: PROJECTS.length,
+    'Sports ML': PROJECTS.filter((p) => p.category === 'Sports ML').length,
+    'AI Agents': PROJECTS.filter((p) => p.category === 'AI Agents').length,
+    MLOps: PROJECTS.filter((p) => p.category === 'MLOps').length,
+    Tools: PROJECTS.filter((p) => p.category === 'Tools').length,
+    Web3: PROJECTS.filter((p) => p.category === 'Web3').length,
   };
 
+  const copy = (id: string, command: string) => {
+    navigator.clipboard?.writeText(command).then(() => {
+      setCopied(id);
+      setTimeout(() => setCopied((c) => (c === id ? null : c)), 1600);
+    });
+  };
+
+  const shell = 'max-w-[1120px] mx-auto px-8';
+
   return (
-    <div className="min-h-screen bg-background relative overflow-x-hidden">
-      <a
-        href="#main-content"
-        className="sr-only z-50 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground focus:not-sr-only focus:absolute focus:left-4 focus:top-4"
-      >
-        Skip to main content
-      </a>
-      {theme === 'matrix' && <MatrixRain />}
+    <div className="font-plex" style={{ background: '#0a0b0a', color: '#e8eae6', minHeight: '100vh', position: 'relative' }}>
+      {/* Ambient background layers */}
+      <div
+        aria-hidden
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 0,
+          pointerEvents: 'none',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.025) 1px, transparent 0)',
+          backgroundSize: '42px 42px',
+        }}
+      />
+      <div
+        aria-hidden
+        style={{
+          position: 'fixed',
+          top: '-15%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '80vw',
+          height: '55vh',
+          zIndex: 0,
+          pointerEvents: 'none',
+          background: 'radial-gradient(ellipse at center, rgba(91,228,155,0.06) 0%, transparent 68%)',
+        }}
+      />
 
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-primary/20 bg-background/90 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-          <a href="#top" className="flex items-center gap-2 text-primary font-mono font-bold tracking-tight">
-            <Terminal size={18} />
-            IAN.SYS
-          </a>
-          <div className="flex items-center gap-3 text-xs font-mono md:gap-5 md:text-sm">
-            <div className="hidden md:flex items-center gap-5">
-              <a href="#featured" className="text-primary hover:text-primary/70 transition-colors">[WORK]</a>
-              <a href="#case-study" className="text-primary hover:text-primary/70 transition-colors">[CASE_STUDY]</a>
-              <a href="#writing" className="text-primary hover:text-primary/70 transition-colors">[WRITING]</a>
-              <a href="#why-hire-me" className="text-primary hover:text-primary/70 transition-colors">[WHY_ME]</a>
-              <a href="#contact" className="text-primary hover:text-primary/70 transition-colors">[CONTACT]</a>
-            </div>
-            <a href="/hireme" className="text-primary hover:text-primary/70 transition-colors">[/HIRE]</a>
-            <Link to="/bots" className="text-primary hover:text-primary/70 transition-colors">[/BOTS]</Link>
-            <a href="/now" className="text-primary hover:text-primary/70 transition-colors">[/NOW]</a>
-            <Link to="/recovery" className="text-primary hover:text-primary/70 transition-colors">[/RECOVERY]</Link>
-            <button
-              onClick={() => setTheme((prev) => (prev === 'matrix' ? 'light' : 'matrix'))}
-              className="rounded-md border border-primary/30 p-2 transition-colors hover:bg-primary/10"
-              aria-label="Toggle theme"
-            >
-              {theme === 'matrix' ? <Sun size={16} className="text-primary" /> : <Moon size={16} className="text-primary" />}
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      <main id="main-content">
-      {/* Animated stats bar */}
-      <section ref={statsRef as React.RefObject<HTMLElement>} className="relative z-10 border-b border-primary/10 bg-primary/5 px-4 pb-4 pt-20">
-        <div className="mx-auto max-w-6xl">
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16">
-            {[
-              { label: 'Fraud Reduction', value: c1, suffix: '%', sub: 'for fintech client' },
-              { label: 'Ops Efficiency', value: c2, suffix: '%', sub: 'improvement delivered' },
-              { label: 'Model Accuracy', value: c3, suffix: '%', sub: 'NBA betting model' },
-              { label: 'GitHub Repos', value: c4, suffix: '+', sub: 'public repositories' },
-            ].map((s) => (
-              <div key={s.label} className="text-center">
-                <div className="text-2xl font-bold font-mono text-primary">{s.value}{s.suffix}</div>
-                <div className="text-xs font-mono font-semibold text-foreground/80 uppercase tracking-widest">{s.label}</div>
-                <div className="text-[10px] font-mono text-muted-foreground">{s.sub}</div>
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        {/* ── 1. Nav ── */}
+        <nav
+          style={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 50,
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            background: 'rgba(10,11,10,0.72)',
+            borderBottom: '1px solid rgba(255,255,255,0.07)',
+          }}
+        >
+          <div className={shell} style={{ height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <a href="#top" style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
+              <span style={{ width: 9, height: 9, borderRadius: 2, background: ACCENT, boxShadow: '0 0 10px rgba(91,228,155,0.7)' }} />
+              <span className="font-jet" style={{ fontWeight: 700, fontSize: 14, color: '#e8eae6' }}>
+                ian<span style={{ color: ACCENT }}>.</span>alloway
+              </span>
+            </a>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+              <div className="hidden sm:flex" style={{ alignItems: 'center', gap: 4 }}>
+                {[
+                  ['work', '#work'],
+                  ['capabilities', '#capabilities'],
+                  ['agents', '#agents'],
+                  ['about', '#about'],
+                ].map(([label, href]) => (
+                  <a key={href} href={href} className="nav-link font-jet" style={{ fontSize: 12.5, color: '#9aa093', padding: '7px 13px', borderRadius: 6 }}>
+                    {label}
+                  </a>
+                ))}
               </div>
-            ))}
+              <a
+                href="#contact"
+                className="font-jet btn-glow"
+                style={{ fontSize: 12.5, fontWeight: 500, color: '#0a0b0a', background: ACCENT, padding: '8px 16px', borderRadius: 6, whiteSpace: 'nowrap' }}
+              >
+                Get in touch
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </nav>
 
-      <section id="top" className="relative z-10 px-4 pt-28 pb-16 md:pt-36 md:pb-24">
-        {/* Radial hero glow */}
-        <div className="absolute inset-0 pointer-events-none" style={{background:'radial-gradient(ellipse 60% 40% at 30% 50%, hsl(120 100% 50% / 0.05) 0%, transparent 70%)'}} />
-        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
-          <div>
-            <div className="mb-5 flex items-center gap-3 flex-wrap">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-green-400/40 bg-green-400/8 text-green-400 font-mono text-xs font-bold tracking-widest uppercase animate-border-glow shadow-[0_0_16px_hsl(120_100%_50%/0.1)]">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
-                </span>
-                Open to Work · ML Engineer / Data Scientist
+        {/* ── 2. Hero ── */}
+        <header id="top" style={{ padding: '96px 32px 88px' }}>
+          <div style={{ maxWidth: 780, margin: '0 auto' }}>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 9,
+                padding: '6px 14px 6px 12px',
+                border: '1px solid rgba(91,228,155,0.28)',
+                borderRadius: 100,
+                background: 'rgba(91,228,155,0.05)',
+                marginBottom: 30,
+              }}
+            >
+              <span style={{ position: 'relative', width: 8, height: 8 }}>
+                <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: ACCENT }} />
+                <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: ACCENT, animation: 'home-pulse-ring 2.4s ease-out infinite' }} />
+              </span>
+              <span className="font-jet uppercase" style={{ fontSize: 11.5, fontWeight: 500, letterSpacing: '0.14em', color: '#9fe9c1', whiteSpace: 'nowrap' }}>
+                Open to work · ML / Data roles
               </span>
             </div>
-            <h1 className="mb-4 text-5xl md:text-7xl font-bold font-mono leading-[0.95]">
-              <span className="gradient-text animate-glow-pulse">{typedText}</span>
-              <span className="animate-terminal-blink text-primary">_</span>
+
+            <p className="font-jet" style={{ fontSize: 13, color: '#6f756a', letterSpacing: '0.04em', marginBottom: 18 }}>
+              <span style={{ color: ACCENT }}>&gt;</span> ml engineer &amp; data scientist <span style={{ color: '#3f463b' }}>·</span> usf m.s. ai{' '}
+              <span style={{ color: '#3f463b' }}>·</span> 2026
+            </p>
+
+            <h1 className="font-display" style={{ fontWeight: 700, fontSize: 'clamp(44px, 7vw, 84px)', lineHeight: 0.98, letterSpacing: '-0.03em', color: '#f4f6f1', marginBottom: 26 }}>
+              Ian Alloway
             </h1>
-            <p className="max-w-3xl text-xl md:text-2xl font-mono text-foreground/85 mb-4">
-              ML Engineer / Data Scientist building evaluation-first analytics and decision-support products.
+
+            <p style={{ fontSize: 'clamp(19px, 2.4vw, 25px)', lineHeight: 1.5, color: '#c4c9bd', maxWidth: 640 }}>
+              I build <span style={{ color: ACCENT, fontWeight: 500 }}>evaluation-first ML systems</span> that survive contact with real users —{' '}
+              <span style={{ color: '#e8eae6' }}>{typed}</span>
+              <Caret />
             </p>
-            <p className="max-w-2xl text-sm md:text-base text-muted-foreground font-mono leading-relaxed mb-8">
-              I build applied ML systems that survive contact with real users: APIs, dashboards, reporting layers, and developer tools that make model behavior easier to trust. Basically, I like useful models and I maintain a healthy suspicion of dashboards that look too good.
+
+            <p style={{ fontSize: 15.5, lineHeight: 1.65, color: '#8b9085', maxWidth: 600, marginTop: 20, marginBottom: 38 }}>
+              APIs, dashboards, reporting layers, and developer tools that make model behavior easier to trust. Production-grade, mostly open source.
             </p>
 
-            <div className="flex flex-wrap gap-3 mb-8">
-              <Button className="font-mono bg-primary text-primary-foreground hover:bg-primary/90" asChild>
-                <a href="/Ian_Alloway_Resume_CV.pdf" download>
-                  <Download className="mr-2" size={16} /> View Resume
-                </a>
-              </Button>
-              <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
-                <a href="#featured">
-                  <BarChart3 className="mr-2" size={16} /> See Featured Projects
-                </a>
-              </Button>
-              <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
-                <a href="#contact">
-                  <Mail className="mr-2" size={16} /> Contact Me
-                </a>
-              </Button>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2">
-              {outcomes.map((item) => (
-                <div key={item} className="flex items-start gap-3 rounded-xl border border-primary/20 bg-card/70 px-4 py-4 backdrop-blur-sm">
-                  <CheckCircle2 size={16} className="mt-0.5 text-primary shrink-0" />
-                  <p className="text-sm font-mono text-muted-foreground leading-relaxed">{item}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="glass-card rounded-3xl p-6 shadow-[0_8px_40px_hsl(0_0%_0%/0.5)] animate-float">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <p className="text-xs font-mono uppercase tracking-[0.2em] text-primary/70 mb-2">Current Narrative</p>
-                <h2 className="text-2xl font-semibold font-mono text-primary">What I want recruiters to notice</h2>
-              </div>
-              <Brain size={26} className="text-primary/70" />
-            </div>
-            <div className="space-y-4 font-mono text-sm text-muted-foreground">
-              <p>B.S. Information Science from USF.</p>
-              <p>M.S. Artificial Intelligence in progress at USF.</p>
-              <p>Strongest public proof: sports analytics, ML evaluation, reporting, and developer tooling.</p>
-              <p>Best fit roles: ML Engineer, Applied AI Engineer, Data Scientist, Analytics Engineer.</p>
-            </div>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-mono text-primary hover:text-primary/70 transition-colors">
-                <Github size={15} /> GitHub
-              </a>
-              <a href="https://www.linkedin.com/in/ianit" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-mono text-primary hover:text-primary/70 transition-colors">
-                <Linkedin size={15} /> LinkedIn
-              </a>
-              <a href="mailto:ian@allowayllc.com" className="inline-flex items-center gap-2 text-sm font-mono text-primary hover:text-primary/70 transition-colors">
-                <Mail size={15} /> ian@allowayllc.com
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="relative z-10 px-4 pb-16">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid gap-4 md:grid-cols-3">
-            {proofCards.map((card) => (
-              <div key={card.title} className="glass-card rounded-xl p-6 transition-all duration-300">
-                <p className="text-xs uppercase tracking-[0.22em] text-primary/60 font-mono mb-4">// proof</p>
-                <h3 className="text-base font-bold text-primary font-mono mb-2">{card.title}</h3>
-                <p className="text-xs font-mono text-primary/60 mb-3">{card.stack}</p>
-                <p className="text-sm font-mono text-muted-foreground leading-relaxed">{card.impact}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="featured" className="relative z-10 px-4 py-16" style={{background:'linear-gradient(180deg, transparent, hsl(120 100% 50% / 0.03) 50%, transparent)'}}>
-        <div className="mx-auto max-w-6xl">
-          <div className="max-w-3xl mb-10">
-            <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-3">Featured Work</p>
-            <h2 className="text-3xl md:text-4xl font-semibold font-mono text-primary mb-4">The projects that make the hiring case fastest</h2>
-            <p className="text-sm md:text-base font-mono text-muted-foreground leading-relaxed">
-              These are the strongest examples of how I work: a model-backed product, an honest evaluation dashboard, an end-to-end ML pipeline, and a practical developer tool with clear maintenance value.
-            </p>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            {featuredProjects.map((project) => (
-              <div key={project.name} className="glass-card rounded-xl overflow-hidden transition-all duration-300">
-                <div className="aspect-[16/10] overflow-hidden bg-black/30 border-b border-primary/20">
-                  <img
-                    src={project.image}
-                    alt={project.name}
-                    width="640"
-                    height="400"
-                    loading="lazy"
-                    className="h-full w-full object-cover object-top"
-                  />
-                </div>
-                <CardContent className="p-6">
-                  <div className="flex items-start justify-between gap-4 mb-4">
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.22em] text-primary/60 font-mono mb-2">{project.subtitle}</p>
-                      <h3 className="text-xl font-semibold font-mono text-primary">{project.name}</h3>
-                    </div>
-                    <a
-                      href={project.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Open ${project.name} repository`}
-                      className="text-primary hover:text-primary/70 transition-colors shrink-0"
-                    >
-                      <ExternalLink size={18} />
-                    </a>
-                  </div>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.stack.map((tech) => (
-                      <span key={tech} className="rounded-full border border-primary/20 px-2.5 py-1 text-xs font-mono text-primary/80">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-sm font-mono text-muted-foreground leading-relaxed mb-3">{project.detail}</p>
-                  <p className="text-sm font-mono text-foreground/90 leading-relaxed mb-5">{project.whyItMatters}</p>
-                  <Button variant="outline" className="font-mono terminal-border text-primary border-primary/30 hover:bg-primary/10 hover:border-primary/60" asChild>
-                    <a href={project.href} target="_blank" rel="noopener noreferrer">
-                      <Github className="mr-2" size={16} /> {project.ctaLabel}
-                    </a>
-                  </Button>
-                </CardContent>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="why-hire-me" className="relative z-10 px-4 py-16">
-        <div className="mx-auto max-w-6xl grid gap-8 lg:grid-cols-[0.95fr_1.05fr] items-start">
-          <div>
-            <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-3">Why Hire Me</p>
-            <h2 className="text-3xl md:text-4xl font-semibold font-mono text-primary mb-4">Clear strengths, no interpretive dance required</h2>
-            <p className="text-sm md:text-base font-mono text-muted-foreground leading-relaxed">
-              If someone only spends two minutes on this site, this is the section I want them to leave with. My edge is not just modeling. It is building the whole thing around the model so another person can trust, use, and extend it.
-            </p>
-          </div>
-          <div className="grid gap-4">
-            {whyHireMe.map((item) => (
-              <div key={item} className="glass-card rounded-xl px-5 py-4 flex gap-4 transition-all duration-200">
-                <CheckCircle2 size={16} className="text-primary mt-0.5 shrink-0" />
-                <p className="text-sm font-mono text-muted-foreground leading-relaxed">{item}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="case-study" className="relative z-10 px-4 py-16 bg-primary/5">
-        <div className="mx-auto max-w-6xl grid gap-8 lg:grid-cols-[1.05fr_0.95fr] items-start">
-          <div className="glass-card rounded-xl overflow-hidden">
-            <div className="aspect-[16/10] overflow-hidden border-b border-primary/20 bg-black/40">
-              <img
-                src="/proof/sports-betting-ml-architecture.svg"
-                alt="Sports Betting ML architecture"
-                width="1600"
-                height="900"
-                loading="lazy"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="p-6">
-              <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-3">Case Study</p>
-              <h2 className="text-2xl md:text-3xl font-semibold font-mono text-primary mb-4">Sports ML evaluation and calibration</h2>
-              <p className="text-sm font-mono text-muted-foreground leading-relaxed mb-5">
-                I already had the pieces: reusable modeling primitives, reporting scripts, and a dashboard. The case study ties them together into the story recruiters actually need to see: problem, approach, tradeoffs, results, and what I would build next.
-              </p>
-              <div className="space-y-3 mb-6">
-                {caseStudyBullets.map((bullet) => (
-                  <p key={bullet} className="text-sm font-mono text-muted-foreground leading-relaxed">{bullet}</p>
-                ))}
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <Button className="font-mono bg-primary text-primary-foreground hover:bg-primary/90" asChild>
-                  <a href="/papers/sports-ml-evaluation-case-study.html" target="_blank" rel="noopener noreferrer">
-                    <FileText className="mr-2" size={16} /> Read Case Study
-                  </a>
-                </Button>
-                <Button variant="outline" className="font-mono terminal-border text-primary border-primary/30 hover:bg-primary/10" asChild>
-                  <a href="https://github.com/ianalloway/oss-archive/tree/archive/nba-clv-dashboard" target="_blank" rel="noopener noreferrer">
-                    <ArrowRight className="mr-2" size={16} /> See the dashboard repo
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono">Credibility Signals</p>
-            {credibilitySignals.map((signal) => (
-              <div key={signal.label} className="glass-card rounded-xl p-5 transition-all duration-200">
-                <p className="text-xs uppercase tracking-[0.2em] text-primary/60 font-mono mb-2">{signal.label}</p>
-                <p className="text-sm font-mono text-muted-foreground leading-relaxed">{signal.value}</p>
-              </div>
-            ))}
-            <div className="glass-card rounded-xl p-5">
-              <p className="text-xs uppercase tracking-[0.2em] text-primary/60 font-mono mb-3">One strong quote</p>
-              <p className="text-sm font-mono text-foreground/90 leading-relaxed mb-3">"{quote.text}"</p>
-              <p className="text-xs font-mono text-muted-foreground">{quote.person} • {quote.role}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="writing" className="py-16 px-4 bg-primary/5 relative z-10">
-        <div className="max-w-6xl mx-auto">
-          <div className="max-w-3xl mb-8">
-            <h2 className="text-2xl font-bold mb-4 matrix-text font-mono text-primary">
-              <GraduationCap className="inline mr-2" size={24} />
-              [ACADEMIC_WRITING]
-            </h2>
-            <p className="text-muted-foreground font-mono mb-3 text-sm">
-              &gt; Selected assignments and writing artifacts from my Information Science coursework at USF, presented in their original formats.
-            </p>
-            <p className="text-muted-foreground/80 font-mono text-xs">
-              Each piece is listed under its original assignment name, with the submitted files available to read or download.
-            </p>
-          </div>
-
-          <div className="grid xl:grid-cols-[1.15fr_0.85fr] gap-8 items-start">
-            <div>
-              <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-4">Assignments</p>
-              <div className="grid md:grid-cols-2 gap-4">
-                {academicAssignments.map((paper) => (
-                  <Card key={paper.title} className="terminal-border bg-card/80 backdrop-blur-sm hover:scale-[1.02] transition-transform">
-                    <CardContent className="p-4">
-                      <div className="flex justify-between items-start gap-3 mb-2">
-                        <h3 className="text-primary font-bold font-mono text-sm leading-snug">{paper.title}</h3>
-                        <span className="px-2 py-0.5 text-xs terminal-border rounded font-mono text-primary/80 shrink-0">
-                          {paper.category}
-                        </span>
-                      </div>
-                      {paper.videoUrl && paper.videoThumbnail && (
-                        <div className="mb-3 rounded overflow-hidden border border-primary/30">
-                          <a href={paper.videoUrl} target="_blank" rel="noopener noreferrer" className="block relative group">
-                            <img
-                              src={paper.videoThumbnail}
-                              alt={`${paper.title} thumbnail`}
-                              width="480"
-                              height="360"
-                              loading="lazy"
-                              className="w-full object-cover h-32"
-                            />
-                            <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/60 transition-colors">
-                              <div className="w-10 h-10 rounded-full bg-primary/90 flex items-center justify-center">
-                                <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-black ml-0.5"><path d="M8 5v14l11-7z"/></svg>
-                              </div>
-                            </div>
-                            {paper.videoBadge && (
-                              <span className="absolute bottom-1 right-1 bg-black/80 text-primary font-mono text-xs px-1 rounded">{paper.videoBadge}</span>
-                            )}
-                          </a>
-                        </div>
-                      )}
-                      <p className="text-muted-foreground/70 text-xs mb-3 font-mono">{paper.description}</p>
-                      {paper.note && (
-                        <p className="text-[11px] font-mono text-primary/70 mb-3">{paper.note}</p>
-                      )}
-                      <div className="flex flex-wrap gap-2">
-                        {paper.assets.map((asset) => (
-                          <Button key={asset.label} variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
-                            <a href={asset.href} target="_blank" rel="noopener noreferrer" download={asset.download}>
-                              <FileText className="mr-1" size={12} /> {asset.label}
-                            </a>
-                          </Button>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono">Supporting Writing</p>
-              {writingResources.map((item) => (
-                <Card key={item.title} className="terminal-border bg-card/80 backdrop-blur-sm">
-                  <CardContent className="p-5">
-                    <div className="flex justify-between items-start gap-3 mb-2">
-                      <h3 className="text-primary font-bold font-mono text-sm leading-snug">{item.title}</h3>
-                      <span className="px-2 py-0.5 text-xs terminal-border rounded font-mono text-primary/80 shrink-0">
-                        {item.category}
-                      </span>
-                    </div>
-                    <p className="text-muted-foreground/70 text-xs mb-4 font-mono">{item.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {item.assets.map((asset) => (
-                        <Button key={asset.label} variant="outline" size="sm" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs" asChild>
-                          <a href={asset.href} target="_blank" rel="noopener noreferrer" download={asset.download}>
-                            <FileText className="mr-1" size={12} /> {asset.label}
-                          </a>
-                        </Button>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="relative z-10 px-4 py-16">
-        <div className="mx-auto max-w-6xl grid gap-8 lg:grid-cols-[0.95fr_1.05fr] items-start">
-          <div>
-            <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-3">Experience</p>
-            <h2 className="text-3xl md:text-4xl font-semibold font-mono text-primary mb-4">Range is useful when the story stays coherent</h2>
-            <p className="text-sm md:text-base font-mono text-muted-foreground leading-relaxed">
-              I have done work across analytics, operations, client delivery, and developer tooling. The common thread is that I like systems that have to perform under real constraints, which is probably why I ended up obsessed with evaluation and process quality.
-            </p>
-          </div>
-          <div className="space-y-3">
-            {experience.map((item, idx) => (
-              <Card key={`${item.company}-${item.title}`} className={`border-primary/20 bg-card/70 backdrop-blur-sm border-l-4 hover:-translate-y-0.5 hover:shadow-[0_0_16px_hsl(120_100%_50%/0.1)] transition-all duration-200 ${idx === 0 ? 'border-l-primary' : idx === 1 ? 'border-l-cyan-400' : idx === 2 ? 'border-l-yellow-400' : 'border-l-purple-400'}`}>
-                <CardContent className="p-5">
-                  <div className="flex flex-wrap items-start justify-between gap-3 mb-2">
-                    <div>
-                      <h3 className="text-sm md:text-base font-mono font-semibold text-primary">{item.title}</h3>
-                      <p className="text-xs md:text-sm font-mono text-muted-foreground">{item.company}</p>
-                    </div>
-                    <span className="text-xs font-mono text-primary/70 bg-primary/10 px-2 py-0.5 rounded-full">{item.period}</span>
-                  </div>
-                  <p className="text-sm font-mono text-muted-foreground leading-relaxed">{item.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="relative z-10 px-4 py-16 bg-primary/5">
-        <div className="mx-auto max-w-6xl">
-          <div className="max-w-3xl mb-8">
-            <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-3">More Good Proof</p>
-            <h2 className="text-3xl md:text-4xl font-semibold font-mono text-primary mb-4">A few more repos worth clicking</h2>
-            <p className="text-sm md:text-base font-mono text-muted-foreground leading-relaxed">
-              These support the same hiring story without diluting it: reusable modeling utilities, practical tooling, and OSS work that looks like something a team could actually adopt.
-            </p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            {selectedProjects.map((project) => (
-              <Card key={project.name} className="border-primary/20 bg-card/80 backdrop-blur-sm">
-                <CardContent className="p-5">
-                  <div className="flex items-start justify-between gap-4 mb-3">
-                    <div>
-                      <h3 className="text-lg font-semibold font-mono text-primary">{project.name}</h3>
-                      <p className="text-sm font-mono text-muted-foreground leading-relaxed mt-2">{project.description}</p>
-                    </div>
-                    <a
-                      href={project.demoHref ?? project.codeHref}
-                      aria-label={`Open ${project.name} ${project.demoHref ? 'demo' : 'repository'}`}
-                      {...(!project.demoHref ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                      className="text-primary hover:text-primary/70 transition-colors shrink-0"
-                    >
-                      <ExternalLink size={18} />
-                    </a>
-                  </div>
-                  <div className="flex flex-wrap gap-3">
-                    <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
-                      <a href={project.codeHref} target="_blank" rel="noopener noreferrer">
-                        <Github className="mr-2" size={16} /> Code
-                      </a>
-                    </Button>
-                    {project.demoHref ? (
-                      <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
-                        <Link to={project.demoHref}>
-                          <ExternalLink className="mr-2" size={16} /> Live Demo
-                        </Link>
-                      </Button>
-                    ) : null}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* GitHub Activity Strip */}
-      <section className="relative z-10 px-4 py-10 border-t border-primary/10">
-        <div className="mx-auto max-w-6xl">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-1">// RECENT_ACTIVITY</p>
-              <h2 className="text-xl font-semibold font-mono text-primary">Latest on GitHub</h2>
-            </div>
-            <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-primary transition-colors">
-              <Github size={13} /> View all 60+ repos →
-            </a>
-          </div>
-          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              { name: 'solvent-agent', desc: 'Self-funding AI agent — Stripe × Nemotron hackathon project', lang: 'Python', updated: 'today', href: 'https://github.com/ianalloway/solvent-agent' },
-              { name: 'openclaw-skills', desc: '9+ agent skills for OpenClaw / ClawHub', lang: 'Python', updated: '1 day ago', href: 'https://github.com/ianalloway/openclaw-skills' },
-              { name: 'ai-advantage', desc: 'Sports betting platform — ML picks engine', lang: 'TypeScript', updated: '3 days ago', href: 'https://github.com/ianalloway/ai-advantage' },
-              { name: 'juryrig', desc: 'Audit LLM-as-judge pipelines before you trust them', lang: 'Python', updated: '3 days ago', href: 'https://github.com/ianalloway/juryrig' },
-              { name: 'onchain-risk-scanner', desc: 'Read-only EVM contract risk & proxy scanner', lang: 'Python', updated: '3 days ago', href: 'https://github.com/ianalloway/onchain-risk-scanner' },
-              { name: 'ian-web-forge', desc: 'This portfolio site — React + Tailwind', lang: 'TypeScript', updated: 'today', href: 'https://github.com/ianalloway/ian-web-forge' },
-            ].map((repo) => (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 46 }}>
               <a
-                key={repo.name}
-                href={repo.href}
+                href="#work"
+                className="font-jet btn-glow"
+                style={{ fontSize: 13.5, fontWeight: 500, color: '#0a0b0a', background: ACCENT, padding: '13px 24px', borderRadius: 8 }}
+              >
+                View selected work
+              </a>
+              <a
+                href="https://github.com/ianalloway"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block glass-card rounded-xl p-4 transition-all duration-200"
+                className="font-jet btn-outline"
+                style={{ fontSize: 13.5, color: '#d6dbcf', border: '1px solid rgba(255,255,255,0.13)', padding: '13px 22px', borderRadius: 8 }}
               >
-                <div className="flex items-start justify-between gap-2 mb-2">
-                  <span className="font-mono text-sm font-semibold text-primary neon-underline">{repo.name}</span>
-                  <ExternalLink size={12} className="text-muted-foreground shrink-0 mt-0.5" />
-                </div>
-                <p className="text-xs font-mono text-muted-foreground leading-relaxed mb-3">{repo.desc}</p>
-                <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-muted-foreground">
-                    <span className={`w-2 h-2 rounded-full ${repo.lang === 'Python' ? 'bg-blue-400' : repo.lang === 'TypeScript' ? 'bg-cyan-400' : 'bg-yellow-400'}`} />
-                    {repo.lang}
-                  </span>
-                  <span className="text-[10px] font-mono text-muted-foreground/60">Updated {repo.updated}</span>
-                </div>
+                GitHub ↗
               </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" className="relative z-10 px-4 py-16">
-        <div className="mx-auto max-w-5xl glass-card rounded-[28px] p-8 md:p-10 shadow-[0_20px_60px_hsl(0_0%_0%/0.5)]">
-          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
-            <div>
-              <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-3">Contact</p>
-              <h2 className="text-3xl md:text-4xl font-semibold font-mono text-primary mb-4">If you need someone who can build the model and the layer around it, let’s talk.</h2>
-              <p className="text-sm md:text-base font-mono text-muted-foreground leading-relaxed mb-6 max-w-3xl">
-                I’m especially interested in ML engineering, applied AI, analytics engineering, and data science roles where evaluation quality, product thinking, and practical delivery all matter.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Button className="font-mono bg-primary text-primary-foreground hover:bg-primary/90" asChild>
-                  <a href="mailto:ian@allowayllc.com">
-                    <Mail className="mr-2" size={16} /> Contact Me
-                  </a>
-                </Button>
-                <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
-                  <a href="/Ian_Alloway_Resume_CV.pdf" download>
-                    <Download className="mr-2" size={16} /> Download Resume
-                  </a>
-                </Button>
-                <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
-                  <a href="https://www.linkedin.com/in/ianit" target="_blank" rel="noopener noreferrer">
-                    <Linkedin className="mr-2" size={16} /> LinkedIn
-                  </a>
-                </Button>
-                <Button variant="outline" className="font-mono terminal-border text-primary border-primary hover:bg-primary/10" asChild>
-                  <a href="https://allowayai.substack.com" target="_blank" rel="noopener noreferrer">
-                    <FileText className="mr-2" size={16} /> Read Substack
-                  </a>
-                </Button>
-              </div>
-
-              <div className="mt-8 max-w-2xl rounded-2xl border border-primary/20 bg-background/70 p-5">
-                <p className="text-xs uppercase tracking-[0.22em] text-primary/70 font-mono mb-2">Subscribe By Email</p>
-                <h3 className="text-xl font-semibold font-mono text-primary mb-2">Get new writing the minute it lands.</h3>
-                <p className="text-sm font-mono text-muted-foreground leading-relaxed mb-4">
-                  This now uses the official embedded Substack signup, so people can subscribe right here in the contact section without leaving the site.
-                </p>
-                <SubstackEmbed className="max-w-xl" />
-                <p className="mt-4 text-xs font-mono text-muted-foreground">
-                  If the embed does not load,{" "}
-                  <a
-                    href="https://allowayai.substack.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:text-primary/70 transition-colors"
-                  >
-                    open AllowayAI on Substack directly
-                  </a>
-                  .
-                </p>
-              </div>
+              <a
+                href="/Ian_Alloway_Resume_CV.pdf"
+                download
+                className="font-jet btn-outline"
+                style={{ fontSize: 13.5, color: '#d6dbcf', border: '1px solid rgba(255,255,255,0.13)', padding: '13px 22px', borderRadius: 8 }}
+              >
+                Résumé ↓
+              </a>
             </div>
 
-            <div className="space-y-3 font-mono text-sm text-muted-foreground min-w-[260px]">
-              <a href="mailto:ian@allowayllc.com" className="flex items-center gap-2 text-primary hover:text-primary/70 transition-colors">
-                <Mail size={15} /> ian@allowayllc.com
-              </a>
-              <a href="https://allowayai.substack.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-primary hover:text-primary/70 transition-colors">
-                <FileText size={15} /> allowayai.substack.com
-              </a>
-              <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-primary hover:text-primary/70 transition-colors">
-                <Github size={15} /> github.com/ianalloway
-              </a>
-              <a href="https://www.linkedin.com/in/ianit" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-primary hover:text-primary/70 transition-colors">
-                <Linkedin size={15} /> linkedin.com/in/ianit
-              </a>
-              <Link to="/hireme" className="flex items-center gap-2 text-primary transition-colors hover:text-primary/70">
-                <Briefcase size={15} /> Hire / consulting page
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <footer className="relative z-10 border-t border-primary/20 px-4 py-8">
-        <div className="mx-auto max-w-6xl flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="text-primary/70 text-sm font-mono">IAN.ALLOWAY.SYS</p>
-            <p className="text-xs font-mono text-muted-foreground mt-1">Built with React + Tailwind. Calm UI, honest metrics, and a little bit of terminal theater.</p>
-            <p className="text-xs font-mono text-muted-foreground mt-1 flex items-center gap-1.5">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-400"></span>
-              </span>
-              Currently building: M.S. AI coursework + AI Advantage Sports v2
-            </p>
-          </div>
-          <div className="flex flex-wrap items-center gap-3">
-            <a href="/papers/sports-ml-evaluation-case-study.html" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
-              <FileText size={12} /> Case study
-            </a>
-            <a href="/papers/bsis-program-review-alloway.pdf" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
-              <GraduationCap size={12} /> Academic writing
-            </a>
-            <a href="https://allowayai.substack.com" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
-              <FileText size={12} /> AllowayAI
-            </a>
-            <a href="/toolkit" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
-              <Package size={12} /> Toolkit
-            </a>
-            <a href="/demos" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
-              <Terminal size={12} /> Live demos
-            </a>
-            <a href="/bots" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
-              <Bot size={12} /> Start bots
-            </a>
-            <a href="https://etherscan.io/address/0x6F278Ce76BA5ED31Fd9bE646D074863e126836E9" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-primary hover:text-primary/70 transition-colors inline-flex items-center gap-1">
-              <Heart size={12} /> Crypto tips
-            </a>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={copyEthAddress}
-              className="font-mono terminal-border text-primary border-primary hover:bg-primary/10 text-xs"
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(4, 1fr)',
+                maxWidth: 640,
+                border: '1px solid rgba(255,255,255,0.08)',
+                borderRadius: 12,
+                background: 'rgba(255,255,255,0.012)',
+              }}
             >
-              <Copy size={12} className="mr-1" /> Copy wallet
-            </Button>
+              {HERO_METRICS.map((m, i) => (
+                <div key={m.label} style={{ padding: '18px 16px', borderRight: i < HERO_METRICS.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none' }}>
+                  <div className="font-display" style={{ fontWeight: 600, fontSize: 26, color: ACCENT, lineHeight: 1 }}>{m.value}</div>
+                  <div className="font-jet uppercase" style={{ fontSize: 10, fontWeight: 500, letterSpacing: '0.1em', color: '#cdd2c5', marginTop: 8 }}>{m.label}</div>
+                  <div className="font-jet" style={{ fontSize: 10, color: '#6f756a', marginTop: 3 }}>{m.sub}</div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </footer>
-      </main>
+        </header>
+
+        {/* ── 3. Selected Work ── */}
+        <section id="work" style={{ padding: '40px 32px 88px' }}>
+          <div style={{ maxWidth: 1120, margin: '0 auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 20 }}>
+              <div>
+                <Eyebrow>// selected_work</Eyebrow>
+                <h2 className="font-display" style={{ fontWeight: 600, fontSize: 'clamp(30px,4.4vw,44px)', letterSpacing: '-0.025em', color: '#f4f6f1' }}>
+                  Things I&apos;ve shipped
+                </h2>
+              </div>
+              <p style={{ fontSize: 14.5, color: '#8b9085', maxWidth: 340 }}>
+                Sports ML, AI agents, MLOps tooling, and developer tools. Most are open source and runnable today.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, margin: '28px 0' }}>
+              {FILTERS.map((f) => {
+                const active = filter === f;
+                const color = f === 'All' ? ACCENT : CATEGORY_COLORS[f];
+                return (
+                  <button
+                    key={f}
+                    onClick={() => setFilter(f)}
+                    className="font-jet"
+                    style={{
+                      fontSize: 11.5,
+                      fontWeight: 500,
+                      padding: '7px 14px',
+                      borderRadius: 7,
+                      cursor: 'pointer',
+                      transition: 'all .18s',
+                      color: active ? '#0a0b0a' : '#9aa093',
+                      background: active ? color : 'transparent',
+                      border: active ? `1px solid ${color}` : '1px solid rgba(255,255,255,0.11)',
+                    }}
+                  >
+                    {f} <span style={{ opacity: 0.5 }}>{counts[f]}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(330px, 1fr))', gap: 18 }}>
+              {visible.map((p) => {
+                const color = CATEGORY_COLORS[p.category];
+                return (
+                  <article
+                    key={p.title}
+                    style={{
+                      background: 'rgba(255,255,255,0.018)',
+                      borderRadius: 12,
+                      padding: 20,
+                      border: `1px solid ${p.featured ? `${color}33` : 'rgba(255,255,255,0.08)'}`,
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 9, minWidth: 0 }}>
+                        <span style={{ width: 7, height: 7, borderRadius: 2, background: color, boxShadow: `0 0 8px ${color}99`, flexShrink: 0 }} />
+                        <span className="font-jet" style={{ fontWeight: 700, fontSize: 14.5, color: '#f4f6f1', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {p.title}
+                        </span>
+                      </div>
+                      <span
+                        className="font-jet uppercase"
+                        style={{ fontSize: 9.5, fontWeight: 700, letterSpacing: '0.1em', color, border: `1px solid ${color}33`, background: `${color}12`, borderRadius: 5, padding: '3px 8px', whiteSpace: 'nowrap' }}
+                      >
+                        {p.category}
+                      </span>
+                    </div>
+
+                    <p style={{ fontSize: 13, lineHeight: 1.6, color: '#9aa093', minHeight: 62, marginTop: 14 }}>{p.description}</p>
+
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 4 }}>
+                      {p.tech.map((t) => (
+                        <span key={t} className="font-jet" style={{ fontSize: 10.5, color: '#8b9085', border: '1px solid rgba(255,255,255,0.09)', borderRadius: 5, padding: '3px 8px' }}>
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="font-jet" style={{ display: 'flex', gap: 14, marginTop: 'auto', paddingTop: 14, borderTop: '1px solid rgba(255,255,255,0.06)', fontSize: 12 }}>
+                      {p.code && (
+                        <a href={p.code} target="_blank" rel="noopener noreferrer" className="link-code" style={{ color: '#9aa093' }}>
+                          code ↗
+                        </a>
+                      )}
+                      {p.demo && (
+                        <a href={p.demo} target="_blank" rel="noopener noreferrer" className="link-demo" style={{ color: ACCENT }}>
+                          live demo →
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+
+            <div style={{ textAlign: 'center', marginTop: 40 }}>
+              <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="font-jet link-code" style={{ fontSize: 13.5, color: '#8b9085' }}>
+                See all 60+ repos on GitHub →
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 4. Capabilities ── */}
+        <section id="capabilities" style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.008)' }}>
+          <div style={{ maxWidth: 1120, margin: '0 auto', padding: '80px 32px' }}>
+            <Eyebrow>// capabilities</Eyebrow>
+            <h2 className="font-display" style={{ fontWeight: 600, fontSize: 'clamp(30px,4.4vw,44px)', letterSpacing: '-0.025em', color: '#f4f6f1', maxWidth: 640, marginBottom: 44 }}>
+              From feature engineering to deployment
+            </h2>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                gap: 1,
+                background: 'rgba(255,255,255,0.07)',
+                border: '1px solid rgba(255,255,255,0.07)',
+                borderRadius: 14,
+                overflow: 'hidden',
+              }}
+            >
+              {CAPABILITIES.map((c) => (
+                <div key={c.n} className="cap-cell" style={{ background: '#0c0e0c', padding: '28px 24px' }}>
+                  <div className="font-jet" style={{ fontSize: 11, color: ACCENT, marginBottom: 18 }}>{c.n}</div>
+                  <h3 className="font-display" style={{ fontWeight: 600, fontSize: 18, color: '#f4f6f1', marginBottom: 10 }}>{c.title}</h3>
+                  <p style={{ fontSize: 13.5, lineHeight: 1.6, color: '#8b9085', marginBottom: 16 }}>{c.desc}</p>
+                  <div className="font-jet" style={{ display: 'flex', flexWrap: 'wrap', gap: 5, fontSize: 10, color: '#6f756a' }}>
+                    {c.tags.map((t, i) => (
+                      <span key={t}>{t}{i < c.tags.length - 1 ? ' ·' : ''}</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 5. Measured Impact + Timeline ── */}
+        <section id="about" style={{ padding: '80px 32px' }}>
+          <div style={{ maxWidth: 1120, margin: '0 auto' }} className="impact-grid">
+            {/* Measured Impact */}
+            <div>
+              <Eyebrow>// measured_impact</Eyebrow>
+              <h2 className="font-display" style={{ fontWeight: 600, fontSize: 'clamp(26px,3.4vw,36px)', letterSpacing: '-0.02em', color: '#f4f6f1', marginBottom: 26 }}>
+                Results, not adjectives
+              </h2>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                {IMPACT.map((s) => (
+                  <div key={s.label} style={{ display: 'flex', alignItems: 'baseline', gap: 18, border: '1px solid rgba(255,255,255,0.08)', borderRadius: 11, padding: '16px 20px', background: 'rgba(255,255,255,0.012)' }}>
+                    <div className="font-display" style={{ fontWeight: 700, fontSize: 34, color: ACCENT, letterSpacing: '-0.03em', minWidth: 96 }}>{s.num}</div>
+                    <div>
+                      <div style={{ fontSize: 14, fontWeight: 600, color: '#e8eae6' }}>{s.label}</div>
+                      <div className="font-jet" style={{ fontSize: 11.5, color: '#8b9085', marginTop: 2 }}>{s.sub}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Timeline */}
+            <div>
+              <Eyebrow>// timeline</Eyebrow>
+              <div style={{ position: 'relative', paddingLeft: 26, marginTop: 8 }}>
+                <div
+                  aria-hidden
+                  style={{ position: 'absolute', left: 3, top: 4, bottom: 4, width: 1, background: 'linear-gradient(to bottom, transparent, rgba(91,228,155,0.35), transparent)' }}
+                />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
+                  {TIMELINE.map((t, i) => (
+                    <div key={`${t.year}-${i}`} style={{ position: 'relative' }}>
+                      <span style={{ position: 'absolute', left: -22, top: 4, width: 7, height: 7, borderRadius: 2, background: t.color, boxShadow: `0 0 8px ${t.color}99` }} />
+                      <span className="font-jet" style={{ fontSize: 11.5, fontWeight: 700, color: t.color, marginRight: 10 }}>{t.year}</span>
+                      <span style={{ fontSize: 13.5, color: '#c4c9bd' }}>{t.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 6. Agents ── */}
+        <section id="agents" style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.008)' }}>
+          <div style={{ maxWidth: 1120, margin: '0 auto', padding: '80px 32px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 20, marginBottom: 32 }}>
+              <div>
+                <Eyebrow>// run_the_agents</Eyebrow>
+                <h2 className="font-display" style={{ fontWeight: 600, fontSize: 'clamp(30px,4.4vw,44px)', letterSpacing: '-0.025em', color: '#f4f6f1' }}>
+                  Try them in your terminal
+                </h2>
+              </div>
+              <p style={{ fontSize: 14.5, color: '#8b9085', maxWidth: 330 }}>
+                Copy-paste to run each agent locally. SOLVENT needs zero API keys for the demo — the others have quick no-key paths too.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              {AGENTS.map((a) => (
+                <div key={a.id} style={{ background: '#0c0e0c', borderRadius: 14, border: `1px solid ${a.accent}2e`, overflow: 'hidden' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 20px', borderBottom: '1px solid rgba(255,255,255,0.07)', flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <span style={{ width: 11, height: 11, borderRadius: '50%', background: '#3a3f35' }} />
+                      <span style={{ width: 11, height: 11, borderRadius: '50%', background: '#3a3f35' }} />
+                      <span style={{ width: 11, height: 11, borderRadius: '50%', background: a.accent }} />
+                    </div>
+                    <span className="font-jet" style={{ fontWeight: 700, fontSize: 15, color: '#f4f6f1' }}>{a.name}</span>
+                    <span style={{ fontSize: 13, color: '#8b9085' }}>{a.tagline}</span>
+                    <a href={a.repoUrl} target="_blank" rel="noopener noreferrer" className="font-jet link-code" style={{ fontSize: 11.5, color: '#6f756a', marginLeft: 'auto', whiteSpace: 'nowrap' }}>
+                      {a.repo} ↗
+                    </a>
+                  </div>
+                  <div style={{ padding: '22px 20px' }}>
+                    <p style={{ fontSize: 13.5, lineHeight: 1.65, color: '#9aa093', maxWidth: 760, marginBottom: 16 }}>{a.desc}</p>
+                    <div style={{ position: 'relative' }}>
+                      <button
+                        onClick={() => copy(a.id, a.command)}
+                        className="font-jet"
+                        style={{
+                          position: 'absolute',
+                          top: 10,
+                          right: 10,
+                          fontSize: 11,
+                          fontWeight: 500,
+                          padding: '5px 11px',
+                          borderRadius: 6,
+                          cursor: 'pointer',
+                          transition: 'all .18s',
+                          color: copied === a.id ? a.accent : '#9aa093',
+                          border: `1px solid ${copied === a.id ? a.accent : 'rgba(255,255,255,0.14)'}`,
+                          background: copied === a.id ? `${a.accent}18` : 'rgba(255,255,255,0.04)',
+                        }}
+                      >
+                        {copied === a.id ? 'copied ✓' : 'copy'}
+                      </button>
+                      <pre
+                        className="font-jet"
+                        style={{ background: '#060706', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 9, padding: '16px 18px', fontSize: 12.5, lineHeight: 1.7, color: '#c4f3d6', overflowX: 'auto', margin: 0 }}
+                      >
+                        {a.command}
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 7. Contact ── */}
+        <section id="contact" style={{ padding: '96px 32px' }}>
+          <div
+            style={{
+              maxWidth: 820,
+              margin: '0 auto',
+              border: '1px solid rgba(91,228,155,0.22)',
+              borderRadius: 18,
+              background: 'radial-gradient(ellipse at top, rgba(91,228,155,0.06), transparent 70%)',
+              padding: 'clamp(40px,6vw,72px) clamp(28px,5vw,64px)',
+              textAlign: 'center',
+            }}
+          >
+            <p className="font-jet" style={{ fontSize: 13, color: '#6f756a', marginBottom: 18 }}>
+              <span style={{ color: ACCENT }}>&gt;</span> let&apos;s build something measurable
+            </p>
+            <h2 className="font-display" style={{ fontWeight: 700, fontSize: 'clamp(32px,5vw,52px)', letterSpacing: '-0.03em', color: '#f4f6f1', marginBottom: 18 }}>
+              Open to roles &amp; collaborations
+            </h2>
+            <p style={{ fontSize: 16, color: '#9aa093', maxWidth: 520, margin: '0 auto 32px' }}>
+              Recruiting, consulting, or just want to talk evaluation-first ML? The fastest way to reach me is email.
+            </p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 12, marginBottom: 30 }}>
+              <a href="mailto:ian@allowayllc.com" className="font-jet btn-glow" style={{ fontSize: 14, color: '#0a0b0a', background: ACCENT, padding: '14px 28px', borderRadius: 9 }}>
+                ian@allowayllc.com
+              </a>
+              <a href="/Ian_Alloway_Resume_CV.pdf" download className="font-jet btn-outline" style={{ fontSize: 14, color: '#d6dbcf', border: '1px solid rgba(255,255,255,0.13)', padding: '14px 26px', borderRadius: 9 }}>
+                Download résumé ↓
+              </a>
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 10 }}>
+              {[
+                ['GitHub', 'https://github.com/ianalloway'],
+                ['LinkedIn', 'https://www.linkedin.com/in/ianit'],
+                ['Twitter / X', 'https://x.com/ianallowayxyz'],
+                ['Substack', 'https://allowayai.substack.com'],
+              ].map(([label, href]) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="font-jet social-pill" style={{ fontSize: 12.5, color: '#9aa093', border: `1px solid ${HAIRLINE}`, borderRadius: 100, padding: '8px 16px' }}>
+                  {label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Footer ── */}
+        <footer style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <div className={shell} style={{ padding: '30px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
+              <span style={{ width: 8, height: 8, borderRadius: 2, background: ACCENT }} />
+              <span className="font-jet" style={{ fontSize: 12.5, color: '#8b9085' }}>ian.alloway · ML engineer &amp; data scientist</span>
+            </div>
+            <span className="font-jet" style={{ fontSize: 11.5, color: '#5a5f54' }}>© 2026 Alloway LLC · ianalloway.xyz</span>
+          </div>
+        </footer>
+      </div>
+
+      {/* Scoped hover styles for this page */}
+      <style>{`
+        .nav-link { transition: color .18s, background .18s; }
+        .nav-link:hover { color: #e8eae6 !important; background: rgba(255,255,255,0.05); }
+        .btn-glow { transition: box-shadow .2s; }
+        .btn-glow:hover { box-shadow: 0 0 26px rgba(91,228,155,0.42); }
+        .btn-outline { transition: border-color .2s, background .2s; }
+        .btn-outline:hover { border-color: rgba(91,228,155,0.45) !important; background: rgba(91,228,155,0.05); }
+        .cap-cell { transition: background .18s; }
+        .cap-cell:hover { background: #101310 !important; }
+        .link-code { transition: color .18s; }
+        .link-code:hover { color: #5be49b !important; }
+        .link-demo { transition: color .18s; }
+        .link-demo:hover { color: #9fe9c1 !important; }
+        .social-pill { transition: color .18s, border-color .18s; }
+        .social-pill:hover { color: #5be49b !important; border-color: rgba(91,228,155,0.4) !important; }
+        .impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+        @media (max-width: 860px) { .impact-grid { grid-template-columns: 1fr; gap: 48px; } }
+      `}</style>
     </div>
   );
 };
