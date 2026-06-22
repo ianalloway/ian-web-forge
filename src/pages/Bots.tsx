@@ -42,6 +42,15 @@ python3 -m solvent serve --port 8787
 python3 -m solvent worker
 # then open http://127.0.0.1:8787/`,
       },
+      {
+        label: 'Telegram bot — pairing + job notifications',
+        command: `pip install -r requirements-telegram.txt
+export TELEGRAM_BOT_TOKEN="..."
+python3 -m solvent serve
+python3 -m solvent worker
+python3 -m solvent telegram
+# docs: github.com/ianalloway/solvent-agent/blob/main/docs/TELEGRAM.md`,
+      },
       { label: 'Interactive — type your own research jobs', command: 'python3 run_demo.py --interactive' },
       { label: 'Skip first-run wizard (use saved defaults)', command: 'python3 run_demo.py --no-onboard' },
       { label: 'Open treasury dashboard after a run', command: 'open treasury_dashboard.html' },
@@ -51,6 +60,7 @@ python3 -m solvent worker
       'Batch mode (default): four pre-loaded analyst jobs run in ~30 seconds — margin gating, payment simulation, Nemotron fulfilment, guardrail screening, live P&L.',
       'Interactive mode: type a research topic and client budget at the prompt; the agent quotes, collects, fulfils, and books each job until you quit.',
       'Live dashboard: `solvent serve` hosts a browser UI with typed chat, Web Speech mic input, and Server-Sent Events that refresh treasury + job state in real time.',
+      'Telegram: long-poll bot with OpenClaw-style DM pairing — quote, commission, and payment notifications in chat (see repo docs/TELEGRAM.md).',
       'When finished, open treasury_dashboard.html for revenue, spend, job cards, and a transaction log.',
     ],
     hero: true,
