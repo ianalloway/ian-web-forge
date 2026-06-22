@@ -34,6 +34,14 @@ const BOTS: BotGuide[] = [
 cd solvent-agent
 python3 run_demo.py`,
     optionalCommands: [
+      {
+        label: 'Interactive dashboard — chat + voice + live SSE treasury',
+        command: `pip install -r requirements.txt -r requirements-serve.txt
+python3 -m solvent serve --port 8787
+# optional second terminal:
+python3 -m solvent worker
+# then open http://127.0.0.1:8787/`,
+      },
       { label: 'Interactive — type your own research jobs', command: 'python3 run_demo.py --interactive' },
       { label: 'Skip first-run wizard (use saved defaults)', command: 'python3 run_demo.py --no-onboard' },
       { label: 'Open treasury dashboard after a run', command: 'open treasury_dashboard.html' },
@@ -42,6 +50,7 @@ python3 run_demo.py`,
       'First run: a short onboarding wizard asks for model, batch vs interactive mode, and whether to enable Stripe test mode. Choices save to .solvent/config.json.',
       'Batch mode (default): four pre-loaded analyst jobs run in ~30 seconds — margin gating, payment simulation, Nemotron fulfilment, guardrail screening, live P&L.',
       'Interactive mode: type a research topic and client budget at the prompt; the agent quotes, collects, fulfils, and books each job until you quit.',
+      'Live dashboard: `solvent serve` hosts a browser UI with typed chat, Web Speech mic input, and Server-Sent Events that refresh treasury + job state in real time.',
       'When finished, open treasury_dashboard.html for revenue, spend, job cards, and a transaction log.',
     ],
     hero: true,

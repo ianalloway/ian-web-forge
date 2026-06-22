@@ -314,7 +314,26 @@ const Demos = () => {
               <li className="rounded border border-primary/15 bg-background/40 px-3 py-2">
                 <span className="text-primary">Issuing spend</span> — capped virtual cards per vendor (test mode)
               </li>
+              <li className="rounded border border-primary/15 bg-background/40 px-3 py-2 md:col-span-2">
+                <span className="text-primary">Live dashboard</span> — chat panel (type or mic via Web Speech API) + SSE treasury updates at{' '}
+                <code className="text-primary/90">http://127.0.0.1:8787/</code>
+              </li>
             </ul>
+
+            <div className="rounded border border-primary/25 bg-background/50 p-4 space-y-2">
+              <p className="text-xs font-mono text-primary font-bold uppercase tracking-wider">
+                Try the interactive dashboard locally
+              </p>
+              <pre className="overflow-x-auto text-[11px] font-mono text-primary/90 leading-relaxed">
+{`pip install -r requirements.txt -r requirements-serve.txt
+python3 -m solvent serve --port 8787
+python3 -m solvent worker   # optional second terminal
+open http://127.0.0.1:8787/`}
+              </pre>
+              <p className="text-[11px] font-mono text-muted-foreground">
+                Chat routes through the Nemotron agent loop; treasury and job cards refresh live via Server-Sent Events.
+              </p>
+            </div>
 
             <div className="relative rounded border border-primary/20 bg-background/40 overflow-hidden">
               <video
