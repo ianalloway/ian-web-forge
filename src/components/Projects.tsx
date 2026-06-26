@@ -315,7 +315,7 @@ const Projects = () => {
             className="inline-flex items-center gap-2 font-mono text-sm text-muted-foreground hover:text-primary transition-colors duration-200 group"
           >
             <Github size={14} />
-            <span className="neon-underline">See all 60+ repos on GitHub</span>
+            <span className="neon-underline">See all 47 repos on GitHub</span>
             <Zap size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
           </a>
         </div>

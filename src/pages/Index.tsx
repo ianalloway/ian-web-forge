@@ -122,7 +122,7 @@ const FILTERS: Filter[] = ['All', 'Sports ML', 'AI Agents', 'MLOps', 'Tools', 'W
 
 const HERO_METRICS = [
   { value: '68.3%', label: 'Model accuracy', sub: 'NBA betting model' },
-  { value: '60+', label: 'GitHub repos', sub: 'public' },
+  { value: '47', label: 'GitHub repos', sub: 'public' },
   { value: '9', label: 'OSS skills', sub: 'on ClawHub' },
   { value: 'PyPI', label: 'nba-edge', sub: 'installable' },
 ];
@@ -569,7 +569,7 @@ const Index = () => {
 
             <div style={{ textAlign: 'center', marginTop: 40 }}>
               <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="font-jet link-code" style={{ fontSize: 13.5, color: '#8b9085' }}>
-                See all 60+ repos on GitHub →
+                See all 47 repos on GitHub →
               </a>
             </div>
           </div>

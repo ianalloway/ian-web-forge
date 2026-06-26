@@ -13,7 +13,7 @@ const ROLES = [
 
 const QUICK_STATS = [
   { value: '68.3%', label: 'Model Accuracy', sub: 'NBA betting model' },
-  { value: '60+', label: 'GitHub Repos', sub: 'public repositories' },
+  { value: '47', label: 'GitHub Repos', sub: 'public repositories' },
   { value: '9', label: 'OSS Skills', sub: 'published on ClawHub' },
   { value: 'PyPI', label: 'nba-edge', sub: 'installable package' },
 ];
