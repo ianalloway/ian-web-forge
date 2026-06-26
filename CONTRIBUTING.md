@@ -15,14 +15,13 @@ Thanks for your interest in contributing! Here's how to get started.
 ```bash
 git clone https://github.com/ianalloway/ian-web-forge
 cd ian-web-forge
-npm install      # or: pip install -r requirements.txt
-npm run dev      # or: python main.py
+npm install
+npm run dev      # http://localhost:5173
 ```
 
 ## Code Style
 
-- **TypeScript/JS**: ESLint + Prettier (config in repo). Run `npm run lint` before committing.
-- **Python**: Black + isort. Run `black . && isort .` before committing.
+- **TypeScript/React**: ESLint (config in repo). Run `npm run lint` before committing.
 - Keep functions small and focused — one job per function.
 - Write self-documenting code; add comments only where logic is non-obvious.
 
