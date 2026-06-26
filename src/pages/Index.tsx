@@ -306,6 +306,28 @@ const Index = () => {
 
   return (
     <div className="font-plex" style={{ background: '#0a0b0a', color: '#e8eae6', minHeight: '100vh', position: 'relative' }}>
+      <a
+        href="#work"
+        className="font-jet"
+        style={{
+          position: 'absolute',
+          top: -100,
+          left: 12,
+          zIndex: 200,
+          padding: '10px 18px',
+          borderRadius: 8,
+          fontSize: 13,
+          fontWeight: 500,
+          color: '#0a0b0a',
+          background: ACCENT,
+          transition: 'top .2s',
+          ':focus': { top: 12 },
+        }}
+        onFocus={(e) => { e.currentTarget.style.top = '12px'; }}
+        onBlur={(e) => { e.currentTarget.style.top = '-100px'; }}
+      >
+        Skip to content →
+      </a>
       {/* Ambient background layers */}
       <div
         aria-hidden
@@ -333,9 +355,10 @@ const Index = () => {
         }}
       />
 
-      <div style={{ position: 'relative', zIndex: 1 }}>
+      <main style={{ position: 'relative', zIndex: 1 }}>
         {/* ── 1. Nav ── */}
         <nav
+          aria-label="Primary"
           style={{
             position: 'sticky',
             top: 0,
@@ -401,9 +424,9 @@ const Index = () => {
               </span>
             </div>
 
-            <p className="font-jet" style={{ fontSize: 13, color: '#6f756a', letterSpacing: '0.04em', marginBottom: 18 }}>
-              <span style={{ color: ACCENT }}>&gt;</span> ml engineer &amp; data scientist <span style={{ color: '#3f463b' }}>·</span> usf m.s. ai{' '}
-              <span style={{ color: '#3f463b' }}>·</span> 2026
+            <p className="font-jet" style={{ fontSize: 13, color: '#8b9085', letterSpacing: '0.04em', marginBottom: 18 }}>
+              <span style={{ color: ACCENT }}>&gt;</span> ml engineer &amp; data scientist <span style={{ color: '#6f756a' }}>·</span> usf m.s. ai{' '}
+              <span style={{ color: '#6f756a' }}>·</span> 2026
             </p>
 
             <h1 className="font-display" style={{ fontWeight: 700, fontSize: 'clamp(44px, 7vw, 84px)', lineHeight: 0.98, letterSpacing: '-0.03em', color: '#f4f6f1', marginBottom: 26 }}>
@@ -448,9 +471,10 @@ const Index = () => {
             </div>
 
             <div
+              className="hero-metrics-grid"
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(4, 1fr)',
+                gridTemplateColumns: 'repeat(2, 1fr)',
                 maxWidth: 640,
                 border: '1px solid rgba(255,255,255,0.08)',
                 borderRadius: 12,
@@ -491,6 +515,7 @@ const Index = () => {
                   <button
                     key={f}
                     onClick={() => setFilter(f)}
+                    aria-pressed={active}
                     className="font-jet"
                     style={{
                       fontSize: 11.5,
@@ -679,7 +704,7 @@ const Index = () => {
                     </div>
                     <span className="font-jet" style={{ fontWeight: 700, fontSize: 15, color: '#f4f6f1' }}>{a.name}</span>
                     <span style={{ fontSize: 13, color: '#8b9085' }}>{a.tagline}</span>
-                    <a href={a.repoUrl} target="_blank" rel="noopener noreferrer" className="font-jet link-code" style={{ fontSize: 11.5, color: '#6f756a', marginLeft: 'auto', whiteSpace: 'nowrap' }}>
+                    <a href={a.repoUrl} target="_blank" rel="noopener noreferrer" className="font-jet link-code" style={{ fontSize: 11.5, color: '#8b9085', marginLeft: 'auto', whiteSpace: 'nowrap' }}>
                       {a.repo} ↗
                     </a>
                   </div>
@@ -688,6 +713,7 @@ const Index = () => {
                     <div style={{ position: 'relative' }}>
                       <button
                         onClick={() => copy(a.id, a.command)}
+                        aria-label={`Copy ${a.name} install command`}
                         className="font-jet"
                         style={{
                           position: 'absolute',
@@ -733,7 +759,7 @@ const Index = () => {
               textAlign: 'center',
             }}
           >
-            <p className="font-jet" style={{ fontSize: 13, color: '#6f756a', marginBottom: 18 }}>
+            <p className="font-jet" style={{ fontSize: 13, color: '#8b9085', marginBottom: 18 }}>
               <span style={{ color: ACCENT }}>&gt;</span> let&apos;s build something measurable
             </p>
             <h2 className="font-display" style={{ fontWeight: 700, fontSize: 'clamp(32px,5vw,52px)', letterSpacing: '-0.03em', color: '#f4f6f1', marginBottom: 18 }}>
@@ -772,10 +798,10 @@ const Index = () => {
               <span style={{ width: 8, height: 8, borderRadius: 2, background: ACCENT }} />
               <span className="font-jet" style={{ fontSize: 12.5, color: '#8b9085' }}>ian.alloway · ML engineer &amp; data scientist</span>
             </div>
-            <span className="font-jet" style={{ fontSize: 11.5, color: '#5a5f54' }}>© 2026 Alloway LLC · ianalloway.xyz</span>
+            <span className="font-jet" style={{ fontSize: 11.5, color: '#8b9085' }}>© 2026 Alloway LLC · ianalloway.xyz</span>
           </div>
         </footer>
-      </div>
+      </main>
 
       {/* Scoped hover styles for this page */}
       <style>{`
@@ -792,6 +818,9 @@ const Index = () => {
         .link-demo { transition: color .18s; }
         .link-demo:hover { color: #9fe9c1 !important; }
         .social-pill { transition: color .18s, border-color .18s; }
+        @media (min-width: 480px) {
+          .hero-metrics-grid { gridTemplateColumns: repeat(4, 1fr) !important; }
+        }
         .social-pill:hover { color: #5be49b !important; border-color: rgba(91,228,155,0.4) !important; }
         .impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
         @media (max-width: 860px) { .impact-grid { grid-template-columns: 1fr; gap: 48px; } }

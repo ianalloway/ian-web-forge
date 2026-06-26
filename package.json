@@ -1,7 +1,16 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "ian-web-forge",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Matrix-themed portfolio site for Ian Alloway — ML engineer & data scientist (React + TypeScript + Vite).",
+  "author": "Ian Alloway <ian@allowayllc.com>",
+  "license": "MIT",
+  "homepage": "https://ianalloway.xyz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ianalloway/ian-web-forge.git"
+  },
+  "keywords": ["portfolio", "react", "typescript", "vite", "machine-learning", "sports-analytics"],
   "type": "module",
   "scripts": {
     "dev": "vite",
