@@ -67,6 +67,7 @@ const PROJECTS: Project[] = [
       'Self-funding AI analyst: quotes jobs, collects Stripe payment, fulfils work on Nemotron, pays its own vendor bills under guardrails, and books P&L.',
     tech: ['Stripe', 'Nemotron', 'Python'],
     code: 'https://github.com/ianalloway/solvent-agent',
+    demo: 'https://allowayai.substack.com/p/case-study-solvent-streamlining-agent',
   },
   {
     title: 'juryrig',
