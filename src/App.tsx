@@ -20,8 +20,11 @@ const HireMe = lazy(() => import("./pages/HireMe"));
 const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
+const NbaApi = lazy(() => import("./pages/NbaApi"));
+const Consulting = lazy(() => import("./pages/Consulting"));
 const Snake = lazy(() => import("./pages/Snake"));
 const RecoveryTracker = lazy(() => import("./pages/RecoveryTracker"));
+const Kelly = lazy(() => import("./pages/Kelly"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -123,6 +126,45 @@ const App = () => (
                       noIndex
                     />
                     <RecoveryTracker />
+                  </>
+                }
+              />
+              <Route
+                path="/kelly"
+                element={
+                  <>
+                    <SEO
+                      title="Kelly Criterion Calculator — optimal bet sizing"
+                      path="/kelly"
+                      description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
+                    />
+                    <Kelly />
+                  </>
+                }
+              />
+              <Route
+                path="/consulting"
+                element={
+                  <>
+                    <SEO
+                      title="LLM Evaluation Consulting"
+                      path="/consulting"
+                      description="Ian Alloway — LLM evaluation consulting. Audit and calibrate your LLM-as-judge pipeline for position bias, verbosity bias, injection, and calibration drift. Backed by juryrig, a zero-dependency audit toolkit."
+                    />
+                    <Consulting />
+                  </>
+                }
+              />
+              <Route
+                path="/nba-api"
+                element={
+                  <>
+                    <SEO
+                      title="NBA Edge API — 68.3% backtested accuracy, Kelly-sized"
+                      path="/nba-api"
+                      description="NBA Edge API: an XGBoost classifier with 68.3% backtested accuracy, Kelly criterion bet sizing, and REST delivery. Starter, Pro, and Team tiers. API-first sports predictions."
+                    />
+                    <NbaApi />
                   </>
                 }
               />
