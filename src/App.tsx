@@ -23,6 +23,7 @@ const Bots = lazy(() => import("./pages/Bots"));
 const NbaApi = lazy(() => import("./pages/NbaApi"));
 const Consulting = lazy(() => import("./pages/Consulting"));
 const Snake = lazy(() => import("./pages/Snake"));
+const Life = lazy(() => import("./pages/Life"));
 const RecoveryTracker = lazy(() => import("./pages/RecoveryTracker"));
 const Kelly = lazy(() => import("./pages/Kelly"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -165,6 +166,19 @@ const App = () => (
                       description="NBA Edge API: an XGBoost classifier with 68.3% backtested accuracy, Kelly criterion bet sizing, and REST delivery. Starter, Pro, and Team tiers. API-first sports predictions."
                     />
                     <NbaApi />
+                  </>
+                }
+              />
+              <Route
+                path="/life"
+                element={
+                  <>
+                    <SEO
+                      title="Game of Life — Conway's cellular automaton"
+                      path="/life"
+                      description="Play Conway's Game of Life in the browser: click to draw cells, drop in gliders, spaceships, pulsars, and a Gosper glider gun, then watch the B3/S23 rules evolve the colony. Adjustable speed and a wrap-around toroidal grid."
+                    />
+                    <Life />
                   </>
                 }
               />
