@@ -746,6 +746,63 @@ const Index = () => {
           </div>
         </section>
 
+        {/* ── 6.5. Writing ── */}
+        <section id="writing" style={{ padding: '80px 32px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ maxWidth: 1120, margin: '0 auto' }}>
+            <Eyebrow>// writing</Eyebrow>
+            <h2 className="font-display" style={{ fontWeight: 700, fontSize: 'clamp(28px,4vw,40px)', letterSpacing: '-0.03em', color: '#f4f6f1', marginBottom: 12 }}>
+              Notes from the loop
+            </h2>
+            <p style={{ fontSize: 14.5, color: '#9aa093', maxWidth: 560, marginBottom: 32 }}>
+              I write about evaluation, agent systems, and applied ML on Substack. New posts drop when I learn something worth writing down.
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16, marginBottom: 28 }}>
+              <a
+                href="https://allowayai.substack.com/p/i-gave-an-ai-agent-a-stripe-key-and-walked-away-heres-what-it-built"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-jet link-code"
+                style={{ display: 'block', padding: '20px 22px', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, background: 'rgba(255,255,255,0.012)', color: '#cdd2c5' }}
+              >
+                <div style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: ACCENT, marginBottom: 8 }}>Featured · Jun 2026</div>
+                <div style={{ fontSize: 16, fontWeight: 600, color: '#f4f6f1', marginBottom: 6, lineHeight: 1.3 }}>I Gave an AI Agent a Stripe Key and Walked Away</div>
+                <div style={{ fontSize: 13, color: '#8b9085', lineHeight: 1.5 }}>Most agents can spend money. Almost none can run as a business. Notes from solvent-agent.</div>
+              </a>
+              <a
+                href="https://allowayai.substack.com/p/audit-your-llm-judges-before-you-trust-them"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-jet link-code"
+                style={{ display: 'block', padding: '20px 22px', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, background: 'rgba(255,255,255,0.012)', color: '#cdd2c5' }}
+              >
+                <div style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: ACCENT, marginBottom: 8 }}>Essay · Jun 2026</div>
+                <div style={{ fontSize: 16, fontWeight: 600, color: '#f4f6f1', marginBottom: 6, lineHeight: 1.3 }}>Audit Your LLM Judges Before You Trust Them</div>
+                <div style={{ fontSize: 13, color: '#8b9085', lineHeight: 1.5 }}>LLM-as-judge is useful, cheap, and everywhere. It also has vibes, blind spots, and the confidence of a toaster giving legal advice.</div>
+              </a>
+              <a
+                href="https://allowayai.substack.com/p/the-ghost-in-the-machine-why-your-ai-needs-a-memory-not-just-a-prompt"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-jet link-code"
+                style={{ display: 'block', padding: '20px 22px', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, background: 'rgba(255,255,255,0.012)', color: '#cdd2c5' }}
+              >
+                <div style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: ACCENT, marginBottom: 8 }}>Reflection · May 2026</div>
+                <div style={{ fontSize: 16, fontWeight: 600, color: '#f4f6f1', marginBottom: 6, lineHeight: 1.3 }}>The Ghost in the Machine: Memory, Not Just a Prompt</div>
+                <div style={{ fontSize: 13, color: '#8b9085', lineHeight: 1.5 }}>Treating my AI as a partner, not a tool. What I learned shipping a memory layer.</div>
+              </a>
+            </div>
+            <a
+              href="https://allowayai.substack.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-jet btn-outline"
+              style={{ display: 'inline-block', fontSize: 13, color: '#d6dbcf', border: '1px solid rgba(255,255,255,0.13)', padding: '12px 22px', borderRadius: 8 }}
+            >
+              Subscribe to the Substack →
+            </a>
+          </div>
+        </section>
+
         {/* ── 7. Contact ── */}
         <section id="contact" style={{ padding: '96px 32px' }}>
           <div
