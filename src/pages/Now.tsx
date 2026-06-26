@@ -6,66 +6,66 @@ import { Terminal, ArrowLeft, Book, Code, Brain, Music, MapPin, Target, Zap, Cof
 import MatrixRain from '@/components/MatrixRain';
 import { applyTheme, getStoredTheme, type SiteTheme } from '@/lib/theme';
 
-const LAST_UPDATED = 'June 2026';
+const LAST_UPDATED = 'July 2026';
 
 const NOW_DATA = {
   focus: {
     title: 'Main Focus',
     icon: Target,
     items: [
-      'Pursuing my M.S. in Artificial Intelligence at USF',
-      'Growing AI Advantage Sports to 500 premium subscribers',
-      'Contributing weekly to OpenClaw — currently refactoring the skill resolution pipeline',
-      'Building applied AI/evaluation projects alongside graduate AI coursework',
+      'Shipping SOLVENT (self-funding AI agent) to v1.0 with stable Stripe webhooks + LLM fulfillment',
+      'Pushing nba-edge from 68.3% to 70% accuracy with real-time injury data and rest-day features',
+      'Interviewing for ML engineering roles — focused on AI evaluation and applied systems teams',
+      'Finishing my M.S. in AI at USF — capstone on LLM judge calibration',
     ],
   },
   building: {
     title: 'Currently Building',
     icon: Code,
     items: [
-      'AI Advantage Sports — daily picks engine, leaderboard, and live odds integration',
-      'openclaw-skills v2 — dfs-optimizer, bet-journal, market-sentiment, streak-tracker',
-      'Personal RAG pipeline over my Substack posts for a "chat with my writing" feature',
-      'Evaluation-first sports ML tooling — dashboards, backtests, and model reporting',
+      'solvent-agent v0.2 — adding P&L reporting, multi-job queue, and Stripe Issuing integration',
+      'juryrig v0.2 — releasing prompt-injection audit and drift monitoring probes',
+      'nba-clv-dashboard v2 — adding live calibration charts and CLV-by-strategy breakdowns',
+      'openclaw-skills bundles — Sports Bettor, Crypto Watcher, Developer Power Tools',
     ],
   },
   learning: {
     title: 'Currently Learning',
     icon: GraduationCap,
     items: [
-      'Reinforcement learning from human feedback (RLHF) — working through Anthropic\'s alignment papers',
-      'Rust — building CLI tools feels cleaner than Python for performance-critical work',
-      'Advanced SQL window functions and query plan optimization for analytics pipelines',
-      'Transformer architecture internals — reading "Attention Is All You Need" and follow-ups',
+      'Multi-agent orchestration — reading DeepMind and Anthropic multi-agent papers, evaluating LangGraph vs Autogen vs custom',
+      'Post-training RL — RLHF, DPO, GRPO. How do you measure alignment without gaming?',
+      'Stripe Issuing limits and treasury flows — what it takes to run a real economic agent in production',
+      'Time-series foundation models — Chronos, TimesFM, Mamba. Are they better than XGBoost for NBA?',
     ],
   },
   reading: {
     title: 'Currently Reading',
     icon: Book,
     items: [
-      '"The Alignment Problem" — Brian Christian (understanding AI safety from first principles)',
-      '"Thinking in Bets" — Annie Duke (rereading for the 3rd time, always find something new)',
-      '"The Art of Statistics" — David Spiegelhalter (stats communication is underrated)',
-      'Anthropic research blog — Constitutional AI, interpretability, scaling laws',
+      '"The Beginning of Infinity" — David Deutsch (on knowledge, error, and the nature of progress)',
+      'Anthropic interpretability research — circuit-level analysis of LLM features',
+      'A selection of LLM judge papers: Zheng MT-Bench, Wang Fair Evaluators, recent 2026 work',
+      'Stripe engineering blog — webhook reliability at scale',
     ],
   },
   tools: {
     title: 'Daily Tools',
     icon: Zap,
     items: [
-      'Claude Sonnet 4.6 — primary coding assistant, replaced GPT-4 entirely',
+      'Claude Sonnet 4.6 + o1 — primary coding + reasoning models',
       'Cursor — AI-native editor for heavy refactoring sessions',
       'OpenClaw — my personal assistant, runs in terminal + Telegram + Discord',
-      'Convex — realtime database for ClawHub and side projects',
-      'Vercel + Netlify — deploy everything, zero config headaches',
+      'Vercel — deploy everything, zero config',
+      'Stripe + Stripe Issuing — production payment infrastructure for solvent-agent',
     ],
   },
   listening: {
     title: 'On Repeat',
     icon: Music,
     items: [
-      'Lofi hip-hop for deep work sessions — 90s lo-fi beats playlist',
       'Lex Fridman Podcast — long-form AI/CS/physics conversations',
+      'Latent Space — the AI engineering podcast, very tactical',
       'My First Million — business idea generation fuel',
       'The Bill Simmons Podcast — sports takes and NBA deep dives',
     ],
@@ -74,9 +74,9 @@ const NOW_DATA = {
     title: 'Where I Am',
     icon: MapPin,
     items: [
-      'Fairmont, WV — home base, remote-first',
-      'University of South Florida (Tampa) — campus visits for thesis work',
-      'Remote-first since 2020, building everywhere',
+      'Tampa, FL — University of South Florida, finishing M.S. in AI',
+      'Open to remote ML engineer / applied AI roles',
+      'Available for LLM evaluation consulting engagements',
     ],
   },
   not: {
