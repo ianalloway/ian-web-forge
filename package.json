@@ -28,7 +28,6 @@
     "test": "echo \"No tests specified\" && exit 0"
   },
   "dependencies": {
-    "@ianalloway/matrix-rain": "file:../ian-matrix-rain",
     "@radix-ui/react-slot": "^1.3.0",
     "@radix-ui/react-toast": "^1.2.17",
     "@radix-ui/react-tooltip": "^1.2.10",
