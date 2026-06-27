@@ -460,6 +460,19 @@ open http://127.0.0.1:8787/`}
               </span>
             </Link>
             <Link
+              to="/2048"
+              className="rounded-md border border-primary/30 bg-card/60 p-4 backdrop-blur-sm hover:border-primary/60 transition-colors"
+            >
+              <div className="font-mono text-primary font-bold mb-1">2048</div>
+              <p className="text-xs text-muted-foreground font-mono leading-relaxed">
+                Slide and merge matching tiles to reach 2048. Arrow keys, WASD, or swipe — with score
+                and best-score tracking.
+              </p>
+              <span className="inline-flex items-center gap-1 mt-3 text-xs font-mono text-primary/80">
+                Open /2048 <ExternalLink size={12} />
+              </span>
+            </Link>
+            <Link
               to="/wpm"
               className="rounded-md border border-primary/30 bg-card/60 p-4 backdrop-blur-sm hover:border-primary/60 transition-colors"
             >

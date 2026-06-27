@@ -26,6 +26,7 @@ const Snake = lazy(() => import("./pages/Snake"));
 const Life = lazy(() => import("./pages/Life"));
 const Terminal = lazy(() => import("./pages/Terminal"));
 const Typing = lazy(() => import("./pages/Typing"));
+const Game2048 = lazy(() => import("./pages/Game2048"));
 const RecoveryTracker = lazy(() => import("./pages/RecoveryTracker"));
 const Kelly = lazy(() => import("./pages/Kelly"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -207,6 +208,19 @@ const App = () => (
                       description="A browser typing-speed test on ianalloway.xyz: type short lines and get live net/gross WPM, accuracy, a running timer, and per-character feedback. No backend, runs entirely client-side."
                     />
                     <Typing />
+                  </>
+                }
+              />
+              <Route
+                path="/2048"
+                element={
+                  <>
+                    <SEO
+                      title="2048 — slide and merge puzzle"
+                      path="/2048"
+                      description="Play 2048 on ianalloway.xyz: slide tiles with arrow keys, WASD, or swipe to merge matching numbers and reach 2048. Score and best-score tracking, runs entirely client-side."
+                    />
+                    <Game2048 />
                   </>
                 }
               />
