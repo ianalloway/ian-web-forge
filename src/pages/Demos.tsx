@@ -460,6 +460,19 @@ open http://127.0.0.1:8787/`}
               </span>
             </Link>
             <Link
+              to="/wpm"
+              className="rounded-md border border-primary/30 bg-card/60 p-4 backdrop-blur-sm hover:border-primary/60 transition-colors"
+            >
+              <div className="font-mono text-primary font-bold mb-1">Typing Speed Test</div>
+              <p className="text-xs text-muted-foreground font-mono leading-relaxed">
+                Measure your WPM and accuracy on short, on-theme lines. Live net/gross WPM, a running
+                timer, and per-character feedback.
+              </p>
+              <span className="inline-flex items-center gap-1 mt-3 text-xs font-mono text-primary/80">
+                Open /wpm <ExternalLink size={12} />
+              </span>
+            </Link>
+            <Link
               to="/life"
               className="rounded-md border border-primary/30 bg-card/60 p-4 backdrop-blur-sm hover:border-primary/60 transition-colors"
             >
