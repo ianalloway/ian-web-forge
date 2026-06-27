@@ -460,6 +460,19 @@ open http://127.0.0.1:8787/`}
               </span>
             </Link>
             <Link
+              to="/minesweeper"
+              className="rounded-md border border-primary/30 bg-card/60 p-4 backdrop-blur-sm hover:border-primary/60 transition-colors"
+            >
+              <div className="font-mono text-primary font-bold mb-1">Minesweeper</div>
+              <p className="text-xs text-muted-foreground font-mono leading-relaxed">
+                Clear the board without hitting a mine — first-click-safe, flood-fill reveals,
+                flagging, and beginner/intermediate/expert boards with a timer.
+              </p>
+              <span className="inline-flex items-center gap-1 mt-3 text-xs font-mono text-primary/80">
+                Open /minesweeper <ExternalLink size={12} />
+              </span>
+            </Link>
+            <Link
               to="/2048"
               className="rounded-md border border-primary/30 bg-card/60 p-4 backdrop-blur-sm hover:border-primary/60 transition-colors"
             >

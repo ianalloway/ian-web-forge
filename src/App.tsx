@@ -27,6 +27,7 @@ const Life = lazy(() => import("./pages/Life"));
 const Terminal = lazy(() => import("./pages/Terminal"));
 const Typing = lazy(() => import("./pages/Typing"));
 const Game2048 = lazy(() => import("./pages/Game2048"));
+const Minesweeper = lazy(() => import("./pages/Minesweeper"));
 const RecoveryTracker = lazy(() => import("./pages/RecoveryTracker"));
 const Kelly = lazy(() => import("./pages/Kelly"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -221,6 +222,19 @@ const App = () => (
                       description="Play 2048 on ianalloway.xyz: slide tiles with arrow keys, WASD, or swipe to merge matching numbers and reach 2048. Score and best-score tracking, runs entirely client-side."
                     />
                     <Game2048 />
+                  </>
+                }
+              />
+              <Route
+                path="/minesweeper"
+                element={
+                  <>
+                    <SEO
+                      title="Minesweeper — clear the board"
+                      path="/minesweeper"
+                      description="Play Minesweeper on ianalloway.xyz: first-click-safe mine placement, flood-fill reveals, flagging, and beginner/intermediate/expert boards with a live timer. Runs entirely client-side."
+                    />
+                    <Minesweeper />
                   </>
                 }
               />
