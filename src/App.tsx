@@ -25,6 +25,7 @@ const Consulting = lazy(() => import("./pages/Consulting"));
 const Snake = lazy(() => import("./pages/Snake"));
 const Life = lazy(() => import("./pages/Life"));
 const Terminal = lazy(() => import("./pages/Terminal"));
+const Typing = lazy(() => import("./pages/Typing"));
 const RecoveryTracker = lazy(() => import("./pages/RecoveryTracker"));
 const Kelly = lazy(() => import("./pages/Kelly"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -193,6 +194,19 @@ const App = () => (
                       description="An interactive in-browser terminal for ianalloway.xyz. Type commands like whoami, ls, projects, and open /life to explore Ian Alloway's work, links, and pages from a shell."
                     />
                     <Terminal />
+                  </>
+                }
+              />
+              <Route
+                path="/wpm"
+                element={
+                  <>
+                    <SEO
+                      title="Typing Speed Test — words per minute"
+                      path="/wpm"
+                      description="A browser typing-speed test on ianalloway.xyz: type short lines and get live net/gross WPM, accuracy, a running timer, and per-character feedback. No backend, runs entirely client-side."
+                    />
+                    <Typing />
                   </>
                 }
               />
