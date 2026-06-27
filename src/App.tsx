@@ -24,6 +24,7 @@ const NbaApi = lazy(() => import("./pages/NbaApi"));
 const Consulting = lazy(() => import("./pages/Consulting"));
 const Snake = lazy(() => import("./pages/Snake"));
 const Life = lazy(() => import("./pages/Life"));
+const Terminal = lazy(() => import("./pages/Terminal"));
 const RecoveryTracker = lazy(() => import("./pages/RecoveryTracker"));
 const Kelly = lazy(() => import("./pages/Kelly"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -179,6 +180,19 @@ const App = () => (
                       description="Play Conway's Game of Life in the browser: click to draw cells, drop in gliders, spaceships, pulsars, and a Gosper glider gun, then watch the B3/S23 rules evolve the colony. Adjustable speed and a wrap-around toroidal grid."
                     />
                     <Life />
+                  </>
+                }
+              />
+              <Route
+                path="/terminal"
+                element={
+                  <>
+                    <SEO
+                      title="Terminal — interactive shell"
+                      path="/terminal"
+                      description="An interactive in-browser terminal for ianalloway.xyz. Type commands like whoami, ls, projects, and open /life to explore Ian Alloway's work, links, and pages from a shell."
+                    />
+                    <Terminal />
                   </>
                 }
               />

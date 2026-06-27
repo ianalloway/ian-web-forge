@@ -446,6 +446,20 @@ open http://127.0.0.1:8787/`}
           </p>
           <div className="grid sm:grid-cols-2 gap-4">
             <Link
+              to="/terminal"
+              className="rounded-md border border-primary/30 bg-card/60 p-4 backdrop-blur-sm hover:border-primary/60 transition-colors"
+            >
+              <div className="font-mono text-primary font-bold mb-1">Terminal</div>
+              <p className="text-xs text-muted-foreground font-mono leading-relaxed">
+                An interactive shell for the site — type <span className="text-primary">whoami</span>,{' '}
+                <span className="text-primary">ls</span>, <span className="text-primary">projects</span>, or{' '}
+                <span className="text-primary">open /life</span>. Tab-completion and command history included.
+              </p>
+              <span className="inline-flex items-center gap-1 mt-3 text-xs font-mono text-primary/80">
+                Open /terminal <ExternalLink size={12} />
+              </span>
+            </Link>
+            <Link
               to="/life"
               className="rounded-md border border-primary/30 bg-card/60 p-4 backdrop-blur-sm hover:border-primary/60 transition-colors"
             >
