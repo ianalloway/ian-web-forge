@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Terminal, ExternalLink, Github, Calculator, LineChart, Cpu, Trophy, Coins, Gamepad2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { PLAYGROUND_ITEMS } from '@/features/playground/catalog';
 import MatrixRain from '@/components/MatrixRain';
 import { kelly, convertOdds, arbitrage } from '@/lib/kelly';
 
@@ -445,85 +446,19 @@ open http://127.0.0.1:8787/`}
             your browser.
           </p>
           <div className="grid sm:grid-cols-2 gap-4">
-            <Link
-              to="/terminal"
-              className="rounded-md border border-primary/30 bg-card/60 p-4 backdrop-blur-sm hover:border-primary/60 transition-colors"
-            >
-              <div className="font-mono text-primary font-bold mb-1">Terminal</div>
-              <p className="text-xs text-muted-foreground font-mono leading-relaxed">
-                An interactive shell for the site — type <span className="text-primary">whoami</span>,{' '}
-                <span className="text-primary">ls</span>, <span className="text-primary">projects</span>, or{' '}
-                <span className="text-primary">open /life</span>. Tab-completion and command history included.
-              </p>
-              <span className="inline-flex items-center gap-1 mt-3 text-xs font-mono text-primary/80">
-                Open /terminal <ExternalLink size={12} />
-              </span>
-            </Link>
-            <Link
-              to="/minesweeper"
-              className="rounded-md border border-primary/30 bg-card/60 p-4 backdrop-blur-sm hover:border-primary/60 transition-colors"
-            >
-              <div className="font-mono text-primary font-bold mb-1">Minesweeper</div>
-              <p className="text-xs text-muted-foreground font-mono leading-relaxed">
-                Clear the board without hitting a mine — first-click-safe, flood-fill reveals,
-                flagging, and beginner/intermediate/expert boards with a timer.
-              </p>
-              <span className="inline-flex items-center gap-1 mt-3 text-xs font-mono text-primary/80">
-                Open /minesweeper <ExternalLink size={12} />
-              </span>
-            </Link>
-            <Link
-              to="/2048"
-              className="rounded-md border border-primary/30 bg-card/60 p-4 backdrop-blur-sm hover:border-primary/60 transition-colors"
-            >
-              <div className="font-mono text-primary font-bold mb-1">2048</div>
-              <p className="text-xs text-muted-foreground font-mono leading-relaxed">
-                Slide and merge matching tiles to reach 2048. Arrow keys, WASD, or swipe — with score
-                and best-score tracking.
-              </p>
-              <span className="inline-flex items-center gap-1 mt-3 text-xs font-mono text-primary/80">
-                Open /2048 <ExternalLink size={12} />
-              </span>
-            </Link>
-            <Link
-              to="/wpm"
-              className="rounded-md border border-primary/30 bg-card/60 p-4 backdrop-blur-sm hover:border-primary/60 transition-colors"
-            >
-              <div className="font-mono text-primary font-bold mb-1">Typing Speed Test</div>
-              <p className="text-xs text-muted-foreground font-mono leading-relaxed">
-                Measure your WPM and accuracy on short, on-theme lines. Live net/gross WPM, a running
-                timer, and per-character feedback.
-              </p>
-              <span className="inline-flex items-center gap-1 mt-3 text-xs font-mono text-primary/80">
-                Open /wpm <ExternalLink size={12} />
-              </span>
-            </Link>
-            <Link
-              to="/life"
-              className="rounded-md border border-primary/30 bg-card/60 p-4 backdrop-blur-sm hover:border-primary/60 transition-colors"
-            >
-              <div className="font-mono text-primary font-bold mb-1">Game of Life</div>
-              <p className="text-xs text-muted-foreground font-mono leading-relaxed">
-                Conway&apos;s cellular automaton — draw cells, drop in gliders and a glider gun, and
-                watch the B3/S23 rules play out on a wrap-around grid.
-              </p>
-              <span className="inline-flex items-center gap-1 mt-3 text-xs font-mono text-primary/80">
-                Open /life <ExternalLink size={12} />
-              </span>
-            </Link>
-            <Link
-              to="/snake"
-              className="rounded-md border border-primary/30 bg-card/60 p-4 backdrop-blur-sm hover:border-primary/60 transition-colors"
-            >
-              <div className="font-mono text-primary font-bold mb-1">Snake</div>
-              <p className="text-xs text-muted-foreground font-mono leading-relaxed">
-                The classic — grid movement, food, growth, score, and crash state. Arrow keys or
-                WASD, space to pause.
-              </p>
-              <span className="inline-flex items-center gap-1 mt-3 text-xs font-mono text-primary/80">
-                Open /snake <ExternalLink size={12} />
-              </span>
-            </Link>
+            {PLAYGROUND_ITEMS.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className="rounded-md border border-primary/30 bg-card/60 p-4 backdrop-blur-sm hover:border-primary/60 transition-colors"
+              >
+                <div className="font-mono text-primary font-bold mb-1">{item.title}</div>
+                <p className="text-xs text-muted-foreground font-mono leading-relaxed">{item.blurb}</p>
+                <span className="inline-flex items-center gap-1 mt-3 text-xs font-mono text-primary/80">
+                  Open {item.path} <ExternalLink size={12} />
+                </span>
+              </Link>
+            ))}
           </div>
         </section>
 

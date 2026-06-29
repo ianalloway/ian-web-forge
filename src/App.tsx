@@ -28,6 +28,7 @@ const Terminal = lazy(() => import("./pages/Terminal"));
 const Typing = lazy(() => import("./pages/Typing"));
 const Game2048 = lazy(() => import("./pages/Game2048"));
 const Minesweeper = lazy(() => import("./pages/Minesweeper"));
+const Playground = lazy(() => import("./pages/Playground"));
 const RecoveryTracker = lazy(() => import("./pages/RecoveryTracker"));
 const Kelly = lazy(() => import("./pages/Kelly"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -235,6 +236,19 @@ const App = () => (
                       description="Play Minesweeper on ianalloway.xyz: first-click-safe mine placement, flood-fill reveals, flagging, and beginner/intermediate/expert boards with a live timer. Runs entirely client-side."
                     />
                     <Minesweeper />
+                  </>
+                }
+              />
+              <Route
+                path="/playground"
+                element={
+                  <>
+                    <SEO
+                      title="Playground — interactive browser toys"
+                      path="/playground"
+                      description="A hub of client-side interactive demos on ianalloway.xyz: an interactive terminal, Minesweeper, 2048, a typing-speed test, Conway's Game of Life, and Snake. No backend — everything runs in your browser."
+                    />
+                    <Playground />
                   </>
                 }
               />
