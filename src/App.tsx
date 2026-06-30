@@ -32,6 +32,7 @@ const Playground = lazy(() => import("./pages/Playground"));
 const RecoveryTracker = lazy(() => import("./pages/RecoveryTracker"));
 const Kelly = lazy(() => import("./pages/Kelly"));
 const Tetris = lazy(() => import("./pages/Tetris"));
+const Breakout = lazy(() => import("./pages/Breakout"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -263,6 +264,19 @@ const App = () => (
                       description="Play Tetris on ianalloway.xyz: rotate and place tetrominoes, hard-drop with Space, hold with C, and clear lines to level up. Score and level tracking, runs entirely client-side."
                     />
                     <Tetris />
+                  </>
+                }
+              />
+              <Route
+                path="/breakout"
+                element={
+                  <>
+                    <SEO
+                      title="Breakout — clear the bricks"
+                      path="/breakout"
+                      description="Play Breakout on ianalloway.xyz: move the paddle with your mouse or arrow keys, keep the ball bouncing, and destroy 60 bricks across 6 color-coded rows. Canvas-based, runs entirely client-side."
+                    />
+                    <Breakout />
                   </>
                 }
               />

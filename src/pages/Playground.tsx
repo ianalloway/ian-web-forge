@@ -3,6 +3,7 @@ import {
   ArrowLeft,
   ArrowRight,
   Bomb,
+  Disc,
   Gamepad2,
   Hash,
   Keyboard,
@@ -27,6 +28,7 @@ const ICONS: Record<PlaygroundIcon, LucideIcon> = {
   sparkles: Sparkles,
   gamepad: Gamepad2,
   layers: Layers,
+  disc: Disc,
 };
 
 export default function Playground() {

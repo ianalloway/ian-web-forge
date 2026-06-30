@@ -15,7 +15,8 @@ export type PlaygroundIcon =
   | "keyboard"
   | "sparkles"
   | "gamepad"
-  | "layers";
+  | "layers"
+  | "disc";
 
 export interface PlaygroundItem {
   /** Internal SPA route. */
@@ -82,6 +83,14 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
       "Rotate and place tetrominoes to clear lines. Hard-drop with Space, hold with C, ghost piece preview, and escalating speed across levels.",
     tag: "game",
     iconKey: "layers",
+  },
+  {
+    path: "/breakout",
+    title: "Breakout",
+    blurb:
+      "Canvas-based Breakout: move the paddle with your mouse or arrow keys, keep the ball bouncing, and clear 60 bricks across 6 colored rows. Speed ramps as you score.",
+    tag: "game",
+    iconKey: "disc",
   },
 ];
 
