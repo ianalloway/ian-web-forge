@@ -16,7 +16,8 @@ export type PlaygroundIcon =
   | "sparkles"
   | "gamepad"
   | "layers"
-  | "type";
+  | "type"
+  | "chart";
 
 export interface PlaygroundItem {
   /** Internal SPA route. */
@@ -91,6 +92,14 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
       "6 tries to guess a hidden 5-letter tech or programming word. Green = right position, yellow = wrong position.",
     tag: "game",
     iconKey: "type",
+  },
+  {
+    path: "/sort",
+    title: "Sort Visualizer",
+    blurb:
+      "Watch five classic algorithms — bubble, insertion, selection, merge, and quicksort — step through the same shuffled array. Adjustable speed, step counter, yellow highlights on comparisons.",
+    tag: "sim",
+    iconKey: "chart",
   },
 ];
 

@@ -33,6 +33,7 @@ const RecoveryTracker = lazy(() => import("./pages/RecoveryTracker"));
 const Kelly = lazy(() => import("./pages/Kelly"));
 const Tetris = lazy(() => import("./pages/Tetris"));
 const Wordle = lazy(() => import("./pages/Wordle"));
+const Sort = lazy(() => import("./pages/Sort"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -277,6 +278,19 @@ const App = () => (
                       description="A tech-themed Wordle on ianalloway.xyz: 6 tries to guess a hidden 5-letter programming or CS word. Green = right spot, yellow = wrong spot. Runs entirely client-side."
                     />
                     <Wordle />
+                  </>
+                }
+              />
+              <Route
+                path="/sort"
+                element={
+                  <>
+                    <SEO
+                      title="Sort Visualizer — bubble, merge, quick, and more"
+                      path="/sort"
+                      description="Watch five classic sorting algorithms step through a shuffled array on ianalloway.xyz: bubble, insertion, selection, merge, and quicksort. Adjustable speed, step counter, comparison highlights. Runs entirely client-side."
+                    />
+                    <Sort />
                   </>
                 }
               />

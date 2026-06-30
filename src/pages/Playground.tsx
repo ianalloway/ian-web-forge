@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import {
   ArrowLeft,
   ArrowRight,
+  BarChart2,
   Bomb,
   Gamepad2,
   Hash,
@@ -29,6 +30,7 @@ const ICONS: Record<PlaygroundIcon, LucideIcon> = {
   gamepad: Gamepad2,
   layers: Layers,
   type: Type,
+  chart: BarChart2,
 };
 
 export default function Playground() {
