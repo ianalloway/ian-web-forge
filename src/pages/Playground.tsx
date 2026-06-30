@@ -6,6 +6,7 @@ import {
   Gamepad2,
   Hash,
   Keyboard,
+  Layers,
   Sparkles,
   Terminal,
   type LucideIcon,
@@ -25,6 +26,7 @@ const ICONS: Record<PlaygroundIcon, LucideIcon> = {
   keyboard: Keyboard,
   sparkles: Sparkles,
   gamepad: Gamepad2,
+  layers: Layers,
 };
 
 export default function Playground() {

@@ -31,6 +31,7 @@ const Minesweeper = lazy(() => import("./pages/Minesweeper"));
 const Playground = lazy(() => import("./pages/Playground"));
 const RecoveryTracker = lazy(() => import("./pages/RecoveryTracker"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Tetris = lazy(() => import("./pages/Tetris"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -249,6 +250,19 @@ const App = () => (
                       description="A hub of client-side interactive demos on ianalloway.xyz: an interactive terminal, Minesweeper, 2048, a typing-speed test, Conway's Game of Life, and Snake. No backend — everything runs in your browser."
                     />
                     <Playground />
+                  </>
+                }
+              />
+              <Route
+                path="/tetris"
+                element={
+                  <>
+                    <SEO
+                      title="Tetris — rotate and clear"
+                      path="/tetris"
+                      description="Play Tetris on ianalloway.xyz: rotate and place tetrominoes, hard-drop with Space, hold with C, and clear lines to level up. Score and level tracking, runs entirely client-side."
+                    />
+                    <Tetris />
                   </>
                 }
               />
