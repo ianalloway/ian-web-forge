@@ -32,6 +32,7 @@ const Playground = lazy(() => import("./pages/Playground"));
 const RecoveryTracker = lazy(() => import("./pages/RecoveryTracker"));
 const Kelly = lazy(() => import("./pages/Kelly"));
 const Tetris = lazy(() => import("./pages/Tetris"));
+const Wordle = lazy(() => import("./pages/Wordle"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -263,6 +264,19 @@ const App = () => (
                       description="Play Tetris on ianalloway.xyz: rotate and place tetrominoes, hard-drop with Space, hold with C, and clear lines to level up. Score and level tracking, runs entirely client-side."
                     />
                     <Tetris />
+                  </>
+                }
+              />
+              <Route
+                path="/wordle"
+                element={
+                  <>
+                    <SEO
+                      title="Wordle — guess the tech word"
+                      path="/wordle"
+                      description="A tech-themed Wordle on ianalloway.xyz: 6 tries to guess a hidden 5-letter programming or CS word. Green = right spot, yellow = wrong spot. Runs entirely client-side."
+                    />
+                    <Wordle />
                   </>
                 }
               />
