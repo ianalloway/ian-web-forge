@@ -14,7 +14,8 @@ export type PlaygroundIcon =
   | "hash"
   | "keyboard"
   | "sparkles"
-  | "gamepad";
+  | "gamepad"
+  | "layers";
 
 export interface PlaygroundItem {
   /** Internal SPA route. */
@@ -73,6 +74,14 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
       "The classic — grid movement, food, growth, score, and crash state. Arrow keys or WASD, space to pause.",
     tag: "game",
     iconKey: "gamepad",
+  },
+  {
+    path: "/tetris",
+    title: "Tetris",
+    blurb:
+      "Rotate and place tetrominoes to clear lines. Hard-drop with Space, hold with C, ghost piece preview, and escalating speed across levels.",
+    tag: "game",
+    iconKey: "layers",
   },
 ];
 
