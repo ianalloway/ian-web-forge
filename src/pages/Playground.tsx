@@ -9,6 +9,7 @@ import {
   Layers,
   Sparkles,
   Terminal,
+  Type,
   type LucideIcon,
 } from "lucide-react";
 import MatrixRain from "@/components/MatrixRain";
@@ -27,6 +28,7 @@ const ICONS: Record<PlaygroundIcon, LucideIcon> = {
   sparkles: Sparkles,
   gamepad: Gamepad2,
   layers: Layers,
+  type: Type,
 };
 
 export default function Playground() {

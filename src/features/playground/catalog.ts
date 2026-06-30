@@ -15,7 +15,8 @@ export type PlaygroundIcon =
   | "keyboard"
   | "sparkles"
   | "gamepad"
-  | "layers";
+  | "layers"
+  | "type";
 
 export interface PlaygroundItem {
   /** Internal SPA route. */
@@ -82,6 +83,14 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
       "Rotate and place tetrominoes to clear lines. Hard-drop with Space, hold with C, ghost piece preview, and escalating speed across levels.",
     tag: "game",
     iconKey: "layers",
+  },
+  {
+    path: "/wordle",
+    title: "Wordle",
+    blurb:
+      "6 tries to guess a hidden 5-letter tech or programming word. Green = right position, yellow = wrong position.",
+    tag: "game",
+    iconKey: "type",
   },
 ];
 
