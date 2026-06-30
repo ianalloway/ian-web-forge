@@ -4,6 +4,7 @@ import {
   ArrowRight,
   BarChart2,
   Bomb,
+  Disc,
   Gamepad2,
   Hash,
   Keyboard,
@@ -31,6 +32,7 @@ const ICONS: Record<PlaygroundIcon, LucideIcon> = {
   layers: Layers,
   type: Type,
   chart: BarChart2,
+  disc: Disc,
 };
 
 export default function Playground() {
