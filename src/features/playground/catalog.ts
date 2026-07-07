@@ -18,7 +18,8 @@ export type PlaygroundIcon =
   | "layers"
   | "type"
   | "chart"
-  | "disc";
+  | "disc"
+  | "navigation";
 
 export interface PlaygroundItem {
   /** Internal SPA route. */
@@ -109,6 +110,14 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
       "Canvas-based Breakout: move the paddle with your mouse or arrow keys, keep the ball bouncing, and clear 60 bricks across 6 colored rows. Speed ramps as you score.",
     tag: "game",
     iconKey: "disc",
+  },
+  {
+    path: "/pathfind",
+    title: "Pathfinding",
+    blurb:
+      "Draw walls on a grid and watch BFS or A★ find the shortest path step by step. See how A★'s heuristic focuses the search compared to BFS's even wavefront.",
+    tag: "sim",
+    iconKey: "navigation",
   },
 ];
 

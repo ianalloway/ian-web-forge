@@ -35,6 +35,7 @@ const Tetris = lazy(() => import("./pages/Tetris"));
 const Wordle = lazy(() => import("./pages/Wordle"));
 const Sort = lazy(() => import("./pages/Sort"));
 const Breakout = lazy(() => import("./pages/Breakout"));
+const Pathfind = lazy(() => import("./pages/Pathfind"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -305,6 +306,19 @@ const App = () => (
                       description="Play Breakout on ianalloway.xyz: move the paddle with your mouse or arrow keys, keep the ball bouncing, and destroy 60 bricks across 6 color-coded rows. Canvas-based, runs entirely client-side."
                     />
                     <Breakout />
+                  </>
+                }
+              />
+              <Route
+                path="/pathfind"
+                element={
+                  <>
+                    <SEO
+                      title="Pathfinding Visualizer — BFS and A★"
+                      path="/pathfind"
+                      description="Interactive pathfinding visualizer on ianalloway.xyz: draw walls on a grid and watch BFS or A★ find the shortest path step by step. Runs entirely client-side."
+                    />
+                    <Pathfind />
                   </>
                 }
               />
