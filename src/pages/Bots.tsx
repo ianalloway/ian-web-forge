@@ -1,4 +1,4 @@
-import { Github, ExternalLink, Terminal, Bot, Coins, Scale, Puzzle } from 'lucide-react';
+import { GitBranch as Github, ExternalLink, Terminal, Bot, Coins, Scale, Puzzle } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 

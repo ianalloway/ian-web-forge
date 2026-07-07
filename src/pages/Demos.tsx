@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Terminal, ExternalLink, Github, Calculator, LineChart, Cpu, Trophy, Coins, Gamepad2 } from 'lucide-react';
+import { Terminal, ExternalLink, GitBranch as Github, Calculator, LineChart, Cpu, Trophy, Coins, Gamepad2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { PLAYGROUND_ITEMS } from '@/features/playground/catalog';
 import MatrixRain from '@/components/MatrixRain';

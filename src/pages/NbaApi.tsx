@@ -12,7 +12,7 @@ import {
   Code2,
   DollarSign,
   Gauge,
-  Github,
+  GitBranch as Github,
   HelpCircle,
   Mail,
   Radio,

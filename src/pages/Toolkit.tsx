@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import type { LucideIcon } from 'lucide-react';
 import {
-  Github,
+  GitBranch as Github,
   ExternalLink,
   Terminal,
   LineChart,
