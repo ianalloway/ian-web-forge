@@ -21,7 +21,8 @@ export type PlaygroundIcon =
   | "disc"
   | "navigation"
   | "wind"
-  | "map";
+  | "map"
+  | "music";
 
 export interface PlaygroundItem {
   /** Internal SPA route. */
@@ -136,6 +137,14 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
       "Recursive-backtracker DFS carves a perfect 18×24 maze one passage at a time. Then watch BFS trace the shortest path from S to E.",
     tag: "sim",
     iconKey: "map",
+  },
+  {
+    path: "/piano",
+    title: "Piano Synthesizer",
+    blurb:
+      "A two-octave piano (C3–B4) with Web Audio synthesis. Click keys or use keyboard shortcuts. Switch between sine, triangle, square, and sawtooth waveforms.",
+    tag: "tool",
+    iconKey: "music",
   },
 ];
 
