@@ -20,7 +20,8 @@ export type PlaygroundIcon =
   | "chart"
   | "disc"
   | "navigation"
-  | "wind";
+  | "wind"
+  | "map";
 
 export interface PlaygroundItem {
   /** Internal SPA route. */
@@ -127,6 +128,14 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
       "120 agents, three local rules — separation, alignment, and cohesion — producing emergent flocking. Click the canvas to spawn more boids mid-sim.",
     tag: "sim",
     iconKey: "wind",
+  },
+  {
+    path: "/maze",
+    title: "Maze Generator",
+    blurb:
+      "Recursive-backtracker DFS carves a perfect 18×24 maze one passage at a time. Then watch BFS trace the shortest path from S to E.",
+    tag: "sim",
+    iconKey: "map",
   },
 ];
 
