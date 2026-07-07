@@ -36,6 +36,7 @@ const Wordle = lazy(() => import("./pages/Wordle"));
 const Sort = lazy(() => import("./pages/Sort"));
 const Breakout = lazy(() => import("./pages/Breakout"));
 const Pathfind = lazy(() => import("./pages/Pathfind"));
+const Boids = lazy(() => import("./pages/Boids"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -319,6 +320,19 @@ const App = () => (
                       description="Interactive pathfinding visualizer on ianalloway.xyz: draw walls on a grid and watch BFS or A★ find the shortest path step by step. Runs entirely client-side."
                     />
                     <Pathfind />
+                  </>
+                }
+              />
+              <Route
+                path="/boids"
+                element={
+                  <>
+                    <SEO
+                      title="Boids — emergent flocking simulation"
+                      path="/boids"
+                      description="Watch emergent flocking behaviour on ianalloway.xyz: 120 boids follow three local rules — separation, alignment, and cohesion — to produce lifelike swarms. Click to spawn more. Runs entirely client-side."
+                    />
+                    <Boids />
                   </>
                 }
               />

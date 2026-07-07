@@ -19,7 +19,8 @@ export type PlaygroundIcon =
   | "type"
   | "chart"
   | "disc"
-  | "navigation";
+  | "navigation"
+  | "wind";
 
 export interface PlaygroundItem {
   /** Internal SPA route. */
@@ -118,6 +119,14 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
       "Draw walls on a grid and watch BFS or A★ find the shortest path step by step. See how A★'s heuristic focuses the search compared to BFS's even wavefront.",
     tag: "sim",
     iconKey: "navigation",
+  },
+  {
+    path: "/boids",
+    title: "Boids",
+    blurb:
+      "120 agents, three local rules — separation, alignment, and cohesion — producing emergent flocking. Click the canvas to spawn more boids mid-sim.",
+    tag: "sim",
+    iconKey: "wind",
   },
 ];
 

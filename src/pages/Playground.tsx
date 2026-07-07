@@ -13,6 +13,7 @@ import {
   Sparkles,
   Terminal,
   Type,
+  Wind,
   type LucideIcon,
 } from "lucide-react";
 import MatrixRain from "@/components/MatrixRain";
@@ -35,6 +36,7 @@ const ICONS: Record<PlaygroundIcon, LucideIcon> = {
   chart: BarChart2,
   disc: Disc,
   navigation: Navigation,
+  wind: Wind,
 };
 
 export default function Playground() {
