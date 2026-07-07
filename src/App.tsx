@@ -37,6 +37,7 @@ const Sort = lazy(() => import("./pages/Sort"));
 const Breakout = lazy(() => import("./pages/Breakout"));
 const Pathfind = lazy(() => import("./pages/Pathfind"));
 const Boids = lazy(() => import("./pages/Boids"));
+const Maze = lazy(() => import("./pages/Maze"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -333,6 +334,19 @@ const App = () => (
                       description="Watch emergent flocking behaviour on ianalloway.xyz: 120 boids follow three local rules — separation, alignment, and cohesion — to produce lifelike swarms. Click to spawn more. Runs entirely client-side."
                     />
                     <Boids />
+                  </>
+                }
+              />
+              <Route
+                path="/maze"
+                element={
+                  <>
+                    <SEO
+                      title="Maze Generator — DFS carving and BFS solving"
+                      path="/maze"
+                      description="Watch a recursive-backtracker DFS carve a perfect 18×24 maze passage by passage, then see BFS trace the shortest path from start to end. Runs entirely client-side."
+                    />
+                    <Maze />
                   </>
                 }
               />

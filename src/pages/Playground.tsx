@@ -9,6 +9,7 @@ import {
   Hash,
   Keyboard,
   Layers,
+  Map,
   Navigation,
   Sparkles,
   Terminal,
@@ -37,6 +38,7 @@ const ICONS: Record<PlaygroundIcon, LucideIcon> = {
   disc: Disc,
   navigation: Navigation,
   wind: Wind,
+  map: Map,
 };
 
 export default function Playground() {
