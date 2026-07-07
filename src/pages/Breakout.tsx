@@ -150,6 +150,8 @@ export default function Breakout() {
 
   const handleKey = useCallback(
     (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement).tagName;
+      if (tag === "A" || tag === "BUTTON" || tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
       const { status } = displayRef.current;
       if (e.key === " " || e.key === "Enter") {
         e.preventDefault();
