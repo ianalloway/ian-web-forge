@@ -17,7 +17,8 @@ export type PlaygroundIcon =
   | "gamepad"
   | "layers"
   | "type"
-  | "chart";
+  | "chart"
+  | "disc";
 
 export interface PlaygroundItem {
   /** Internal SPA route. */
@@ -100,6 +101,14 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
       "Watch five classic algorithms — bubble, insertion, selection, merge, and quicksort — step through the same shuffled array. Adjustable speed, step counter, yellow highlights on comparisons.",
     tag: "sim",
     iconKey: "chart",
+  },
+  {
+    path: "/breakout",
+    title: "Breakout",
+    blurb:
+      "Canvas-based Breakout: move the paddle with your mouse or arrow keys, keep the ball bouncing, and clear 60 bricks across 6 colored rows. Speed ramps as you score.",
+    tag: "game",
+    iconKey: "disc",
   },
 ];
 

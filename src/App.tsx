@@ -34,6 +34,7 @@ const Kelly = lazy(() => import("./pages/Kelly"));
 const Tetris = lazy(() => import("./pages/Tetris"));
 const Wordle = lazy(() => import("./pages/Wordle"));
 const Sort = lazy(() => import("./pages/Sort"));
+const Breakout = lazy(() => import("./pages/Breakout"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -291,6 +292,19 @@ const App = () => (
                       description="Watch five classic sorting algorithms step through a shuffled array on ianalloway.xyz: bubble, insertion, selection, merge, and quicksort. Adjustable speed, step counter, comparison highlights. Runs entirely client-side."
                     />
                     <Sort />
+                  </>
+                }
+              />
+              <Route
+                path="/breakout"
+                element={
+                  <>
+                    <SEO
+                      title="Breakout — clear the bricks"
+                      path="/breakout"
+                      description="Play Breakout on ianalloway.xyz: move the paddle with your mouse or arrow keys, keep the ball bouncing, and destroy 60 bricks across 6 color-coded rows. Canvas-based, runs entirely client-side."
+                    />
+                    <Breakout />
                   </>
                 }
               />
