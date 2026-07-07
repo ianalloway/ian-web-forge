@@ -39,6 +39,8 @@ export default function Maze() {
 
   const [phase, setPhase] = useState<Phase>("idle");
   const [speedIdx, setSpeedIdx] = useState(1);
+  const [genProgress, setGenProgress] = useState({ done: 0, total: 0 });
+  const [pathCells, setPathCells] = useState(0);
 
   // rAF loop — draws and advances steps based on elapsed time
   useEffect(() => {
@@ -55,6 +57,7 @@ export default function Maze() {
       if (i >= steps.length) {
         phaseRef.current = "generated";
         setPhase("generated");
+        setGenProgress({ done: steps.length, total: steps.length });
         return;
       }
       const step = steps[i];
@@ -62,6 +65,7 @@ export default function Maze() {
       const opp = step.dir === 1 ? 2 : step.dir === 2 ? 1 : step.dir === 4 ? 8 : 4; // N↔S, E↔W
       wallsRef.current[step.to] |= opp;
       genIdxRef.current = i + 1;
+      setGenProgress({ done: i + 1, total: steps.length });
     }
 
     function advanceSolve() {
@@ -84,6 +88,7 @@ export default function Maze() {
       if (step.done) {
         for (const p of step.path) pathRef.current.add(p);
         frontierRef.current.clear();
+        setPathCells(step.path.length);
         phaseRef.current = "solved";
         setPhase("solved");
       }
@@ -128,6 +133,8 @@ export default function Maze() {
     visitedSolveRef.current = new Set();
     frontierRef.current = new Set();
     pathRef.current = new Set();
+    setGenProgress({ done: 0, total: result.steps.length });
+    setPathCells(0);
     lastStepAtRef.current = 0;
     phaseRef.current = "generating";
     setPhase("generating");
@@ -144,6 +151,7 @@ export default function Maze() {
       walls[step.to] |= opp;
     }
     genIdxRef.current = steps.length;
+    setGenProgress({ done: steps.length, total: steps.length });
     phaseRef.current = "generated";
     setPhase("generated");
   }, []);
@@ -155,6 +163,7 @@ export default function Maze() {
     visitedSolveRef.current = new Set([0]);
     frontierRef.current = new Set([0]);
     pathRef.current = new Set();
+    setPathCells(0);
     lastStepAtRef.current = 0;
     phaseRef.current = "solving";
     setPhase("solving");
@@ -171,6 +180,7 @@ export default function Maze() {
     }
     frontierRef.current.clear();
     solveIdxRef.current = steps.length;
+    setPathCells(pathRef.current.size);
     phaseRef.current = "solved";
     setPhase("solved");
   }, []);
@@ -184,6 +194,8 @@ export default function Maze() {
     visitedSolveRef.current = new Set();
     frontierRef.current = new Set();
     pathRef.current = new Set();
+    setGenProgress({ done: 0, total: 0 });
+    setPathCells(0);
     phaseRef.current = "idle";
     setPhase("idle");
   }, []);
@@ -192,9 +204,6 @@ export default function Maze() {
     setSpeedIdx(i);
     speedRef.current = SPEEDS[i].ms;
   }, []);
-
-  const genTotal = genStepsRef.current.length;
-  const genDone = Math.min(genIdxRef.current, genTotal);
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
@@ -299,21 +308,21 @@ export default function Maze() {
 
         {/* Status */}
         <div className="mb-2 h-5 flex items-center gap-2 text-xs font-mono text-muted-foreground">
-          {phase === "generating" && genTotal > 0 && (
+          {phase === "generating" && genProgress.total > 0 && (
             <>
               <span className="text-primary/70">carving</span>
-              <span>{genDone}/{genTotal} passages</span>
+              <span>{genProgress.done}/{genProgress.total} passages</span>
             </>
           )}
           {phase === "generated" && (
-            <span className="text-primary/70">maze ready — {genTotal} passages</span>
+            <span className="text-primary/70">maze ready — {genProgress.total} passages</span>
           )}
           {phase === "solving" && (
             <span className="text-primary/70">BFS searching…</span>
           )}
           {phase === "solved" && (
             <span className="text-primary/70">
-              path found — {pathRef.current.size} cells
+              path found — {pathCells} cells
             </span>
           )}
         </div>
