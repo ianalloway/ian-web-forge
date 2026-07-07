@@ -6,7 +6,7 @@ import {
   Calculator,
   TrendingUp,
   Info,
-  Github,
+  GitBranch as Github,
   DollarSign,
   Percent,
 } from 'lucide-react';
