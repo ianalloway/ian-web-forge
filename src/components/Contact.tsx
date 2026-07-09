@@ -13,15 +13,48 @@ const Contact = () => {
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    toast({
-      title: "Form not connected",
-      description: "Please email ian@allowayllc.com directly — this form does not send messages yet.",
-      variant: "destructive",
-    });
-    setFormData({ name: '', email: '', message: '' });
+    if (!formData.name || !formData.email || !formData.message) {
+      toast({
+        title: "Missing fields",
+        description: "Please fill in your name, email, and message.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const payload = new URLSearchParams();
+      payload.append("form-name", "contact");
+      payload.append("name", formData.name);
+      payload.append("email", formData.email);
+      payload.append("message", formData.message);
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: payload.toString(),
+      });
+      if (res.ok) {
+        toast({
+          title: "Message sent",
+          description: "Thanks — I'll get back to you at " + formData.email + " soon.",
+        });
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        throw new Error("HTTP " + res.status);
+      }
+    } catch (err) {
+      toast({
+        title: "Couldn't send",
+        description: "Something went wrong. Please email ian@allowayllc.com directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -103,10 +136,11 @@ const Contact = () => {
                 </div>
                 <Button 
                   type="submit" 
+                  disabled={isSubmitting}
                   className="w-full bg-foreground text-background hover:opacity-90 transition-all duration-200"
                 >
                   <Send size={16} className="mr-2" />
-                  Send Message
+                  {isSubmitting ? "Sending…" : "Send Message"}
                 </Button>
               </form>
             </CardContent>

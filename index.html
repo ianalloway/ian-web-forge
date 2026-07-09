@@ -86,6 +86,20 @@
       <input type="text" name="referrer" />
       <input type="text" name="user_agent" />
     </form>
+    <!-- Hidden Netlify Form spacer for the contact form (SPA detection) -->
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      hidden
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <input type="text" name="bot-field" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

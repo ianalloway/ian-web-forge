@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import Newsletter from '@/components/Newsletter';
 
 /* ──────────────────────────────────────────────────────────────────────────
    Portfolio homepage redesign — data-forward, restrained terminal aesthetic.
@@ -801,6 +802,7 @@ const Index = () => {
             >
               Subscribe to the Substack →
             </a>
+            <Newsletter />
           </div>
         </section>
 

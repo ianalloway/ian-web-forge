@@ -1,16 +1,18 @@
 interface SubscribeInput {
   email: string;
   name?: string;
-  site: string;
-  source: string;
 }
 
 interface SubscribeResult {
   success: boolean;
   message: string;
-  redirectUrl?: string;
 }
 
+/**
+ * Submits the newsletter signup to the Netlify Forms "ianalloway-newsletter"
+ * spacer declared in index.html. No backend required — Netlify captures the
+ * submission and notifies via the site's configured email.
+ */
 export async function subscribeToNewsletter(
   input: SubscribeInput,
 ): Promise<SubscribeResult> {
@@ -25,40 +27,27 @@ export async function subscribeToNewsletter(
   }
 
   try {
-    const response = await fetch("/api/newsletter-subscribe", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        name: name || undefined,
-        site: input.site,
-        source: input.source,
-        pageUrl: typeof window !== "undefined" ? window.location.href : undefined,
-        referrer: typeof document !== "undefined" ? document.referrer : undefined,
-        userAgent: typeof navigator !== "undefined" ? navigator.userAgent : undefined,
-      }),
-    });
+    const payload = new URLSearchParams();
+    payload.append("form-name", "ianalloway-newsletter");
+    payload.append("email", email);
+    if (name) payload.append("name", name);
 
-    const data = (await response.json().catch(() => ({}))) as {
-      message?: string;
-      redirectUrl?: string;
-    };
+    const response = await fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: payload.toString(),
+    });
 
     if (!response.ok) {
       return {
         success: false,
-        message: data.message || "Unable to save your signup. Please try again.",
+        message: "Unable to save your signup. Please try again.",
       };
     }
 
     return {
       success: true,
-      message:
-        data.message ||
-        "Saved. We logged your signup and are taking you to the official Substack subscribe page.",
-      redirectUrl: data.redirectUrl,
+      message: "You're on the list — I'll email new posts to " + email + ".",
     };
   } catch {
     return {
