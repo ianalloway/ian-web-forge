@@ -49,19 +49,21 @@ export class PianoSynth {
   private ctx: AudioContext | null = null;
   private masterGain: GainNode | null = null;
   private active = new Map<string, { osc: OscillatorNode; env: GainNode; stopAt: number }>();
+  private volume = 0.7;
 
   private ensureCtx() {
     if (!this.ctx) {
       this.ctx = new AudioContext();
       this.masterGain = this.ctx.createGain();
-      this.masterGain.gain.value = 0.7;
+      this.masterGain.gain.value = this.volume;
       this.masterGain.connect(this.ctx.destination);
     }
-    if (this.ctx.state === "suspended") this.ctx.resume();
+    if (this.ctx.state === "suspended") this.ctx.resume().catch(() => {});
     return this.ctx;
   }
 
   setVolume(v: number) {
+    this.volume = v;
     if (this.masterGain) this.masterGain.gain.value = v;
   }
 
@@ -88,8 +90,9 @@ export class PianoSynth {
     if (!node || !this.ctx) return;
     const { osc, env } = node;
     const t = this.ctx.currentTime;
+    const currentVal = Math.max(env.gain.value, 0.0001);
     env.gain.cancelScheduledValues(t);
-    env.gain.setValueAtTime(env.gain.value, t);
+    env.gain.setValueAtTime(currentVal, t);
     env.gain.exponentialRampToValueAtTime(0.0001, t + 0.25);
     osc.stop(t + 0.26);
     this.active.delete(label);

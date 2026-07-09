@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Music } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import MatrixRain from "@/components/MatrixRain";
 import { Button } from "@/components/ui/button";
 import {
@@ -57,7 +57,7 @@ export default function Piano() {
     });
   }, []);
 
-  // Keyboard bindings
+  // Keyboard bindings + panic handler (blur/tab-switch releases all notes)
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.repeat) return;
@@ -70,11 +70,19 @@ export default function Piano() {
       if (!note) return;
       noteOff(note);
     };
+    const panic = () => {
+      synthRef.current?.allNotesOff();
+      setPressed(new Set());
+    };
     window.addEventListener("keydown", down);
     window.addEventListener("keyup", up);
+    window.addEventListener("blur", panic);
+    document.addEventListener("visibilitychange", panic);
     return () => {
       window.removeEventListener("keydown", down);
       window.removeEventListener("keyup", up);
+      window.removeEventListener("blur", panic);
+      document.removeEventListener("visibilitychange", panic);
     };
   }, [noteOn, noteOff]);
 
@@ -192,11 +200,18 @@ export default function Piano() {
               return (
                 <div
                   key={note.label}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={note.label}
+                  aria-pressed={isDown}
                   onMouseDown={() => noteOn(note)}
                   onMouseUp={() => noteOff(note)}
                   onMouseLeave={() => { if (pressed.has(note.label)) noteOff(note); }}
                   onTouchStart={(e) => { e.preventDefault(); noteOn(note); }}
                   onTouchEnd={(e) => { e.preventDefault(); noteOff(note); }}
+                  onTouchCancel={(e) => { e.preventDefault(); noteOff(note); }}
+                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); noteOn(note); } }}
+                  onKeyUp={(e) => { if (e.key === "Enter" || e.key === " ") noteOff(note); }}
                   style={{
                     position: "absolute",
                     left: note.idx * WHITE_W,
@@ -235,11 +250,18 @@ export default function Piano() {
               return (
                 <div
                   key={note.label}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={note.label}
+                  aria-pressed={isDown}
                   onMouseDown={(e) => { e.stopPropagation(); noteOn(note); }}
                   onMouseUp={(e) => { e.stopPropagation(); noteOff(note); }}
                   onMouseLeave={() => { if (pressed.has(note.label)) noteOff(note); }}
                   onTouchStart={(e) => { e.preventDefault(); e.stopPropagation(); noteOn(note); }}
                   onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); noteOff(note); }}
+                  onTouchCancel={(e) => { e.preventDefault(); e.stopPropagation(); noteOff(note); }}
+                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); noteOn(note); } }}
+                  onKeyUp={(e) => { if (e.key === "Enter" || e.key === " ") noteOff(note); }}
                   style={{
                     position: "absolute",
                     left: getBlackLeft(note),
