@@ -10,6 +10,7 @@ import {
   Keyboard,
   Layers,
   Map,
+  Music,
   Navigation,
   Sparkles,
   Terminal,
@@ -39,6 +40,7 @@ const ICONS: Record<PlaygroundIcon, LucideIcon> = {
   navigation: Navigation,
   wind: Wind,
   map: Map,
+  music: Music,
 };
 
 export default function Playground() {
