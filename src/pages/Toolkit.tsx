@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import type { LucideIcon } from 'lucide-react';
 import {
   GitBranch as Github,
@@ -10,7 +9,6 @@ import {
   Shield,
   ArrowRight,
   Home,
-  Gamepad2,
 } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 
@@ -290,29 +288,6 @@ const Toolkit = () => {
               </span>
             ))}
           </div>
-        </section>
-
-        <section className="mb-14">
-          <Card className="terminal-border bg-card/40 backdrop-blur-sm">
-            <CardContent className="p-5 md:p-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <h2 className="text-primary font-mono text-lg font-bold flex items-center gap-2 mb-2">
-                  <Gamepad2 size={18} />
-                  [PLAY_SNAKE]
-                </h2>
-                <p className="text-muted-foreground font-mono text-sm max-w-2xl">
-                  A small classic Snake game now lives on the site at <span className="text-primary">/snake</span>.
-                  No extra dependencies, just a clean playable route.
-                </p>
-              </div>
-              <Button className="font-mono bg-primary text-primary-foreground shrink-0" asChild>
-                <a href="/snake">
-                  Launch Snake
-                  <ArrowRight className="ml-2" size={16} />
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
         </section>
 
         <section key={section.id} id={section.id} className="mb-12 scroll-mt-24">

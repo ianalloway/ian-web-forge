@@ -37,9 +37,10 @@ Matrix-themed developer portfolio — ML, sports analytics, AI agents.
 git clone https://github.com/ianalloway/ian-web-forge.git
 cd ian-web-forge
 npm install
-npm run dev      # http://localhost:5173
+npm run dev      # http://localhost:8080
 npm run build    # production build → dist/
 npm run lint     # ESLint
+npm test         # eslint . && tsc --noEmit
 ```
 
 ## Content updates
@@ -50,28 +51,15 @@ npm run lint     # ESLint
 2. Update the `academicPapers` array in `src/pages/Index.tsx`.
 3. Commit and deploy.
 
-### Newsletter / contact form
+### Newsletter form
 
-The contact-area subscribe form posts to `/api/newsletter-subscribe` and:
-
-- creates a Notion entry
-- sends a notification email
-- redirects the visitor to the Substack subscribe flow
-
-Required env vars:
-
-```bash
-NOTION_API_KEY=secret_your_notion_integration_token
-NOTION_PARENT_PAGE_ID=your_notion_parent_page_id
-RESEND_API_KEY=re_your_resend_api_key
-RESEND_FROM_EMAIL="Ian Alloway <onboarding@yourdomain.com>"
-NOTIFY_EMAIL=ian@allowayllc.com
-SUBSTACK_PUBLICATION_URL=https://allowayai.substack.com
-```
+The newsletter signup on the homepage submits directly to Netlify Forms (`ianalloway-newsletter`,
+declared as a hidden form in `index.html`) — no backend, no API keys, no environment variables.
 
 ## Deployment
 
-The repo includes `vercel.json` so preview deployments can serve SPA routes like `/now`, `/hireme`, and `/toolkit` without 404s while still routing `/api/*` to serverless functions.
+Netlify only (`netlify.toml`): builds with `npm run build` and publishes `dist/`, with a catch-all
+SPA rewrite to `index.html` so client-side routes like `/now`, `/hireme`, and `/toolkit` don't 404.
 
 ## Notes
 
