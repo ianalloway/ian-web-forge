@@ -56,8 +56,8 @@ const PROJECTS: Project[] = [
     title: 'nba-ratings / nba-edge',
     category: 'Sports ML',
     description:
-      'Installable Elo, logistic win-probability, and Kelly helpers for NBA-style models. Published to PyPI as nba-edge.',
-    tech: ['Elo', 'PyPI', 'Python'],
+      'Installable Elo, logistic win-probability, and Kelly helpers for NBA-style models (`pip install -e .` from GitHub).',
+    tech: ['Elo', 'Python', 'Kelly'],
     code: 'https://github.com/ianalloway/nba-ratings',
   },
   {
@@ -126,7 +126,7 @@ const HERO_METRICS = [
   { value: '68.3%', label: 'Model accuracy', sub: 'NBA betting model' },
   { value: '47', label: 'GitHub repos', sub: 'public' },
   { value: '9', label: 'OSS skills', sub: 'on ClawHub' },
-  { value: 'PyPI', label: 'nba-edge', sub: 'installable' },
+  { value: 'OSS', label: 'nba-edge', sub: 'GitHub install' },
 ];
 
 const CAPABILITIES = [
@@ -167,7 +167,7 @@ const TIMELINE = [
   { year: '2020', color: '#7aa2f0', label: 'Data Auditor / AI Engineer — Omniichain blockchain analytics' },
   { year: '2023', color: '#e9c14a', label: 'Founded Alloway LLC · first production ML system shipped' },
   { year: '2024', color: '#e9c14a', label: 'Launched AI Advantage Sports · 68.3% model accuracy' },
-  { year: '2025', color: '#c79bf0', label: 'Published 9 OSS skills on ClawHub · nba-edge on PyPI' },
+  { year: '2025', color: '#c79bf0', label: 'Published 9 OSS skills on ClawHub · nba-edge open sourced' },
   { year: '2025', color: '#7aa2f0', label: 'Completed B.S. Information Science @ USF' },
   { year: '2026', color: '#5be49b', label: 'M.S. Artificial Intelligence @ USF — in progress' },
 ];
