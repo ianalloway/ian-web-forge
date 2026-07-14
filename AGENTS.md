@@ -1,66 +1,51 @@
 # AGENTS.md - AI Agent Guidelines for ian-web-forge
 
-## Changelog (maintainer notes)
-
-| Date | Change |
-|------|--------|
-| **2026-03** | **`/toolkit`** lists **8 active** public repos + **`oss-archive`**. Retired OSS was copied to `ianalloway/oss-archive` branches `archive/<repo>` then originals were **GitHub-archived**. Sync profile README + Toolkit. `scripts/apply-topics.sh` targets **active** repos only. |
-
 ## Overview
 
-This repo uses a risk-aware CI/CD pipeline with policy gates and code review agents.
+Matrix-themed developer portfolio for Ian Alloway — a single-page React SPA plus a handful of
+lazy-loaded routes (Now, HireMe, Toolkit, Demos, Bots, Kelly). No backend: the newsletter form on
+the homepage posts to Netlify Forms (see `index.html` + `netlify.toml`).
 
-## Risk Tiers
+## Stack
 
-| Tier | Paths | Required Checks |
-|------|-------|-----------------|
-| High | `app/api/**`, `lib/tools/**`, `db/**`, `**/auth*`, `**/payment*`, `**/admin*` | risk-policy-gate, harness-smoke, Browser Evidence, CI Pipeline |
-| Medium | `app/components/**`, `lib/**`, `services/**` | risk-policy-gate, CI Pipeline |
-| Low | All other files | risk-policy-gate, CI Pipeline |
+- React 19 + TypeScript + Vite
+- Tailwind CSS + a small hand-picked set of shadcn/ui primitives (`src/components/ui/`)
+- React Router (lazy-loaded routes), react-helmet-async for SEO tags
 
-## Workflow
-
-1. **Risk Policy Gate** runs first (before expensive CI)
-2. **Code Review** via Greptile/Coderabbit for high-risk changes
-3. **CI Pipeline** runs typecheck → lint → test → build
-4. **Browser Evidence** captured for UI changes
-
-## SHA Discipline
-
-⚠️ **IMPORTANT**: Always verify against the current HEAD SHA. Stale review evidence is invalid.
-
-## Testing Commands
+## Commands
 
 ```bash
-npm run typecheck   # Type checking
-npm run lint        # Linting
-npm test            # Unit tests
-npm run build       # Production build
-npm run harness:ui:smoke  # Browser smoke tests
+npm install
+npm run dev       # Vite dev server → http://localhost:8080 (port set in vite.config.ts)
+npm run build     # production build → dist/
+npm run lint      # ESLint
+npm test          # eslint . && tsc --noEmit
+npm run preview   # preview a production build
 ```
 
-## Remediation Loop
+There is no `typecheck` script — `npm test` already runs `tsc --noEmit`. There is no browser/smoke
+test harness in this repo; CI is a single build/lint/typecheck pipeline (below).
 
-If code review finds issues:
-1. Agent reads review context
-2. Agent patches code
-3. Agent runs local validation
-4. Agent pushes fix commit
-5. Review re-runs automatically
+## CI
 
-## Useful Links
+- `.github/workflows/ci.yml` — checkout → `npm ci` → lint → `tsc --noEmit` → build. Runs on every
+  push/PR against `main`.
+- `.github/workflows/codeql.yml` — GitHub CodeQL security scanning (scheduled + push/PR).
+- CodeRabbit (`coderabbit.yaml`) reviews PRs automatically; no manual step required.
 
-- Risk Policy: `risk-policy.json`
-- CI Config: `.github/workflows/risk-policy-gate.yml`
-- Greptile: `.greptile.yml`
-- CodeRabbit: `coderabbit.yaml`
-- Public repo catalog: `src/pages/Toolkit.tsx` (`CORE_SECTION` + `START_HERE`; condensed, matches profile “featured” story)
+## Deployment
 
-## Cursor Cloud specific instructions
+Netlify only (`netlify.toml`): `npm run build`, publish `dist/`, SPA rewrite to `index.html`. There
+is no serverless API and no Vercel config — the newsletter and contact flows are pure Netlify Forms
+submissions with no environment variables required (see `env.example`).
 
-- **Dev server**: `npm run dev` starts Vite on port 8080 (configured in `vite.config.ts`).
-- **Lint**: `npm run lint` (ESLint). No `typecheck` or `harness:ui:smoke` scripts exist in `package.json` despite being listed above—use `npx tsc --noEmit` for type checking directly.
-- **Build**: `npm run build` produces output in `dist/`.
-- **Tests**: `npm test` is a no-op placeholder (`echo "No tests specified"`).
-- **Serverless API** (`/api/newsletter-subscribe`): requires Vercel CLI + env vars (`NOTION_API_KEY`, `RESEND_API_KEY`, etc.). Not needed for frontend development; the SPA runs standalone via Vite.
-- **No Docker or external services** required for the frontend.
+## Content updates
+
+- Public repo catalog: `src/pages/Toolkit.tsx` (`CORE_SECTION` + `START_HERE`).
+- Academic papers: add the PDF to `/public/papers/`, then update the `academicPapers` array in
+  `src/pages/Index.tsx`.
+
+## Routes
+
+`/`, `/now`, `/hireme`, `/toolkit`, `/demos`, `/bots`, `/kelly`, and a catch-all 404. Keep
+`Index.tsx` and `HireMe.tsx` intact — they're the hire-me-critical pages.

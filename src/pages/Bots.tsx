@@ -36,7 +36,7 @@ python3 run_demo.py`,
     optionalCommands: [
       {
         label: 'Interactive dashboard — chat + voice + live SSE treasury',
-        command: `pip install -r requirements.txt -r requirements-serve.txt
+        command: `pip install -e ".[serve]"
 python3 -m solvent serve --port 8787
 # optional second terminal:
 python3 -m solvent worker
@@ -44,7 +44,7 @@ python3 -m solvent worker
       },
       {
         label: 'Telegram bot — pairing + job notifications',
-        command: `pip install -r requirements-telegram.txt
+        command: `pip install -e ".[serve,telegram]"
 export TELEGRAM_BOT_TOKEN="..."
 python3 -m solvent serve
 python3 -m solvent worker
@@ -79,14 +79,14 @@ cd juryrig
 python3 examples/audit_demo.py`,
     optionalCommands: [
       {
-        label: 'Install + launch local audit dashboard',
-        command: 'pip install git+https://github.com/ianalloway/juryrig\njuryrig-dashboard',
+        label: 'Install the library from GitHub',
+        command: 'pip install git+https://github.com/ianalloway/juryrig',
       },
     ],
     whatHappensNext: [
       'audit_demo.py runs the full audit suite against a fair judge and a rigged one — no network calls.',
       'You see flip rates, injection lift, verbosity bias, and which audits flag the judge.',
-      'With juryrig-dashboard, a local console opens at http://127.0.0.1:8765 with live metrics and JSON export.',
+      'Use the library APIs (position_bias, verbosity_bias, Panel.evaluate) in your own eval pipeline.',
     ],
   },
   {

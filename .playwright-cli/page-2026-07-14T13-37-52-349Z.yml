@@ -1,0 +1,7 @@
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - generic [ref=e5]:
+    - generic [ref=e6]: Loading desk
+    - paragraph [ref=e11]: Pulling the next view into the terminal.

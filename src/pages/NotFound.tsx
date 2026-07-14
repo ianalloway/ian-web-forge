@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ArrowLeft, Home, Briefcase, Wrench, Activity, Gamepad2, Bot } from "lucide-react";
+import { ArrowLeft, Home, Briefcase, Wrench, Activity, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const suggestedRoutes = [
@@ -9,7 +9,6 @@ const suggestedRoutes = [
   { path: "/toolkit", label: "~/toolkit", description: "Sports analytics and open-source tools", icon: Wrench },
   { path: "/bots", label: "~/bots", description: "How to start SOLVENT and other agents", icon: Bot },
   { path: "/now", label: "~/now", description: "What I'm focused on right now", icon: Activity },
-  { path: "/snake", label: "~/snake", description: "Take a break — play Snake", icon: Gamepad2 },
 ];
 
 const NotFound = () => {
