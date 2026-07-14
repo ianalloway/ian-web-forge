@@ -22,7 +22,8 @@ export type PlaygroundIcon =
   | "navigation"
   | "wind"
   | "map"
-  | "music";
+  | "music"
+  | "aperture";
 
 export interface PlaygroundItem {
   /** Internal SPA route. */
@@ -145,6 +146,14 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
       "A two-octave piano (C3–B4) with Web Audio synthesis. Click keys or use keyboard shortcuts. Switch between sine, triangle, square, and sawtooth waveforms.",
     tag: "tool",
     iconKey: "music",
+  },
+  {
+    path: "/fractal",
+    title: "Fractal Explorer",
+    blurb:
+      "Mandelbrot set rendered in the browser. Scroll or click to zoom in, right-click to zoom out, drag to pan. Three color palettes and adjustable iteration depth.",
+    tag: "sim",
+    iconKey: "aperture",
   },
 ];
 

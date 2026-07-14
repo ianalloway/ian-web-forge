@@ -38,6 +38,7 @@ const Breakout = lazy(() => import("./pages/Breakout"));
 const Pathfind = lazy(() => import("./pages/Pathfind"));
 const Boids = lazy(() => import("./pages/Boids"));
 const Maze = lazy(() => import("./pages/Maze"));
+const Fractal = lazy(() => import("./pages/Fractal"));
 const Piano = lazy(() => import("./pages/Piano"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -361,6 +362,19 @@ const App = () => (
                       description="A two-octave Web Audio piano synthesizer on ianalloway.xyz. Click keys or use keyboard shortcuts to play C3–B4. Switch between sine, triangle, square, and sawtooth waveforms. Runs entirely client-side."
                     />
                     <Piano />
+                  </>
+                }
+              />
+              <Route
+                path="/fractal"
+                element={
+                  <>
+                    <SEO
+                      title="Fractal Explorer — Mandelbrot set in the browser"
+                      path="/fractal"
+                      description="Explore the Mandelbrot set on ianalloway.xyz: scroll or click to zoom, drag to pan, right-click to zoom out. Three color palettes and adjustable iteration depth. Runs entirely client-side."
+                    />
+                    <Fractal />
                   </>
                 }
               />

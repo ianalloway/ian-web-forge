@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import {
+  Aperture,
   ArrowLeft,
   ArrowRight,
   BarChart2,
@@ -41,6 +42,7 @@ const ICONS: Record<PlaygroundIcon, LucideIcon> = {
   wind: Wind,
   map: Map,
   music: Music,
+  aperture: Aperture,
 };
 
 export default function Playground() {
