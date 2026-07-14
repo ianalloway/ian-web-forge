@@ -93,7 +93,7 @@ const CORE_SECTION: CatalogSection = {
     {
       name: 'nba-ratings',
       href: 'https://github.com/ianalloway/nba-ratings',
-      oneLine: 'Elo / logistic / Kelly · GitHub install',
+      oneLine: 'Elo / logistic / Kelly · PyPI `nba-edge`',
     },
     {
       name: 'juryrig',
