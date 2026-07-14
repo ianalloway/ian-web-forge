@@ -18,7 +18,7 @@ export default function Gravity() {
   const pausedRef = useRef(false);
   const dragStartRef = useRef<{ x: number; y: number } | null>(null);
   const dragCurrentRef = useRef<{ x: number; y: number } | null>(null);
-  const rafRef = useRef<number>(0);
+
 
   const [paused, setPaused] = useState(false);
   const [preset, setPreset] = useState<Preset>("binary");
@@ -113,17 +113,6 @@ export default function Gravity() {
     }
   }, []);
 
-  const loop = useCallback(() => {
-    if (!pausedRef.current) {
-      for (let i = 0; i < STEPS_PER_FRAME; i++) {
-        bodiesRef.current = stepLeapfrog(bodiesRef.current, DT);
-      }
-      setBodyCount(bodiesRef.current.length);
-    }
-    draw();
-    rafRef.current = requestAnimationFrame(loop);
-  }, [draw]);
-
   // Resize canvas to fill container
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -140,11 +129,22 @@ export default function Gravity() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Start rAF loop
+  // Start rAF loop — local function avoids self-reference lint error
   useEffect(() => {
-    rafRef.current = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [loop]);
+    let raf: number;
+    const loop = () => {
+      if (!pausedRef.current) {
+        for (let i = 0; i < STEPS_PER_FRAME; i++) {
+          bodiesRef.current = stepLeapfrog(bodiesRef.current, DT);
+        }
+        setBodyCount(bodiesRef.current.length);
+      }
+      draw();
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [draw]);
 
   // Sync paused state → ref
   useEffect(() => {
