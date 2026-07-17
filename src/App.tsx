@@ -16,6 +16,7 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Path = lazy(() => import("./pages/Path"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -99,6 +100,19 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/path"
+            element={
+              <>
+                <SEO
+                  title="Pathfinding Visualizer — A*, BFS, DFS, Greedy"
+                  path="/path"
+                  description="Draw walls, move the start and end points, and watch A*, BFS, DFS, and greedy best-first search explore the grid to find a path."
+                />
+                <Path />
               </>
             }
           />
