@@ -16,6 +16,7 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Cipher = lazy(() => import("./pages/Cipher"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -99,6 +100,19 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/cipher"
+            element={
+              <>
+                <SEO
+                  title="Cipher Playground — Caesar, Vigenère, ROT13, Atbash"
+                  path="/cipher"
+                  description="Encode and decode text with classic ciphers: Caesar with adjustable shift, Vigenère with a keyword, ROT13, and Atbash — plus a live letter-frequency histogram."
+                />
+                <Cipher />
               </>
             }
           />
