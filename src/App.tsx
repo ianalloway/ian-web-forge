@@ -16,6 +16,7 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Pendulum = lazy(() => import("./pages/Pendulum"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -99,6 +100,19 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/pendulum"
+            element={
+              <>
+                <SEO
+                  title="Double Pendulum — deterministic chaos"
+                  path="/pendulum"
+                  description="Interactive double pendulum with RK4 physics: drag the bobs, spawn a ghost twin 0.001 radians apart, and watch chaos tear the trajectories apart."
+                />
+                <Pendulum />
               </>
             }
           />
