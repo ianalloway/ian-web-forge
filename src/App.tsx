@@ -16,6 +16,7 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Fireworks = lazy(() => import("./pages/Fireworks"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -99,6 +100,19 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/fireworks"
+            element={
+              <>
+                <SEO
+                  title="Fireworks — particle show"
+                  path="/fireworks"
+                  description="Click to launch rockets and watch physics-based firework bursts — spheres, rings, and golden willows with glitter, gravity, and additive glow."
+                />
+                <Fireworks />
               </>
             }
           />
