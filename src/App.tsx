@@ -16,6 +16,7 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Pi = lazy(() => import("./pages/Pi"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -99,6 +100,19 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/pi"
+            element={
+              <>
+                <SEO
+                  title="Monte Carlo π — estimate pi by throwing darts"
+                  path="/pi"
+                  description="Watch π emerge from random darts: uniform samples on a quarter circle, a live estimate, and a log-log convergence chart tracking the 1/√n error law."
+                />
+                <Pi />
               </>
             }
           />
