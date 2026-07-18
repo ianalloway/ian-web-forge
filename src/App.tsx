@@ -16,6 +16,7 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Elo = lazy(() => import("./pages/Elo"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -99,6 +100,19 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/elo"
+            element={
+              <>
+                <SEO
+                  title="Elo Simulator — watch ratings converge"
+                  path="/elo"
+                  description="A simulated league where Elo ratings chase hidden true skill: tune the K-factor and watch the convergence/noise tradeoff, with rank agreement and error metrics."
+                />
+                <Elo />
               </>
             }
           />
