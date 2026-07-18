@@ -16,6 +16,7 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Game2048 = lazy(() => import("./pages/Game2048"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -99,6 +100,19 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/2048"
+            element={
+              <>
+                <SEO
+                  title="2048 — terminal edition"
+                  path="/2048"
+                  description="Play 2048 in the terminal aesthetic: arrows, WASD, or swipe to slide tiles, merge to 2048 and beyond, best score saved locally."
+                />
+                <Game2048 />
               </>
             }
           />
