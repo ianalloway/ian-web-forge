@@ -16,6 +16,7 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Lissajous = lazy(() => import("./pages/Lissajous"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -99,6 +100,19 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/lissajous"
+            element={
+              <>
+                <SEO
+                  title="Harmonograph — Lissajous curve drawer"
+                  path="/lissajous"
+                  description="Watch a virtual harmonograph draw damped Lissajous figures line by line. Tune frequency ratio, detune, phase, and damping, or roll a random figure."
+                />
+                <Lissajous />
               </>
             }
           />
