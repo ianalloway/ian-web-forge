@@ -16,6 +16,7 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Markov = lazy(() => import("./pages/Markov"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -99,6 +100,19 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/markov"
+            element={
+              <>
+                <SEO
+                  title="Markov Text Generator — n-gram remix machine"
+                  path="/markov"
+                  description="Paste any text and generate new sentences from a word-level Markov chain. Adjustable order shows the coherence spectrum from word salad to near-quotes."
+                />
+                <Markov />
               </>
             }
           />
