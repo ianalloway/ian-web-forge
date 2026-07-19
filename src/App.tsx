@@ -16,6 +16,7 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Morse = lazy(() => import("./pages/Morse"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -99,6 +100,19 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/morse"
+            element={
+              <>
+                <SEO
+                  title="Morse Code — translate and listen"
+                  path="/morse"
+                  description="Translate text to morse (and back — direction auto-detected) and hear it played with proper PARIS timing at adjustable WPM and tone."
+                />
+                <Morse />
               </>
             }
           />
