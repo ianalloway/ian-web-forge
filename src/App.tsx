@@ -16,6 +16,7 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Tsp = lazy(() => import("./pages/Tsp"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -99,6 +100,19 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/tsp"
+            element={
+              <>
+                <SEO
+                  title="Traveling Salesman — greedy + 2-opt live"
+                  path="/tsp"
+                  description="Watch a nearest-neighbor tour get built city by city, then 2-opt swaps untangle the crossings — tour length dropping in real time."
+                />
+                <Tsp />
               </>
             }
           />
