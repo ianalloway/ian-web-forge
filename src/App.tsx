@@ -16,6 +16,7 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Slime = lazy(() => import("./pages/Slime"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -99,6 +100,19 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/slime"
+            element={
+              <>
+                <SEO
+                  title="Slime Mold — physarum vein networks"
+                  path="/slime"
+                  description="Thousands of agents deposit and chase pheromone trails, self-organizing into living vein networks — the classic Physarum simulation."
+                />
+                <Slime />
               </>
             }
           />
