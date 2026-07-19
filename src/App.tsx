@@ -16,6 +16,7 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Percolation = lazy(() => import("./pages/Percolation"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -99,6 +100,19 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/percolation"
+            element={
+              <>
+                <SEO
+                  title="Percolation — watch a phase transition"
+                  path="/percolation"
+                  description="Sweep site probability across the percolation threshold and watch a spanning cluster snap into existence — a phase transition on a random lattice."
+                />
+                <Percolation />
               </>
             }
           />
