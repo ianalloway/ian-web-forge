@@ -16,6 +16,7 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Eca = lazy(() => import("./pages/Eca"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -99,6 +100,19 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/eca"
+            element={
+              <>
+                <SEO
+                  title="Elementary Cellular Automata — all 256 Wolfram rules"
+                  path="/eca"
+                  description="Explore Wolfram's elementary cellular automata: scrub through all 256 rules and watch Rule 30's chaos, Rule 90's Sierpiński triangle, and Rule 110's complexity evolve."
+                />
+                <Eca />
               </>
             }
           />
