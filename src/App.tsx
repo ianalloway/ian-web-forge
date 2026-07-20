@@ -16,6 +16,7 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Spectrum = lazy(() => import("./pages/Spectrum"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -99,6 +100,19 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/spectrum"
+            element={
+              <>
+                <SEO
+                  title="Spectrogram — live audio frequency analyzer"
+                  path="/spectrum"
+                  description="Turn your microphone into a scrolling spectrogram and live bar spectrum via the Web Audio FFT — whistle, hum, or play music and watch the harmonics. Audio stays on-device."
+                />
+                <Spectrum />
               </>
             }
           />
