@@ -17,6 +17,7 @@ const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
 const Dla = lazy(() => import("./pages/Dla"));
+const Lorenz = lazy(() => import("./pages/Lorenz"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -113,6 +114,19 @@ const App = () => (
                   description="Random-walking particles freeze on contact to grow dendritic fractals — the process behind frost, coral, mineral deposits, and lightning. Seed from a center or a floor."
                 />
                 <Dla />
+              </>
+            }
+          />
+          <Route
+            path="/lorenz"
+            element={
+              <>
+                <SEO
+                  title="Lorenz Attractor — the butterfly of chaos"
+                  path="/lorenz"
+                  description="Integrate the Lorenz equations with RK4 and watch three trajectories starting 0.001 apart trace the butterfly yet diverge — deterministic chaos in a rotating 3D orbit."
+                />
+                <Lorenz />
               </>
             }
           />
