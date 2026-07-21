@@ -17,6 +17,7 @@ const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
 const Langton = lazy(() => import("./pages/Langton"));
+const Lorenz = lazy(() => import("./pages/Lorenz"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -113,6 +114,19 @@ const App = () => (
                   description="Watch Langton's Ant and generalized turmites build order from a single deterministic rule: chaos for thousands of steps, then a spontaneous highway. Pick a rule string over {L,R,U,N} and see wildly different attractors emerge — no randomness."
                 />
                 <Langton />
+              </>
+            }
+          />
+          <Route
+            path="/lorenz"
+            element={
+              <>
+                <SEO
+                  title="Lorenz Attractor — the butterfly of chaos"
+                  path="/lorenz"
+                  description="Integrate the Lorenz equations with RK4 and watch three trajectories starting 0.001 apart trace the butterfly yet diverge — deterministic chaos in a rotating 3D orbit."
+                />
+                <Lorenz />
               </>
             }
           />
