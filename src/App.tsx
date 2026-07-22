@@ -24,6 +24,7 @@ const Type = lazy(() => import("./pages/Type"));
 const Sort = lazy(() => import("./pages/Sort"));
 const Life = lazy(() => import("./pages/Life"));
 const Boids = lazy(() => import("./pages/Boids"));
+const Path = lazy(() => import("./pages/Path"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -211,6 +212,19 @@ const App = () => (
                   description="Classic Reynolds boids flocking simulation: tune cohesion, alignment, and separation live, scatter the flock with your cursor, and watch emergent murmurations."
                 />
                 <Boids />
+              </>
+            }
+          />
+          <Route
+            path="/path"
+            element={
+              <>
+                <SEO
+                  title="Pathfinding Visualizer — A*, BFS, DFS, Greedy"
+                  path="/path"
+                  description="Draw walls, move the start and end points, and watch A*, BFS, DFS, and greedy best-first search explore the grid to find a path."
+                />
+                <Path />
               </>
             }
           />
