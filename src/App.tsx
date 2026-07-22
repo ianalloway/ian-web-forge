@@ -33,6 +33,7 @@ const Regress = lazy(() => import("./pages/Regress"));
 const Cluster = lazy(() => import("./pages/Cluster"));
 const Pi = lazy(() => import("./pages/Pi"));
 const Game2048 = lazy(() => import("./pages/Game2048"));
+const Waves = lazy(() => import("./pages/Waves"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -337,6 +338,19 @@ const App = () => (
                   description="Play 2048 in the terminal aesthetic: arrows, WASD, or swipe to slide tiles, merge to 2048 and beyond, best score saved locally."
                 />
                 <Game2048 />
+              </>
+            }
+          />
+          <Route
+            path="/waves"
+            element={
+              <>
+                <SEO
+                  title="Wave Interference — ripple tank simulator"
+                  path="/waves"
+                  description="A digital ripple tank: place and drag wave sources, tune wavelength and speed, and watch constructive and destructive interference paint the classic fringe patterns."
+                />
+                <Waves />
               </>
             }
           />
