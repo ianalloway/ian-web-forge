@@ -18,6 +18,7 @@ const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
 const Dla = lazy(() => import("./pages/Dla"));
 const Lorenz = lazy(() => import("./pages/Lorenz"));
+const Gravity = lazy(() => import("./pages/Gravity"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -127,6 +128,19 @@ const App = () => (
                   description="Integrate the Lorenz equations with RK4 and watch three trajectories starting 0.001 apart trace the butterfly yet diverge — deterministic chaos in a rotating 3D orbit."
                 />
                 <Lorenz />
+              </>
+            }
+          />
+          <Route
+            path="/gravity"
+            element={
+              <>
+                <SEO
+                  title="Gravity Sandbox — N-body simulator"
+                  path="/gravity"
+                  description="Interactive N-body gravity sandbox: launch bodies, watch orbits form, and simulate binary stars, solar systems, and figure-8 choreographies."
+                />
+                <Gravity />
               </>
             }
           />
