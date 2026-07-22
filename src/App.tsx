@@ -46,6 +46,7 @@ const Morse = lazy(() => import("./pages/Morse"));
 const Galton = lazy(() => import("./pages/Galton"));
 const Lsystem = lazy(() => import("./pages/Lsystem"));
 const Bezier = lazy(() => import("./pages/Bezier"));
+const Percolation = lazy(() => import("./pages/Percolation"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -519,6 +520,19 @@ const App = () => (
                   description="Drag control points and watch De Casteljau's algorithm sweep out Bézier curves — nested interpolation levels animated from linear to septic."
                 />
                 <Bezier />
+              </>
+            }
+          />
+          <Route
+            path="/percolation"
+            element={
+              <>
+                <SEO
+                  title="Percolation — watch a phase transition"
+                  path="/percolation"
+                  description="Sweep site probability across the percolation threshold and watch a spanning cluster snap into existence — a phase transition on a random lattice."
+                />
+                <Percolation />
               </>
             }
           />
