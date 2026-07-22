@@ -34,6 +34,7 @@ const Cluster = lazy(() => import("./pages/Cluster"));
 const Pi = lazy(() => import("./pages/Pi"));
 const Game2048 = lazy(() => import("./pages/Game2048"));
 const Waves = lazy(() => import("./pages/Waves"));
+const Markov = lazy(() => import("./pages/Markov"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -351,6 +352,19 @@ const App = () => (
                   description="A digital ripple tank: place and drag wave sources, tune wavelength and speed, and watch constructive and destructive interference paint the classic fringe patterns."
                 />
                 <Waves />
+              </>
+            }
+          />
+          <Route
+            path="/markov"
+            element={
+              <>
+                <SEO
+                  title="Markov Text Generator — n-gram remix machine"
+                  path="/markov"
+                  description="Paste any text and generate new sentences from a word-level Markov chain. Adjustable order shows the coherence spectrum from word salad to near-quotes."
+                />
+                <Markov />
               </>
             }
           />
