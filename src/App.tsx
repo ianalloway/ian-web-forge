@@ -31,6 +31,7 @@ const Flow = lazy(() => import("./pages/Flow"));
 const Cipher = lazy(() => import("./pages/Cipher"));
 const Regress = lazy(() => import("./pages/Regress"));
 const Cluster = lazy(() => import("./pages/Cluster"));
+const Pi = lazy(() => import("./pages/Pi"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -309,6 +310,19 @@ const App = () => (
                   description="Interactive k-means clustering: scatter points, seed centroids with k-means++, and step through Lloyd iterations watching assignments and inertia converge."
                 />
                 <Cluster />
+              </>
+            }
+          />
+          <Route
+            path="/pi"
+            element={
+              <>
+                <SEO
+                  title="Monte Carlo π — estimate pi by throwing darts"
+                  path="/pi"
+                  description="Watch π emerge from random darts: uniform samples on a quarter circle, a live estimate, and a log-log convergence chart tracking the 1/√n error law."
+                />
+                <Pi />
               </>
             }
           />
