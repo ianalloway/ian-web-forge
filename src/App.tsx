@@ -48,6 +48,7 @@ const Lsystem = lazy(() => import("./pages/Lsystem"));
 const Bezier = lazy(() => import("./pages/Bezier"));
 const Percolation = lazy(() => import("./pages/Percolation"));
 const Epidemic = lazy(() => import("./pages/Epidemic"));
+const Descent = lazy(() => import("./pages/Descent"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -547,6 +548,19 @@ const App = () => (
                   description="Watch an outbreak spread through a wandering population: tune transmission and social distancing, flatten the curve, and read the live S/I/R chart."
                 />
                 <Epidemic />
+              </>
+            }
+          />
+          <Route
+            path="/descent"
+            element={
+              <>
+                <SEO
+                  title="Gradient Descent Arena — SGD vs Momentum vs Adam"
+                  path="/descent"
+                  description="Drop three optimizers on a bumpy loss surface and watch SGD, momentum, and Adam race downhill — local minima, overshoot, and adaptive steps made visible."
+                />
+                <Descent />
               </>
             }
           />
