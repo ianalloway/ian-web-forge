@@ -55,6 +55,7 @@ const Reaction = lazy(() => import("./pages/Reaction"));
 const Voronoi = lazy(() => import("./pages/Voronoi"));
 const Eca = lazy(() => import("./pages/Eca"));
 const Spectrum = lazy(() => import("./pages/Spectrum"));
+const Bandit = lazy(() => import("./pages/Bandit"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -645,6 +646,19 @@ const App = () => (
                   description="Turn your microphone into a scrolling spectrogram and live bar spectrum via the Web Audio FFT — whistle, hum, or play music and watch the harmonics. Audio stays on-device."
                 />
                 <Spectrum />
+              </>
+            }
+          />
+          <Route
+            path="/bandit"
+            element={
+              <>
+                <SEO
+                  title="Multi-Armed Bandit — exploration vs exploitation"
+                  path="/bandit"
+                  description="Watch greedy, ε-greedy, UCB1, and Thompson sampling race to find the best arm, with cumulative regret plotted live — the math behind A/B testing and ad allocation."
+                />
+                <Bandit />
               </>
             }
           />
