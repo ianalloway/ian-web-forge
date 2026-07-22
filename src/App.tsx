@@ -56,6 +56,7 @@ const Voronoi = lazy(() => import("./pages/Voronoi"));
 const Eca = lazy(() => import("./pages/Eca"));
 const Spectrum = lazy(() => import("./pages/Spectrum"));
 const Bandit = lazy(() => import("./pages/Bandit"));
+const Newton = lazy(() => import("./pages/Newton"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -659,6 +660,19 @@ const App = () => (
                   description="Watch greedy, ε-greedy, UCB1, and Thompson sampling race to find the best arm, with cumulative regret plotted live — the math behind A/B testing and ad allocation."
                 />
                 <Bandit />
+              </>
+            }
+          />
+          <Route
+            path="/newton"
+            element={
+              <>
+                <SEO
+                  title="Newton Fractal — basins of attraction"
+                  path="/newton"
+                  description="Newton's method for finding polynomial roots draws a fractal: each point is colored by which root it converges to. Scroll to zoom into the infinitely detailed basin boundaries."
+                />
+                <Newton />
               </>
             }
           />
