@@ -19,6 +19,7 @@ const Kelly = lazy(() => import("./pages/Kelly"));
 const Dla = lazy(() => import("./pages/Dla"));
 const Lorenz = lazy(() => import("./pages/Lorenz"));
 const Gravity = lazy(() => import("./pages/Gravity"));
+const Ascii = lazy(() => import("./pages/Ascii"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -141,6 +142,19 @@ const App = () => (
                   description="Interactive N-body gravity sandbox: launch bodies, watch orbits form, and simulate binary stars, solar systems, and figure-8 choreographies."
                 />
                 <Gravity />
+              </>
+            }
+          />
+          <Route
+            path="/ascii"
+            element={
+              <>
+                <SEO
+                  title="ASCII Art Generator"
+                  path="/ascii"
+                  description="Type text and watch it rendered as ASCII art in real time. Multiple character sets: classic ASCII, Unicode blocks, matrix glyphs, and binary."
+                />
+                <Ascii />
               </>
             }
           />
