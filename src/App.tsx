@@ -44,6 +44,7 @@ const Maze = lazy(() => import("./pages/Maze"));
 const Fourier = lazy(() => import("./pages/Fourier"));
 const Morse = lazy(() => import("./pages/Morse"));
 const Galton = lazy(() => import("./pages/Galton"));
+const Lsystem = lazy(() => import("./pages/Lsystem"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -491,6 +492,19 @@ const App = () => (
                   description="Watch balls cascade through pegs into bins, piling up into the binomial distribution — with a bias slider to skew it and a live theoretical overlay."
                 />
                 <Galton />
+              </>
+            }
+          />
+          <Route
+            path="/lsystem"
+            element={
+              <>
+                <SEO
+                  title="L-System Garden — fractal plants from rewrite rules"
+                  path="/lsystem"
+                  description="Grow ferns, dragon curves, and Koch snowflakes from L-system rewrite rules with turtle graphics — tune depth and branching angle live."
+                />
+                <Lsystem />
               </>
             }
           />
