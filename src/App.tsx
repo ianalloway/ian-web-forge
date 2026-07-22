@@ -57,6 +57,7 @@ const Eca = lazy(() => import("./pages/Eca"));
 const Spectrum = lazy(() => import("./pages/Spectrum"));
 const Bandit = lazy(() => import("./pages/Bandit"));
 const Newton = lazy(() => import("./pages/Newton"));
+const Langton = lazy(() => import("./pages/Langton"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -673,6 +674,19 @@ const App = () => (
                   description="Newton's method for finding polynomial roots draws a fractal: each point is colored by which root it converges to. Scroll to zoom into the infinitely detailed basin boundaries."
                 />
                 <Newton />
+              </>
+            }
+          />
+          <Route
+            path="/langton"
+            element={
+              <>
+                <SEO
+                  title="Langton's Ant — emergence from one rule"
+                  path="/langton"
+                  description="Watch Langton's Ant and generalized turmites build order from a single deterministic rule: chaos for thousands of steps, then a spontaneous highway. Pick a rule string over {L,R,U,N} and see wildly different attractors emerge — no randomness."
+                />
+                <Langton />
               </>
             }
           />
