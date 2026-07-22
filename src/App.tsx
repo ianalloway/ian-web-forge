@@ -28,6 +28,7 @@ const Path = lazy(() => import("./pages/Path"));
 const Snake = lazy(() => import("./pages/Snake"));
 const Pendulum = lazy(() => import("./pages/Pendulum"));
 const Flow = lazy(() => import("./pages/Flow"));
+const Cipher = lazy(() => import("./pages/Cipher"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -267,6 +268,19 @@ const App = () => (
                   description="Thousands of particles trace an evolving Perlin-noise vector field into silky generative streams. Tune zoom, speed, palette, and density live."
                 />
                 <Flow />
+              </>
+            }
+          />
+          <Route
+            path="/cipher"
+            element={
+              <>
+                <SEO
+                  title="Cipher Playground — Caesar, Vigenère, ROT13, Atbash"
+                  path="/cipher"
+                  description="Encode and decode text with classic ciphers: Caesar with adjustable shift, Vigenère with a keyword, ROT13, and Atbash — plus a live letter-frequency histogram."
+                />
+                <Cipher />
               </>
             }
           />
