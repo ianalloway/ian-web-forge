@@ -47,6 +47,7 @@ const Galton = lazy(() => import("./pages/Galton"));
 const Lsystem = lazy(() => import("./pages/Lsystem"));
 const Bezier = lazy(() => import("./pages/Bezier"));
 const Percolation = lazy(() => import("./pages/Percolation"));
+const Epidemic = lazy(() => import("./pages/Epidemic"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -533,6 +534,19 @@ const App = () => (
                   description="Sweep site probability across the percolation threshold and watch a spanning cluster snap into existence — a phase transition on a random lattice."
                 />
                 <Percolation />
+              </>
+            }
+          />
+          <Route
+            path="/epidemic"
+            element={
+              <>
+                <SEO
+                  title="Epidemic Simulator — agent-based SIR model"
+                  path="/epidemic"
+                  description="Watch an outbreak spread through a wandering population: tune transmission and social distancing, flatten the curve, and read the live S/I/R chart."
+                />
+                <Epidemic />
               </>
             }
           />
