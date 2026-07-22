@@ -43,6 +43,7 @@ const Dice = lazy(() => import("./pages/Dice"));
 const Maze = lazy(() => import("./pages/Maze"));
 const Fourier = lazy(() => import("./pages/Fourier"));
 const Morse = lazy(() => import("./pages/Morse"));
+const Galton = lazy(() => import("./pages/Galton"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -477,6 +478,19 @@ const App = () => (
                   description="Translate text to morse (and back — direction auto-detected) and hear it played with proper PARIS timing at adjustable WPM and tone."
                 />
                 <Morse />
+              </>
+            }
+          />
+          <Route
+            path="/galton"
+            element={
+              <>
+                <SEO
+                  title="Galton Board — the bell curve from bouncing balls"
+                  path="/galton"
+                  description="Watch balls cascade through pegs into bins, piling up into the binomial distribution — with a bias slider to skew it and a live theoretical overlay."
+                />
+                <Galton />
               </>
             }
           />
