@@ -36,6 +36,7 @@ const Game2048 = lazy(() => import("./pages/Game2048"));
 const Waves = lazy(() => import("./pages/Waves"));
 const Markov = lazy(() => import("./pages/Markov"));
 const Mines = lazy(() => import("./pages/Mines"));
+const Lissajous = lazy(() => import("./pages/Lissajous"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -379,6 +380,19 @@ const App = () => (
                   description="Classic minesweeper with first-click safety, flood-fill reveals, flags, chording, three difficulties, and a timer — in the terminal aesthetic."
                 />
                 <Mines />
+              </>
+            }
+          />
+          <Route
+            path="/lissajous"
+            element={
+              <>
+                <SEO
+                  title="Harmonograph — Lissajous curve drawer"
+                  path="/lissajous"
+                  description="Watch a virtual harmonograph draw damped Lissajous figures line by line. Tune frequency ratio, detune, phase, and damping, or roll a random figure."
+                />
+                <Lissajous />
               </>
             }
           />
