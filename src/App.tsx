@@ -40,6 +40,7 @@ const Lissajous = lazy(() => import("./pages/Lissajous"));
 const Elo = lazy(() => import("./pages/Elo"));
 const Fireworks = lazy(() => import("./pages/Fireworks"));
 const Dice = lazy(() => import("./pages/Dice"));
+const Maze = lazy(() => import("./pages/Maze"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -435,6 +436,19 @@ const App = () => (
                   description="Roll handfuls of dice and watch the sum histogram converge to the normal curve — the central limit theorem live, with theoretical overlay and running mean."
                 />
                 <Dice />
+              </>
+            }
+          />
+          <Route
+            path="/maze"
+            element={
+              <>
+                <SEO
+                  title="Maze Carver — watch a maze build and solve itself"
+                  path="/maze"
+                  description="A recursive backtracker carves a perfect maze live on canvas, then BFS floods it to find the shortest path from entrance to exit."
+                />
+                <Maze />
               </>
             }
           />
