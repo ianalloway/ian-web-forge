@@ -20,6 +20,7 @@ const Dla = lazy(() => import("./pages/Dla"));
 const Lorenz = lazy(() => import("./pages/Lorenz"));
 const Gravity = lazy(() => import("./pages/Gravity"));
 const Ascii = lazy(() => import("./pages/Ascii"));
+const Type = lazy(() => import("./pages/Type"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -155,6 +156,19 @@ const App = () => (
                   description="Type text and watch it rendered as ASCII art in real time. Multiple character sets: classic ASCII, Unicode blocks, matrix glyphs, and binary."
                 />
                 <Ascii />
+              </>
+            }
+          />
+          <Route
+            path="/type"
+            element={
+              <>
+                <SEO
+                  title="Typing Speed Test — WPM & accuracy"
+                  path="/type"
+                  description="Measure your typing speed and accuracy with tech and programming quotes. Get instant WPM, accuracy, and time results."
+                />
+                <Type />
               </>
             }
           />
