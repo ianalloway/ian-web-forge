@@ -16,6 +16,11 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Dla = lazy(() => import("./pages/Dla"));
+const Lorenz = lazy(() => import("./pages/Lorenz"));
+const Gravity = lazy(() => import("./pages/Gravity"));
+const Ascii = lazy(() => import("./pages/Ascii"));
+const Type = lazy(() => import("./pages/Type"));
 const Sort = lazy(() => import("./pages/Sort"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -100,6 +105,71 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/dla"
+            element={
+              <>
+                <SEO
+                  title="Diffusion-Limited Aggregation — grow fractal crystals"
+                  path="/dla"
+                  description="Random-walking particles freeze on contact to grow dendritic fractals — the process behind frost, coral, mineral deposits, and lightning. Seed from a center or a floor."
+                />
+                <Dla />
+              </>
+            }
+          />
+          <Route
+            path="/lorenz"
+            element={
+              <>
+                <SEO
+                  title="Lorenz Attractor — the butterfly of chaos"
+                  path="/lorenz"
+                  description="Integrate the Lorenz equations with RK4 and watch three trajectories starting 0.001 apart trace the butterfly yet diverge — deterministic chaos in a rotating 3D orbit."
+                />
+                <Lorenz />
+              </>
+            }
+          />
+          <Route
+            path="/gravity"
+            element={
+              <>
+                <SEO
+                  title="Gravity Sandbox — N-body simulator"
+                  path="/gravity"
+                  description="Interactive N-body gravity sandbox: launch bodies, watch orbits form, and simulate binary stars, solar systems, and figure-8 choreographies."
+                />
+                <Gravity />
+              </>
+            }
+          />
+          <Route
+            path="/ascii"
+            element={
+              <>
+                <SEO
+                  title="ASCII Art Generator"
+                  path="/ascii"
+                  description="Type text and watch it rendered as ASCII art in real time. Multiple character sets: classic ASCII, Unicode blocks, matrix glyphs, and binary."
+                />
+                <Ascii />
+              </>
+            }
+          />
+          <Route
+            path="/type"
+            element={
+              <>
+                <SEO
+                  title="Typing Speed Test — WPM & accuracy"
+                  path="/type"
+                  description="Measure your typing speed and accuracy with tech and programming quotes. Get instant WPM, accuracy, and time results."
+                />
+                <Type />
               </>
             }
           />
