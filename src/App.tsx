@@ -30,6 +30,7 @@ const Pendulum = lazy(() => import("./pages/Pendulum"));
 const Flow = lazy(() => import("./pages/Flow"));
 const Cipher = lazy(() => import("./pages/Cipher"));
 const Regress = lazy(() => import("./pages/Regress"));
+const Cluster = lazy(() => import("./pages/Cluster"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -295,6 +296,19 @@ const App = () => (
                   description="Click to place data points and watch least-squares polynomial fits update live. Crank the degree to see overfitting happen, with R², RMSE, and residual lines."
                 />
                 <Regress />
+              </>
+            }
+          />
+          <Route
+            path="/cluster"
+            element={
+              <>
+                <SEO
+                  title="K-Means Playground — watch clustering converge"
+                  path="/cluster"
+                  description="Interactive k-means clustering: scatter points, seed centroids with k-means++, and step through Lloyd iterations watching assignments and inertia converge."
+                />
+                <Cluster />
               </>
             }
           />
