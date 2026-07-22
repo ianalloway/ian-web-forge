@@ -41,6 +41,7 @@ const Elo = lazy(() => import("./pages/Elo"));
 const Fireworks = lazy(() => import("./pages/Fireworks"));
 const Dice = lazy(() => import("./pages/Dice"));
 const Maze = lazy(() => import("./pages/Maze"));
+const Fourier = lazy(() => import("./pages/Fourier"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -449,6 +450,19 @@ const App = () => (
                   description="A recursive backtracker carves a perfect maze live on canvas, then BFS floods it to find the shortest path from entrance to exit."
                 />
                 <Maze />
+              </>
+            }
+          />
+          <Route
+            path="/fourier"
+            element={
+              <>
+                <SEO
+                  title="Fourier Epicycles — waves from circles"
+                  path="/fourier"
+                  description="Watch rotating circles stack harmonics into square, sawtooth, and triangle waves — Fourier series drawn live, complete with Gibbs ringing at the corners."
+                />
+                <Fourier />
               </>
             }
           />
