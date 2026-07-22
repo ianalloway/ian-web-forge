@@ -22,6 +22,7 @@ const Gravity = lazy(() => import("./pages/Gravity"));
 const Ascii = lazy(() => import("./pages/Ascii"));
 const Type = lazy(() => import("./pages/Type"));
 const Sort = lazy(() => import("./pages/Sort"));
+const Life = lazy(() => import("./pages/Life"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -183,6 +184,19 @@ const App = () => (
                   description="Watch bubble, insertion, selection, quick, and merge sort race through a bar chart in real time. Adjustable speed, step counter, and color-coded comparisons."
                 />
                 <Sort />
+              </>
+            }
+          />
+          <Route
+            path="/life"
+            element={
+              <>
+                <SEO
+                  title="Game of Life — Conway's cellular automaton"
+                  path="/life"
+                  description="Interactive Conway's Game of Life: paint cells, drop classic patterns like the Gosper glider gun and pulsar, and watch generations evolve on a wrap-around grid."
+                />
+                <Life />
               </>
             }
           />
