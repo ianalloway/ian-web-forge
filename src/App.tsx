@@ -42,6 +42,7 @@ const Fireworks = lazy(() => import("./pages/Fireworks"));
 const Dice = lazy(() => import("./pages/Dice"));
 const Maze = lazy(() => import("./pages/Maze"));
 const Fourier = lazy(() => import("./pages/Fourier"));
+const Morse = lazy(() => import("./pages/Morse"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -463,6 +464,19 @@ const App = () => (
                   description="Watch rotating circles stack harmonics into square, sawtooth, and triangle waves — Fourier series drawn live, complete with Gibbs ringing at the corners."
                 />
                 <Fourier />
+              </>
+            }
+          />
+          <Route
+            path="/morse"
+            element={
+              <>
+                <SEO
+                  title="Morse Code — translate and listen"
+                  path="/morse"
+                  description="Translate text to morse (and back — direction auto-detected) and hear it played with proper PARIS timing at adjustable WPM and tone."
+                />
+                <Morse />
               </>
             }
           />
