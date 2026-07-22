@@ -23,6 +23,7 @@ const Ascii = lazy(() => import("./pages/Ascii"));
 const Type = lazy(() => import("./pages/Type"));
 const Sort = lazy(() => import("./pages/Sort"));
 const Life = lazy(() => import("./pages/Life"));
+const Boids = lazy(() => import("./pages/Boids"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -197,6 +198,19 @@ const App = () => (
                   description="Interactive Conway's Game of Life: paint cells, drop classic patterns like the Gosper glider gun and pulsar, and watch generations evolve on a wrap-around grid."
                 />
                 <Life />
+              </>
+            }
+          />
+          <Route
+            path="/boids"
+            element={
+              <>
+                <SEO
+                  title="Boids — flocking simulation"
+                  path="/boids"
+                  description="Classic Reynolds boids flocking simulation: tune cohesion, alignment, and separation live, scatter the flock with your cursor, and watch emergent murmurations."
+                />
+                <Boids />
               </>
             }
           />
