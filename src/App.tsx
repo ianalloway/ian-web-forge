@@ -52,6 +52,7 @@ const Descent = lazy(() => import("./pages/Descent"));
 const Tsp = lazy(() => import("./pages/Tsp"));
 const Slime = lazy(() => import("./pages/Slime"));
 const Reaction = lazy(() => import("./pages/Reaction"));
+const Voronoi = lazy(() => import("./pages/Voronoi"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -603,6 +604,19 @@ const App = () => (
                   description="The Gray-Scott model: two diffusing chemicals react into spots, stripes, coral, and mazes — the math behind how a leopard gets its spots, running in your browser."
                 />
                 <Reaction />
+              </>
+            }
+          />
+          <Route
+            path="/voronoi"
+            element={
+              <>
+                <SEO
+                  title="Voronoi + Delaunay Explorer"
+                  path="/voronoi"
+                  description="Drop sites and watch Voronoi cells and their dual Delaunay triangulation update live — Bowyer-Watson triangulation in the browser."
+                />
+                <Voronoi />
               </>
             }
           />
