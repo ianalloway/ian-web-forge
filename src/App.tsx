@@ -53,6 +53,7 @@ const Tsp = lazy(() => import("./pages/Tsp"));
 const Slime = lazy(() => import("./pages/Slime"));
 const Reaction = lazy(() => import("./pages/Reaction"));
 const Voronoi = lazy(() => import("./pages/Voronoi"));
+const Eca = lazy(() => import("./pages/Eca"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -617,6 +618,19 @@ const App = () => (
                   description="Drop sites and watch Voronoi cells and their dual Delaunay triangulation update live — Bowyer-Watson triangulation in the browser."
                 />
                 <Voronoi />
+              </>
+            }
+          />
+          <Route
+            path="/eca"
+            element={
+              <>
+                <SEO
+                  title="Elementary Cellular Automata — all 256 Wolfram rules"
+                  path="/eca"
+                  description="Explore Wolfram's elementary cellular automata: scrub through all 256 rules and watch Rule 30's chaos, Rule 90's Sierpiński triangle, and Rule 110's complexity evolve."
+                />
+                <Eca />
               </>
             }
           />
