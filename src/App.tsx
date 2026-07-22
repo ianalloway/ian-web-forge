@@ -16,6 +16,14 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Dla = lazy(() => import("./pages/Dla"));
+const Lorenz = lazy(() => import("./pages/Lorenz"));
+const Gravity = lazy(() => import("./pages/Gravity"));
+const Ascii = lazy(() => import("./pages/Ascii"));
+const Type = lazy(() => import("./pages/Type"));
+const Sort = lazy(() => import("./pages/Sort"));
+const Life = lazy(() => import("./pages/Life"));
+const Boids = lazy(() => import("./pages/Boids"));
 const Path = lazy(() => import("./pages/Path"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -100,6 +108,110 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/dla"
+            element={
+              <>
+                <SEO
+                  title="Diffusion-Limited Aggregation — grow fractal crystals"
+                  path="/dla"
+                  description="Random-walking particles freeze on contact to grow dendritic fractals — the process behind frost, coral, mineral deposits, and lightning. Seed from a center or a floor."
+                />
+                <Dla />
+              </>
+            }
+          />
+          <Route
+            path="/lorenz"
+            element={
+              <>
+                <SEO
+                  title="Lorenz Attractor — the butterfly of chaos"
+                  path="/lorenz"
+                  description="Integrate the Lorenz equations with RK4 and watch three trajectories starting 0.001 apart trace the butterfly yet diverge — deterministic chaos in a rotating 3D orbit."
+                />
+                <Lorenz />
+              </>
+            }
+          />
+          <Route
+            path="/gravity"
+            element={
+              <>
+                <SEO
+                  title="Gravity Sandbox — N-body simulator"
+                  path="/gravity"
+                  description="Interactive N-body gravity sandbox: launch bodies, watch orbits form, and simulate binary stars, solar systems, and figure-8 choreographies."
+                />
+                <Gravity />
+              </>
+            }
+          />
+          <Route
+            path="/ascii"
+            element={
+              <>
+                <SEO
+                  title="ASCII Art Generator"
+                  path="/ascii"
+                  description="Type text and watch it rendered as ASCII art in real time. Multiple character sets: classic ASCII, Unicode blocks, matrix glyphs, and binary."
+                />
+                <Ascii />
+              </>
+            }
+          />
+          <Route
+            path="/type"
+            element={
+              <>
+                <SEO
+                  title="Typing Speed Test — WPM & accuracy"
+                  path="/type"
+                  description="Measure your typing speed and accuracy with tech and programming quotes. Get instant WPM, accuracy, and time results."
+                />
+                <Type />
+              </>
+            }
+          />
+          <Route
+            path="/sort"
+            element={
+              <>
+                <SEO
+                  title="Sorting Algorithm Visualizer"
+                  path="/sort"
+                  description="Watch bubble, insertion, selection, quick, and merge sort race through a bar chart in real time. Adjustable speed, step counter, and color-coded comparisons."
+                />
+                <Sort />
+              </>
+            }
+          />
+          <Route
+            path="/life"
+            element={
+              <>
+                <SEO
+                  title="Game of Life — Conway's cellular automaton"
+                  path="/life"
+                  description="Interactive Conway's Game of Life: paint cells, drop classic patterns like the Gosper glider gun and pulsar, and watch generations evolve on a wrap-around grid."
+                />
+                <Life />
+              </>
+            }
+          />
+          <Route
+            path="/boids"
+            element={
+              <>
+                <SEO
+                  title="Boids — flocking simulation"
+                  path="/boids"
+                  description="Classic Reynolds boids flocking simulation: tune cohesion, alignment, and separation live, scatter the flock with your cursor, and watch emergent murmurations."
+                />
+                <Boids />
               </>
             }
           />
