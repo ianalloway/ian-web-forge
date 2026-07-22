@@ -16,6 +16,7 @@ const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
 const Bots = lazy(() => import("./pages/Bots"));
 const Kelly = lazy(() => import("./pages/Kelly"));
+const Dla = lazy(() => import("./pages/Dla"));
 const Lorenz = lazy(() => import("./pages/Lorenz"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -100,6 +101,19 @@ const App = () => (
                   description="Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js."
                 />
                 <Kelly />
+              </>
+            }
+          />
+          <Route
+            path="/dla"
+            element={
+              <>
+                <SEO
+                  title="Diffusion-Limited Aggregation — grow fractal crystals"
+                  path="/dla"
+                  description="Random-walking particles freeze on contact to grow dendritic fractals — the process behind frost, coral, mineral deposits, and lightning. Seed from a center or a floor."
+                />
+                <Dla />
               </>
             }
           />
