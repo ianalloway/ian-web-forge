@@ -29,6 +29,7 @@ const Snake = lazy(() => import("./pages/Snake"));
 const Pendulum = lazy(() => import("./pages/Pendulum"));
 const Flow = lazy(() => import("./pages/Flow"));
 const Cipher = lazy(() => import("./pages/Cipher"));
+const Regress = lazy(() => import("./pages/Regress"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -281,6 +282,19 @@ const App = () => (
                   description="Encode and decode text with classic ciphers: Caesar with adjustable shift, Vigenère with a keyword, ROT13, and Atbash — plus a live letter-frequency histogram."
                 />
                 <Cipher />
+              </>
+            }
+          />
+          <Route
+            path="/regress"
+            element={
+              <>
+                <SEO
+                  title="Regression Playground — polynomial fitting & overfitting"
+                  path="/regress"
+                  description="Click to place data points and watch least-squares polynomial fits update live. Crank the degree to see overfitting happen, with R², RMSE, and residual lines."
+                />
+                <Regress />
               </>
             }
           />
