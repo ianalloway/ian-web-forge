@@ -26,6 +26,7 @@ const Life = lazy(() => import("./pages/Life"));
 const Boids = lazy(() => import("./pages/Boids"));
 const Path = lazy(() => import("./pages/Path"));
 const Snake = lazy(() => import("./pages/Snake"));
+const Pendulum = lazy(() => import("./pages/Pendulum"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -239,6 +240,19 @@ const App = () => (
                   description="Play classic snake in the terminal aesthetic: arrows or WASD to steer, speed ramps up as you grow, best score saved locally."
                 />
                 <Snake />
+              </>
+            }
+          />
+          <Route
+            path="/pendulum"
+            element={
+              <>
+                <SEO
+                  title="Double Pendulum — deterministic chaos"
+                  path="/pendulum"
+                  description="Interactive double pendulum with RK4 physics: drag the bobs, spawn a ghost twin 0.001 radians apart, and watch chaos tear the trajectories apart."
+                />
+                <Pendulum />
               </>
             }
           />
