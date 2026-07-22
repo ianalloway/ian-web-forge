@@ -51,6 +51,7 @@ const Epidemic = lazy(() => import("./pages/Epidemic"));
 const Descent = lazy(() => import("./pages/Descent"));
 const Tsp = lazy(() => import("./pages/Tsp"));
 const Slime = lazy(() => import("./pages/Slime"));
+const Reaction = lazy(() => import("./pages/Reaction"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -589,6 +590,19 @@ const App = () => (
                   description="Thousands of agents deposit and chase pheromone trails, self-organizing into living vein networks — the classic Physarum simulation."
                 />
                 <Slime />
+              </>
+            }
+          />
+          <Route
+            path="/reaction"
+            element={
+              <>
+                <SEO
+                  title="Reaction-Diffusion — Turing patterns live"
+                  path="/reaction"
+                  description="The Gray-Scott model: two diffusing chemicals react into spots, stripes, coral, and mazes — the math behind how a leopard gets its spots, running in your browser."
+                />
+                <Reaction />
               </>
             }
           />
