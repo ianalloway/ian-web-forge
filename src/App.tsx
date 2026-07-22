@@ -27,6 +27,7 @@ const Boids = lazy(() => import("./pages/Boids"));
 const Path = lazy(() => import("./pages/Path"));
 const Snake = lazy(() => import("./pages/Snake"));
 const Pendulum = lazy(() => import("./pages/Pendulum"));
+const Flow = lazy(() => import("./pages/Flow"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -253,6 +254,19 @@ const App = () => (
                   description="Interactive double pendulum with RK4 physics: drag the bobs, spawn a ghost twin 0.001 radians apart, and watch chaos tear the trajectories apart."
                 />
                 <Pendulum />
+              </>
+            }
+          />
+          <Route
+            path="/flow"
+            element={
+              <>
+                <SEO
+                  title="Flow Field — perlin noise particles"
+                  path="/flow"
+                  description="Thousands of particles trace an evolving Perlin-noise vector field into silky generative streams. Tune zoom, speed, palette, and density live."
+                />
+                <Flow />
               </>
             }
           />
