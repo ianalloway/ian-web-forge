@@ -21,6 +21,7 @@ const Lorenz = lazy(() => import("./pages/Lorenz"));
 const Gravity = lazy(() => import("./pages/Gravity"));
 const Ascii = lazy(() => import("./pages/Ascii"));
 const Type = lazy(() => import("./pages/Type"));
+const Sort = lazy(() => import("./pages/Sort"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -169,6 +170,19 @@ const App = () => (
                   description="Measure your typing speed and accuracy with tech and programming quotes. Get instant WPM, accuracy, and time results."
                 />
                 <Type />
+              </>
+            }
+          />
+          <Route
+            path="/sort"
+            element={
+              <>
+                <SEO
+                  title="Sorting Algorithm Visualizer"
+                  path="/sort"
+                  description="Watch bubble, insertion, selection, quick, and merge sort race through a bar chart in real time. Adjustable speed, step counter, and color-coded comparisons."
+                />
+                <Sort />
               </>
             }
           />
