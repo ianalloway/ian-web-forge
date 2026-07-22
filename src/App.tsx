@@ -49,6 +49,7 @@ const Bezier = lazy(() => import("./pages/Bezier"));
 const Percolation = lazy(() => import("./pages/Percolation"));
 const Epidemic = lazy(() => import("./pages/Epidemic"));
 const Descent = lazy(() => import("./pages/Descent"));
+const Tsp = lazy(() => import("./pages/Tsp"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -561,6 +562,19 @@ const App = () => (
                   description="Drop three optimizers on a bumpy loss surface and watch SGD, momentum, and Adam race downhill — local minima, overshoot, and adaptive steps made visible."
                 />
                 <Descent />
+              </>
+            }
+          />
+          <Route
+            path="/tsp"
+            element={
+              <>
+                <SEO
+                  title="Traveling Salesman — greedy + 2-opt live"
+                  path="/tsp"
+                  description="Watch a nearest-neighbor tour get built city by city, then 2-opt swaps untangle the crossings — tour length dropping in real time."
+                />
+                <Tsp />
               </>
             }
           />
