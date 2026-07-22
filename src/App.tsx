@@ -35,6 +35,7 @@ const Pi = lazy(() => import("./pages/Pi"));
 const Game2048 = lazy(() => import("./pages/Game2048"));
 const Waves = lazy(() => import("./pages/Waves"));
 const Markov = lazy(() => import("./pages/Markov"));
+const Mines = lazy(() => import("./pages/Mines"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -365,6 +366,19 @@ const App = () => (
                   description="Paste any text and generate new sentences from a word-level Markov chain. Adjustable order shows the coherence spectrum from word salad to near-quotes."
                 />
                 <Markov />
+              </>
+            }
+          />
+          <Route
+            path="/mines"
+            element={
+              <>
+                <SEO
+                  title="Minesweeper — terminal edition"
+                  path="/mines"
+                  description="Classic minesweeper with first-click safety, flood-fill reveals, flags, chording, three difficulties, and a timer — in the terminal aesthetic."
+                />
+                <Mines />
               </>
             }
           />
