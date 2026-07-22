@@ -39,6 +39,7 @@ const Mines = lazy(() => import("./pages/Mines"));
 const Lissajous = lazy(() => import("./pages/Lissajous"));
 const Elo = lazy(() => import("./pages/Elo"));
 const Fireworks = lazy(() => import("./pages/Fireworks"));
+const Dice = lazy(() => import("./pages/Dice"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -421,6 +422,19 @@ const App = () => (
                   description="Click to launch rockets and watch physics-based firework bursts — spheres, rings, and golden willows with glitter, gravity, and additive glow."
                 />
                 <Fireworks />
+              </>
+            }
+          />
+          <Route
+            path="/dice"
+            element={
+              <>
+                <SEO
+                  title="Dice & the Bell Curve — central limit theorem demo"
+                  path="/dice"
+                  description="Roll handfuls of dice and watch the sum histogram converge to the normal curve — the central limit theorem live, with theoretical overlay and running mean."
+                />
+                <Dice />
               </>
             }
           />
