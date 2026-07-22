@@ -54,6 +54,7 @@ const Slime = lazy(() => import("./pages/Slime"));
 const Reaction = lazy(() => import("./pages/Reaction"));
 const Voronoi = lazy(() => import("./pages/Voronoi"));
 const Eca = lazy(() => import("./pages/Eca"));
+const Spectrum = lazy(() => import("./pages/Spectrum"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -631,6 +632,19 @@ const App = () => (
                   description="Explore Wolfram's elementary cellular automata: scrub through all 256 rules and watch Rule 30's chaos, Rule 90's Sierpiński triangle, and Rule 110's complexity evolve."
                 />
                 <Eca />
+              </>
+            }
+          />
+          <Route
+            path="/spectrum"
+            element={
+              <>
+                <SEO
+                  title="Spectrogram — live audio frequency analyzer"
+                  path="/spectrum"
+                  description="Turn your microphone into a scrolling spectrogram and live bar spectrum via the Web Audio FFT — whistle, hum, or play music and watch the harmonics. Audio stays on-device."
+                />
+                <Spectrum />
               </>
             }
           />
