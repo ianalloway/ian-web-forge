@@ -38,6 +38,7 @@ const Markov = lazy(() => import("./pages/Markov"));
 const Mines = lazy(() => import("./pages/Mines"));
 const Lissajous = lazy(() => import("./pages/Lissajous"));
 const Elo = lazy(() => import("./pages/Elo"));
+const Fireworks = lazy(() => import("./pages/Fireworks"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -407,6 +408,19 @@ const App = () => (
                   description="A simulated league where Elo ratings chase hidden true skill: tune the K-factor and watch the convergence/noise tradeoff, with rank agreement and error metrics."
                 />
                 <Elo />
+              </>
+            }
+          />
+          <Route
+            path="/fireworks"
+            element={
+              <>
+                <SEO
+                  title="Fireworks — particle show"
+                  path="/fireworks"
+                  description="Click to launch rockets and watch physics-based firework bursts — spheres, rings, and golden willows with glitter, gravity, and additive glow."
+                />
+                <Fireworks />
               </>
             }
           />
