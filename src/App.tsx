@@ -50,6 +50,7 @@ const Percolation = lazy(() => import("./pages/Percolation"));
 const Epidemic = lazy(() => import("./pages/Epidemic"));
 const Descent = lazy(() => import("./pages/Descent"));
 const Tsp = lazy(() => import("./pages/Tsp"));
+const Slime = lazy(() => import("./pages/Slime"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -575,6 +576,19 @@ const App = () => (
                   description="Watch a nearest-neighbor tour get built city by city, then 2-opt swaps untangle the crossings — tour length dropping in real time."
                 />
                 <Tsp />
+              </>
+            }
+          />
+          <Route
+            path="/slime"
+            element={
+              <>
+                <SEO
+                  title="Slime Mold — physarum vein networks"
+                  path="/slime"
+                  description="Thousands of agents deposit and chase pheromone trails, self-organizing into living vein networks — the classic Physarum simulation."
+                />
+                <Slime />
               </>
             }
           />
