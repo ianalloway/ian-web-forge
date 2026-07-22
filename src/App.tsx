@@ -32,6 +32,7 @@ const Cipher = lazy(() => import("./pages/Cipher"));
 const Regress = lazy(() => import("./pages/Regress"));
 const Cluster = lazy(() => import("./pages/Cluster"));
 const Pi = lazy(() => import("./pages/Pi"));
+const Game2048 = lazy(() => import("./pages/Game2048"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -323,6 +324,19 @@ const App = () => (
                   description="Watch π emerge from random darts: uniform samples on a quarter circle, a live estimate, and a log-log convergence chart tracking the 1/√n error law."
                 />
                 <Pi />
+              </>
+            }
+          />
+          <Route
+            path="/2048"
+            element={
+              <>
+                <SEO
+                  title="2048 — terminal edition"
+                  path="/2048"
+                  description="Play 2048 in the terminal aesthetic: arrows, WASD, or swipe to slide tiles, merge to 2048 and beyond, best score saved locally."
+                />
+                <Game2048 />
               </>
             }
           />
