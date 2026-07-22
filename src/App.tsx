@@ -45,6 +45,7 @@ const Fourier = lazy(() => import("./pages/Fourier"));
 const Morse = lazy(() => import("./pages/Morse"));
 const Galton = lazy(() => import("./pages/Galton"));
 const Lsystem = lazy(() => import("./pages/Lsystem"));
+const Bezier = lazy(() => import("./pages/Bezier"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -505,6 +506,19 @@ const App = () => (
                   description="Grow ferns, dragon curves, and Koch snowflakes from L-system rewrite rules with turtle graphics — tune depth and branching angle live."
                 />
                 <Lsystem />
+              </>
+            }
+          />
+          <Route
+            path="/bezier"
+            element={
+              <>
+                <SEO
+                  title="Bézier Playground — De Casteljau construction live"
+                  path="/bezier"
+                  description="Drag control points and watch De Casteljau's algorithm sweep out Bézier curves — nested interpolation levels animated from linear to septic."
+                />
+                <Bezier />
               </>
             }
           />
