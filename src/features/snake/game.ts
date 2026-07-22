@@ -1,198 +1,114 @@
-export const GRID_COLUMNS = 16;
-export const GRID_ROWS = 16;
-export const TICK_MS = 140;
+export type Dir = "up" | "down" | "left" | "right";
 
-export type Position = {
-  x: number;
-  y: number;
-};
-
-export type Direction = "up" | "down" | "left" | "right";
-export type GameStatus = "running" | "paused" | "game_over";
-
-export type SnakeGameState = {
-  columns: number;
+export interface GameState {
+  cols: number;
   rows: number;
-  snake: Position[];
-  direction: Direction;
-  food: Position | null;
+  snake: number[]; // cell indices, head first
+  dir: Dir;
+  food: number;
   score: number;
-  status: GameStatus;
-  won: boolean;
-};
+  over: boolean;
+}
 
-export const DIRECTION_VECTORS: Record<Direction, Position> = {
-  up: { x: 0, y: -1 },
-  down: { x: 0, y: 1 },
-  left: { x: -1, y: 0 },
-  right: { x: 1, y: 0 },
-};
-
-const OPPOSITE_DIRECTIONS: Record<Direction, Direction> = {
+const OPPOSITE: Record<Dir, Dir> = {
   up: "down",
   down: "up",
   left: "right",
   right: "left",
 };
 
-function createInitialSnake(columns: number, rows: number): Position[] {
-  const centerX = Math.floor(columns / 2);
-  const centerY = Math.floor(rows / 2);
-
-  return [
-    { x: centerX, y: centerY },
-    { x: centerX - 1, y: centerY },
-    { x: centerX - 2, y: centerY },
-  ];
+export function isOpposite(a: Dir, b: Dir): boolean {
+  return OPPOSITE[a] === b;
 }
 
-function toCellKey({ x, y }: Position) {
-  return `${x},${y}`;
-}
-
-function randomIndex(length: number, random: () => number) {
-  return Math.floor(random() * length);
-}
-
-export function placeFood(
-  snake: Position[],
-  columns: number,
-  rows: number,
-  random: () => number = Math.random,
-) {
-  const occupied = new Set(snake.map(toCellKey));
-  const openCells: Position[] = [];
-
-  for (let y = 0; y < rows; y += 1) {
-    for (let x = 0; x < columns; x += 1) {
-      if (!occupied.has(`${x},${y}`)) {
-        openCells.push({ x, y });
-      }
-    }
+function placeFood(state: Pick<GameState, "cols" | "rows" | "snake">): number {
+  const occupied = new Set(state.snake);
+  const free: number[] = [];
+  for (let i = 0; i < state.cols * state.rows; i++) {
+    if (!occupied.has(i)) free.push(i);
   }
-
-  if (openCells.length === 0) {
-    return null;
-  }
-
-  return openCells[randomIndex(openCells.length, random)];
+  if (free.length === 0) return -1; // board full — player wins
+  return free[Math.floor(Math.random() * free.length)];
 }
 
-export function createGame({
-  columns = GRID_COLUMNS,
-  rows = GRID_ROWS,
-  random = Math.random,
-}: {
-  columns?: number;
-  rows?: number;
-  random?: () => number;
-} = {}): SnakeGameState {
-  const snake = createInitialSnake(columns, rows);
-
-  return {
-    columns,
+export function newGame(cols: number, rows: number): GameState {
+  const cy = Math.floor(rows / 2);
+  const cx = Math.floor(cols / 2);
+  const head = cy * cols + cx;
+  const snake = [head, head - 1, head - 2];
+  const state: GameState = {
+    cols,
     rows,
     snake,
-    direction: "right",
-    food: placeFood(snake, columns, rows, random),
+    dir: "right",
+    food: 0,
     score: 0,
-    status: "running",
-    won: false,
+    over: false,
   };
+  state.food = placeFood(state);
+  return state;
 }
 
-export function setDirection(state: SnakeGameState, nextDirection: Direction) {
-  if (OPPOSITE_DIRECTIONS[state.direction] === nextDirection) {
-    return state;
+/** Advance one tick. Returns a new state; sets `over` on wall/self collision. */
+export function tick(state: GameState, nextDir: Dir): GameState {
+  if (state.over) return state;
+
+  const dir = isOpposite(state.dir, nextDir) ? state.dir : nextDir;
+  const { cols, rows } = state;
+  const head = state.snake[0];
+  const hx = head % cols;
+  const hy = Math.floor(head / cols);
+
+  let nx = hx, ny = hy;
+  if (dir === "up") ny--;
+  else if (dir === "down") ny++;
+  else if (dir === "left") nx--;
+  else nx++;
+
+  // Wall collision
+  if (nx < 0 || ny < 0 || nx >= cols || ny >= rows) {
+    return { ...state, dir, over: true };
   }
 
-  return {
+  const newHead = ny * cols + nx;
+  const ate = newHead === state.food;
+  const body = ate ? state.snake : state.snake.slice(0, -1);
+
+  // Self collision (tail cell just vacated is allowed when not eating)
+  if (body.includes(newHead)) {
+    return { ...state, dir, over: true };
+  }
+
+  const snake = [newHead, ...body];
+  const next: GameState = {
     ...state,
-    direction: nextDirection,
+    dir,
+    snake,
+    score: ate ? state.score + 1 : state.score,
   };
+  if (ate) next.food = placeFood(next);
+  return next;
 }
 
-export function togglePause(state: SnakeGameState) {
-  if (state.status === "game_over") {
-    return state;
-  }
-
-  return {
-    ...state,
-    status: state.status === "paused" ? "running" : "paused",
-  };
+/** Tick interval in ms — speeds up as the snake grows. */
+export function tickInterval(score: number): number {
+  return Math.max(60, 140 - score * 4);
 }
 
-export function restartGame(state: SnakeGameState) {
-  return createGame({
-    columns: state.columns,
-    rows: state.rows,
-  });
+const HISCORE_KEY = "snake-hiscore";
+
+export function loadHiScore(): number {
+  try {
+    return Number(localStorage.getItem(HISCORE_KEY)) || 0;
+  } catch {
+    return 0;
+  }
 }
 
-export function advanceGame(
-  state: SnakeGameState,
-  { random = Math.random }: { random?: () => number } = {},
-) {
-  if (state.status !== "running") {
-    return state;
+export function saveHiScore(score: number): void {
+  try {
+    localStorage.setItem(HISCORE_KEY, String(score));
+  } catch {
+    // storage unavailable — ignore
   }
-
-  const vector = DIRECTION_VECTORS[state.direction];
-  const nextHead = {
-    x: state.snake[0].x + vector.x,
-    y: state.snake[0].y + vector.y,
-  };
-
-  const hitWall =
-    nextHead.x < 0 ||
-    nextHead.x >= state.columns ||
-    nextHead.y < 0 ||
-    nextHead.y >= state.rows;
-
-  if (hitWall) {
-    return {
-      ...state,
-      status: "game_over",
-      won: false,
-    };
-  }
-
-  const willEat =
-    state.food !== null &&
-    nextHead.x === state.food.x &&
-    nextHead.y === state.food.y;
-
-  const collisionBody = willEat ? state.snake : state.snake.slice(0, -1);
-  const hitSelf = collisionBody.some(
-    (segment) => segment.x === nextHead.x && segment.y === nextHead.y,
-  );
-
-  if (hitSelf) {
-    return {
-      ...state,
-      status: "game_over",
-      won: false,
-    };
-  }
-
-  const nextSnake = [nextHead, ...state.snake];
-  if (!willEat) {
-    nextSnake.pop();
-  }
-
-  const nextFood = willEat
-    ? placeFood(nextSnake, state.columns, state.rows, random)
-    : state.food;
-
-  const hasWon = willEat && nextFood === null;
-
-  return {
-    ...state,
-    snake: nextSnake,
-    food: nextFood,
-    score: willEat ? state.score + 1 : state.score,
-    status: hasWon ? "game_over" : state.status,
-    won: hasWon,
-  };
 }

@@ -1,184 +1,173 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Pause, Play, PlusCircle, RotateCcw, Wind } from "lucide-react";
-import MatrixRain from "@/components/MatrixRain";
-import { Button } from "@/components/ui/button";
 import {
-  CANVAS_H,
-  CANVAS_W,
-  createBoids,
-  drawBoids,
-  stepBoids,
-  type Boid,
-} from "@/features/boids/sim";
+  Boid,
+  FlockParams,
+  DEFAULT_PARAMS,
+  makeFlock,
+  stepFlock,
+} from "../features/boids/flock";
 
-const INITIAL_COUNT = 120;
+const FLOCK_SIZES = [50, 100, 200];
+
+interface SliderDef {
+  key: keyof Pick<FlockParams, "cohesion" | "alignment" | "separation">;
+  label: string;
+}
+
+const SLIDERS: SliderDef[] = [
+  { key: "cohesion", label: "cohesion" },
+  { key: "alignment", label: "alignment" },
+  { key: "separation", label: "separation" },
+];
 
 export default function Boids() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const boidsRef = useRef<Boid[]>(createBoids(INITIAL_COUNT));
-  const runningRef = useRef(true);
-  const lastTimeRef = useRef<number | null>(null);
+  const boidsRef = useRef<Boid[]>([]);
+  const paramsRef = useRef<FlockParams>({ ...DEFAULT_PARAMS });
+  const mouseRef = useRef<{ x: number; y: number } | null>(null);
+  const pausedRef = useRef(false);
 
-  const [running, setRunning] = useState(true);
-  const [count, setCount] = useState(INITIAL_COUNT);
+  const [params, setParams] = useState<FlockParams>({ ...DEFAULT_PARAMS });
+  const [flockSize, setFlockSize] = useState(100);
+  const [paused, setPaused] = useState(false);
 
-  // rAF loop — runs once, reads runningRef to pause without restarting loop
+  // Sim + render loop
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let rafId: number;
-
-    function loop(ts: number) {
-      rafId = requestAnimationFrame(loop);
-      const dt = lastTimeRef.current != null ? (ts - lastTimeRef.current) / 1000 : 0;
-      lastTimeRef.current = ts;
-
-      if (runningRef.current) {
-        stepBoids(boidsRef.current, dt);
-      }
-      drawBoids(ctx!, boidsRef.current);
-    }
-
-    rafId = requestAnimationFrame(loop);
-    return () => {
-      cancelAnimationFrame(rafId);
-      lastTimeRef.current = null;
+    const resize = () => {
+      const rect = canvas.parentElement!.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
     };
-  }, []);
+    resize();
+    window.addEventListener("resize", resize);
 
-  const toggleRunning = useCallback(() => {
-    runningRef.current = !runningRef.current;
-    setRunning(runningRef.current);
-  }, []);
+    boidsRef.current = makeFlock(flockSize, canvas.width, canvas.height);
 
-  const handleReset = useCallback(() => {
-    boidsRef.current = createBoids(INITIAL_COUNT);
-    setCount(INITIAL_COUNT);
-    runningRef.current = true;
-    setRunning(true);
-  }, []);
+    let raf = 0;
+    const loop = () => {
+      raf = requestAnimationFrame(loop);
+      const { width: W, height: H } = canvas;
 
-  const handleAdd = useCallback(() => {
+      if (!pausedRef.current) {
+        stepFlock(boidsRef.current, W, H, paramsRef.current, mouseRef.current);
+      }
+
+      // Motion-blur trail
+      ctx.fillStyle = "rgba(0,0,0,0.25)";
+      ctx.fillRect(0, 0, W, H);
+
+      for (const b of boidsRef.current) {
+        const angle = Math.atan2(b.vy, b.vx);
+        ctx.save();
+        ctx.translate(b.x, b.y);
+        ctx.rotate(angle);
+        ctx.beginPath();
+        ctx.moveTo(7, 0);
+        ctx.lineTo(-4, 3.5);
+        ctx.lineTo(-2, 0);
+        ctx.lineTo(-4, -3.5);
+        ctx.closePath();
+        ctx.fillStyle = `hsl(${b.hue}, 100%, 55%)`;
+        ctx.fill();
+        ctx.restore();
+      }
+    };
+    raf = requestAnimationFrame(loop);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resize);
+    };
+  }, [flockSize]);
+
+  const handleParam = (key: SliderDef["key"], value: number) => {
+    paramsRef.current = { ...paramsRef.current, [key]: value };
+    setParams(paramsRef.current);
+  };
+
+  const canvasPos = (e: React.MouseEvent) => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const newBoids = createBoids(20);
-    boidsRef.current = [...boidsRef.current, ...newBoids];
-    setCount((c) => c + 20);
-  }, []);
-
-  const handleCanvasClick = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) return null;
     const rect = canvas.getBoundingClientRect();
-    const scaleX = CANVAS_W / rect.width;
-    const scaleY = CANVAS_H / rect.height;
-    const cx = (e.clientX - rect.left) * scaleX;
-    const cy = (e.clientY - rect.top) * scaleY;
-    const angle = Math.random() * Math.PI * 2;
-    const speed = 60 + Math.random() * 40;
-    const newBoids: Boid[] = Array.from({ length: 8 }, () => ({
-      x: cx + (Math.random() - 0.5) * 30,
-      y: cy + (Math.random() - 0.5) * 30,
-      vx: Math.cos(angle + (Math.random() - 0.5)) * speed,
-      vy: Math.sin(angle + (Math.random() - 0.5)) * speed,
-    }));
-    boidsRef.current = [...boidsRef.current, ...newBoids];
-    setCount((c) => c + 8);
-  }, []);
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  };
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      <MatrixRain />
+    <div className="min-h-screen bg-background text-primary font-mono flex flex-col">
+      {/* Header */}
+      <div className="border-b border-primary/20 px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+        <div className="flex items-center gap-3">
+          <Link to="/" className="text-primary/50 hover:text-primary text-sm transition-colors">
+            ← home
+          </Link>
+          <span className="text-primary/20">|</span>
+          <span className="text-sm">boids</span>
+        </div>
+        <div className="text-xs text-primary/40">{flockSize} boids</div>
+      </div>
 
-      <main className="relative z-10 max-w-4xl mx-auto px-4 py-8 md:py-12">
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-          <Button
-            variant="outline"
-            className="font-mono terminal-border text-primary border-primary"
-            asChild
-          >
-            <Link to="/playground">
-              <ArrowLeft className="mr-2" />
-              Playground
-            </Link>
-          </Button>
-          <p className="text-xs font-mono text-primary/80">ianalloway.xyz/boids</p>
+      {/* Controls */}
+      <div className="border-b border-primary/10 px-4 py-2 flex flex-wrap items-center gap-4">
+        {SLIDERS.map(({ key, label }) => (
+          <div key={key} className="flex items-center gap-2">
+            <span className="text-primary/40 text-xs w-16 text-right">{label}</span>
+            <input
+              type="range"
+              min={0}
+              max={1.5}
+              step={0.1}
+              value={params[key]}
+              onChange={(e) => handleParam(key, Number(e.target.value))}
+              className="w-20 accent-primary"
+            />
+          </div>
+        ))}
+
+        <div className="flex items-center gap-1">
+          {FLOCK_SIZES.map((n) => (
+            <button
+              key={n}
+              onClick={() => setFlockSize(n)}
+              className={`px-2 py-0.5 text-xs border transition-colors ${
+                flockSize === n
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-primary/20 text-primary/40 hover:border-primary/50 hover:text-primary/70"
+              }`}
+            >
+              {n}
+            </button>
+          ))}
         </div>
 
-        <header className="mb-6">
-          <p className="inline-block px-2 py-1 text-xs font-mono text-primary terminal-border mb-3">
-            SIM
-          </p>
-          <h1 className="text-3xl md:text-4xl font-mono font-bold matrix-text text-primary mb-2">
-            Boids
-          </h1>
-          <p className="text-sm text-muted-foreground font-mono">
-            Emergent flocking from three simple rules: separation, alignment, and cohesion.
-            Click the canvas to spawn more boids.
-          </p>
-        </header>
+        <button
+          onClick={() => {
+            pausedRef.current = !pausedRef.current;
+            setPaused(pausedRef.current);
+          }}
+          className="ml-auto px-3 py-1 text-xs border border-primary/30 hover:border-primary text-primary/70 hover:text-primary transition-colors"
+        >
+          {paused ? "▶ resume" : "⏸ pause"}
+        </button>
+      </div>
 
-        {/* Controls */}
-        <div className="flex flex-wrap items-center gap-3 mb-4">
-          <button
-            onClick={toggleRunning}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono border border-primary text-primary rounded hover:bg-primary/10 transition-colors"
-          >
-            {running ? <><Pause size={12} /> pause</> : <><Play size={12} /> play</>}
-          </button>
-          <button
-            onClick={handleAdd}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono border border-primary/40 text-primary/80 rounded hover:border-primary hover:text-primary transition-colors"
-          >
-            <PlusCircle size={12} />
-            +20
-          </button>
-          <button
-            onClick={handleReset}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono border border-primary/40 text-primary/80 rounded hover:border-primary hover:text-primary transition-colors"
-          >
-            <RotateCcw size={12} />
-            reset
-          </button>
-          <span className="ml-auto text-xs font-mono text-muted-foreground flex items-center gap-1.5">
-            <Wind size={11} className="text-primary/60" />
-            {count} boids
-          </span>
-        </div>
-
-        {/* Canvas */}
+      {/* Canvas */}
+      <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
-          width={CANVAS_W}
-          height={CANVAS_H}
-          className="w-full rounded-xl border border-primary/30 cursor-crosshair touch-none"
-          onClick={handleCanvasClick}
+          className="block w-full h-full"
+          onMouseMove={(e) => { mouseRef.current = canvasPos(e); }}
+          onMouseLeave={() => { mouseRef.current = null; }}
         />
-
-        {/* Legend */}
-        <div className="mt-5 grid sm:grid-cols-3 gap-3 text-xs font-mono text-muted-foreground">
-          <div className="rounded-lg border border-primary/20 bg-card/30 px-3 py-2">
-            <span className="text-primary">separation</span>
-            <p className="mt-0.5 leading-relaxed">steer away from neighbours that are too close</p>
-          </div>
-          <div className="rounded-lg border border-primary/20 bg-card/30 px-3 py-2">
-            <span className="text-primary">alignment</span>
-            <p className="mt-0.5 leading-relaxed">steer toward the average heading of nearby boids</p>
-          </div>
-          <div className="rounded-lg border border-primary/20 bg-card/30 px-3 py-2">
-            <span className="text-primary">cohesion</span>
-            <p className="mt-0.5 leading-relaxed">steer toward the average position of nearby boids</p>
-          </div>
+        <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none">
+          move the cursor to scatter the flock
         </div>
-
-        <p className="mt-4 text-xs font-mono text-muted-foreground text-center">
-          click canvas to spawn · +20 to add a burst · no rules changed — just numbers
-        </p>
-      </main>
+      </div>
     </div>
   );
 }

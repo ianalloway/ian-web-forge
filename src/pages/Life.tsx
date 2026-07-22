@@ -1,268 +1,276 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Pause, Play, RotateCcw, Shuffle, SkipForward, Trash2 } from "lucide-react";
-import MatrixRain from "@/components/MatrixRain";
-import { Button } from "@/components/ui/button";
 import {
-  GRID_COLUMNS,
-  GRID_ROWS,
-  PATTERN_LABELS,
-  type LifeGrid,
-  type PatternName,
-  clearGrid,
-  createGrid,
-  placePattern,
+  Grid,
+  WorldSize,
+  makeGrid,
   randomize,
   step,
+  countAlive,
+  PATTERNS,
+  PatternId,
+  stampPattern,
   toggleCell,
-} from "@/features/life/life";
+} from "../features/life/engine";
 
-const SPEEDS = [
-  { label: "0.5×", ms: 220 },
-  { label: "1×", ms: 110 },
-  { label: "2×", ms: 55 },
-  { label: "4×", ms: 28 },
-] as const;
-
-const PATTERN_ORDER: PatternName[] = [
-  "glider",
-  "lwss",
-  "blinker",
-  "pulsar",
-  "gosper_glider_gun",
-];
+const CELL = 8; // px per cell
+const PATTERN_KEYS = Object.keys(PATTERNS) as PatternId[];
 
 export default function Life() {
-  const [grid, setGrid] = useState<LifeGrid>(() =>
-    placePattern(createGrid(), "gosper_glider_gun"),
-  );
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const gridRef = useRef<Grid>(new Uint8Array(0));
+  const sizeRef = useRef<WorldSize>({ cols: 0, rows: 0 });
+  const runningRef = useRef(false);
+  const speedRef = useRef(12); // generations per second
+  const paintingRef = useRef<null | 0 | 1>(null); // value being painted during drag
+  const lastPaintRef = useRef(-1);
+
   const [running, setRunning] = useState(false);
-  const [speedIndex, setSpeedIndex] = useState(1);
-  const [wrap, setWrap] = useState(true);
+  const [speed, setSpeed] = useState(12);
+  const [generation, setGeneration] = useState(0);
+  const [population, setPopulation] = useState(0);
 
-  useEffect(() => {
-    if (!running) {
-      return undefined;
+  const draw = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const { cols, rows } = sizeRef.current;
+    const grid = gridRef.current;
+
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#00ff41";
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < cols; x++) {
+        if (grid[y * cols + x]) {
+          ctx.fillRect(x * CELL + 1, y * CELL + 1, CELL - 2, CELL - 2);
+        }
+      }
     }
-
-    const timerId = window.setInterval(() => {
-      setGrid((current) => step(current, { wrap }));
-    }, SPEEDS[speedIndex].ms);
-
-    return () => window.clearInterval(timerId);
-  }, [running, speedIndex, wrap]);
-
-  const handleStep = useCallback(() => {
-    setRunning(false);
-    setGrid((current) => step(current, { wrap }));
-  }, [wrap]);
-
-  const handleToggleCell = useCallback((x: number, y: number) => {
-    setRunning(false);
-    setGrid((current) => toggleCell(current, x, y));
   }, []);
 
-  const handlePattern = useCallback((name: PatternName) => {
-    setRunning(false);
-    setGrid((current) => placePattern(createGrid({ columns: current.columns, rows: current.rows }), name));
+  const syncStats = useCallback((gen: number) => {
+    setGeneration(gen);
+    setPopulation(countAlive(gridRef.current));
   }, []);
 
-  const handleRandomize = useCallback(() => {
-    setRunning(false);
-    setGrid((current) => randomize(current));
+  const setRunningBoth = useCallback((r: boolean) => {
+    runningRef.current = r;
+    setRunning(r);
   }, []);
 
-  const handleClear = useCallback(() => {
-    setRunning(false);
-    setGrid((current) => clearGrid(current));
-  }, []);
+  // Init canvas size + random soup, then run the generation loop
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-  const cells = grid.cells;
-  const gridStyle = useMemo(
-    () => ({ gridTemplateColumns: `repeat(${grid.columns}, minmax(0, 1fr))` }),
-    [grid.columns],
-  );
+    const rect = canvas.parentElement!.getBoundingClientRect();
+    const cols = Math.max(20, Math.floor(rect.width / CELL));
+    const rows = Math.max(20, Math.floor(rect.height / CELL));
+    canvas.width = cols * CELL;
+    canvas.height = rows * CELL;
+    sizeRef.current = { cols, rows };
+    gridRef.current = randomize(makeGrid({ cols, rows }));
+
+    let gen = 0;
+    let last = 0;
+    let raf = 0;
+    const loop = (t: number) => {
+      raf = requestAnimationFrame(loop);
+      const interval = 1000 / speedRef.current;
+      if (runningRef.current && t - last >= interval) {
+        last = t;
+        gridRef.current = step(gridRef.current, sizeRef.current);
+        gen++;
+        setGeneration(gen);
+        setPopulation(countAlive(gridRef.current));
+      }
+      draw();
+    };
+    raf = requestAnimationFrame(loop);
+
+    // Let the reset button zero the local counter via a custom event
+    const onReset = () => { gen = 0; };
+    canvas.addEventListener("life:resetgen", onReset);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      canvas.removeEventListener("life:resetgen", onReset);
+    };
+  }, [draw]);
+
+  const resetGeneration = useCallback(() => {
+    canvasRef.current?.dispatchEvent(new Event("life:resetgen"));
+    syncStats(0);
+  }, [syncStats]);
+
+  const handleClear = () => {
+    gridRef.current = makeGrid(sizeRef.current);
+    setRunningBoth(false);
+    resetGeneration();
+  };
+
+  const handleRandom = () => {
+    gridRef.current = randomize(makeGrid(sizeRef.current));
+    resetGeneration();
+  };
+
+  const handlePattern = (p: PatternId) => {
+    const { cols, rows } = sizeRef.current;
+    gridRef.current = stampPattern(
+      makeGrid(sizeRef.current),
+      sizeRef.current,
+      p,
+      Math.floor(cols / 2) - 18,
+      Math.floor(rows / 2) - 7
+    );
+    resetGeneration();
+  };
+
+  const handleStep = () => {
+    gridRef.current = step(gridRef.current, sizeRef.current);
+    setGeneration((g) => g + 1);
+    setPopulation(countAlive(gridRef.current));
+  };
+
+  const cellFromEvent = (e: React.MouseEvent): { x: number; y: number } | null => {
+    const canvas = canvasRef.current;
+    if (!canvas) return null;
+    const rect = canvas.getBoundingClientRect();
+    const x = Math.floor(((e.clientX - rect.left) / rect.width) * sizeRef.current.cols);
+    const y = Math.floor(((e.clientY - rect.top) / rect.height) * sizeRef.current.rows);
+    const { cols, rows } = sizeRef.current;
+    if (x < 0 || y < 0 || x >= cols || y >= rows) return null;
+    return { x, y };
+  };
+
+  const paintCell = (x: number, y: number) => {
+    const { cols } = sizeRef.current;
+    const idx = y * cols + x;
+    if (idx === lastPaintRef.current) return;
+    lastPaintRef.current = idx;
+    if (paintingRef.current === null) {
+      // First cell of the drag decides paint vs erase
+      paintingRef.current = gridRef.current[idx] ? 0 : 1;
+    }
+    const next = new Uint8Array(gridRef.current);
+    next[idx] = paintingRef.current;
+    gridRef.current = next;
+    setPopulation(countAlive(next));
+  };
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    const cell = cellFromEvent(e);
+    if (!cell) return;
+    paintingRef.current = null;
+    lastPaintRef.current = -1;
+    paintCell(cell.x, cell.y);
+  };
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (paintingRef.current === null && lastPaintRef.current === -1) return;
+    if (e.buttons !== 1) return;
+    const cell = cellFromEvent(e);
+    if (cell) paintCell(cell.x, cell.y);
+  };
+
+  const onMouseUp = () => {
+    paintingRef.current = null;
+    lastPaintRef.current = -1;
+  };
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      <MatrixRain />
+    <div className="min-h-screen bg-background text-primary font-mono flex flex-col">
+      {/* Header */}
+      <div className="border-b border-primary/20 px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+        <div className="flex items-center gap-3">
+          <Link to="/" className="text-primary/50 hover:text-primary text-sm transition-colors">
+            ← home
+          </Link>
+          <span className="text-primary/20">|</span>
+          <span className="text-sm">game of life</span>
+        </div>
+        <div className="text-xs text-primary/40">
+          gen {generation} · pop {population}
+        </div>
+      </div>
 
-      <main className="relative z-10 max-w-5xl mx-auto px-4 py-8 md:py-12">
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-          <Button variant="outline" className="font-mono terminal-border text-primary border-primary" asChild>
-            <Link to="/demos">
-              <ArrowLeft className="mr-2" />
-              Back to demos
-            </Link>
-          </Button>
-          <p className="text-xs font-mono text-primary/80">ianalloway.xyz/life</p>
+      {/* Controls */}
+      <div className="border-b border-primary/10 px-4 py-2 flex flex-wrap items-center gap-3">
+        <div className="flex gap-1 flex-wrap">
+          {PATTERN_KEYS.map((p) => (
+            <button
+              key={p}
+              onClick={() => handlePattern(p)}
+              className="px-2 py-0.5 text-xs border border-primary/20 text-primary/40 hover:border-primary/50 hover:text-primary/70 transition-colors"
+            >
+              {PATTERNS[p].label}
+            </button>
+          ))}
         </div>
 
-        <section className="terminal-border rounded-xl bg-card/55 backdrop-blur-sm p-5 md:p-8">
-          <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-            <div>
-              <p className="inline-block px-2 py-1 text-xs font-mono text-primary terminal-border mb-3">
-                PLAYABLE_DEMO
-              </p>
-              <h1 className="text-3xl md:text-4xl font-mono font-bold matrix-text text-primary mb-3">
-                Game of Life
-              </h1>
-              <p className="max-w-2xl text-sm md:text-base text-muted-foreground font-mono leading-relaxed">
-                Conway&apos;s cellular automaton, running the classic B3/S23 rules. Click cells to
-                draw, drop in a seed pattern, then press play and watch the colony evolve. The grid
-                wraps at the edges by default, so gliders loop forever.
-              </p>
-            </div>
+        <div className="flex items-center gap-2">
+          <span className="text-primary/40 text-xs">speed</span>
+          <input
+            type="range"
+            min={2}
+            max={40}
+            step={2}
+            value={speed}
+            onChange={(e) => {
+              const v = Number(e.target.value);
+              speedRef.current = v;
+              setSpeed(v);
+            }}
+            className="w-24 accent-primary"
+          />
+          <span className="text-primary/60 text-xs w-10">{speed}/s</span>
+        </div>
 
-            <div className="grid grid-cols-2 gap-3 text-sm font-mono min-w-[220px]">
-              <div className="rounded-lg border border-primary/30 bg-background/70 p-3">
-                <div className="text-primary/70 text-xs mb-1">GENERATION</div>
-                <div className="text-primary text-2xl font-bold" aria-live="off">
-                  {grid.generation}
-                </div>
-              </div>
-              <div className="rounded-lg border border-primary/30 bg-background/70 p-3">
-                <div className="text-primary/70 text-xs mb-1">POPULATION</div>
-                <div className="text-primary text-2xl font-bold" aria-live="off">
-                  {grid.population}
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="flex gap-2 ml-auto">
+          <button
+            onClick={() => setRunningBoth(!running)}
+            className="px-3 py-1 text-xs border border-primary/30 hover:border-primary text-primary/70 hover:text-primary transition-colors"
+          >
+            {running ? "⏸ pause" : "▶ run"}
+          </button>
+          <button
+            onClick={handleStep}
+            disabled={running}
+            className="px-3 py-1 text-xs border border-primary/30 hover:border-primary text-primary/70 hover:text-primary transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+          >
+            ⏭ step
+          </button>
+          <button
+            onClick={handleRandom}
+            className="px-3 py-1 text-xs border border-primary/30 hover:border-primary text-primary/70 hover:text-primary transition-colors"
+          >
+            ⚄ soup
+          </button>
+          <button
+            onClick={handleClear}
+            className="px-3 py-1 text-xs border border-primary/30 hover:border-primary text-primary/70 hover:text-primary transition-colors"
+          >
+            ✕ clear
+          </button>
+        </div>
+      </div>
 
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_240px] lg:items-start">
-            <div className="rounded-xl border border-primary/30 bg-background/70 p-3 md:p-4">
-              <div
-                className="grid gap-px rounded-lg bg-primary/15 p-px"
-                style={gridStyle}
-                role="grid"
-                aria-label="Game of Life board"
-              >
-                {cells.map((alive, index) => {
-                  const x = index % grid.columns;
-                  const y = Math.floor(index / grid.columns);
-                  return (
-                    <button
-                      key={index}
-                      type="button"
-                      role="gridcell"
-                      aria-label={`Cell ${x + 1}, ${y + 1} ${alive ? "alive" : "dead"}`}
-                      aria-pressed={alive}
-                      onClick={() => handleToggleCell(x, y)}
-                      className={`aspect-square rounded-[1px] transition-colors duration-75 ${
-                        alive
-                          ? "bg-primary shadow-[0_0_6px_hsl(var(--primary)/0.7)]"
-                          : "bg-muted/40 hover:bg-primary/30"
-                      }`}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div className="rounded-xl border border-primary/30 bg-background/70 p-4">
-                <div className="flex flex-wrap gap-3">
-                  <Button
-                    className="font-mono flex-1 min-w-[120px]"
-                    onClick={() => setRunning((value) => !value)}
-                  >
-                    {running ? (
-                      <>
-                        <Pause className="mr-2" />
-                        Pause
-                      </>
-                    ) : (
-                      <>
-                        <Play className="mr-2" />
-                        Play
-                      </>
-                    )}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="font-mono terminal-border text-primary border-primary flex-1 min-w-[120px]"
-                    onClick={handleStep}
-                  >
-                    <SkipForward className="mr-2" />
-                    Step
-                  </Button>
-                </div>
-                <div className="mt-3 flex flex-wrap gap-3">
-                  <Button
-                    variant="outline"
-                    className="font-mono terminal-border text-primary border-primary flex-1 min-w-[120px]"
-                    onClick={handleRandomize}
-                  >
-                    <Shuffle className="mr-2" />
-                    Random
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="font-mono terminal-border text-primary border-primary flex-1 min-w-[120px]"
-                    onClick={handleClear}
-                  >
-                    <Trash2 className="mr-2" />
-                    Clear
-                  </Button>
-                </div>
-              </div>
-
-              <div className="rounded-xl border border-primary/30 bg-background/70 p-4">
-                <h2 className="text-sm font-mono text-primary mb-3">SPEED</h2>
-                <div className="grid grid-cols-4 gap-2">
-                  {SPEEDS.map((speed, index) => (
-                    <Button
-                      key={speed.label}
-                      variant={index === speedIndex ? "default" : "outline"}
-                      className={`font-mono px-0 ${
-                        index === speedIndex ? "" : "terminal-border text-primary border-primary"
-                      }`}
-                      onClick={() => setSpeedIndex(index)}
-                    >
-                      {speed.label}
-                    </Button>
-                  ))}
-                </div>
-                <label className="mt-4 flex items-center gap-2 text-xs font-mono text-muted-foreground cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={wrap}
-                    onChange={(event) => setWrap(event.target.checked)}
-                    className="accent-primary h-4 w-4"
-                  />
-                  Wrap edges (toroidal grid)
-                </label>
-              </div>
-
-              <div className="rounded-xl border border-primary/30 bg-background/70 p-4">
-                <h2 className="text-sm font-mono text-primary mb-3">PATTERNS</h2>
-                <div className="flex flex-col gap-2">
-                  {PATTERN_ORDER.map((name) => (
-                    <Button
-                      key={name}
-                      variant="outline"
-                      className="font-mono terminal-border text-primary border-primary justify-start"
-                      onClick={() => handlePattern(name)}
-                    >
-                      {PATTERN_LABELS[name]}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="rounded-xl border border-primary/30 bg-background/70 p-4">
-                <h2 className="text-sm font-mono text-primary mb-2">THE RULES</h2>
-                <ul className="space-y-2 text-xs text-muted-foreground font-mono leading-relaxed">
-                  <li>Live cell with 2–3 neighbours survives</li>
-                  <li>Dead cell with exactly 3 neighbours is born</li>
-                  <li>All other cells die or stay empty</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
+      {/* Canvas */}
+      <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
+        <canvas
+          ref={canvasRef}
+          className="block cursor-crosshair"
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
+          onMouseLeave={onMouseUp}
+        />
+        <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none">
+          click / drag to paint cells · edges wrap around
+        </div>
+      </div>
     </div>
   );
 }

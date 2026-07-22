@@ -16,7 +16,7 @@ Thanks for your interest in contributing! Here's how to get started.
 git clone https://github.com/ianalloway/ian-web-forge
 cd ian-web-forge
 npm install
-npm run dev      # http://localhost:5173
+npm run dev      # http://localhost:8080
 ```
 
 ## Code Style

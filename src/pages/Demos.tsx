@@ -1,7 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Terminal, ExternalLink, GitBranch as Github, Calculator, LineChart, Cpu, Trophy, Coins, Gamepad2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { PLAYGROUND_ITEMS } from '@/features/playground/catalog';
+import { Terminal, ExternalLink, GitBranch as Github, Calculator, LineChart, Cpu, Trophy, Coins } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 import { kelly, convertOdds, arbitrage } from '@/lib/kelly';
 
@@ -250,9 +248,6 @@ const Demos = () => {
             <a href="#product" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               Product
             </a>
-            <a href="#playground" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
-              Play
-            </a>
             <a href="/bots" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               [BOTS]
             </a>
@@ -330,7 +325,7 @@ const Demos = () => {
                 Try the interactive dashboard locally
               </p>
               <pre className="overflow-x-auto text-[11px] font-mono text-primary/90 leading-relaxed">
-{`pip install -r requirements.txt -r requirements-serve.txt
+{`pip install -e ".[serve]"
 python3 -m solvent serve --port 8787
 python3 -m solvent worker   # optional second terminal
 open http://127.0.0.1:8787/`}
@@ -433,34 +428,6 @@ open http://127.0.0.1:8787/`}
             </a>
           </div>
         </SectionShell>
-
-        <section id="playground" className="mb-14 scroll-mt-24">
-          <div className="flex items-center gap-2 mb-1">
-            <Gamepad2 size={18} className="text-primary" />
-            <h2 className="text-xl md:text-2xl font-bold font-mono text-primary matrix-text">
-              Playground — browser toys
-            </h2>
-          </div>
-          <p className="text-muted-foreground text-sm mb-4">
-            Self-contained interactive bits that run entirely client-side. No backend, just code in
-            your browser.
-          </p>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {PLAYGROUND_ITEMS.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className="rounded-md border border-primary/30 bg-card/60 p-4 backdrop-blur-sm hover:border-primary/60 transition-colors"
-              >
-                <div className="font-mono text-primary font-bold mb-1">{item.title}</div>
-                <p className="text-xs text-muted-foreground font-mono leading-relaxed">{item.blurb}</p>
-                <span className="inline-flex items-center gap-1 mt-3 text-xs font-mono text-primary/80">
-                  Open {item.path} <ExternalLink size={12} />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </section>
 
         <footer className="text-center text-xs font-mono text-muted-foreground">
           <a href="/" className="text-primary/70 hover:text-primary">

@@ -35,3 +35,7 @@ dist-ssr
 *.key
 .vercel
 .netlify
+
+# Playwright CLI local artifacts
+.playwright-cli/
+

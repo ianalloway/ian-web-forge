@@ -1,261 +1,196 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Pause, Play, RotateCcw } from "lucide-react";
-import MatrixRain from "@/components/MatrixRain";
-import { Button } from "@/components/ui/button";
 import {
-  GRID_COLUMNS,
-  GRID_ROWS,
-  TICK_MS,
-  advanceGame,
-  createGame,
-  restartGame,
-  setDirection,
-  togglePause,
-  type Direction,
-  type SnakeGameState,
-} from "@/features/snake/game";
+  Dir,
+  GameState,
+  newGame,
+  tick,
+  tickInterval,
+  loadHiScore,
+  saveHiScore,
+} from "../features/snake/game";
 
-const CELL_COUNT = GRID_COLUMNS * GRID_ROWS;
+const COLS = 28;
+const ROWS = 20;
+const CELL = 22;
 
-const directionMap: Record<string, Direction> = {
-  ArrowUp: "up",
-  ArrowDown: "down",
-  ArrowLeft: "left",
-  ArrowRight: "right",
-  w: "up",
-  a: "left",
-  s: "down",
-  d: "right",
-  W: "up",
-  A: "left",
-  S: "down",
-  D: "right",
+const KEY_DIRS: Record<string, Dir> = {
+  ArrowUp: "up", KeyW: "up",
+  ArrowDown: "down", KeyS: "down",
+  ArrowLeft: "left", KeyA: "left",
+  ArrowRight: "right", KeyD: "right",
 };
 
-const touchControls: Array<{ label: string; direction: Direction; className: string }> = [
-  { label: "Up", direction: "up", className: "col-start-2" },
-  { label: "Left", direction: "left", className: "col-start-1 row-start-2" },
-  { label: "Down", direction: "down", className: "col-start-2 row-start-2" },
-  { label: "Right", direction: "right", className: "col-start-3 row-start-2" },
-];
-
-function statusLabel(state: SnakeGameState) {
-  if (state.status === "paused") {
-    return "Paused";
-  }
-
-  if (state.status === "game_over") {
-    return state.won ? "You win" : "Game over";
-  }
-
-  return "Running";
-}
+type Phase = "ready" | "playing" | "over";
 
 export default function Snake() {
-  const [game, setGame] = useState<SnakeGameState>(() => createGame());
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const stateRef = useRef<GameState>(newGame(COLS, ROWS));
+  const dirQueueRef = useRef<Dir[]>([]);
+  const phaseRef = useRef<Phase>("ready");
 
-  useEffect(() => {
-    if (game.status !== "running") {
-      return undefined;
-    }
+  const [phase, setPhase] = useState<Phase>("ready");
+  const [score, setScore] = useState(0);
+  const [hiScore, setHiScore] = useState(() => loadHiScore());
 
-    const timerId = window.setInterval(() => {
-      setGame((current) => advanceGame(current));
-    }, TICK_MS);
-
-    return () => window.clearInterval(timerId);
-  }, [game.status]);
-
-  useEffect(() => {
-    const handleKeyboard = (event: KeyboardEvent) => {
-      if (event.code === "Space") {
-        event.preventDefault();
-        setGame((current) => togglePause(current));
-        return;
-      }
-
-      const nextDirection = directionMap[event.key];
-      if (!nextDirection) {
-        return;
-      }
-
-      event.preventDefault();
-      setGame((current) => {
-        if (current.status === "game_over") {
-          return current;
-        }
-
-        return setDirection(current, nextDirection);
-      });
-    };
-
-    window.addEventListener("keydown", handleKeyboard);
-    return () => window.removeEventListener("keydown", handleKeyboard);
+  const setPhaseBoth = useCallback((p: Phase) => {
+    phaseRef.current = p;
+    setPhase(p);
   }, []);
 
-  const snakeCells = new Map(
-    game.snake.map((segment, index) => [`${segment.x},${segment.y}`, index] as const),
-  );
+  const draw = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const s = stateRef.current;
+
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Subtle grid
+    ctx.strokeStyle = "rgba(0,255,65,0.06)";
+    ctx.lineWidth = 1;
+    for (let x = 0; x <= COLS; x++) {
+      ctx.beginPath();
+      ctx.moveTo(x * CELL, 0);
+      ctx.lineTo(x * CELL, ROWS * CELL);
+      ctx.stroke();
+    }
+    for (let y = 0; y <= ROWS; y++) {
+      ctx.beginPath();
+      ctx.moveTo(0, y * CELL);
+      ctx.lineTo(COLS * CELL, y * CELL);
+      ctx.stroke();
+    }
+
+    // Food
+    if (s.food >= 0) {
+      const fx = (s.food % COLS) * CELL;
+      const fy = Math.floor(s.food / COLS) * CELL;
+      ctx.fillStyle = "#ff4da6";
+      ctx.beginPath();
+      ctx.arc(fx + CELL / 2, fy + CELL / 2, CELL / 3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Snake — head brightest, body fades toward tail
+    s.snake.forEach((cell, i) => {
+      const x = (cell % COLS) * CELL;
+      const y = Math.floor(cell / COLS) * CELL;
+      const t = i / Math.max(1, s.snake.length - 1);
+      const alpha = 1 - t * 0.6;
+      ctx.fillStyle = i === 0 ? "#00ff41" : `rgba(0,255,65,${alpha.toFixed(2)})`;
+      ctx.fillRect(x + 1, y + 1, CELL - 2, CELL - 2);
+    });
+  }, []);
+
+  // Game loop — self-adjusting timeout so speed follows the score
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    const loop = () => {
+      if (phaseRef.current === "playing") {
+        const queued = dirQueueRef.current.shift();
+        const next = tick(stateRef.current, queued ?? stateRef.current.dir);
+        stateRef.current = next;
+        setScore(next.score);
+        if (next.over) {
+          setPhaseBoth("over");
+          setHiScore((prev) => {
+            const best = Math.max(prev, next.score);
+            if (best > prev) saveHiScore(best);
+            return best;
+          });
+        }
+        draw();
+      }
+      timer = setTimeout(loop, tickInterval(stateRef.current.score));
+    };
+    timer = setTimeout(loop, tickInterval(0));
+    draw();
+    return () => clearTimeout(timer);
+  }, [draw, setPhaseBoth]);
+
+  const start = useCallback(() => {
+    stateRef.current = newGame(COLS, ROWS);
+    dirQueueRef.current = [];
+    setScore(0);
+    setPhaseBoth("playing");
+  }, [setPhaseBoth]);
+
+  // Keyboard input
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const dir = KEY_DIRS[e.code];
+      if (dir) {
+        e.preventDefault();
+        if (phaseRef.current === "playing") {
+          const q = dirQueueRef.current;
+          const last = q.length > 0 ? q[q.length - 1] : stateRef.current.dir;
+          if (dir !== last && q.length < 3) q.push(dir);
+        }
+        return;
+      }
+      if (e.code === "Space" || e.code === "Enter") {
+        e.preventDefault();
+        if (phaseRef.current !== "playing") start();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [start]);
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      <MatrixRain />
-
-      <main className="relative z-10 max-w-5xl mx-auto px-4 py-8 md:py-12">
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-          <Button variant="outline" className="font-mono terminal-border text-primary border-primary" asChild>
-            <Link to="/toolkit">
-              <ArrowLeft className="mr-2" />
-              Back to toolkit
-            </Link>
-          </Button>
-          <p className="text-xs font-mono text-primary/80">ianalloway.xyz/snake</p>
+    <div className="min-h-screen bg-background text-primary font-mono flex flex-col">
+      {/* Header */}
+      <div className="border-b border-primary/20 px-4 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Link to="/" className="text-primary/50 hover:text-primary text-sm transition-colors">
+            ← home
+          </Link>
+          <span className="text-primary/20">|</span>
+          <span className="text-sm">snake</span>
         </div>
+        <div className="text-xs text-primary/60">
+          score {score} <span className="text-primary/30 ml-2">best {hiScore}</span>
+        </div>
+      </div>
 
-        <section className="terminal-border rounded-xl bg-card/55 backdrop-blur-sm p-5 md:p-8">
-          <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-            <div>
-              <p className="inline-block px-2 py-1 text-xs font-mono text-primary terminal-border mb-3">
-                PLAYABLE_DEMO
-              </p>
-              <h1 className="text-3xl md:text-4xl font-mono font-bold matrix-text text-primary mb-3">
-                Snake
-              </h1>
-              <p className="max-w-2xl text-sm md:text-base text-muted-foreground font-mono leading-relaxed">
-                Classic Snake only: grid movement, food, growth, score, crash state, and restart. Arrow keys
-                or WASD to move. Space pauses.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3 text-sm font-mono min-w-[220px]">
-              <div className="rounded-lg border border-primary/30 bg-background/70 p-3">
-                <div className="text-primary/70 text-xs mb-1">SCORE</div>
-                <div className="text-primary text-2xl font-bold" aria-live="polite">
-                  {game.score}
-                </div>
-              </div>
-              <div className="rounded-lg border border-primary/30 bg-background/70 p-3">
-                <div className="text-primary/70 text-xs mb-1">STATUS</div>
-                <div className="text-primary text-base font-bold" aria-live="polite">
-                  {statusLabel(game)}
-                </div>
-              </div>
-            </div>
-            <p className="sr-only" aria-live="polite">
-              Snake game status: {statusLabel(game)}. Score: {game.score}.
-            </p>
-          </div>
-
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_240px] lg:items-start">
-            <div className="rounded-xl border border-primary/30 bg-background/70 p-3 md:p-4">
-              <div
-                className="grid gap-[3px] rounded-lg bg-primary/20 p-[3px]"
-                style={{ gridTemplateColumns: `repeat(${GRID_COLUMNS}, minmax(0, 1fr))` }}
-                role="grid"
-                aria-label="Snake board"
+      {/* Board */}
+      <div className="flex-1 flex items-center justify-center p-4">
+        <div className="relative">
+          <canvas
+            ref={canvasRef}
+            width={COLS * CELL}
+            height={ROWS * CELL}
+            className="border border-primary/20 max-w-full h-auto"
+          />
+          {phase !== "playing" && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/70">
+              {phase === "over" && (
+                <>
+                  <div className="text-2xl text-primary">game over</div>
+                  <div className="text-sm text-primary/50">
+                    score {score}{score >= hiScore && score > 0 ? " — new best!" : ""}
+                  </div>
+                </>
+              )}
+              {phase === "ready" && (
+                <div className="text-xl text-primary/80">snake</div>
+              )}
+              <button
+                onClick={start}
+                className="px-4 py-2 text-sm border border-primary/40 hover:border-primary text-primary/80 hover:text-primary transition-colors"
               >
-                {Array.from({ length: CELL_COUNT }, (_, index) => {
-                  const x = index % GRID_COLUMNS;
-                  const y = Math.floor(index / GRID_COLUMNS);
-                  const key = `${x},${y}`;
-                  const snakeIndex = snakeCells.get(key);
-                  const isFood = game.food?.x === x && game.food?.y === y;
-
-                  let cellClassName = "bg-muted/70";
-                  if (typeof snakeIndex === "number") {
-                    cellClassName = snakeIndex === 0 ? "bg-primary" : "bg-primary/75";
-                  } else if (isFood) {
-                    cellClassName = "bg-destructive";
-                  }
-
-                  return (
-                    <div
-                      key={key}
-                      className={`aspect-square rounded-[2px] ${cellClassName}`}
-                      aria-hidden="true"
-                    />
-                  );
-                })}
+                {phase === "over" ? "↺ play again" : "▶ start"}
+              </button>
+              <div className="text-xs text-primary/30">
+                arrows / WASD to steer · space to start
               </div>
             </div>
-
-            <div className="space-y-4">
-              <div className="rounded-xl border border-primary/30 bg-background/70 p-4">
-                <div className="flex flex-wrap gap-3">
-                  <Button
-                    className="font-mono flex-1 min-w-[120px]"
-                    disabled={game.status === "game_over"}
-                    onClick={() => setGame((current) => togglePause(current))}
-                  >
-                    {game.status === "game_over" ? (
-                      <>
-                        <Pause className="mr-2" />
-                        Game over
-                      </>
-                    ) : game.status === "paused" ? (
-                      <>
-                        <Play className="mr-2" />
-                        Resume
-                      </>
-                    ) : (
-                      <>
-                        <Pause className="mr-2" />
-                        Pause
-                      </>
-                    )}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="font-mono terminal-border text-primary border-primary flex-1 min-w-[120px]"
-                    onClick={() => setGame((current) => restartGame(current))}
-                  >
-                    <RotateCcw className="mr-2" />
-                    Restart
-                  </Button>
-                </div>
-              </div>
-
-              <div className="rounded-xl border border-primary/30 bg-background/70 p-4">
-                <h2 className="text-sm font-mono text-primary mb-3">CONTROLS</h2>
-                <div className="grid grid-cols-3 gap-2 md:hidden mb-4">
-                  {touchControls.map((control) => (
-                    <Button
-                      key={control.direction}
-                      variant="outline"
-                      className={`font-mono terminal-border text-primary border-primary ${control.className}`}
-                      onClick={() => {
-                        setGame((current) =>
-                          current.status === "game_over" ? current : setDirection(current, control.direction),
-                        );
-                      }}
-                    >
-                      {control.label}
-                    </Button>
-                  ))}
-                </div>
-                <ul className="space-y-2 text-xs text-muted-foreground font-mono">
-                  <li>Arrow keys or WASD to move</li>
-                  <li>Space to pause or resume</li>
-                  <li>Restart after any crash</li>
-                  <li>Walls and self-collisions end the run</li>
-                </ul>
-              </div>
-
-              <div className="rounded-xl border border-primary/30 bg-background/70 p-4">
-                <h2 className="text-sm font-mono text-primary mb-2">PLAY FROM YOUR SITE</h2>
-                <p className="text-xs text-muted-foreground font-mono leading-relaxed">
-                  This game now lives inside the main site, so you can link directly to
-                  {" "}
-                  <span className="text-primary">/snake</span>
-                  {" "}
-                  without adding a separate deployment.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
