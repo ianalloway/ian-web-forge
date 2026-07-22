@@ -25,6 +25,7 @@ const Sort = lazy(() => import("./pages/Sort"));
 const Life = lazy(() => import("./pages/Life"));
 const Boids = lazy(() => import("./pages/Boids"));
 const Path = lazy(() => import("./pages/Path"));
+const Snake = lazy(() => import("./pages/Snake"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -225,6 +226,19 @@ const App = () => (
                   description="Draw walls, move the start and end points, and watch A*, BFS, DFS, and greedy best-first search explore the grid to find a path."
                 />
                 <Path />
+              </>
+            }
+          />
+          <Route
+            path="/snake"
+            element={
+              <>
+                <SEO
+                  title="Snake — classic arcade game"
+                  path="/snake"
+                  description="Play classic snake in the terminal aesthetic: arrows or WASD to steer, speed ramps up as you grow, best score saved locally."
+                />
+                <Snake />
               </>
             }
           />
