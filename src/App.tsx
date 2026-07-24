@@ -53,6 +53,7 @@ const Bandit = lazy(() => import("./pages/Bandit"));
 const Newton = lazy(() => import("./pages/Newton"));
 const Langton = lazy(() => import("./pages/Langton"));
 const CyclicPage = lazy(() => import("./pages/Cyclic"));
+const Turing = lazy(() => import("./pages/Turing"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -112,6 +113,7 @@ const routes = [
   { path: "/newton", Component: Newton, seo: { title: "Newton Fractal — basins of attraction", description: "Newton's method for finding polynomial roots draws a fractal: each point is colored by which root it converges to. Scroll to zoom into the infinitely detailed basin boundaries." } },
   { path: "/langton", Component: Langton, seo: { title: "Langton's Ant — emergence from one rule", description: "Watch Langton's Ant and generalized turmites build order from a single deterministic rule: chaos for thousands of steps, then a spontaneous highway. Pick a rule string over {L,R,U,N} and see wildly different attractors emerge — no randomness." } },
   { path: "/cyclic", Component: CyclicPage, seo: { title: "Cyclic Automaton — spirals from rock-paper-scissors", description: "Griffeath's cyclic cellular automaton: each color is beaten by the next in the cycle and advances when enough neighbors already hold it. From pure noise, the rock-paper-scissors rule self-organizes into rotating spiral waves. Tune states and threshold live." } },
+  { path: "/turing", Component: Turing, seo: { title: "Turing Machine — watch computation from first principles", description: "A single-tape Turing machine with a genuinely two-way infinite tape: step through binary increment, a unary doubler, a palindrome checker, and the 3- and 4-state busy beaver champions, watching the head read, write, and move one transition at a time." } },
   { path: "*", Component: NotFound, seo: { title: "Page not found", noIndex: true } },
 ] satisfies RouteConfig[];
 
