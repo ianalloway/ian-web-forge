@@ -52,6 +52,7 @@ const Spectrum = lazy(() => import("./pages/Spectrum"));
 const Bandit = lazy(() => import("./pages/Bandit"));
 const Newton = lazy(() => import("./pages/Newton"));
 const Langton = lazy(() => import("./pages/Langton"));
+const Huffman = lazy(() => import("./pages/Huffman"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -110,6 +111,7 @@ const routes = [
   { path: "/bandit", Component: Bandit, seo: { title: "Multi-Armed Bandit — exploration vs exploitation", description: "Watch greedy, ε-greedy, UCB1, and Thompson sampling race to find the best arm, with cumulative regret plotted live — the math behind A/B testing and ad allocation." } },
   { path: "/newton", Component: Newton, seo: { title: "Newton Fractal — basins of attraction", description: "Newton's method for finding polynomial roots draws a fractal: each point is colored by which root it converges to. Scroll to zoom into the infinitely detailed basin boundaries." } },
   { path: "/langton", Component: Langton, seo: { title: "Langton's Ant — emergence from one rule", description: "Watch Langton's Ant and generalized turmites build order from a single deterministic rule: chaos for thousands of steps, then a spontaneous highway. Pick a rule string over {L,R,U,N} and see wildly different attractors emerge — no randomness." } },
+  { path: "/huffman", Component: Huffman, seo: { title: "Huffman Coding — build an optimal compression code", description: "Type text and watch Huffman coding build the optimal prefix-free binary code: merge the two rarest symbols, repeat. See the code tree, the per-character bit codes, and the live compression ratio — the algorithm behind ZIP, JPEG, and MP3." } },
   { path: "*", Component: NotFound, seo: { title: "Page not found", noIndex: true } },
 ] satisfies RouteConfig[];
 
