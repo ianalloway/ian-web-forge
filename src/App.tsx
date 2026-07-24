@@ -52,6 +52,7 @@ const Spectrum = lazy(() => import("./pages/Spectrum"));
 const Bandit = lazy(() => import("./pages/Bandit"));
 const Newton = lazy(() => import("./pages/Newton"));
 const Langton = lazy(() => import("./pages/Langton"));
+const Sandpile = lazy(() => import("./pages/Sandpile"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -110,6 +111,7 @@ const routes = [
   { path: "/bandit", Component: Bandit, seo: { title: "Multi-Armed Bandit — exploration vs exploitation", description: "Watch greedy, ε-greedy, UCB1, and Thompson sampling race to find the best arm, with cumulative regret plotted live — the math behind A/B testing and ad allocation." } },
   { path: "/newton", Component: Newton, seo: { title: "Newton Fractal — basins of attraction", description: "Newton's method for finding polynomial roots draws a fractal: each point is colored by which root it converges to. Scroll to zoom into the infinitely detailed basin boundaries." } },
   { path: "/langton", Component: Langton, seo: { title: "Langton's Ant — emergence from one rule", description: "Watch Langton's Ant and generalized turmites build order from a single deterministic rule: chaos for thousands of steps, then a spontaneous highway. Pick a rule string over {L,R,U,N} and see wildly different attractors emerge — no randomness." } },
+  { path: "/sandpile", Component: Sandpile, seo: { title: "Abelian Sandpile — fractals & self-organized criticality", description: "Drop grains of sand: a cell with 4 or more topples one to each neighbor. The same trivial rule builds a fractal from a single pile and, under steady rain, self-organizes to a critical state where one grain can trigger an avalanche of any size." } },
   { path: "*", Component: NotFound, seo: { title: "Page not found", noIndex: true } },
 ] satisfies RouteConfig[];
 
