@@ -52,6 +52,7 @@ const Spectrum = lazy(() => import("./pages/Spectrum"));
 const Bandit = lazy(() => import("./pages/Bandit"));
 const Newton = lazy(() => import("./pages/Newton"));
 const Langton = lazy(() => import("./pages/Langton"));
+const Collatz = lazy(() => import("./pages/Collatz"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -110,6 +111,7 @@ const routes = [
   { path: "/bandit", Component: Bandit, seo: { title: "Multi-Armed Bandit — exploration vs exploitation", description: "Watch greedy, ε-greedy, UCB1, and Thompson sampling race to find the best arm, with cumulative regret plotted live — the math behind A/B testing and ad allocation." } },
   { path: "/newton", Component: Newton, seo: { title: "Newton Fractal — basins of attraction", description: "Newton's method for finding polynomial roots draws a fractal: each point is colored by which root it converges to. Scroll to zoom into the infinitely detailed basin boundaries." } },
   { path: "/langton", Component: Langton, seo: { title: "Langton's Ant — emergence from one rule", description: "Watch Langton's Ant and generalized turmites build order from a single deterministic rule: chaos for thousands of steps, then a spontaneous highway. Pick a rule string over {L,R,U,N} and see wildly different attractors emerge — no randomness." } },
+  { path: "/collatz", Component: Collatz, seo: { title: "Collatz Coral — the 3n+1 conjecture as a growing tree", description: "Draw thousands of Collatz (3n+1) trajectories from a shared root, bending one way at each even step and the other at each odd. The paths merge on their common tails into an organic coral — structure from a conjecture no one has proved. Tune the bend angle and count." } },
   { path: "*", Component: NotFound, seo: { title: "Page not found", noIndex: true } },
 ] satisfies RouteConfig[];
 
