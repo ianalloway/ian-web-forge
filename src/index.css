@@ -341,23 +341,24 @@ body.home-redesign {
   gap: 16px 24px;
 }
 
-.rd-primary-action {
+.rd-site .rd-primary-action {
   display: inline-flex;
   min-height: 48px;
   padding: 0 18px;
   align-items: center;
   gap: 22px;
   background: var(--rd-signal);
-  color: #0b0c0a;
-  font-size: 0.7rem;
+  color: #050605;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 0.9rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  letter-spacing: -0.01em;
   transition: background 160ms ease, transform 160ms ease;
 }
 
-.rd-primary-action:hover {
+.rd-site .rd-primary-action:hover {
   background: #e2ff8c;
+  color: #050605;
   transform: translateY(-2px);
 }
 

@@ -324,7 +324,7 @@ export default function Index() {
               and measured in production.
             </p>
             <div className="rd-hero-actions">
-              <a className="rd-primary-action rd-mono" href="#work">
+              <a className="rd-primary-action" href="#work">
                 Explore the experiments <span aria-hidden="true">↓</span>
               </a>
               <a
