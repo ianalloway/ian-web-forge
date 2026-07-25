@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Ian Alloway — ML Engineer and Data Scientist</title>
+  <desc id="description">A research-desk inspired portfolio card with a calibration trace and the statement systems that make the right call when the data gets noisy.</desc>
+  <defs>
+    <pattern id="grid" width="70" height="70" patternUnits="userSpaceOnUse">
+      <path d="M70 0H0V70" fill="none" stroke="#f3f1e8" stroke-opacity=".055"/>
+    </pattern>
+    <linearGradient id="signal" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#d7ff5f" stop-opacity=".35"/>
+      <stop offset=".45" stop-color="#d7ff5f"/>
+      <stop offset="1" stop-color="#ecffad"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#d7ff5f" stop-opacity=".13"/>
+      <stop offset="1" stop-color="#d7ff5f" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0b0c0a"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <circle cx="978" cy="200" r="330" fill="url(#glow)"/>
+  <rect x="28" y="28" width="1144" height="574" fill="none" stroke="#f3f1e8" stroke-opacity=".14"/>
+
+  <g transform="translate(64 60)">
+    <rect width="54" height="54" rx="7" fill="#11130e" stroke="#d7ff5f"/>
+    <path d="M12 12V43M11 42H44" fill="none" stroke="#747866" stroke-width="1.5"/>
+    <path d="M13 37C19 36 21 31 26 32C31 33 33 25 38 26C42 27 43 18 47 14" fill="none" stroke="#d7ff5f" stroke-width="3" stroke-linecap="square" stroke-linejoin="round"/>
+    <circle cx="47" cy="14" r="3.5" fill="#d7ff5f"/>
+  </g>
+  <text x="138" y="81" fill="#f3f1e8" font-family="'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="-.3">IAN ALLOWAY</text>
+  <text x="138" y="105" fill="#9a9e8c" font-family="'Courier New', monospace" font-size="12" font-weight="700" letter-spacing="1.7">RESEARCH DESK / APPLIED ML</text>
+
+  <text x="64" y="222" fill="#f3f1e8" font-family="'Helvetica Neue', Arial, sans-serif" font-size="78" font-weight="700" letter-spacing="-4">Ian</text>
+  <text x="64" y="304" fill="#f3f1e8" font-family="'Helvetica Neue', Arial, sans-serif" font-size="78" font-weight="700" letter-spacing="-4">Alloway<tspan fill="#d7ff5f">.</tspan></text>
+  <text x="67" y="355" fill="#d7ff5f" font-family="'Courier New', monospace" font-size="15" font-weight="700" letter-spacing="1.8">ML ENGINEER · DATA SCIENTIST · USF M.S. AI</text>
+
+  <g transform="translate(681 80)">
+    <text x="0" y="0" fill="#9a9e8c" font-family="'Courier New', monospace" font-size="12" font-weight="700" letter-spacing="1.5">CALIBRATION TRACE / 01</text>
+    <path d="M0 354V43M0 354H443" fill="none" stroke="#f3f1e8" stroke-opacity=".22"/>
+    <path d="M0 292H443M0 230H443M0 168H443M0 106H443M88 43V354M177 43V354M266 43V354M354 43V354" fill="none" stroke="#f3f1e8" stroke-opacity=".08"/>
+    <path d="M18 335L416 66" fill="none" stroke="#f3f1e8" stroke-opacity=".2" stroke-dasharray="6 10"/>
+    <path d="M18 334C67 322 91 288 132 290C178 293 188 240 233 248C280 257 291 185 334 195C377 205 383 110 416 75" fill="none" stroke="url(#signal)" stroke-width="5"/>
+    <g fill="#0b0c0a" stroke="#d7ff5f" stroke-width="3">
+      <circle cx="18" cy="334" r="6"/>
+      <circle cx="132" cy="290" r="6"/>
+      <circle cx="233" cy="248" r="6"/>
+      <circle cx="334" cy="195" r="6"/>
+    </g>
+    <circle cx="416" cy="75" r="9" fill="#d7ff5f"/>
+    <circle cx="416" cy="75" r="30" fill="none" stroke="#d7ff5f" stroke-opacity=".25"/>
+    <text x="303" y="337" fill="#d7ff5f" font-family="'Helvetica Neue', Arial, sans-serif" font-size="46" font-weight="700" letter-spacing="-2">68.3</text>
+    <text x="303" y="358" fill="#9a9e8c" font-family="'Courier New', monospace" font-size="10" font-weight="700" letter-spacing="1.2">OBSERVED ACCURACY</text>
+  </g>
+
+  <line x1="64" y1="435" x2="1136" y2="435" stroke="#f3f1e8" stroke-opacity=".14"/>
+  <text x="64" y="489" fill="#f3f1e8" font-family="'Helvetica Neue', Arial, sans-serif" font-size="29" font-weight="500" letter-spacing="-.6">Systems that make the right call when the data gets noisy.</text>
+
+  <g transform="translate(64 553)">
+    <circle cx="6" cy="-4" r="5" fill="#d7ff5f"/>
+    <text x="22" y="0" fill="#9a9e8c" font-family="'Courier New', monospace" font-size="13" font-weight="700" letter-spacing="1.4">ianalloway.xyz</text>
+    <text x="1072" y="0" fill="#9a9e8c" text-anchor="end" font-family="'Courier New', monospace" font-size="13" font-weight="700" letter-spacing="1.4">BUILD / TEST / MEASURE</text>
+  </g>
+</svg>

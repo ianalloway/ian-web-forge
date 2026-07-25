@@ -290,7 +290,7 @@ export default function Index() {
 
       <nav className="rd-nav" aria-label="Primary navigation">
         <a className="rd-wordmark" href="#top" aria-label="Ian Alloway, home">
-          <span className="rd-wordmark-mark">IA</span>
+          <img className="rd-wordmark-mark" src="/favicon.svg" alt="" width="32" height="32" />
           <span>Ian Alloway</span>
         </a>
         <div className="rd-nav-links rd-mono">

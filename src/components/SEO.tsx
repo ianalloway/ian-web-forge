@@ -12,7 +12,8 @@ const defaults = {
   title: 'Ian Alloway | ML Engineer & Data Scientist',
   description: 'ML engineer and data scientist building evaluation-first ML systems, sports analytics, dashboards, and developer tools. B.S. Information Science from USF; M.S. Artificial Intelligence in progress at USF.',
   url: 'https://ianalloway.xyz',
-  image: '/og-image.png',
+  image: '/og-research-desk.png',
+  imageAlt: 'Ian Alloway portfolio research desk with a model calibration trace',
   siteName: 'Ian Alloway',
 };
 
@@ -35,6 +36,10 @@ export default function SEO({ title, description, path = '', image, noIndex = fa
       <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={pageDescription} />
       <meta property="og:image" content={pageImage} />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={defaults.imageAlt} />
       <meta property="og:site_name" content={defaults.siteName} />
 
       {/* Twitter */}
@@ -42,6 +47,7 @@ export default function SEO({ title, description, path = '', image, noIndex = fa
       <meta name="twitter:title" content={pageTitle} />
       <meta name="twitter:description" content={pageDescription} />
       <meta name="twitter:image" content={pageImage} />
+      <meta name="twitter:image:alt" content={defaults.imageAlt} />
 
       {/* Structured Data */}
       <script type="application/ld+json">
@@ -77,7 +83,7 @@ export default function SEO({ title, description, path = '', image, noIndex = fa
       <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow'} />
       <meta name="author" content="Ian Alloway" />
       <meta name="keywords" content="Ian Alloway, AI Engineer, Data Scientist, ML Engineer, Machine Learning, Portfolio, USF, Sports Analytics, Model Evaluation, Applied AI, XGBoost, Python, React, FastAPI" />
-      <meta name="theme-color" content="#0f172a" />
+      <meta name="theme-color" content="#0b0c0a" />
     </Helmet>
   );
 }

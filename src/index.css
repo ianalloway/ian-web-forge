@@ -183,15 +183,10 @@ body.home-redesign {
 }
 
 .rd-wordmark-mark {
-  display: grid;
   width: 32px;
   height: 32px;
-  place-items: center;
-  border: 1px solid var(--rd-signal);
-  color: var(--rd-signal);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.66rem;
-  letter-spacing: -0.08em;
+  display: block;
+  flex: 0 0 auto;
 }
 
 .rd-nav-links {
