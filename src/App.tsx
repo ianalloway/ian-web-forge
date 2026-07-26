@@ -54,6 +54,27 @@ const Newton = lazy(() => import("./pages/Newton"));
 const Langton = lazy(() => import("./pages/Langton"));
 const CyclicPage = lazy(() => import("./pages/Cyclic"));
 const Turing = lazy(() => import("./pages/Turing"));
+const Wfc = lazy(() => import("./pages/Wfc"));
+const Mandelbrot = lazy(() => import("./pages/Mandelbrot"));
+const Chaos = lazy(() => import("./pages/Chaos"));
+const Hull = lazy(() => import("./pages/Hull"));
+const Sandpile = lazy(() => import("./pages/Sandpile"));
+const NeuralNet = lazy(() => import("./pages/NeuralNet"));
+const IsingPage = lazy(() => import("./pages/Ising"));
+const Huffman = lazy(() => import("./pages/Huffman"));
+const WatorPage = lazy(() => import("./pages/Wator"));
+const Collatz = lazy(() => import("./pages/Collatz"));
+const TerrainPage = lazy(() => import("./pages/Terrain"));
+const Sudoku = lazy(() => import("./pages/Sudoku"));
+const Metaballs = lazy(() => import("./pages/Metaballs"));
+const Poisson = lazy(() => import("./pages/Poisson"));
+const Mst = lazy(() => import("./pages/Mst"));
+const Cloth = lazy(() => import("./pages/Cloth"));
+const KellySim = lazy(() => import("./pages/KellySim"));
+const FluidPage = lazy(() => import("./pages/Fluid"));
+const Rsa = lazy(() => import("./pages/Rsa"));
+const Cube = lazy(() => import("./pages/Cube"));
+const Raycast = lazy(() => import("./pages/Raycast"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -114,6 +135,27 @@ const routes = [
   { path: "/langton", Component: Langton, seo: { title: "Langton's Ant — emergence from one rule", description: "Watch Langton's Ant and generalized turmites build order from a single deterministic rule: chaos for thousands of steps, then a spontaneous highway. Pick a rule string over {L,R,U,N} and see wildly different attractors emerge — no randomness." } },
   { path: "/cyclic", Component: CyclicPage, seo: { title: "Cyclic Automaton — spirals from rock-paper-scissors", description: "Griffeath's cyclic cellular automaton: each color is beaten by the next in the cycle and advances when enough neighbors already hold it. From pure noise, the rock-paper-scissors rule self-organizes into rotating spiral waves. Tune states and threshold live." } },
   { path: "/turing", Component: Turing, seo: { title: "Turing Machine — watch computation from first principles", description: "A single-tape Turing machine with a genuinely two-way infinite tape: step through binary increment, a unary doubler, a palindrome checker, and the 3- and 4-state busy beaver champions, watching the head read, write, and move one transition at a time." } },
+  { path: "/wfc", Component: Wfc, seo: { title: "Wave Function Collapse — constraint-based circuit generator", description: "Watch Wave Function Collapse solve a tiled circuit board from local adjacency rules alone: the lowest-entropy cell collapses, constraints propagate, and a coherent matrix-green pattern emerges from pure logic." } },
+  { path: "/mandelbrot", Component: Mandelbrot, seo: { title: "Mandelbrot Set — infinite zoom explorer", description: "Explore the Mandelbrot set: z ↦ z² + c iterated, with smooth escape-time coloring and click-to-zoom into the infinitely detailed boundary." } },
+  { path: "/chaos", Component: Chaos, seo: { title: "Chaos Game — fractals from random jumps", description: "Watch a single point hop under randomly chosen affine maps and converge to exact fractals — the Sierpiński triangle, Barnsley fern, Heighway dragon, Lévy C curve, and a fractal spiral." } },
+  { path: "/hull", Component: Hull, seo: { title: "Convex Hull — watch the monotone chain build", description: "Click to drop points and watch Andrew's monotone chain algorithm wrap them in a convex hull step by step — sorting, sweeping, and popping points that would dent the boundary inward." } },
+  { path: "/sandpile", Component: Sandpile, seo: { title: "Abelian Sandpile — fractals & self-organized criticality", description: "Drop grains of sand: a cell with 4 or more topples one to each neighbor. The same trivial rule builds a fractal from a single pile and, under steady rain, self-organizes to a critical state." } },
+  { path: "/neuralnet", Component: NeuralNet, seo: { title: "Neural Network — watch a decision boundary learn", description: "A tiny 2·8·8·1 neural network trains by backpropagation on 2D toy datasets — blobs, circles, XOR, and spirals. Watch the decision boundary bend to fit the data in real time." } },
+  { path: "/ising", Component: IsingPage, seo: { title: "Ising Model — magnetism & the phase transition", description: "A lattice of spins evolved by Metropolis Monte Carlo. Drag the temperature across the critical point Tc≈2.27 and watch magnetic domains freeze out of thermal noise." } },
+  { path: "/huffman", Component: Huffman, seo: { title: "Huffman Coding — build an optimal compression code", description: "Type text and watch Huffman coding build the optimal prefix-free binary code: merge the two rarest symbols, repeat. See the code tree, the per-character bit codes, and the live compression ratio." } },
+  { path: "/wator", Component: WatorPage, seo: { title: "Wa-Tor — predator-prey population cycles", description: "The classic Wa-Tor simulation: fish wander and breed while sharks hunt, breed, and starve without food. Watch the two populations chase each other in Lotka-Volterra boom-and-bust cycles." } },
+  { path: "/collatz", Component: Collatz, seo: { title: "Collatz Coral — the 3n+1 conjecture as a growing tree", description: "Draw thousands of Collatz (3n+1) trajectories from a shared root, bending one way at each even step and the other at each odd. The paths merge on their common tails into an organic coral." } },
+  { path: "/terrain", Component: TerrainPage, seo: { title: "Fractal Terrain — diamond-square heightmaps", description: "Generate procedural terrain with the diamond-square algorithm: seed four corners, set each midpoint to its neighbors' average plus a shrinking random nudge, repeat." } },
+  { path: "/sudoku", Component: Sudoku, seo: { title: "Sudoku Solver — watch backtracking search", description: "Watch a backtracking Sudoku solver think: it places digits that fit, hits dead ends, and backtracks (in red) to try again. Generate easy/medium/hard puzzles and step through the search." } },
+  { path: "/metaballs", Component: Metaballs, seo: { title: "Metaballs — marching-squares iso-contours", description: "Watch organic blobs merge and split as marching squares traces the iso-contour of their combined inverse-square field. Tune the ball count, threshold, and speed." } },
+  { path: "/poisson", Component: Poisson, seo: { title: "Poisson-Disk Sampling — blue noise, no clumping", description: "Watch Bridson's algorithm fill space with blue noise: points placed so none are closer than a set radius, yet with no large gaps — the even spacing behind stippling and dithering." } },
+  { path: "/mst", Component: Mst, seo: { title: "Minimum Spanning Tree — Prim vs Kruskal", description: "Watch Prim's and Kruskal's algorithms build the minimum spanning tree — the cheapest cycle-free web connecting every point. Two very different paths to the same optimal tree." } },
+  { path: "/cloth", Component: Cloth, seo: { title: "Verlet Cloth — position-based physics you can tear", description: "A cloth of point masses held together by distance constraints and integrated with Verlet: drag it, pin corners, crank gravity, and tear the fabric apart." } },
+  { path: "/kellysim", Component: KellySim, seo: { title: "Kelly Bankroll Simulator — full vs fractional Kelly", description: "Monte Carlo hundreds of bankrolls betting the same edge at quarter, half, full, and double Kelly. See the whole distribution on a log scale — median growth, percentiles, risk of ruin, and worst drawdown." } },
+  { path: "/fluid", Component: FluidPage, seo: { title: "Stable Fluids — stir a Navier-Stokes simulation", description: "An interactive real-time fluid solver using Jos Stam's Stable Fluids method: each frame the velocity field is diffused, self-advected, then projected divergence-free. Drag to stir the dye." } },
+  { path: "/rsa", Component: Rsa, seo: { title: "RSA Playground — build a key and break it", description: "Pick two primes, watch RSA build a keypair, encrypt and decrypt by modular exponentiation with the square-and-multiply ladder shown step by step — then factor the modulus to recover the private key. Textbook RSA, for learning only." } },
+  { path: "/cube", Component: Cube, seo: { title: "Pocket Cube Solver — provably optimal 2×2 solutions", description: "Scramble a 2×2×2 Rubik's cube and watch a bidirectional breadth-first search find the shortest solution that exists. No 2×2 position ever needs more than 11 turns." } },
+  { path: "/raycast", Component: Raycast, seo: { title: "Raycaster — pseudo-3D from a flat grid", description: "Walk a maze rendered the Wolfenstein way: one ray per screen column, walked cell by cell through a 2D grid with a digital differential analyser. No 3D geometry involved." } },
   { path: "*", Component: NotFound, seo: { title: "Page not found", noIndex: true } },
 ] satisfies RouteConfig[];
 
