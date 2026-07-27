@@ -45,8 +45,8 @@ jobs:
         run: |
           echo "## Read-only probe of https://$TARGET" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "| Path | GET status | Declares form |" >> "$GITHUB_STEP_SUMMARY"
-          echo "|---|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Path | GET status | Declares form | Served as |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|---|---|" >> "$GITHUB_STEP_SUMMARY"
 
           for path in "/" "/__forms.html"; do
             code=$(curl -s -o /tmp/body -w "%{http_code}" --max-time 20 "https://$TARGET$path" || echo "000")
@@ -55,8 +55,16 @@ jobs:
             else
               declares="no"
             fi
-            echo "| \`$path\` | $code | $declares |" >> "$GITHUB_STEP_SUMMARY"
-            echo "GET $path -> $code (declares form: $declares)"
+            # public/__forms.html contains no #root mount point, so a body
+            # carrying one means the catch-all rewrite served the app shell
+            # instead of the real file — i.e. the file is not deployed here.
+            if grep -q 'id="root"' /tmp/body 2>/dev/null; then
+              served="app shell (rewrite)"
+            else
+              served="real file"
+            fi
+            echo "| \`$path\` | $code | $declares | $served |" >> "$GITHUB_STEP_SUMMARY"
+            echo "GET $path -> $code (declares form: $declares, served as: $served)"
           done
 
       - name: Live submission (opt-in)
@@ -99,13 +107,23 @@ jobs:
               --data-urlencode "referrer=" \
               --data-urlencode "user_agent=github-actions-form-check" || echo "000")
 
+            # Three things the response can be, and only one means "recorded":
+            #   app shell        -> the catch-all rewrite answered
+            #   the spacer file  -> Netlify served __forms.html as a static file
+            #   anything else    -> the form handler answered (normally a 303)
             if grep -q 'id="root"' /tmp/resp 2>/dev/null; then
               shape="app shell (SPA rewrite)"
+            elif grep -q 'Form declarations' /tmp/resp 2>/dev/null; then
+              shape="the __forms.html spacer served as a static file"
             else
-              shape="not the app shell"
+              shape="neither shell nor spacer — likely the form handler"
             fi
 
             echo "POST $path -> $code [$shape]"
+            echo "--- response headers ---"
+            cat /tmp/hdr
+            echo "--- first 300 bytes of body ---"
+            head -c 300 /tmp/resp; echo
             echo "- \`POST $path\` -> **$code** — response body is $shape" \
               >> "$GITHUB_STEP_SUMMARY"
             echo "" >> "$GITHUB_STEP_SUMMARY"
@@ -120,7 +138,7 @@ jobs:
             # An app-shell body means the rewrite answered, not the handler —
             # keep going rather than reporting a false positive.
             if [ "$code" != "404" ] && [ "$code" != "405" ] \
-               && [ "$shape" != "app shell (SPA rewrite)" ]; then
+               && [ "$shape" = "neither shell nor spacer — likely the form handler" ]; then
               echo "Stopping at $path (no duplicate entry)."
               echo "" >> "$GITHUB_STEP_SUMMARY"
               echo "Stopped at \`$path\`. Confirm delivery by searching for" \
