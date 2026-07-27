@@ -1,0 +1,106 @@
+name: Newsletter form check
+
+# Verifies the live Netlify Forms wiring for the newsletter signup.
+#
+# The read-only probe runs on demand and creates no submissions. The live
+# submission is opt-in, because every successful POST lands a real entry in the
+# Netlify Forms dashboard.
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Host to check"
+        required: true
+        default: "ianalloway.xyz"
+      submit:
+        description: "Send a real signup (creates a Netlify Forms entry)"
+        type: boolean
+        required: true
+        default: false
+  push:
+    branches: ["claude/**"]
+    paths:
+      - ".github/workflows/form-check.yml"
+      - "src/lib/newsletter.ts"
+      - "public/__forms.html"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    name: Probe form wiring
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve target
+        id: cfg
+        run: |
+          TARGET="${{ github.event.inputs.target }}"
+          echo "target=${TARGET:-ianalloway.xyz}" >> "$GITHUB_OUTPUT"
+
+      - name: Read-only probe (no submission)
+        env:
+          TARGET: ${{ steps.cfg.outputs.target }}
+        run: |
+          echo "## Read-only probe of https://$TARGET" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Path | GET status | Declares form |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|---|" >> "$GITHUB_STEP_SUMMARY"
+
+          for path in "/" "/__forms.html"; do
+            code=$(curl -s -o /tmp/body -w "%{http_code}" --max-time 20 "https://$TARGET$path" || echo "000")
+            if grep -q "ianalloway-newsletter" /tmp/body 2>/dev/null; then
+              declares="yes"
+            else
+              declares="no"
+            fi
+            echo "| \`$path\` | $code | $declares |" >> "$GITHUB_STEP_SUMMARY"
+            echo "GET $path -> $code (declares form: $declares)"
+          done
+
+      - name: Live submission (opt-in)
+        if: github.event_name == 'workflow_dispatch' && inputs.submit
+        env:
+          TARGET: ${{ steps.cfg.outputs.target }}
+        run: |
+          TOKEN=$(openssl rand -hex 6)
+          EMAIL="formtest+${TOKEN}@example.com"
+
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "## Live submission" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Token \`$TOKEN\` — search for it at" \
+            "https://app.netlify.com/projects/ianalloway/forms" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+
+          # Mirror the client's fallback order so at most ONE entry is created.
+          for path in "/" "/__forms.html"; do
+            code=$(curl -s -o /tmp/resp -w "%{http_code}" --max-time 25 \
+              -X POST "https://$TARGET$path" \
+              -H "Content-Type: application/x-www-form-urlencoded" \
+              --data-urlencode "form-name=ianalloway-newsletter" \
+              --data-urlencode "bot-field=" \
+              --data-urlencode "email=${EMAIL}" \
+              --data-urlencode "name=CI form check" \
+              --data-urlencode "source=github-actions" \
+              --data-urlencode "site=${TARGET}" \
+              --data-urlencode "page_url=https://${TARGET}/" \
+              --data-urlencode "referrer=" \
+              --data-urlencode "user_agent=github-actions-form-check" || echo "000")
+
+            echo "POST $path -> $code"
+            echo "- \`POST $path\` -> **$code**" >> "$GITHUB_STEP_SUMMARY"
+
+            if [ "$code" != "404" ] && [ "$code" != "405" ]; then
+              echo "Handler answered at $path; stopping (no duplicate entry)."
+              echo "" >> "$GITHUB_STEP_SUMMARY"
+              echo "Handler answered at \`$path\`." >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+          done
+
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "**No form handler at any path** — Netlify never detected the form." \
+            >> "$GITHUB_STEP_SUMMARY"
+          exit 1
