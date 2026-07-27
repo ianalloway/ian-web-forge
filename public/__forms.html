@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex" />
+    <title>Form declarations</title>
+  </head>
+  <body>
+    <!--
+      Netlify's form detection scans every HTML file in the publish directory at
+      deploy time. Declaring the newsletter form here as well as in index.html
+      gives detection a plain, bundler-untouched file to find it in, and gives
+      the client a POST target that is a real file on disk — so it is never
+      served by the SPA rewrite in netlify.toml (`/* -> /index.html 200`).
+
+      Keep these fields in sync with src/lib/newsletter.ts. Netlify only stores
+      fields that are declared here.
+    -->
+    <form
+      name="ianalloway-newsletter"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      hidden
+    >
+      <input type="hidden" name="form-name" value="ianalloway-newsletter" />
+      <input type="text" name="bot-field" />
+      <input type="email" name="email" />
+      <input type="text" name="name" />
+      <input type="text" name="site" />
+      <input type="text" name="source" />
+      <input type="text" name="page_url" />
+      <input type="text" name="referrer" />
+      <input type="text" name="user_agent" />
+    </form>
+  </body>
+</html>

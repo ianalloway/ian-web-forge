@@ -8,11 +8,27 @@ interface SubscribeResult {
   message: string;
 }
 
-/** Must match the hidden spacer form declared in index.html. */
+/** Must match the spacer forms in index.html and public/__forms.html. */
 export const NEWSLETTER_FORM_NAME = "ianalloway-newsletter";
 
 /** Netlify processes form POSTs at the spacer form's action path. */
 export const NEWSLETTER_FORM_ACTION = "/";
+
+/**
+ * Where the POST is attempted, in order.
+ *
+ * "/__forms.html" goes first deliberately. It is a real file in the publish
+ * directory, so Netlify serves it directly instead of applying the catch-all
+ * rewrite, and its status code is therefore truthful: the form handler answers,
+ * or it does not. "/" is the opposite — the rewrite in netlify.toml
+ * (`/* -> /index.html 200`) answers *any* path with the app shell and a 200,
+ * confirmed by probing a path that does not exist on the deployed site.
+ *
+ * Ordering them the other way round makes the fallback dead code: "/" would
+ * never return the 404/405 that triggers falling through, so the second path
+ * would never be tried.
+ */
+const SUBMIT_PATHS = ["/__forms.html", NEWSLETTER_FORM_ACTION] as const;
 
 /** Honeypot field name declared via `netlify-honeypot` on the spacer form. */
 export const NEWSLETTER_HONEYPOT = "bot-field";
@@ -48,10 +64,32 @@ function buildPayload(email: string, name: string): URLSearchParams {
   return payload;
 }
 
+/** A 404/405 means there is no Netlify form handler at that path. */
+function isMissingHandler(status: number): boolean {
+  return status === 404 || status === 405;
+}
+
+/** Netlify redirects to the success page once it accepts a submission. */
+function isRedirect(status: number): boolean {
+  return status >= 300 && status < 400;
+}
+
+/**
+ * The mount point in index.html. Its presence in a POST response means the SPA
+ * rewrite served the app shell — i.e. nothing handled the submission.
+ *
+ * Measured against production: `POST /` returns 200 with this marker in the
+ * body, which is why status alone cannot be trusted to mean "recorded".
+ */
+const APP_SHELL_MARKER = 'id="root"';
+
 /**
  * Submits the newsletter signup to the Netlify Forms "ianalloway-newsletter"
- * spacer declared in index.html. No backend required — Netlify captures the
- * submission and notifies via the site's configured email.
+ * spacer. No backend required — Netlify captures the submission and notifies
+ * via the site's configured email.
+ *
+ * Tries each path in SUBMIT_PATHS until one is served by the form handler, so
+ * the signup lands whether detection picked up index.html or __forms.html.
  */
 export async function subscribeToNewsletter(
   input: SubscribeInput,
@@ -68,36 +106,63 @@ export async function subscribeToNewsletter(
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), SUBMIT_TIMEOUT_MS);
+  const body = buildPayload(email, name).toString();
 
   try {
-    const response = await fetch(NEWSLETTER_FORM_ACTION, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: buildPayload(email, name).toString(),
-      signal: controller.signal,
-    });
+    let lastStatus = 0;
 
-    // The SPA rewrite (`/* -> /index.html 200`) answers any POST with the app
-    // shell, so a 200 alone does not prove Netlify recorded anything. When the
-    // form handler is absent — local dev, or a deploy where form detection
-    // failed — the request 404/405s instead of being accepted.
-    if (response.status === 404 || response.status === 405) {
+    for (const path of SUBMIT_PATHS) {
+      const response = await fetch(path, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body,
+        // Netlify answers an accepted submission with a 303 to the success
+        // page. Not following it keeps that redirect visible as proof the form
+        // handler ran; following it would land on the app shell and look
+        // identical to the rewrite swallowing the POST.
+        redirect: "manual",
+        signal: controller.signal,
+      });
+      lastStatus = response.status;
+
+      // A redirect (surfaced as an opaque response under redirect: "manual")
+      // only comes from the form handler — the rewrite is a 200, not a 3xx.
+      if (response.type === "opaqueredirect" || isRedirect(response.status)) {
+        return {
+          success: true,
+          message: `You're on the list — I'll email new posts to ${email}.`,
+        };
+      }
+
+      if (isMissingHandler(response.status)) continue;
+
+      if (!response.ok) {
+        return {
+          success: false,
+          message: "Unable to save your signup. Please try again.",
+        };
+      }
+
+      // A 200 whose body is the app shell is the SPA rewrite answering, not the
+      // form handler. Treating it as success is what made failed signups look
+      // like they worked.
+      if ((await response.text()).includes(APP_SHELL_MARKER)) continue;
+
       return {
-        success: false,
-        message: "Signups aren't available right now. Email ian@allowayllc.com instead.",
+        success: true,
+        message: `You're on the list — I'll email new posts to ${email}.`,
       };
     }
 
-    if (!response.ok) {
-      return {
-        success: false,
-        message: "Unable to save your signup. Please try again.",
-      };
-    }
-
+    // No path was served by the form handler — Netlify has not detected the
+    // form, and a signup posted here would go nowhere.
+    console.warn(
+      `[newsletter] no Netlify form handler found (last status ${lastStatus}); ` +
+        `tried ${SUBMIT_PATHS.join(", ")}`,
+    );
     return {
-      success: true,
-      message: `You're on the list — I'll email new posts to ${email}.`,
+      success: false,
+      message: "Signups aren't available right now. Email ian@allowayllc.com instead.",
     };
   } catch (error) {
     if (error instanceof DOMException && error.name === "AbortError") {
