@@ -75,6 +75,9 @@ const FluidPage = lazy(() => import("./pages/Fluid"));
 const Rsa = lazy(() => import("./pages/Rsa"));
 const Cube = lazy(() => import("./pages/Cube"));
 const Raycast = lazy(() => import("./pages/Raycast"));
+const Regex = lazy(() => import("./pages/Regex"));
+const EditDistance = lazy(() => import("./pages/EditDistance"));
+const Bloom = lazy(() => import("./pages/Bloom"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -156,6 +159,9 @@ const routes = [
   { path: "/rsa", Component: Rsa, seo: { title: "RSA Playground — build a key and break it", description: "Pick two primes, watch RSA build a keypair, encrypt and decrypt by modular exponentiation with the square-and-multiply ladder shown step by step — then factor the modulus to recover the private key. Textbook RSA, for learning only." } },
   { path: "/cube", Component: Cube, seo: { title: "Pocket Cube Solver — provably optimal 2×2 solutions", description: "Scramble a 2×2×2 Rubik's cube and watch a bidirectional breadth-first search find the shortest solution that exists. No 2×2 position ever needs more than 11 turns." } },
   { path: "/raycast", Component: Raycast, seo: { title: "Raycaster — pseudo-3D from a flat grid", description: "Walk a maze rendered the Wolfenstein way: one ray per screen column, walked cell by cell through a 2D grid with a digital differential analyser. No 3D geometry involved." } },
+  { path: "/regex", Component: Regex, seo: { title: "Regex Engine — pattern to NFA to DFA", description: "Watch a regular expression compile the textbook way: parsed into a syntax tree, converted to an NFA by Thompson's construction, then determinised by subset construction. Step through the DFA character by character — no backtracking, linear time." } },
+  { path: "/editdistance", Component: EditDistance, seo: { title: "Edit Distance — the dynamic programming table", description: "See Levenshtein distance computed by the Wagner-Fischer dynamic program: every cell asks whether substituting, inserting, or deleting is cheaper, and the traceback reveals the cheapest edit script turning one word into another." } },
+  { path: "/bloom", Component: Bloom, seo: { title: "Bloom Filter — a set that can only lie one way", description: "An interactive Bloom filter: adding a word sets k bits, checking reads the same k. One clear bit proves absence, so false negatives are impossible — but collisions cause false positives. Measure the real rate against the theoretical formula." } },
   { path: "*", Component: NotFound, seo: { title: "Page not found", noIndex: true } },
 ] satisfies RouteConfig[];
 
