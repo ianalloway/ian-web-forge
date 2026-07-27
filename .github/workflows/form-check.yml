@@ -60,7 +60,12 @@ jobs:
           done
 
       - name: Live submission (opt-in)
-        if: github.event_name == 'workflow_dispatch' && inputs.submit
+        # Also runs from a push whose commit message carries [form-submit],
+        # since workflow_dispatch is only available once this file reaches the
+        # default branch.
+        if: >-
+          (github.event_name == 'workflow_dispatch' && inputs.submit) ||
+          contains(github.event.head_commit.message, '[form-submit]')
         env:
           TARGET: ${{ steps.cfg.outputs.target }}
         run: |
