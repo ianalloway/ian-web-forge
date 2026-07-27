@@ -69,6 +69,20 @@ function isMissingHandler(status: number): boolean {
   return status === 404 || status === 405;
 }
 
+/** Netlify redirects to the success page once it accepts a submission. */
+function isRedirect(status: number): boolean {
+  return status >= 300 && status < 400;
+}
+
+/**
+ * The mount point in index.html. Its presence in a POST response means the SPA
+ * rewrite served the app shell — i.e. nothing handled the submission.
+ *
+ * Measured against production: `POST /` returns 200 with this marker in the
+ * body, which is why status alone cannot be trusted to mean "recorded".
+ */
+const APP_SHELL_MARKER = 'id="root"';
+
 /**
  * Submits the newsletter signup to the Netlify Forms "ianalloway-newsletter"
  * spacer. No backend required — Netlify captures the submission and notifies
@@ -102,14 +116,24 @@ export async function subscribeToNewsletter(
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body,
+        // Netlify answers an accepted submission with a 303 to the success
+        // page. Not following it keeps that redirect visible as proof the form
+        // handler ran; following it would land on the app shell and look
+        // identical to the rewrite swallowing the POST.
+        redirect: "manual",
         signal: controller.signal,
       });
       lastStatus = response.status;
 
-      // Note: the SPA rewrite answers any POST to "/" with the app shell, so a
-      // 200 is not by itself proof Netlify recorded the submission — only that
-      // nothing rejected it. A missing handler does surface as 404/405, which
-      // is what makes falling through to the next path worthwhile.
+      // A redirect (surfaced as an opaque response under redirect: "manual")
+      // only comes from the form handler — the rewrite is a 200, not a 3xx.
+      if (response.type === "opaqueredirect" || isRedirect(response.status)) {
+        return {
+          success: true,
+          message: `You're on the list — I'll email new posts to ${email}.`,
+        };
+      }
+
       if (isMissingHandler(response.status)) continue;
 
       if (!response.ok) {
@@ -119,13 +143,19 @@ export async function subscribeToNewsletter(
         };
       }
 
+      // A 200 whose body is the app shell is the SPA rewrite answering, not the
+      // form handler. Treating it as success is what made failed signups look
+      // like they worked.
+      if ((await response.text()).includes(APP_SHELL_MARKER)) continue;
+
       return {
         success: true,
         message: `You're on the list — I'll email new posts to ${email}.`,
       };
     }
 
-    // Every candidate path 404/405'd — the form handler is not deployed at all.
+    // No path was served by the form handler — Netlify has not detected the
+    // form, and a signup posted here would go nowhere.
     console.warn(
       `[newsletter] no Netlify form handler found (last status ${lastStatus}); ` +
         `tried ${SUBMIT_PATHS.join(", ")}`,

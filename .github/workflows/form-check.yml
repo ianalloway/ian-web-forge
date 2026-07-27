@@ -85,7 +85,7 @@ jobs:
           # which is the signature of the rewrite rather than the handler.
           #
           # Mirror the client's fallback order so at most ONE entry is created.
-          for path in "/" "/__forms.html"; do
+          for path in "/__forms.html" "/"; do
             code=$(curl -s -o /tmp/resp -D /tmp/hdr -w "%{http_code}" --max-time 25 \
               -X POST "https://$TARGET$path" \
               -H "Content-Type: application/x-www-form-urlencoded" \
@@ -117,7 +117,10 @@ jobs:
             echo '```' >> "$GITHUB_STEP_SUMMARY"
             echo "</details>" >> "$GITHUB_STEP_SUMMARY"
 
-            if [ "$code" != "404" ] && [ "$code" != "405" ]; then
+            # An app-shell body means the rewrite answered, not the handler —
+            # keep going rather than reporting a false positive.
+            if [ "$code" != "404" ] && [ "$code" != "405" ] \
+               && [ "$shape" != "app shell (SPA rewrite)" ]; then
               echo "Stopping at $path (no duplicate entry)."
               echo "" >> "$GITHUB_STEP_SUMMARY"
               echo "Stopped at \`$path\`. Confirm delivery by searching for" \
