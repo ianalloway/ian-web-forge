@@ -15,14 +15,20 @@ export const NEWSLETTER_FORM_NAME = "ianalloway-newsletter";
 export const NEWSLETTER_FORM_ACTION = "/";
 
 /**
- * Where the POST is attempted, in order. "/" is the historical target, but it
- * is covered by the SPA rewrite in netlify.toml, so a deploy whose form
- * detection did not pick up index.html answers with the app shell or a 404
- * rather than the form handler. public/__forms.html is a real file in the
- * publish directory: it is never rewritten, and it declares the same form.
- * Trying both means the signup lands whichever way Netlify wired detection.
+ * Where the POST is attempted, in order.
+ *
+ * "/__forms.html" goes first deliberately. It is a real file in the publish
+ * directory, so Netlify serves it directly instead of applying the catch-all
+ * rewrite, and its status code is therefore truthful: the form handler answers,
+ * or it does not. "/" is the opposite — the rewrite in netlify.toml
+ * (`/* -> /index.html 200`) answers *any* path with the app shell and a 200,
+ * confirmed by probing a path that does not exist on the deployed site.
+ *
+ * Ordering them the other way round makes the fallback dead code: "/" would
+ * never return the 404/405 that triggers falling through, so the second path
+ * would never be tried.
  */
-const SUBMIT_PATHS = [NEWSLETTER_FORM_ACTION, "/__forms.html"] as const;
+const SUBMIT_PATHS = ["/__forms.html", NEWSLETTER_FORM_ACTION] as const;
 
 /** Honeypot field name declared via `netlify-honeypot` on the spacer form. */
 export const NEWSLETTER_HONEYPOT = "bot-field";

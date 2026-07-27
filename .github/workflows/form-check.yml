@@ -74,9 +74,14 @@ jobs:
             "https://app.netlify.com/projects/ianalloway/forms" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
 
+          # A 200 does not prove the form handler answered: the SPA rewrite
+          # (`/* -> /index.html 200`) serves the app shell for any path. So
+          # record the status AND whether the body came back as the app shell,
+          # which is the signature of the rewrite rather than the handler.
+          #
           # Mirror the client's fallback order so at most ONE entry is created.
           for path in "/" "/__forms.html"; do
-            code=$(curl -s -o /tmp/resp -w "%{http_code}" --max-time 25 \
+            code=$(curl -s -o /tmp/resp -D /tmp/hdr -w "%{http_code}" --max-time 25 \
               -X POST "https://$TARGET$path" \
               -H "Content-Type: application/x-www-form-urlencoded" \
               --data-urlencode "form-name=ianalloway-newsletter" \
@@ -89,13 +94,30 @@ jobs:
               --data-urlencode "referrer=" \
               --data-urlencode "user_agent=github-actions-form-check" || echo "000")
 
-            echo "POST $path -> $code"
-            echo "- \`POST $path\` -> **$code**" >> "$GITHUB_STEP_SUMMARY"
+            if grep -q 'id="root"' /tmp/resp 2>/dev/null; then
+              shape="app shell (SPA rewrite)"
+            else
+              shape="not the app shell"
+            fi
+
+            echo "POST $path -> $code [$shape]"
+            echo "- \`POST $path\` -> **$code** — response body is $shape" \
+              >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "<details><summary>Response headers for \`$path\`</summary>" \
+              >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            cat /tmp/hdr >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            echo "</details>" >> "$GITHUB_STEP_SUMMARY"
 
             if [ "$code" != "404" ] && [ "$code" != "405" ]; then
-              echo "Handler answered at $path; stopping (no duplicate entry)."
+              echo "Stopping at $path (no duplicate entry)."
               echo "" >> "$GITHUB_STEP_SUMMARY"
-              echo "Handler answered at \`$path\`." >> "$GITHUB_STEP_SUMMARY"
+              echo "Stopped at \`$path\`. Confirm delivery by searching for" \
+                "\`$TOKEN\` in the Netlify Forms dashboard — that is the only" \
+                "definitive proof the submission was recorded." >> "$GITHUB_STEP_SUMMARY"
               exit 0
             fi
           done
