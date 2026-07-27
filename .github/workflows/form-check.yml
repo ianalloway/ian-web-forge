@@ -45,8 +45,8 @@ jobs:
         run: |
           echo "## Read-only probe of https://$TARGET" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "| Path | GET status | Declares form |" >> "$GITHUB_STEP_SUMMARY"
-          echo "|---|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Path | GET status | Declares form | Served as |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|---|---|" >> "$GITHUB_STEP_SUMMARY"
 
           for path in "/" "/__forms.html"; do
             code=$(curl -s -o /tmp/body -w "%{http_code}" --max-time 20 "https://$TARGET$path" || echo "000")
@@ -55,8 +55,16 @@ jobs:
             else
               declares="no"
             fi
-            echo "| \`$path\` | $code | $declares |" >> "$GITHUB_STEP_SUMMARY"
-            echo "GET $path -> $code (declares form: $declares)"
+            # public/__forms.html contains no #root mount point, so a body
+            # carrying one means the catch-all rewrite served the app shell
+            # instead of the real file — i.e. the file is not deployed here.
+            if grep -q 'id="root"' /tmp/body 2>/dev/null; then
+              served="app shell (rewrite)"
+            else
+              served="real file"
+            fi
+            echo "| \`$path\` | $code | $declares | $served |" >> "$GITHUB_STEP_SUMMARY"
+            echo "GET $path -> $code (declares form: $declares, served as: $served)"
           done
 
       - name: Live submission (opt-in)
