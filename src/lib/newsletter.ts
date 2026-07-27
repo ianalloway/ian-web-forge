@@ -8,11 +8,21 @@ interface SubscribeResult {
   message: string;
 }
 
-/** Must match the hidden spacer form declared in index.html. */
+/** Must match the spacer forms in index.html and public/__forms.html. */
 export const NEWSLETTER_FORM_NAME = "ianalloway-newsletter";
 
 /** Netlify processes form POSTs at the spacer form's action path. */
 export const NEWSLETTER_FORM_ACTION = "/";
+
+/**
+ * Where the POST is attempted, in order. "/" is the historical target, but it
+ * is covered by the SPA rewrite in netlify.toml, so a deploy whose form
+ * detection did not pick up index.html answers with the app shell or a 404
+ * rather than the form handler. public/__forms.html is a real file in the
+ * publish directory: it is never rewritten, and it declares the same form.
+ * Trying both means the signup lands whichever way Netlify wired detection.
+ */
+const SUBMIT_PATHS = [NEWSLETTER_FORM_ACTION, "/__forms.html"] as const;
 
 /** Honeypot field name declared via `netlify-honeypot` on the spacer form. */
 export const NEWSLETTER_HONEYPOT = "bot-field";
@@ -48,10 +58,18 @@ function buildPayload(email: string, name: string): URLSearchParams {
   return payload;
 }
 
+/** A 404/405 means there is no Netlify form handler at that path. */
+function isMissingHandler(status: number): boolean {
+  return status === 404 || status === 405;
+}
+
 /**
  * Submits the newsletter signup to the Netlify Forms "ianalloway-newsletter"
- * spacer declared in index.html. No backend required — Netlify captures the
- * submission and notifies via the site's configured email.
+ * spacer. No backend required — Netlify captures the submission and notifies
+ * via the site's configured email.
+ *
+ * Tries each path in SUBMIT_PATHS until one is served by the form handler, so
+ * the signup lands whether detection picked up index.html or __forms.html.
  */
 export async function subscribeToNewsletter(
   input: SubscribeInput,
@@ -68,36 +86,47 @@ export async function subscribeToNewsletter(
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), SUBMIT_TIMEOUT_MS);
+  const body = buildPayload(email, name).toString();
 
   try {
-    const response = await fetch(NEWSLETTER_FORM_ACTION, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: buildPayload(email, name).toString(),
-      signal: controller.signal,
-    });
+    let lastStatus = 0;
 
-    // The SPA rewrite (`/* -> /index.html 200`) answers any POST with the app
-    // shell, so a 200 alone does not prove Netlify recorded anything. When the
-    // form handler is absent — local dev, or a deploy where form detection
-    // failed — the request 404/405s instead of being accepted.
-    if (response.status === 404 || response.status === 405) {
+    for (const path of SUBMIT_PATHS) {
+      const response = await fetch(path, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body,
+        signal: controller.signal,
+      });
+      lastStatus = response.status;
+
+      // Note: the SPA rewrite answers any POST to "/" with the app shell, so a
+      // 200 is not by itself proof Netlify recorded the submission — only that
+      // nothing rejected it. A missing handler does surface as 404/405, which
+      // is what makes falling through to the next path worthwhile.
+      if (isMissingHandler(response.status)) continue;
+
+      if (!response.ok) {
+        return {
+          success: false,
+          message: "Unable to save your signup. Please try again.",
+        };
+      }
+
       return {
-        success: false,
-        message: "Signups aren't available right now. Email ian@allowayllc.com instead.",
+        success: true,
+        message: `You're on the list — I'll email new posts to ${email}.`,
       };
     }
 
-    if (!response.ok) {
-      return {
-        success: false,
-        message: "Unable to save your signup. Please try again.",
-      };
-    }
-
+    // Every candidate path 404/405'd — the form handler is not deployed at all.
+    console.warn(
+      `[newsletter] no Netlify form handler found (last status ${lastStatus}); ` +
+        `tried ${SUBMIT_PATHS.join(", ")}`,
+    );
     return {
-      success: true,
-      message: `You're on the list — I'll email new posts to ${email}.`,
+      success: false,
+      message: "Signups aren't available right now. Email ian@allowayllc.com instead.",
     };
   } catch (error) {
     if (error instanceof DOMException && error.name === "AbortError") {
