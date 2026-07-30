@@ -35,14 +35,14 @@ const PROJECTS: Project[] = [
   {
     number: "02",
     label: "Sports intelligence",
-    title: "The NBA decision stack",
+    title: "AI Advantage",
     description:
-      "Ratings, win probabilities, calibration, closing-line evaluation, and Kelly sizing—built as one inspectable path from raw games to a decision.",
-    proof: "XGBoost models, nba-edge on PyPI, and an evaluation dashboard built to expose failure.",
+      "Live sports decision desk: model-backed picks, Kelly sizing, portfolio risk, and closing-line evaluation—shipped as a real product surface.",
+    proof: "Built on nba-ratings (PyPI: nba-edge), kelly-js, and the sports-betting-ml training stack.",
     metric: "68.3%",
     metricLabel: "recorded model accuracy",
     visual: "sports",
-    code: "https://github.com/ianalloway/sports-betting-ml",
+    code: "https://github.com/ianalloway/ai-advantage",
     live: "https://aiadvantagesports.com",
     liveLabel: "Open AI Advantage",
   },
@@ -80,16 +80,16 @@ const OPEN_SOURCE = [
     href: "https://github.com/ianalloway/matrix-rain",
   },
   {
-    name: "onchain-risk-scanner",
+    name: "evm-sentry",
     kind: "Python",
-    description: "Read-only proxy, upgrade, and contract-risk timelines.",
-    href: "https://github.com/ianalloway/onchain-risk-scanner",
+    description: "On-chain anomaly and honeypot signal scanner for Base/Ethereum.",
+    href: "https://github.com/ianalloway/evm-sentry",
   },
   {
-    name: "repo-health",
-    kind: "CLI",
-    description: "Scores maintenance signals, docs, licensing, CI, and staleness.",
-    href: "https://github.com/ianalloway/oss-archive/tree/archive/repo-health",
+    name: "sports-betting-ml",
+    kind: "Python",
+    description: "NBA/NFL training stack — XGBoost, ensembles, evaluation harness.",
+    href: "https://github.com/ianalloway/sports-betting-ml",
   },
 ];
 

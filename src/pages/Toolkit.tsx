@@ -101,9 +101,9 @@ const CORE_SECTION: CatalogSection = {
       oneLine: 'Audit LLM-as-judge pipelines — bias, calibration, panels',
     },
     {
-      name: 'onchain-risk-scanner',
-      href: 'https://github.com/ianalloway/onchain-risk-scanner',
-      oneLine: 'EVM contract risk, proxy, and upgrade timeline scanner',
+      name: 'matrix-rain',
+      href: 'https://github.com/ianalloway/matrix-rain',
+      oneLine: 'Retina-aware Matrix digital rain React component',
     },
     {
       name: 'evm-sentry',
