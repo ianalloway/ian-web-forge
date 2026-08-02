@@ -130,11 +130,6 @@ const CORE_SECTION: CatalogSection = {
       href: 'https://github.com/ianalloway/ianalloway',
       oneLine: 'Profile README (this account’s landing page)',
     },
-    {
-      name: 'oss-archive',
-      href: 'https://github.com/ianalloway/oss-archive',
-      oneLine: 'Frozen default-branch snapshots: archive/<repo> for retired public OSS',
-    },
   ],
 };
 
@@ -235,7 +230,7 @@ const Toolkit = () => {
             Sports analytics &amp; GitHub tools
           </h1>
           <p className="text-muted-foreground font-mono text-sm max-w-2xl mx-auto mb-2">
-            Active repos below (eight). Retired public OSS is preserved as branches on{' '}
+            Active repos below (twelve). Retired public OSS is preserved as branches on{' '}
             <a
               href="https://github.com/ianalloway/oss-archive"
               target="_blank"
