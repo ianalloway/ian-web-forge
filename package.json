@@ -28,6 +28,7 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
+    "check:forms": "node scripts/check-netlify-forms.mjs",
     "test": "eslint . && tsc --noEmit"
   },
   "dependencies": {
