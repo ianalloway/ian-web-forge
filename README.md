@@ -2,7 +2,9 @@
 
 # ian-web-forge
 
-Matrix-themed developer portfolio — ML, sports analytics, AI agents.
+Matrix-themed developer portfolio for **Ian Alloway** — ML, sports analytics, AI agents.
+
+**Homepage:** [ianalloway.xyz](https://ianalloway.xyz)
 
 [![Live Site](https://img.shields.io/badge/live-ianalloway.xyz-5be49b?style=flat-square)](https://ianalloway.xyz)
 [![CI](https://github.com/ianalloway/ian-web-forge/actions/workflows/ci.yml/badge.svg)](https://github.com/ianalloway/ian-web-forge/actions/workflows/ci.yml)
@@ -37,10 +39,11 @@ Matrix-themed developer portfolio — ML, sports analytics, AI agents.
 git clone https://github.com/ianalloway/ian-web-forge.git
 cd ian-web-forge
 npm install
-npm run dev      # http://localhost:8080
-npm run build    # production build → dist/
-npm run lint     # ESLint
-npm test         # eslint . && tsc --noEmit
+npm run dev          # http://localhost:8080
+npm run build        # production build → dist/
+npm run lint         # ESLint
+npm test             # eslint . && tsc --noEmit
+npm run check:forms  # after build — Netlify form wiring guard
 ```
 
 ## Content updates
@@ -53,8 +56,11 @@ npm test         # eslint . && tsc --noEmit
 
 ### Newsletter form
 
-The newsletter signup on the homepage submits directly to Netlify Forms (`ianalloway-newsletter`,
-declared as a hidden form in `index.html`) — no backend, no API keys, no environment variables.
+The newsletter signup on the homepage submits directly to Netlify Forms
+(`ianalloway-newsletter`). Detection depends on the load-bearing spacer in
+`public/__forms.html` (also declared in `index.html`) — no backend, no API keys,
+no environment variables. After a build, run `npm run check:forms` to catch silent
+field drift before deploy.
 
 ## Deployment
 
@@ -63,7 +69,13 @@ SPA rewrite to `index.html` so client-side routes like `/now`, `/hireme`, and `/
 
 ## Notes
 
-- Keep the homepage current and minimal.
+- Keep the homepage ([ianalloway.xyz](https://ianalloway.xyz)) current and minimal.
 - This repo should feel like a polished landing page, not a feature dump.
 
-Built with ❤️ by Ian Alloway
+## Author
+
+**Ian Alloway** — [ianalloway.xyz](https://ianalloway.xyz) · [GitHub](https://github.com/ianalloway) · [Writing](https://allowayai.substack.com)
+
+## License
+
+MIT — see [LICENSE](LICENSE).
