@@ -2,7 +2,7 @@
   "name": "ian-web-forge",
   "private": true,
   "version": "1.0.0",
-  "description": "Matrix-themed portfolio site for Ian Alloway — ML engineer & data scientist (React + TypeScript + Vite).",
+  "description": "Matrix-themed portfolio site for Ian Alloway (ianalloway.xyz) — ML engineer & data scientist. React + TypeScript + Vite.",
   "author": "Ian Alloway <ian@allowayllc.com>",
   "license": "MIT",
   "homepage": "https://ianalloway.xyz",
@@ -19,7 +19,8 @@
     "typescript",
     "vite",
     "machine-learning",
-    "sports-analytics"
+    "sports-analytics",
+    "personal-website"
   ],
   "type": "module",
   "engines": {
