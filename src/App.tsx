@@ -81,6 +81,7 @@ const Bloom = lazy(() => import("./pages/Bloom"));
 const QLearning = lazy(() => import("./pages/QLearning"));
 const Kalman = lazy(() => import("./pages/Kalman"));
 const Traffic = lazy(() => import("./pages/Traffic"));
+const Dilemma = lazy(() => import("./pages/Dilemma"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -168,6 +169,7 @@ const routes = [
   { path: "/qlearning", Component: QLearning, seo: { title: "Q-Learning — watch an agent solve a gridworld", description: "Tabular reinforcement learning live: an agent learns to reach the goal and dodge pits from reward alone, with no map. Watch the value function fill in as a heatmap, the ε-greedy policy arrows align, and the greedy route lock onto the goal — tune the learning rate, discount, exploration, and environment slip." } },
   { path: "/kalman", Component: Kalman, seo: { title: "Kalman Filter — tracking a target through noise", description: "A constant-velocity Kalman filter tracking a maneuvering target from noisy position fixes alone. Watch it recover a velocity it never measures, grow its uncertainty ellipse through sensor dropouts, and beat the raw sensor by several times — then detune the process noise and watch it lag every hard turn." } },
   { path: "/traffic", Component: Traffic, seo: { title: "Phantom Traffic Jams — the Nagel-Schreckenberg model", description: "Traffic jams with no cause: four simple rules on a ring road, one of them a random moment of inattention. Watch jams nucleate from nothing and crawl backwards through the space-time diagram, and trace the flow-versus-density curve that explains why a busy road collapses." } },
+  { path: "/dilemma", Component: Dilemma, seo: { title: "Prisoner’s Dilemma — Axelrod’s tournament, evolved", description: "Ten strategies play a round-robin iterated prisoner’s dilemma, then a population evolves under replicator dynamics. See why nice, retaliatory, forgiving strategies beat pure defection over repeated play — and how noise rewards forgiveness." } },
   { path: "*", Component: NotFound, seo: { title: "Page not found", noIndex: true } },
 ] satisfies RouteConfig[];
 
