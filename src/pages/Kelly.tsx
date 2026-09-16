@@ -135,6 +135,12 @@ const Kelly = () => {
             <a href="#explain" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               How it works
             </a>
+            <Link to="/clv" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
+              [CLV]
+            </Link>
+            <Link to="/kellysim" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
+              [SIM]
+            </Link>
             <a
               href={KELLY_REPO}
               target="_blank"
@@ -385,7 +391,15 @@ const Kelly = () => {
           >
             <Github size={12} /> ianalloway/kelly-js
           </a>
-          <div>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Link to="/clv" className="text-primary/70 hover:text-primary">
+              CLV playground →
+            </Link>
+            <span className="text-primary/20">·</span>
+            <Link to="/kellysim" className="text-primary/70 hover:text-primary">
+              bankroll sim →
+            </Link>
+            <span className="text-primary/20">·</span>
             <Link to="/" className="text-primary/70 hover:text-primary">
               ← back to home
             </Link>
