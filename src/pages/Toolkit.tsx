@@ -39,6 +39,11 @@ const START_HERE: { label: string; href: string; note: string }[] = [
     note: 'SOLVENT agent, kelly-js, Streamlit apps',
   },
   {
+    label: 'CLV playground',
+    href: '/clv',
+    note: 'Beat-the-close calculator · entry vs closing American odds',
+  },
+  {
     label: 'Start the bots',
     href: '/bots',
     note: 'Copy-paste commands for SOLVENT, juryrig, OpenClaw skills',
