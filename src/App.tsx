@@ -82,6 +82,7 @@ const QLearning = lazy(() => import("./pages/QLearning"));
 const Kalman = lazy(() => import("./pages/Kalman"));
 const Traffic = lazy(() => import("./pages/Traffic"));
 const Dilemma = lazy(() => import("./pages/Dilemma"));
+const Mcmc = lazy(() => import("./pages/Mcmc"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -170,6 +171,7 @@ const routes = [
   { path: "/kalman", Component: Kalman, seo: { title: "Kalman Filter — tracking a target through noise", description: "A constant-velocity Kalman filter tracking a maneuvering target from noisy position fixes alone. Watch it recover a velocity it never measures, grow its uncertainty ellipse through sensor dropouts, and beat the raw sensor by several times — then detune the process noise and watch it lag every hard turn." } },
   { path: "/traffic", Component: Traffic, seo: { title: "Phantom Traffic Jams — the Nagel-Schreckenberg model", description: "Traffic jams with no cause: four simple rules on a ring road, one of them a random moment of inattention. Watch jams nucleate from nothing and crawl backwards through the space-time diagram, and trace the flow-versus-density curve that explains why a busy road collapses." } },
   { path: "/dilemma", Component: Dilemma, seo: { title: "Prisoner’s Dilemma — Axelrod’s tournament, evolved", description: "Ten strategies play a round-robin iterated prisoner’s dilemma, then a population evolves under replicator dynamics. See why nice, retaliatory, forgiving strategies beat pure defection over repeated play — and how noise rewards forgiveness." } },
+  { path: "/mcmc", Component: Mcmc, seo: { title: "Metropolis-Hastings — sampling a distribution you can only score", description: "Watch a Markov chain sample a distribution it can never solve: propose a nearby point, accept it in proportion to how much better it is, repeat. The sample histogram converges onto the true marginal while the proposal width decides everything — too small and the chain crawls, too large and it stands still, and effective sample size tells you which is happening." } },
   { path: "*", Component: NotFound, seo: { title: "Page not found", noIndex: true } },
 ] satisfies RouteConfig[];
 
