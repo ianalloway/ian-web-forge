@@ -382,7 +382,22 @@ const Kelly = () => {
           </div>
         </section>
 
-        <footer className="text-center text-xs font-mono text-muted-foreground space-y-2">
+        <footer className="text-center text-xs font-mono text-muted-foreground space-y-3">
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+            <span className="text-muted-foreground/70">Related playgrounds</span>
+            <Link to="/scoreline" className="text-primary/80 hover:text-primary">
+              [/scoreline]
+            </Link>
+            <Link to="/clv" className="text-primary/80 hover:text-primary">
+              [/clv]
+            </Link>
+            <Link to="/kellysim" className="text-primary/80 hover:text-primary">
+              [/kellysim]
+            </Link>
+            <Link to="/elo" className="text-primary/80 hover:text-primary">
+              [/elo]
+            </Link>
+          </div>
           <a
             href={KELLY_REPO}
             target="_blank"
@@ -391,15 +406,7 @@ const Kelly = () => {
           >
             <Github size={12} /> ianalloway/kelly-js
           </a>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <Link to="/clv" className="text-primary/70 hover:text-primary">
-              CLV playground →
-            </Link>
-            <span className="text-primary/20">·</span>
-            <Link to="/kellysim" className="text-primary/70 hover:text-primary">
-              bankroll sim →
-            </Link>
-            <span className="text-primary/20">·</span>
+          <div>
             <Link to="/" className="text-primary/70 hover:text-primary">
               ← back to home
             </Link>
