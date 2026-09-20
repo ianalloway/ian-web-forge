@@ -83,6 +83,9 @@ const QLearning = lazy(() => import("./pages/QLearning"));
 const Kalman = lazy(() => import("./pages/Kalman"));
 const Traffic = lazy(() => import("./pages/Traffic"));
 const Dilemma = lazy(() => import("./pages/Dilemma"));
+const Mcmc = lazy(() => import("./pages/Mcmc"));
+const PageRankPage = lazy(() => import("./pages/PageRank"));
+const Avl = lazy(() => import("./pages/Avl"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -172,6 +175,9 @@ const routes = [
   { path: "/kalman", Component: Kalman, seo: { title: "Kalman Filter — tracking a target through noise", description: "A constant-velocity Kalman filter tracking a maneuvering target from noisy position fixes alone. Watch it recover a velocity it never measures, grow its uncertainty ellipse through sensor dropouts, and beat the raw sensor by several times — then detune the process noise and watch it lag every hard turn." } },
   { path: "/traffic", Component: Traffic, seo: { title: "Phantom Traffic Jams — the Nagel-Schreckenberg model", description: "Traffic jams with no cause: four simple rules on a ring road, one of them a random moment of inattention. Watch jams nucleate from nothing and crawl backwards through the space-time diagram, and trace the flow-versus-density curve that explains why a busy road collapses." } },
   { path: "/dilemma", Component: Dilemma, seo: { title: "Prisoner’s Dilemma — Axelrod’s tournament, evolved", description: "Ten strategies play a round-robin iterated prisoner’s dilemma, then a population evolves under replicator dynamics. See why nice, retaliatory, forgiving strategies beat pure defection over repeated play — and how noise rewards forgiveness." } },
+  { path: "/mcmc", Component: Mcmc, seo: { title: "Metropolis-Hastings — sampling a distribution you can only score", description: "Watch a Markov chain sample a distribution it can never solve: propose a nearby point, accept it in proportion to how much better it is, repeat. The sample histogram converges onto the true marginal while the proposal width decides everything — too small and the chain crawls, too large and it stands still, and effective sample size tells you which is happening." } },
+  { path: "/pagerank", Component: PageRankPage, seo: { title: "PageRank — power iteration and the bored surfer", description: "PageRank computed two ways at once: power iteration on the link graph, and a random surfer whose visit counts drift onto the same numbers. Tune the damping factor, watch rank pool in dead ends without teleportation, and see why a link farm cannot manufacture rank out of nothing." } },
+  { path: "/avl", Component: Avl, seo: { title: "AVL Tree — the same keys, kept shallow", description: "An AVL tree and a plain binary search tree receive the same keys in the same order. Insert them sorted and the plain BST degenerates into a linked list while the AVL tree rotates itself back to logarithmic depth. Watch the LL, RR, LR and RL rotations fire and compare the worst-case lookup in each." } },
   { path: "*", Component: NotFound, seo: { title: "Page not found", noIndex: true } },
 ] satisfies RouteConfig[];
 
