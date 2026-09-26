@@ -87,6 +87,9 @@ const Mcmc = lazy(() => import("./pages/Mcmc"));
 const PageRankPage = lazy(() => import("./pages/PageRank"));
 const Avl = lazy(() => import("./pages/Avl"));
 const Scoreline = lazy(() => import("./pages/Scoreline"));
+const Gp = lazy(() => import("./pages/Gp"));
+const Queue = lazy(() => import("./pages/Queue"));
+const Lz77 = lazy(() => import("./pages/Lz77"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -180,6 +183,9 @@ const routes = [
   { path: "/pagerank", Component: PageRankPage, seo: { title: "PageRank — power iteration and the bored surfer", description: "PageRank computed two ways at once: power iteration on the link graph, and a random surfer whose visit counts drift onto the same numbers. Tune the damping factor, watch rank pool in dead ends without teleportation, and see why a link farm cannot manufacture rank out of nothing." } },
   { path: "/avl", Component: Avl, seo: { title: "AVL Tree — the same keys, kept shallow", description: "An AVL tree and a plain binary search tree receive the same keys in the same order. Insert them sorted and the plain BST degenerates into a linked list while the AVL tree rotates itself back to logarithmic depth. Watch the LL, RR, LR and RL rotations fire and compare the worst-case lookup in each." } },
   { path: "/scoreline", Component: Scoreline, seo: { title: "Poisson Scoreline Heatmap — independent λ home / away", description: "Interactive sports scoreline model: tune independent Poisson λ for home and away goals, see the full P(i,j) heatmap, the mode scoreline, 1X2 probabilities, and over/under 2.5." } },
+  { path: "/gp", Component: Gp, seo: { title: "Gaussian Processes — fitting a distribution over functions", description: "Click to place observations and watch a Gaussian process condition every plausible function on them. The posterior mean is one curve, but the band around it is the point: it pinches shut at the data and flares wherever nothing was measured, because the variance never looks at y at all. Swap kernels, tune the lengthscale and noise, and draw sample functions." } },
+  { path: "/queue", Component: Queue, seo: { title: "Queueing Theory — why the line explodes before the servers are full", description: "An event-driven M/M/c queue running against Erlang C. The wait grows like 1/(1−ρ), so going from 90% to 95% busy doubles it and 95% to 98% doubles it again — and past ρ = 1 nothing crashes, the line simply never stops growing. Tune arrival and service rates, add servers, and see why pooling beats speed." } },
+  { path: "/lz77", Component: Lz77, seo: { title: "LZ77 — compression by pointing backwards", description: "Watch LZ77 slide a window over text, find the longest run it has already seen, and emit a pointer instead of the characters. A match may run past the cursor and copy what it is still producing, which is how one pointer swallows a long run. LZ77 removes the repetition, Huffman shortens what is left, and together they are DEFLATE." } },
   { path: "*", Component: NotFound, seo: { title: "Page not found", noIndex: true } },
 ] satisfies RouteConfig[];
 
