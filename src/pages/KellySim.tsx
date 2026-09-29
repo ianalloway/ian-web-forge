@@ -117,6 +117,18 @@ export default function KellySim() {
             ← home
           </Link>
           <span className="text-primary/20">|</span>
+          <Link to="/kelly" className="text-primary/50 hover:text-primary text-sm transition-colors">
+            kelly
+          </Link>
+          <span className="text-primary/20">|</span>
+          <Link to="/clv" className="text-primary/50 hover:text-primary text-sm transition-colors">
+            clv
+          </Link>
+          <span className="text-primary/20">|</span>
+          <Link to="/vig" className="text-primary/50 hover:text-primary text-sm transition-colors">
+            vig
+          </Link>
+          <span className="text-primary/20">|</span>
           <span className="text-sm">kelly bankroll simulator</span>
         </div>
         <div className="text-xs text-primary/40 tabular-nums">

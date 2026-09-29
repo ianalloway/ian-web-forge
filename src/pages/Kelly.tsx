@@ -138,6 +138,9 @@ const Kelly = () => {
             <Link to="/clv" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               [CLV]
             </Link>
+            <Link to="/vig" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
+              [VIG]
+            </Link>
             <Link to="/kellysim" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               [SIM]
             </Link>
@@ -390,6 +393,9 @@ const Kelly = () => {
             </Link>
             <Link to="/clv" className="text-primary/80 hover:text-primary">
               [/clv]
+            </Link>
+            <Link to="/vig" className="text-primary/80 hover:text-primary">
+              [/vig]
             </Link>
             <Link to="/kellysim" className="text-primary/80 hover:text-primary">
               [/kellysim]
