@@ -44,6 +44,11 @@ const START_HERE: { label: string; href: string; note: string }[] = [
     note: 'Beat-the-close calculator · entry vs closing American odds',
   },
   {
+    label: 'No-vig playground',
+    href: '/vig',
+    note: 'Fair odds · overround / hold · multiplicative / Shin · ¼ Kelly',
+  },
+  {
     label: 'Start the bots',
     href: '/bots',
     note: 'Copy-paste commands for SOLVENT, juryrig, OpenClaw skills',

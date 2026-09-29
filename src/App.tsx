@@ -72,6 +72,7 @@ const Mst = lazy(() => import("./pages/Mst"));
 const Cloth = lazy(() => import("./pages/Cloth"));
 const KellySim = lazy(() => import("./pages/KellySim"));
 const Clv = lazy(() => import("./pages/Clv"));
+const Vig = lazy(() => import("./pages/Vig"));
 const FluidPage = lazy(() => import("./pages/Fluid"));
 const Rsa = lazy(() => import("./pages/Rsa"));
 const Cube = lazy(() => import("./pages/Cube"));
@@ -168,6 +169,7 @@ const routes = [
   { path: "/cloth", Component: Cloth, seo: { title: "Verlet Cloth — position-based physics you can tear", description: "A cloth of point masses held together by distance constraints and integrated with Verlet: drag it, pin corners, crank gravity, and tear the fabric apart." } },
   { path: "/kellysim", Component: KellySim, seo: { title: "Kelly Bankroll Simulator — full vs fractional Kelly", description: "Monte Carlo hundreds of bankrolls betting the same edge at quarter, half, full, and double Kelly. See the whole distribution on a log scale — median growth, percentiles, risk of ruin, and worst drawdown." } },
   { path: "/clv", Component: Clv, seo: { title: "CLV Playground — closing line value calculator", description: "Interactive Closing Line Value playground: enter American entry and closing odds, see CLV in probability points, beat/lost/push verdict, implied probs, and a rolling bet-log summary with mean CLV and beat rate." } },
+  { path: "/vig", Component: Vig, seo: { title: "No-Vig Playground — fair odds & overround calculator", description: "Interactive no-vig / fair-odds playground: enter a two-way or multi-way market in American, decimal, or implied-probability odds, compare multiplicative / additive / power / Shin de-vig methods, read overround and hold, and size a quarter-Kelly stake against your probability." } },
   { path: "/fluid", Component: FluidPage, seo: { title: "Stable Fluids — stir a Navier-Stokes simulation", description: "An interactive real-time fluid solver using Jos Stam's Stable Fluids method: each frame the velocity field is diffused, self-advected, then projected divergence-free. Drag to stir the dye." } },
   { path: "/rsa", Component: Rsa, seo: { title: "RSA Playground — build a key and break it", description: "Pick two primes, watch RSA build a keypair, encrypt and decrypt by modular exponentiation with the square-and-multiply ladder shown step by step — then factor the modulus to recover the private key. Textbook RSA, for learning only." } },
   { path: "/cube", Component: Cube, seo: { title: "Pocket Cube Solver — provably optimal 2×2 solutions", description: "Scramble a 2×2×2 Rubik's cube and watch a bidirectional breadth-first search find the shortest solution that exists. No 2×2 position ever needs more than 11 turns." } },

@@ -185,6 +185,13 @@ export default function Scoreline() {
           >
             sports math hub
           </Link>
+          <span className="text-primary/20 hidden sm:inline">|</span>
+          <Link
+            to="/vig"
+            className="text-primary/40 hover:text-primary text-xs hidden sm:inline transition-colors"
+          >
+            no-vig
+          </Link>
         </div>
         <div className="text-xs text-primary/40 tabular-nums">
           mode {mode.home}–{mode.away} · {pct(mode.probability)} · grid covers{" "}

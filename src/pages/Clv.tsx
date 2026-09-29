@@ -219,6 +219,10 @@ export default function Clv() {
             kellysim
           </Link>
           <span className="text-primary/20">|</span>
+          <Link to="/vig" className="text-primary/50 hover:text-primary text-sm transition-colors">
+            vig
+          </Link>
+          <span className="text-primary/20">|</span>
           <span className="text-sm">clv playground</span>
         </div>
         <div className="text-xs text-primary/40 tabular-nums">
