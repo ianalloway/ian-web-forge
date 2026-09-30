@@ -91,6 +91,9 @@ const Scoreline = lazy(() => import("./pages/Scoreline"));
 const Gp = lazy(() => import("./pages/Gp"));
 const Queue = lazy(() => import("./pages/Queue"));
 const Lz77 = lazy(() => import("./pages/Lz77"));
+const Kmp = lazy(() => import("./pages/Kmp"));
+const Hashmap = lazy(() => import("./pages/Hashmap"));
+const QuadtreePage = lazy(() => import("./pages/Quadtree"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -188,6 +191,9 @@ const routes = [
   { path: "/gp", Component: Gp, seo: { title: "Gaussian Processes — fitting a distribution over functions", description: "Click to place observations and watch a Gaussian process condition every plausible function on them. The posterior mean is one curve, but the band around it is the point: it pinches shut at the data and flares wherever nothing was measured, because the variance never looks at y at all. Swap kernels, tune the lengthscale and noise, and draw sample functions." } },
   { path: "/queue", Component: Queue, seo: { title: "Queueing Theory — why the line explodes before the servers are full", description: "An event-driven M/M/c queue running against Erlang C. The wait grows like 1/(1−ρ), so going from 90% to 95% busy doubles it and 95% to 98% doubles it again — and past ρ = 1 nothing crashes, the line simply never stops growing. Tune arrival and service rates, add servers, and see why pooling beats speed." } },
   { path: "/lz77", Component: Lz77, seo: { title: "LZ77 — compression by pointing backwards", description: "Watch LZ77 slide a window over text, find the longest run it has already seen, and emit a pointer instead of the characters. A match may run past the cursor and copy what it is still producing, which is how one pointer swallows a long run. LZ77 removes the repetition, Huffman shortens what is left, and together they are DEFLATE." } },
+  { path: "/kmp", Component: Kmp, seo: { title: "KMP — string search that never looks back", description: "Naive search and Knuth-Morris-Pratt hunt the same text side by side at the same rate. On a mismatch naive slides one character and rereads what it already saw; KMP consults a failure table built from the pattern’s own prefixes and never examines a text character twice. Watch the comparison counters diverge on the adversarial case." } },
+  { path: "/hashmap", Component: Hashmap, seo: { title: "Hash Tables — collisions, clustering and load factor", description: "Watch a hash table fill and measure what collisions actually cost. Chaining, linear probing, quadratic probing and double hashing each degrade differently as the load factor climbs, with the measured probe count drawn against Knuth’s theoretical curve — and linear probing running away from it past α ≈ 0.8 as clusters merge." } },
+  { path: "/quadtree", Component: QuadtreePage, seo: { title: "Quadtree — not checking what you don’t need to check", description: "A quadtree over thousands of moving points, rebuilt every frame. Steer a search box with your cursor and watch whole subtrees get dismissed by a single rectangle test: the query examines a few dozen points where brute force would examine every one. Includes pruned nearest-neighbour search and four point distributions." } },
   { path: "*", Component: NotFound, seo: { title: "Page not found", noIndex: true } },
 ] satisfies RouteConfig[];
 
