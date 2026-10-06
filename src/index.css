@@ -1,8 +1,12 @@
+/* Tailwind v4's entry point. The v3-style `@tailwind base/components/utilities`
+   directives still parse under v4, but they do not pull in the theme layer, so
+   --spacing, --text-* and the colour scales were never defined and every
+   utility derived from them (px-4, text-sm, gap-3, w-20 ...) was silently
+   dropped from the build while static ones like flex-wrap survived.
+   `@import "tailwindcss"` brings in theme, preflight, components and utilities
+   together. The v3 config below is still honoured through `@config`. */
+@import "tailwindcss";
 @config "../tailwind.config.ts";
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 /* ============================================================
    MATRIX DESIGN SYSTEM — v2 UPGRADE
