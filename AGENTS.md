@@ -20,18 +20,20 @@ npm install
 npm run dev       # Vite dev server → http://localhost:8080 (port set in vite.config.ts)
 npm run build     # production build → dist/
 npm run lint      # ESLint
-npm test          # eslint . && tsc --noEmit
+npm test          # eslint . && tsc --noEmit && vitest run
+npm run test:unit # vitest only
 npm run preview   # preview a production build
 npm run check:forms  # verify the Netlify form wiring (needs a build first)
 ```
 
-There is no `typecheck` script — `npm test` already runs `tsc --noEmit`. There is no browser/smoke
-test harness in this repo; CI is a single build/lint/typecheck pipeline (below).
+There is no `typecheck` script — `npm test` already runs `tsc --noEmit`. Unit tests are vitest,
+colocated with the code as `src/**/*.test.ts`, configured in `vite.config.ts`. There is no
+browser/smoke test harness.
 
 ## CI
 
-- `.github/workflows/ci.yml` — checkout → `npm ci` → lint → `tsc --noEmit` → build → form check.
-  Runs on every push/PR against `main`.
+- `.github/workflows/ci.yml` — checkout → `npm ci` → lint → `tsc --noEmit` → unit tests → build →
+  form check. Runs on every push/PR against `main`.
 - `.github/workflows/codeql.yml` — GitHub CodeQL security scanning (scheduled + push/PR).
 - `.github/workflows/form-check.yml` — probes the **live** Netlify form wiring. The read-only probe
   is safe to run anytime; the live submission is opt-in (`workflow_dispatch` with `submit: true`,
@@ -59,6 +61,30 @@ The signup is pure Netlify Forms, and its failure mode is silent: a broken wirin
 - Netlify stores **only** fields declared on the detected form. Any field added to the client
   payload must also be declared in `public/__forms.html` and `index.html`. `npm run check:forms`
   enforces this after a build and runs in CI.
+
+## Tailwind entry point — read before touching `src/index.css`
+
+This project runs Tailwind **v4** (`@tailwindcss/postcss`) with a v3-style JS config pulled in by
+`@config`. The first two lines of `src/index.css` are load-bearing:
+
+```css
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+```
+
+Do not swap that `@import` back for `@tailwind base; @tailwind components; @tailwind utilities;`.
+Those directives still parse under v4 and the build still succeeds, but they do not pull in the
+theme layer: `--spacing`, `--text-*` and the colour scales are never defined, so every utility
+derived from them (`px-4`, `text-sm`, `gap-3`, `w-20`, `p-3` …) is silently dropped from the
+stylesheet, while static ones like `flex-wrap` and `min-h-screen` survive. The result is a site
+that builds clean, passes every check, and renders with no padding and no type scale.
+
+That shipped once. To check it after a build:
+
+```bash
+grep -c -- '--spacing:' dist/assets/*.css   # must be 1, not 0
+grep -o '\.px-4[,{ :]' dist/assets/*.css   # must match
+```
 
 ## Content updates
 
