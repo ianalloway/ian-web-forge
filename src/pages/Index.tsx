@@ -97,26 +97,26 @@ const NOTES = [
   {
     type: "Field note · agent economics",
     title: "I gave an AI agent a Stripe key and walked away",
-    href: "https://allowayai.substack.com/p/i-gave-an-ai-agent-a-stripe-key-and-walked-away-heres-what-it-built",
+    href: "https://allowayai.substack.com/p/i-gave-an-ai-agent-a-stripe-key-and",
   },
   {
     type: "Essay · evaluation",
     title: "Audit your LLM judges before you trust them",
-    href: "https://allowayai.substack.com/p/audit-your-llm-judges-before-you-trust-them",
+    href: "https://allowayai.substack.com/p/audit-your-llm-judges-before-you",
   },
   {
     type: "Reflection · memory",
     title: "The ghost in the machine needs memory, not just a prompt",
-    href: "https://allowayai.substack.com/p/the-ghost-in-the-machine-why-your-ai-needs-a-memory-not-just-a-prompt",
+    href: "https://allowayai.substack.com/p/the-ghost-in-the-machine-why-your",
   },
 ];
 
 const PRACTICE = [
-  ["2020", "Audited data and built AI systems for multichain analytics."],
-  ["2023", "Founded Alloway LLC and started shipping production ML for clients."],
-  ["2024", "Turned sports modeling into an end-to-end decision product."],
+  ["2020", "Started Alloway LLC and began shipping ML and analytics for clients."],
+  ["2024", "Audited multichain data at Omniichain; turned sports modeling into a decision product."],
   ["2025", "Published open-source agent skills, evaluation tools, and nba-edge."],
-  ["Now", "M.S. Artificial Intelligence at USF. Building in public."],
+  ["2026", "B.S. at USF. Started grading frontier models for AI labs' eval programs."],
+  ["Now", "M.S. Artificial Intelligence at USF. Building juryrig in public."],
 ];
 
 function Arrow() {
@@ -308,9 +308,9 @@ export default function Index() {
           <div className="rd-hero-copy">
             <div className="rd-availability rd-mono">
               <span />
-              Open to ML, data &amp; AI roles
+              Open to AI engineering &amp; evaluation roles
             </div>
-            <p className="rd-hero-kicker rd-mono">ML ENGINEER · DATA SCIENTIST · USF M.S. AI</p>
+            <p className="rd-hero-kicker rd-mono">AI ENGINEER · LLM EVALUATION · USF M.S. AI</p>
             <h1>
               Ian
               <br />
@@ -342,8 +342,8 @@ export default function Index() {
           </div>
           <HeroPlot />
           <div className="rd-hero-index rd-mono">
-            <span>27.9506° N</span>
-            <span>82.4572° W</span>
+            <span>39.4851° N</span>
+            <span>80.1426° W</span>
             <span>BUILD / TEST / MEASURE</span>
           </div>
         </header>
@@ -488,7 +488,7 @@ export default function Index() {
             </a>
           </div>
           <div className="rd-contact-orbit" aria-hidden="true">
-            <span>IAN ALLOWAY · TAMPA / REMOTE · 2026 ·</span>
+            <span>IAN ALLOWAY · FAIRMONT, WV / REMOTE · 2026 ·</span>
           </div>
         </section>
       </main>
