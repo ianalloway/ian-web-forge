@@ -166,6 +166,11 @@ const HireMe = () => {
                 </a>
               </Button>
               <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
+                <a href="https://ian-alloway-visual-resume--ianalloway43.replit.app/" target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="mr-2" size={16} /> Visual résumé
+                </a>
+              </Button>
+              <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
                 <a href="/papers/sports-ml-evaluation-case-study.html" target="_blank" rel="noopener noreferrer">
                   <FileText className="mr-2" size={16} /> View Case Study
                 </a>
@@ -368,6 +373,11 @@ const HireMe = () => {
                 <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
                   <a href="/Ian_Alloway_Resume_CV.pdf" download>
                     <Download className="mr-2" size={16} /> Resume PDF
+                  </a>
+                </Button>
+                <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
+                  <a href="https://ian-alloway-visual-resume--ianalloway43.replit.app/" target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="mr-2" size={16} /> Visual résumé
                   </a>
                 </Button>
                 <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>

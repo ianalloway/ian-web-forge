@@ -338,6 +338,14 @@ export default function Index() {
               <a className="rd-text-action rd-mono" href="/Ian_Alloway_Resume_CV.pdf" download>
                 Résumé ↓
               </a>
+              <a
+                className="rd-text-action rd-mono"
+                href="https://ian-alloway-visual-resume--ianalloway43.replit.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visual résumé <Arrow />
+              </a>
             </div>
           </div>
           <HeroPlot />
