@@ -51,7 +51,7 @@ Upstream: LiteLLM (Docker PID-1 zombie-process fix); OpenClaw (bug fixes, publis
 
 EDUCATION
 M.S. Artificial Intelligence | University of South Florida | Aug 2026 - Dec 2027 (expected)
-B.S. Information Science | University of South Florida | Aug 2024 - May 2026 | GPA 3.5, Magna Cum Laude
+B.S. Information Science | University of South Florida | Aug 2024 - May 2026 | GPA 3.5, Cum Laude
 
 CERTIFICATIONS
 Professional: AWS Certified Machine Learning - Specialty; Google Cloud Professional Machine Learning Engineer; Databricks Certified Machine Learning Associate; AWS Certified Cloud Practitioner; Oracle Database SQL Certified Associate; Tableau Desktop Certified Professional
