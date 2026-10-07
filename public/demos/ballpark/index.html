@@ -148,7 +148,7 @@ const LOCAL = new URLSearchParams(location.search).has("local"); // same-browser
 /* ---------------- helpers ---------------- */
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const fmt = n => Number(n).toLocaleString("en-US", {maximumFractionDigits: 2});
+const fmt = (n, q) => Number(n).toLocaleString("en-US", {maximumFractionDigits: 2, useGrouping: !/\byear\b/i.test(q||"")}); // no "1,903" for years
 const parseGuess = s => { const t = String(s).replace(/[,\s]/g, ""); if (!/^-?\d*\.?\d+$/.test(t)) return null; const n = Number(t); return Number.isFinite(n) ? n : null; };
 const randCode = () => Array.from({length:4}, () => CODE_CHARS[Math.floor(Math.random()*CODE_CHARS.length)]).join("");
 const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
@@ -471,11 +471,11 @@ function render(){
     <section class="panel">
       <span class="eyebrow">Round ${s.round} of ${s.total}</span>
       <p class="q">${esc(s.q)}</p>
-      <div class="answer"><span class="eyebrow">The answer</span><span class="num lit">${fmt(r.answer)}</span></div>
+      <div class="answer"><span class="eyebrow">The answer</span><span class="num lit">${fmt(r.answer, s.q)}</span></div>
       <div style="overflow-x:auto"><table>
         <thead><tr><th>Player</th><th class="r">Guess</th><th class="r">Off by</th><th class="r">Pts</th></tr></thead>
         <tbody>${r.results.map(x=>`<tr><td><span class="name">${esc(x.name)}</span>${x.id===ME?'<span class="you">YOU</span>':''}</td>
-          <td class="r">${x.guess===null?'<span class="note">no guess</span>':fmt(x.guess)}</td>
+          <td class="r">${x.guess===null?'<span class="note">no guess</span>':fmt(x.guess, s.q)}</td>
           <td class="r">${x.diff===null?'–':x.diff===0?'<b class="lit">EXACT</b>':fmt(x.diff)}</td>
           <td class="r"><span class="pts">${x.pts?'+'+x.pts:'0'}</span></td></tr>`).join("")}</tbody>
       </table></div>
