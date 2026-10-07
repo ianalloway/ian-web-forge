@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Terminal, ExternalLink, GitBranch as Github, Calculator, LineChart, Cpu, Trophy, Coins } from 'lucide-react';
+import { Terminal, ExternalLink, GitBranch as Github, Calculator, LineChart, Cpu, Trophy, Coins, Gamepad2 } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 import { kelly, convertOdds, arbitrage } from '@/lib/kelly';
 
@@ -248,6 +248,9 @@ const Demos = () => {
             <a href="#product" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               Product
             </a>
+            <a href="#ballpark" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
+              Ballpark
+            </a>
             <a href="/bots" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               [BOTS]
             </a>
@@ -425,6 +428,30 @@ open http://127.0.0.1:8787/`}
               className="inline-flex items-center gap-2 rounded border border-primary/50 bg-primary/10 px-4 py-2 font-mono text-sm text-primary hover:bg-primary/20 whitespace-nowrap"
             >
               Open live site <ExternalLink size={14} />
+            </a>
+          </div>
+        </SectionShell>
+
+        <SectionShell
+          id="ballpark"
+          icon={Gamepad2}
+          title="Ballpark — multiplayer party game"
+          repo="ianalloway/ballpark-game"
+          blurb="Real-time estimation game for 2–8 players on their own devices. One player hosts and shares a 4-letter room code; everyone guesses the number and the closest guess scores."
+        >
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <ul className="text-xs font-mono text-muted-foreground space-y-1">
+              <li><span className="text-primary">Rules</span> — 8 rounds, 35s each; closest guess 3 pts, second 1, exact answer +2</li>
+              <li><span className="text-primary">Netcode</span> — host browser is the referee; players sync through an MQTT relay over WSS</li>
+              <li><span className="text-primary">Stack</span> — one static HTML file, no backend, works across phones and networks</li>
+            </ul>
+            <a
+              href="/demos/ballpark/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded border border-primary/50 bg-primary/10 px-4 py-2 font-mono text-sm text-primary hover:bg-primary/20 whitespace-nowrap"
+            >
+              Play Ballpark <ExternalLink size={14} />
             </a>
           </div>
         </SectionShell>

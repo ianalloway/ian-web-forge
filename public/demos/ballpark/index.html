@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ballpark</title>
+<script>/* relative assets need a trailing slash on the folder URL */if(!/\/$|\.html$/.test(location.pathname))location.replace(location.pathname+"/"+location.search+location.hash);</script>
+<meta name="description" content="A live party game for 2–8 players: everyone guesses the number, closest guess scores.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Barlow:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one centered column like a stadium scoreboard; a big lit number panel is the hero of every screen. */
+:root{
+  --field:#0b261d;      /* page ground, deep outfield */
+  --board:#113428;      /* panels */
+  --board-2:#174536;    /* raised rows */
+  --chalk:#f1ede0;      /* primary text, chalk line */
+  --chalk-dim:#a9b8ad;  /* secondary text */
+  --bulb:#ffb627;       /* scoreboard bulbs: numbers, primary buttons */
+  --clay:#d9774a;       /* infield clay: alerts, timer running low */
+  --line:rgba(241,237,224,.14);
+  --display:"Big Shoulders Display",Impact,"Arial Narrow",sans-serif;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+html{background:#0b261d}
+body{
+  background:var(--field);
+  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.018) 0 64px,transparent 64px 128px);
+  color:var(--chalk);font:16px/1.5 var(--body);
+  padding:max(20px,env(safe-area-inset-top)) 16px max(32px,env(safe-area-inset-bottom));
+}
+main{max-width:560px;margin:0 auto;display:grid;gap:18px}
+h1,h2,.num{font-family:var(--display);letter-spacing:.01em;margin:0;line-height:1}
+h1{font-size:clamp(56px,16vw,92px);font-weight:900;text-transform:uppercase}
+h2{font-size:30px;font-weight:800;text-transform:uppercase}
+p{margin:0}
+.eyebrow{font:600 12px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--chalk-dim)}
+.brand{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand small{font:600 12px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--chalk-dim)}
+.panel{background:var(--board);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:14px}
+.lit{color:var(--bulb);text-shadow:0 0 18px rgba(255,182,39,.35)}
+label{font-weight:600;font-size:14px;display:grid;gap:6px}
+input{
+  font:600 20px var(--body);color:var(--chalk);background:var(--field);
+  border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;width:100%;
+}
+input:focus{outline:none;border-color:var(--bulb)}
+input.code{font-family:var(--display);font-size:32px;letter-spacing:.3em;text-transform:uppercase;text-align:center}
+button{
+  font:800 20px var(--display);letter-spacing:.06em;text-transform:uppercase;cursor:pointer;
+  border-radius:10px;padding:14px 18px;border:1.5px solid var(--bulb);background:var(--bulb);color:#1d1503;
+}
+button.ghost{background:transparent;color:var(--chalk);border-color:var(--line)}
+button:disabled{opacity:.4;cursor:not-allowed}
+button:focus-visible,input:focus-visible{outline:3px solid var(--chalk);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1 1 160px}
+.rules{display:grid;gap:8px;padding:0;margin:0;list-style:none;counter-reset:r}
+.rules li{counter-increment:r;display:grid;grid-template-columns:28px 1fr;gap:8px;color:var(--chalk)}
+.rules li::before{content:counter(r);font:800 22px/1.1 var(--display);color:var(--bulb)}
+.players{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.players li{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--board-2);border-radius:8px;padding:9px 12px;min-width:0}
+.players .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+.tag{font:700 11px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--chalk-dim);white-space:nowrap}
+.tag.ok{color:var(--bulb)}
+.tag.off{color:var(--clay)}
+.score{font:800 26px var(--display);color:var(--bulb);font-variant-numeric:tabular-nums}
+.q{font:700 clamp(24px,6vw,32px)/1.2 var(--body);text-wrap:balance}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.clock{font:900 44px var(--display);font-variant-numeric:tabular-nums;color:var(--bulb)}
+.clock.low{color:var(--clay)}
+.answer{display:grid;gap:4px;text-align:center;padding:18px;border-radius:12px;background:#08201a;border:1px solid var(--line)}
+.answer .num{font-size:clamp(52px,15vw,84px);font-weight:900}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{font:700 11px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--chalk-dim);text-align:left;padding:6px 6px}
+td{padding:9px 6px;border-top:1px solid var(--line);vertical-align:middle}
+td.r,th.r{text-align:right}
+td .name{font-weight:600;word-break:break-word}
+.pts{font:800 22px var(--display);color:var(--bulb)}
+.you{font:700 10px var(--body);letter-spacing:.1em;color:#1d1503;background:var(--chalk);border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:2px}
+.note{color:var(--chalk-dim);font-size:14px}
+.err{color:var(--clay);font-weight:600;font-size:14px;min-height:1em}
+.share{display:flex;gap:8px;align-items:stretch}
+.share code{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:var(--field);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:14px;color:var(--chalk-dim)}
+.share button{flex:none;font-size:16px;padding:8px 14px}
+.bigcode{font:900 64px/1 var(--display);letter-spacing:.18em;color:var(--bulb);text-shadow:0 0 18px rgba(255,182,39,.35)}
+.podium{display:grid;gap:6px;text-align:center}
+.podium .num{font-size:56px;font-weight:900}
+.waiting{display:flex;align-items:center;gap:10px;color:var(--chalk-dim)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--bulb);animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.dot{animation:none}}
+footer{text-align:center;color:var(--chalk-dim);font-size:12px}
+</style>
+</head>
+<body>
+<main id="app" aria-live="polite"></main>
+<script src="mqtt.min.js"></script>
+<script>
+"use strict";
+/* ---------------- Question bank: stable facts with numeric answers ---------------- */
+const QUESTIONS = [
+  {q:"How many keys are on a standard piano?", a:88},
+  {q:"How many bones are in the adult human body?", a:206},
+  {q:"In what year did the Berlin Wall fall?", a:1989},
+  {q:"How many member states are in the United Nations?", a:193},
+  {q:"How tall is Mount Everest, in meters?", a:8849},
+  {q:"At sea level, water boils at how many degrees Fahrenheit?", a:212},
+  {q:"In what year was the first iPhone released?", a:2007},
+  {q:"How long is a marathon, in miles?", a:26.2},
+  {q:"In what year did the Titanic sink?", a:1912},
+  {q:"How many teeth are in a full adult set, wisdom teeth included?", a:32},
+  {q:"How many seconds are in one day?", a:86400},
+  {q:"In what year did humans first land on the Moon?", a:1969},
+  {q:"How many elements are on the periodic table?", a:118},
+  {q:"How many hearts does an octopus have?", a:3},
+  {q:"How many justices sit on the U.S. Supreme Court?", a:9},
+  {q:"In what year was William Shakespeare born?", a:1564},
+  {q:"How many countries are in Africa (UN members)?", a:54},
+  {q:"In what year did the Wright brothers make their first powered flight?", a:1903},
+  {q:"How many bones are in one human hand?", a:27},
+  {q:"How many feet are in a mile?", a:5280},
+  {q:"How many amendments does the U.S. Constitution have?", a:27},
+  {q:"How many minutes are in a week?", a:10080},
+  {q:"At what temperature do Fahrenheit and Celsius read the same?", a:-40},
+  {q:"In what year was the Eiffel Tower completed?", a:1889},
+  {q:"How many U.S. states border Canada?", a:13},
+  {q:"What is a perfect score in ten-pin bowling?", a:300},
+  {q:"How long is an Olympic swimming pool, in meters?", a:50},
+  {q:"In what year were the first modern Olympic Games held?", a:1896},
+  {q:"How many squares are on a chessboard?", a:64},
+  {q:"How many moons does Mars have?", a:2},
+  {q:"How many players does each team have on the field in soccer?", a:11},
+  {q:"How many time zones does Russia span?", a:11},
+  {q:"Roughly how far is the Moon from Earth on average, in miles?", a:238900},
+  {q:"Light travels about how many kilometers in one second?", a:299792},
+  {q:"How many strings does a violin have?", a:4},
+  {q:"How many hours are in a non-leap year?", a:8760},
+];
+const ROUNDS = 8, ROUND_MS = 35000, MAX_PLAYERS = 8;
+const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+const LOCAL = new URLSearchParams(location.search).has("local"); // same-browser test mode, no network
+
+/* ---------------- helpers ---------------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt = n => Number(n).toLocaleString("en-US", {maximumFractionDigits: 2});
+const parseGuess = s => { const t = String(s).replace(/[,\s]/g, ""); if (!/^-?\d*\.?\d+$/.test(t)) return null; const n = Number(t); return Number.isFinite(n) ? n : null; };
+const randCode = () => Array.from({length:4}, () => CODE_CHARS[Math.floor(Math.random()*CODE_CHARS.length)]).join("");
+const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+function myKey(){ let k; try{ k = sessionStorage.getItem("bp-key"); }catch(e){} if(!k){ k = Math.random().toString(36).slice(2,10); try{ sessionStorage.setItem("bp-key",k);}catch(e){} } return k; }
+function savedName(){ try{ return localStorage.getItem("bp-name")||""; }catch(e){ return ""; } }
+function saveName(n){ try{ localStorage.setItem("bp-name",n); }catch(e){} }
+
+/* ---------------- transport: MQTT relay over secure WebSockets (real) or BroadcastChannel (?local) ----------------
+   Topics under ballpark-ia/v1/<CODE>/
+     alive  retained, the host's id while the room is open ("" once it closes; also the host's last will)
+     state  retained, the full public game state, published by the host on every change
+     up     player -> host messages, each tagged with the sender's id (a player's last will is a "bye")
+     dm/<id> host -> one player (only "room full")                                                     */
+const BROKER = "wss://broker.emqx.io:8084/mqtt";
+const topic = (code, t) => `ballpark-ia/v1/${code}/${t}`;
+function mq(will){
+  return mqtt.connect(BROKER, {clientId:"bp_"+Math.random().toString(36).slice(2,12), clean:true, keepalive:15,
+    reconnectPeriod:2000, connectTimeout:10000, will});
+}
+function connected(c){
+  return new Promise((res, rej) => { const t=setTimeout(()=>rej({type:"timeout"}),12000); c.once("connect",()=>{clearTimeout(t);res();}); });
+}
+const enc = o => JSON.stringify(o);
+const dec = b => { try{ const s=b.toString(); return s?JSON.parse(s):null; }catch(e){ return null; } };
+
+/* host: openHost(code, onUp) -> {state(s), dm(id,d), close()} ; rejects {type:"taken"} if the code is in use */
+async function openHost(code, onUp){
+  if (LOCAL){
+    const ch = new BroadcastChannel("bp-"+code);
+    ch.onmessage = e => { const m=e.data; if(m.k==="up") onUp(m.d); else if(m.k==="hello" && last) ch.postMessage({k:"state",d:last}); };
+    let last=null;
+    return { state:s=>{last=s; ch.postMessage({k:"state",d:s});}, dm:(id,d)=>ch.postMessage({k:"dm",id,d}),
+             close:()=>{ ch.postMessage({k:"gone"}); ch.close(); } };
+  }
+  const c = mq({topic:topic(code,"alive"), payload:"", qos:1, retain:true});
+  await connected(c);
+  // is this code already taken by a live room?
+  const taken = await new Promise(res => {
+    const t = setTimeout(()=>res(false), 1500);
+    c.on("message", (tp, b) => { if(tp===topic(code,"alive") && b.length){ clearTimeout(t); res(true); } });
+    c.subscribe(topic(code,"alive"), {qos:1});
+  });
+  c.removeAllListeners("message"); c.unsubscribe(topic(code,"alive"));
+  if (taken){ c.end(true); throw {type:"taken"}; }
+  let last = null;
+  const announce = () => { c.publish(topic(code,"alive"), ME, {qos:1, retain:true}); if(last) c.publish(topic(code,"state"), enc(last), {qos:1, retain:true}); };
+  c.subscribe(topic(code,"up"), {qos:1});
+  c.on("message", (tp, b) => { if(tp===topic(code,"up")){ const m=dec(b); if(m) onUp(m); } });
+  c.on("connect", announce);            // re-assert the room after any reconnect
+  announce();
+  return {
+    state: s => { last=s; c.publish(topic(code,"state"), enc(s), {qos:1, retain:true}); },
+    dm: (id,d) => c.publish(topic(code,"dm/"+id), enc(d), {qos:1}),
+    close: () => { c.publish(topic(code,"alive"), "", {qos:1, retain:true}); c.publish(topic(code,"state"), "", {qos:1, retain:true}); setTimeout(()=>c.end(),300); }
+  };
+}
+
+/* player: openClient(code, handlers) -> {send(d)} ; rejects {type:"not-found"} when no live room has that code */
+async function openClient(code, h){
+  if (LOCAL){
+    const ch = new BroadcastChannel("bp-"+code);
+    ch.onmessage = e => { const m=e.data; if(m.k==="state") h.state(m.d); else if(m.k==="dm"&&m.id===ME) h.dm(m.d); else if(m.k==="gone") h.gone(); };
+    addEventListener("beforeunload", () => ch.postMessage({k:"up",d:{t:"bye",from:ME}}));
+    const api = { send:d=>ch.postMessage({k:"up",d:{...d,from:ME}}) };
+    ch.postMessage({k:"hello"});
+    return api;
+  }
+  const c = mq({topic:topic(code,"up"), payload:enc({t:"bye",from:ME}), qos:1, retain:false});
+  await connected(c);
+  let alive = false, goneTimer = null, found;
+  const foundP = new Promise(r => found = r);
+  c.on("message", (tp, b) => {
+    if (tp===topic(code,"alive")){
+      if (b.length){ alive=true; clearTimeout(goneTimer); found(true); }
+      else if (alive){ clearTimeout(goneTimer); goneTimer=setTimeout(h.gone, 8000); } // allow a host reconnect
+    } else if (tp===topic(code,"state")){ const s=dec(b); if(s) h.state(s); }
+    else if (tp===topic(code,"dm/"+ME)){ const d=dec(b); if(d) h.dm(d); }
+  });
+  c.subscribe([topic(code,"alive"), topic(code,"state"), topic(code,"dm/"+ME)], {qos:1});
+  setTimeout(()=>found(false), 4000);
+  if (!(await foundP)){ c.end(true); throw {type:"not-found"}; }
+  const api = { send: d => c.publish(topic(code,"up"), enc({...d, from:ME}), {qos:1}) };
+  c.on("connect", () => h.reconnected && h.reconnected());
+  addEventListener("pagehide", () => api.send({t:"bye"}));
+  return api;
+}
+
+/* ---------------- app state ---------------- */
+const ME = myKey();
+let view = {screen:"home", error:"", joinCode:(location.hash.slice(1)||"").toUpperCase().replace(/[^A-Z]/g,"").slice(0,4)};
+let pub = null;          // public game state from host
+let net = null;          // player connection
+let isHost = false;
+let tick = null, recvAt = 0, myName = "", joinTimer = null;
+
+/* ---------------- host engine (the host's browser is the referee) ---------------- */
+const Host = {
+  code:null, t:null, s:null, guesses:{}, deck:[], timer:null, seen:{},
+  async start(name){
+    for (let tries=0; tries<5 && !this.t; tries++){
+      const code = randCode();
+      try{ this.t = await openHost(code, m=>this.onUp(m)); this.code = code; }
+      catch(err){ if(!(err && err.type==="taken")) throw err; }
+    }
+    if(!this.t) throw new Error("no code");
+    this.s = {code:this.code, phase:"lobby", host:ME, players:[{id:ME,name,score:0,online:true,guessed:false,last:0}], round:0, total:ROUNDS, q:null, msLeft:0, reveal:null, v:0};
+    isHost = true; this.push();
+    setInterval(()=>this.sweep(), 5000);
+    addEventListener("pagehide", ()=>this.t.close());
+  },
+  onUp(m){
+    if(!m || typeof m!=="object") return;
+    const key = String(m.from||"").slice(0,16); if(!key || key===ME) return;
+    this.seen[key] = Date.now();
+    const p = this.s.players.find(p=>p.id===key);
+    if(m.t==="join"){
+      const name = String(m.name||"").trim().slice(0,20) || "Player";
+      if(!p){
+        if(this.s.players.length>=MAX_PLAYERS){ this.t.dm(key,{t:"full"}); return; }
+        this.s.players.push({id:key,name,score:0,online:true,guessed:false,last:0});
+      } else { p.online = true; p.name = name; }
+      this.push();
+    } else if(m.t==="guess"){ this.guess(key, m.v); }
+    else if(m.t==="hb"){ if(p && !p.online){ p.online=true; this.push(); } }
+    else if(m.t==="bye"){ if(p && p.online){ p.online=false; this.push(); this.maybeReveal(); } }
+  },
+  sweep(){ // players send a heartbeat every 5s; 20s of silence marks them offline
+    let changed=false; const now=Date.now();
+    this.s.players.forEach(p=>{ if(p.id!==ME && p.online && now-(this.seen[p.id]||0)>20000){ p.online=false; changed=true; } });
+    if(changed){ this.push(); this.maybeReveal(); }
+  },
+  online(){ return this.s.players.filter(p=>p.online); },
+  begin(){
+    if(this.online().length<2) return;
+    this.deck = shuffle(QUESTIONS).slice(0,ROUNDS);
+    this.s.players.forEach(p=>{p.score=0;p.last=0;});
+    this.s.round=0; this.next();
+  },
+  next(){
+    if(this.s.round>=ROUNDS){ this.s.phase="final"; this.s.q=null; this.push(); return; }
+    const item = this.deck[this.s.round];
+    this.s.round++; this.s.phase="question"; this.s.q=item.q; this.s.reveal=null;
+    this.guesses={}; this.s.players.forEach(p=>{p.guessed=false;p.last=0;});
+    this.deadline = Date.now()+ROUND_MS;
+    clearTimeout(this.timer); this.timer=setTimeout(()=>this.doReveal(), ROUND_MS);
+    this.push();
+  },
+  guess(key, v){
+    if(this.s.phase!=="question") return;
+    const n = typeof v==="number" && Number.isFinite(v) ? v : null;
+    const p = this.s.players.find(p=>p.id===key);
+    if(n===null || !p || key in this.guesses) return;
+    this.guesses[key]=n; p.guessed=true; this.push(); this.maybeReveal();
+  },
+  maybeReveal(){
+    if(this.s.phase==="question" && this.online().every(p=>p.id in this.guesses)) this.doReveal();
+  },
+  doReveal(){
+    if(this.s.phase!=="question") return;
+    clearTimeout(this.timer);
+    const a = this.deck[this.s.round-1].a;
+    const rows = this.s.players.map(p=>({id:p.id,name:p.name,guess:(p.id in this.guesses)?this.guesses[p.id]:null}));
+    const guessed = rows.filter(r=>r.guess!==null).map(r=>({...r,diff:Math.abs(r.guess-a)})).sort((x,y)=>x.diff-y.diff);
+    // standard competition ranking: ties share a place
+    let place=0, prev=null;
+    guessed.forEach((r,i)=>{ if(prev===null||r.diff!==prev){place=i+1;prev=r.diff;} r.place=place; r.pts=(place===1?3:place===2?1:0)+(r.diff===0?2:0); });
+    const missed = rows.filter(r=>r.guess===null).map(r=>({...r,diff:null,place:null,pts:0}));
+    const results = guessed.concat(missed);
+    results.forEach(r=>{ const p=this.s.players.find(p=>p.id===r.id); p.score+=r.pts; p.last=r.pts; });
+    this.s.phase="reveal"; this.s.reveal={answer:a, results};
+    this.push();
+  },
+  push(){
+    this.s.msLeft = this.s.phase==="question" ? Math.max(0,this.deadline-Date.now()) : 0;
+    this.s.v++;
+    const snap = JSON.parse(JSON.stringify(this.s));
+    this.t.state(snap);
+    onState(snap);
+  }
+};
+
+/* ---------------- player side ---------------- */
+function onState(s){
+  if(pub && s.code===pub.code && s.v<pub.v) return;  // ignore an older retained copy
+  pub = s; recvAt = Date.now(); view.error="";
+  if(!isHost){
+    const inGame = s.players.some(p=>p.id===ME);
+    if(!inGame){ return; }            // keep "Connecting…" until the host has added us
+    clearInterval(joinTimer); joinTimer=null;
+  }
+  view.screen = "game";
+  try{ history.replaceState(null,"","#"+s.code); }catch(e){}
+  render();
+}
+async function hostGame(){
+  const name = ($("#name").value||"").trim();
+  if(!name){ view.error="Enter your name first."; return render(); }
+  saveName(name); view.screen="connecting"; render();
+  try{ await Host.start(name.slice(0,20)); }
+  catch(e){ view.screen="home"; view.error="Couldn't open a game room. Check your connection and try again."; render(); }
+}
+async function joinGame(){
+  const name = ($("#name").value||"").trim();
+  const code = ($("#code").value||"").toUpperCase().replace(/[^A-Z]/g,"");
+  if(!name){ view.error="Enter your name first."; return render(); }
+  if(code.length!==4){ view.error="Room codes are 4 letters."; return render(); }
+  saveName(name); myName=name.slice(0,20); view.joinCode=code; view.screen="connecting"; render();
+  try{
+    net = await openClient(code, {
+      state: onState,
+      dm: m => { if(m.t==="full"){ clearInterval(joinTimer); view.screen="home"; view.error="That game is full (8 players max)."; render(); } },
+      gone: () => { view.screen="ended"; render(); },
+      reconnected: () => net && net.send({t:"join", name:myName})
+    });
+    const hello = () => net.send({t:"join", name:myName});
+    hello(); joinTimer = setInterval(hello, 3000);        // repeat until the host lists us
+    setInterval(()=>net.send({t:"hb"}), 5000);
+    setTimeout(()=>{ if(view.screen==="connecting"){ clearInterval(joinTimer); view.screen="home"; view.error="The host didn't respond. Check the code and try again."; render(); } }, 15000);
+  }catch(e){
+    view.screen="home";
+    view.error = e && e.type==="not-found" ? `No open game with code ${code}. Check the code with your host.` : "Couldn't reach the game server. Check your connection and try again.";
+    render();
+  }
+}
+function sendGuess(){
+  const v = parseGuess($("#guess").value);
+  if(v===null){ $("#gerr").textContent="Type a number, like 1200 or 26.2"; return; }
+  if(isHost) Host.guess(ME, v); else { net.send({t:"guess", v}); $("#gBtn").disabled=true; $("#gBtn").textContent="Sending…"; }
+}
+function copyLink(){
+  const link = location.origin+location.pathname+location.search+"#"+pub.code;
+  const btn=$("#copy");
+  const done=()=>{btn.textContent="Copied"; setTimeout(()=>btn.textContent="Copy",1500);};
+  if(navigator.clipboard) navigator.clipboard.writeText(link).then(done,()=>{});
+}
+
+/* ---------------- rendering ---------------- */
+const RULES = `<ol class="rules">
+  <li><span>One player hosts and gets a 4-letter room code. Everyone else joins with that code on their own phone or computer.</span></li>
+  <li><span>Each round shows a question whose answer is a number. Type your best guess before the 35-second clock runs out. Guesses stay hidden until everyone is in.</span></li>
+  <li><span>Closest guess scores <b>3 points</b>, second closest scores <b>1</b>. Hit the answer exactly for <b>+2 bonus</b>. Ties share the place.</span></li>
+  <li><span>After ${ROUNDS} rounds, the highest score wins.</span></li>
+</ol>`;
+
+function render(){
+  const app=$("#app"); clearInterval(tick);
+  const head = `<div class="brand"><h1 class="lit">Ballpark</h1><small>Closest guess wins</small></div>`;
+  if(view.screen==="home"){
+    app.innerHTML = `${head}
+    <section class="panel">
+      <label for="name">Your name<input id="name" maxlength="20" autocomplete="nickname" value="${esc(savedName())}" placeholder="e.g. Jordan"></label>
+      <button id="hostBtn">Host a new game</button>
+    </section>
+    <section class="panel">
+      <span class="eyebrow">Have a room code?</span>
+      <div class="row">
+        <input id="code" class="code" maxlength="4" autocomplete="off" autocapitalize="characters" aria-label="Room code" placeholder="CODE" value="${esc(view.joinCode)}">
+        <button id="joinBtn" class="ghost">Join game</button>
+      </div>
+    </section>
+    <p class="err" role="alert">${esc(view.error)}</p>
+    <section class="panel"><h2>How to play</h2>${RULES}<p class="note">2 to 8 players, each on their own device.</p></section>
+    <footer>Ballpark · a party game of educated guesses</footer>`;
+    $("#hostBtn").onclick=hostGame; $("#joinBtn").onclick=joinGame;
+    $("#code").onkeydown=e=>{ if(e.key==="Enter") joinGame(); };
+    return;
+  }
+  if(view.screen==="connecting"){ app.innerHTML=`${head}<section class="panel"><div class="waiting"><span class="dot"></span>Connecting…</div></section>`; return; }
+  if(view.screen==="ended"){
+    app.innerHTML=`${head}<section class="panel"><h2>The host left</h2><p class="note">This game has ended because the host closed their page. Start a new one any time.</p><button id="home">Back to start</button></section>`;
+    $("#home").onclick=()=>{ location.hash=""; location.reload(); }; return;
+  }
+  const s=pub, me=s.players.find(p=>p.id===ME);
+  const playerList = (showGuess)=>`<ul class="players">${s.players.map(p=>`<li>
+      <span class="name">${esc(p.name)}${p.id===ME?'<span class="you">YOU</span>':''}${p.id===s.host?' <span class="tag">host</span>':''}</span>
+      ${!p.online?'<span class="tag off">offline</span>': showGuess ? (p.guessed?'<span class="tag ok">locked in</span>':'<span class="tag">thinking…</span>') : `<span class="score">${p.score}</span>`}
+    </li>`).join("")}</ul>`;
+
+  if(s.phase==="lobby"){
+    const n = s.players.filter(p=>p.online).length;
+    app.innerHTML = `${head}
+    <section class="panel" style="text-align:center">
+      <span class="eyebrow">Room code</span>
+      <div class="bigcode">${esc(s.code)}</div>
+      <div class="share"><code>${esc(location.origin+location.pathname+location.search+"#"+s.code)}</code><button id="copy" class="ghost">Copy</button></div>
+      <p class="note">Players open this page and enter the code, or open the link directly.</p>
+    </section>
+    <section class="panel">
+      <div class="meta"><h2>Players</h2><span class="tag">${n} / ${MAX_PLAYERS}</span></div>
+      ${playerList(false)}
+      ${isHost ? `<button id="startBtn" ${n<2?"disabled":""}>Start game</button>${n<2?'<p class="note">Waiting for at least one more player to join.</p>':''}`
+               : `<div class="waiting"><span class="dot"></span>Waiting for the host to start…</div>`}
+    </section>
+    <section class="panel"><h2>How to play</h2>${RULES}</section>`;
+    $("#copy").onclick=copyLink; if(isHost) $("#startBtn").onclick=()=>Host.begin();
+    return;
+  }
+  if(s.phase==="question"){
+    const deadline = recvAt + s.msLeft;
+    const locked = me && me.guessed;
+    app.innerHTML = `${head}
+    <section class="panel">
+      <div class="meta"><span class="eyebrow">Round ${s.round} of ${s.total}</span><span id="clock" class="clock">35</span></div>
+      <p class="q">${esc(s.q)}</p>
+      ${locked ? `<div class="waiting"><span class="dot"></span>Guess locked in. Waiting for the others…</div>`
+      : `<label for="guess">Your guess<input id="guess" inputmode="decimal" autocomplete="off" placeholder="Type a number"></label>
+         <button id="gBtn">Lock in guess</button><p id="gerr" class="err" role="alert"></p>`}
+    </section>
+    <section class="panel">${playerList(true)}${isHost?'<button id="revealBtn" class="ghost">Reveal now</button>':''}</section>`;
+    const clock=$("#clock");
+    const upd=()=>{ const left=Math.max(0,Math.ceil((deadline-Date.now())/1000)); clock.textContent=left; clock.classList.toggle("low",left<=10); };
+    upd(); tick=setInterval(upd,250);
+    if(!locked){ $("#gBtn").onclick=sendGuess; const g=$("#guess"); g.onkeydown=e=>{if(e.key==="Enter")sendGuess();}; g.focus(); }
+    if(isHost) $("#revealBtn").onclick=()=>Host.doReveal();
+    return;
+  }
+  if(s.phase==="reveal"){
+    const r=s.reveal, last=s.round>=s.total;
+    app.innerHTML = `${head}
+    <section class="panel">
+      <span class="eyebrow">Round ${s.round} of ${s.total}</span>
+      <p class="q">${esc(s.q)}</p>
+      <div class="answer"><span class="eyebrow">The answer</span><span class="num lit">${fmt(r.answer)}</span></div>
+      <div style="overflow-x:auto"><table>
+        <thead><tr><th>Player</th><th class="r">Guess</th><th class="r">Off by</th><th class="r">Pts</th></tr></thead>
+        <tbody>${r.results.map(x=>`<tr><td><span class="name">${esc(x.name)}</span>${x.id===ME?'<span class="you">YOU</span>':''}</td>
+          <td class="r">${x.guess===null?'<span class="note">no guess</span>':fmt(x.guess)}</td>
+          <td class="r">${x.diff===null?'–':x.diff===0?'<b class="lit">EXACT</b>':fmt(x.diff)}</td>
+          <td class="r"><span class="pts">${x.pts?'+'+x.pts:'0'}</span></td></tr>`).join("")}</tbody>
+      </table></div>
+    </section>
+    <section class="panel"><div class="meta"><h2>Scoreboard</h2></div>${playerList(false)}
+      ${isHost?`<button id="nextBtn">${last?"See final results":"Next question"}</button>`:`<div class="waiting"><span class="dot"></span>Waiting for the host to continue…</div>`}
+    </section>`;
+    if(isHost) $("#nextBtn").onclick=()=>Host.next();
+    return;
+  }
+  if(s.phase==="final"){
+    const ranked=[...s.players].sort((a,b)=>b.score-a.score);
+    const top=ranked[0].score, winners=ranked.filter(p=>p.score===top);
+    app.innerHTML = `${head}
+    <section class="panel podium">
+      <span class="eyebrow">Final whistle</span>
+      <h2>${winners.length>1?"It's a tie":"Winner"}</h2>
+      <div class="num lit">${winners.map(w=>esc(w.name)).join(" & ")}</div>
+      <p class="note">${top} points over ${s.total} rounds</p>
+    </section>
+    <section class="panel"><h2>Standings</h2>${`<ul class="players">${ranked.map((p,i)=>`<li><span class="name">${i+1}. ${esc(p.name)}${p.id===ME?'<span class="you">YOU</span>':''}</span><span class="score">${p.score}</span></li>`).join("")}</ul>`}
+      ${isHost?'<button id="againBtn">Play again</button>':'<div class="waiting"><span class="dot"></span>The host can start a rematch.</div>'}
+    </section>`;
+    if(isHost) $("#againBtn").onclick=()=>Host.begin();
+  }
+}
+
+/* host closing the tab ends the game for everyone; warn first */
+addEventListener("beforeunload", e => { if(isHost && pub && pub.phase!=="lobby"){ e.preventDefault(); e.returnValue=""; } });
+render();
+</script>
+</body>
+</html>
