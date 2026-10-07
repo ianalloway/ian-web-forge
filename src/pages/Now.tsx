@@ -74,8 +74,8 @@ const NOW_DATA = {
     title: 'Where I Am',
     icon: MapPin,
     items: [
-      'Tampa, FL — University of South Florida, finishing M.S. in AI',
-      'Open to remote ML engineer / applied AI roles',
+      'Fairmont, WV — remote M.S. in AI at the University of South Florida',
+      'Open to remote AI engineering and LLM evaluation roles',
       'Available for LLM evaluation consulting engagements',
     ],
   },

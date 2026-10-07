@@ -143,7 +143,7 @@ const HireMe = () => {
         <div className="max-w-6xl mx-auto grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div className={`transition-[opacity,transform] duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             <Badge className="mb-5 bg-green-500/10 text-green-300 border-green-500/30 hover:bg-green-500/10">
-              OPEN TO WORK • ML Engineer / Data Scientist
+              OPEN TO WORK • AI Engineer / LLM Evaluation
             </Badge>
             <h1 className="text-5xl md:text-7xl font-bold leading-[0.95] tracking-tight text-white mb-5">
               Hire me for the part after the model too.
@@ -152,7 +152,7 @@ const HireMe = () => {
               I build evaluation-first analytics and decision-support products: models, APIs, dashboards, reporting, and the surrounding product layer that makes the work usable.
             </p>
             <p className="text-sm md:text-base text-green-400/65 max-w-2xl leading-relaxed mb-8">
-              Best fit: ML engineering, applied AI, analytics engineering, and data science roles where someone needs more than a notebook and a nice chart. That is probably also why my favorite project category is “things that keep dashboards honest.”
+              Best fit: AI engineering, LLM evaluation, ML engineering, and data science roles where someone needs more than a notebook and a nice chart. That is probably also why my favorite project category is “things that keep dashboards honest.”
             </p>
             <div className="flex flex-wrap gap-3">
               <Button className="bg-green-500 text-black hover:bg-green-400 font-mono" asChild>

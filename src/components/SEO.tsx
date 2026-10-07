@@ -9,8 +9,8 @@ interface SEOProps {
 }
 
 const defaults = {
-  title: 'Ian Alloway | ML Engineer & Data Scientist',
-  description: 'ML engineer and data scientist building evaluation-first ML systems, sports analytics, dashboards, and developer tools. B.S. Information Science from USF; M.S. Artificial Intelligence in progress at USF.',
+  title: 'Ian Alloway | AI Engineer · LLM Evaluation & Agent Tooling',
+  description: 'AI engineer focused on LLM evaluation and agent tooling: eval work for AI labs, juryrig (an open-source LLM-judge audit kit), agent economics, and sports models. B.S. Information Science from USF; M.S. Artificial Intelligence in progress at USF.',
   url: 'https://ianalloway.xyz',
   image: '/og-research-desk.png',
   imageAlt: 'Ian Alloway portfolio research desk with a model calibration trace',
@@ -56,7 +56,7 @@ export default function SEO({ title, description, path = '', image, noIndex = fa
           '@type': 'Person',
           name: 'Ian Alloway',
           url: defaults.url,
-          jobTitle: 'ML Engineer and Data Scientist',
+          jobTitle: 'AI Engineer',
           description: defaults.description,
           alumniOf: {
             '@type': 'CollegeOrUniversity',
@@ -82,7 +82,7 @@ export default function SEO({ title, description, path = '', image, noIndex = fa
       {/* Misc */}
       <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow'} />
       <meta name="author" content="Ian Alloway" />
-      <meta name="keywords" content="Ian Alloway, AI Engineer, Data Scientist, ML Engineer, Machine Learning, Portfolio, USF, Sports Analytics, Model Evaluation, Applied AI, XGBoost, Python, React, FastAPI" />
+      <meta name="keywords" content="Ian Alloway, AI Engineer, LLM Evaluation, AI Agents, juryrig, ML Engineer, Data Scientist, Machine Learning, Portfolio, USF, Sports Analytics, Model Evaluation, Applied AI, XGBoost, Python, React, FastAPI" />
       <meta name="theme-color" content="#0b0c0a" />
     </Helmet>
   );
