@@ -99,6 +99,7 @@ const Hamming = lazy(() => import("./pages/Hamming"));
 const Hyperloglog = lazy(() => import("./pages/Hyperloglog"));
 const RingPage = lazy(() => import("./pages/Ring"));
 const DiffPage = lazy(() => import("./pages/Diff"));
+const Skiplist = lazy(() => import("./pages/Skiplist"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -204,6 +205,7 @@ const routes = [
   { path: "/hyperloglog", Component: Hyperloglog, seo: { title: "HyperLogLog — counting distinct things without remembering any", description: "Counting unique visitors exactly means storing every id. HyperLogLog answers the same question in a fixed few kilobytes by keeping only the longest run of leading zeros each register has seen, with error settling at 1.04/√m regardless of the count. Watch the estimate track the truth while an exact set runs out of room." } },
   { path: "/ring", Component: RingPage, seo: { title: "Consistent Hashing — adding a server without moving everything", description: "`hash(key) % n` works until n changes: add a fifth server and four fifths of the cache is suddenly in the wrong place. Consistent hashing puts keys and servers on the same circle so only the arc behind a new server moves — about 1/n of keys. Add and remove servers and watch the measured remap percentage against what the modulus would have cost." } },
   { path: "/diff", Component: DiffPage, seo: { title: "Myers Diff — the algorithm behind git diff", description: "A diff is a shortest path. Lay the old file along one axis and the new along the other: right deletes, down inserts, and a diagonal is a shared line that costs nothing. Myers explores the graph in order of edit distance, and the first wavefront to reach the far corner is the minimal diff — without ever filling an N×M table." } },
+  { path: "/skiplist", Component: Skiplist, seo: { title: "Skip Lists — a balanced structure that never balances", description: "An AVL tree stays shallow by measuring its height and rotating. A skip list reaches the same O(log n) by flipping a coin: each node is promoted to the next express lane with probability p, and a search runs along the top lane and drops a level whenever the next hop would overshoot. No rotations, no rebalancing — just a probabilistic guarantee." } },
   { path: "*", Component: NotFound, seo: { title: "Page not found", noIndex: true } },
 ] satisfies RouteConfig[];
 
