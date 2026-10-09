@@ -480,6 +480,7 @@ async function joinGame(){
   if(!name){ view.error="Enter your name first."; return render(); }
   if(code.length!==4){ view.error="Room codes are 4 letters."; return render(); }
   saveName(name); myName=name.slice(0,20); view.joinCode=code; view.screen="connecting"; render();
+  hostKey = null; pub = null; byeEnv = null;          // a new room: forget the last room's host pin
   try{ await identity; }catch(e){ view.screen="home"; view.error="This browser can't sign game messages. Open the game over https in a current browser."; return render(); }
   try{
     net = await openClient(code, {
