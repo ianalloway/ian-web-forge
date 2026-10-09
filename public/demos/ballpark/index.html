@@ -148,11 +148,55 @@ const LOCAL = new URLSearchParams(location.search).has("local"); // same-browser
 /* ---------------- helpers ---------------- */
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const fmt = (n, q) => Number(n).toLocaleString("en-US", {maximumFractionDigits: 2, useGrouping: !/\byear\b/i.test(q||"")}); // no "1,903" for years
+const fmt = (n, q) => esc(Number(n).toLocaleString("en-US", {maximumFractionDigits: 2, useGrouping: !/\byear\b/i.test(q||"")})); // no "1,903" for years
 const parseGuess = s => { const t = String(s).replace(/[,\s]/g, ""); if (!/^-?\d*\.?\d+$/.test(t)) return null; const n = Number(t); return Number.isFinite(n) ? n : null; };
 const randCode = () => Array.from({length:4}, () => CODE_CHARS[Math.floor(Math.random()*CODE_CHARS.length)]).join("");
 const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
 function myKey(){ let k; try{ k = sessionStorage.getItem("bp-key"); }catch(e){} if(!k){ k = Math.random().toString(36).slice(2,10); try{ sessionStorage.setItem("bp-key",k);}catch(e){} } return k; }
+/* ---------------- untrusted input ----------------
+   The relay is public, so anyone who knows the room code can publish to its topics. Every game
+   state is checked against a strict schema and rebuilt from known fields before it is rendered,
+   and every value that reaches innerHTML goes through esc().                                    */
+const PHASES = ["lobby","question","reveal","final"];
+const ID_RE = /^[a-z0-9]{1,16}$/;
+const isId = x => typeof x==="string" && ID_RE.test(x);
+const isStr = (x, max) => typeof x==="string" && x.length<=max;
+const isInt = (x, lo, hi) => Number.isInteger(x) && x>=lo && x<=hi;
+const isNum = (x, lo, hi) => typeof x==="number" && Number.isFinite(x) && x>=lo && x<=hi;
+const isObj = x => !!x && typeof x==="object" && !Array.isArray(x);
+const MAXN = Number.MAX_VALUE;
+function validPlayer(p){
+  if(!isObj(p) || !isId(p.id) || !isStr(p.name,20) || !isInt(p.score,0,1e6) || !isInt(p.last,0,5)
+     || typeof p.online!=="boolean" || typeof p.guessed!=="boolean") return null;
+  return {id:p.id, name:p.name, score:p.score, last:p.last, online:p.online, guessed:p.guessed};
+}
+function validResult(x){
+  if(!isObj(x) || !isId(x.id) || !isStr(x.name,20) || !isInt(x.pts,0,5)) return null;
+  const missed = x.guess===null;
+  if(missed ? (x.diff!==null || x.place!==null)
+            : (!isNum(x.guess,-MAXN,MAXN) || !isNum(x.diff,0,MAXN) || !isInt(x.place,1,MAX_PLAYERS))) return null;
+  return {id:x.id, name:x.name, guess:x.guess, diff:x.diff, place:x.place, pts:x.pts};
+}
+/* returns a clean copy of a game state, or null if anything is missing, mistyped or out of range */
+function validState(s){
+  if(!isObj(s) || typeof s.code!=="string" || !/^[A-Z]{4}$/.test(s.code) || !PHASES.includes(s.phase) || !isId(s.host)) return null;
+  if(!isInt(s.total,1,100) || !isInt(s.round,0,s.total) || !isInt(s.v,0,Number.MAX_SAFE_INTEGER) || !isNum(s.msLeft,0,ROUND_MS)) return null;
+  if(!Array.isArray(s.players) || s.players.length<1 || s.players.length>MAX_PLAYERS) return null;
+  const players = s.players.map(validPlayer);
+  if(players.includes(null) || new Set(players.map(p=>p.id)).size!==players.length) return null;
+  const needQ = s.phase==="question" || s.phase==="reveal";
+  if(needQ ? !(isStr(s.q,300) && s.q) : !(s.q===null || isStr(s.q,300))) return null;
+  let reveal = null;
+  if(s.phase==="reveal"){
+    const r = s.reveal;
+    if(!isObj(r) || !isNum(r.answer,-MAXN,MAXN) || !Array.isArray(r.results) || r.results.length>MAX_PLAYERS) return null;
+    const results = r.results.map(validResult);
+    if(results.includes(null)) return null;
+    reveal = {answer:r.answer, results};
+  }
+  return {code:s.code, phase:s.phase, host:s.host, players, round:s.round, total:s.total,
+          q:needQ ? s.q : null, msLeft:s.msLeft, reveal, v:s.v};
+}
 function savedName(){ try{ return localStorage.getItem("bp-name")||""; }catch(e){ return ""; } }
 function saveName(n){ try{ localStorage.setItem("bp-name",n); }catch(e){} }
 
@@ -331,7 +375,10 @@ const Host = {
 };
 
 /* ---------------- player side ---------------- */
-function onState(s){
+function onState(raw){
+  const s = validState(raw);
+  if(!s) return;                                      // malformed or hostile state: drop it
+  if(s.code!==(isHost ? Host.code : view.joinCode)) return;  // only the room we are in
   if(pub && s.code===pub.code && s.v<pub.v) return;  // ignore an older retained copy
   pub = s; recvAt = Date.now(); view.error="";
   if(!isHost){
@@ -424,7 +471,7 @@ function render(){
   const s=pub, me=s.players.find(p=>p.id===ME);
   const playerList = (showGuess)=>`<ul class="players">${s.players.map(p=>`<li>
       <span class="name">${esc(p.name)}${p.id===ME?'<span class="you">YOU</span>':''}${p.id===s.host?' <span class="tag">host</span>':''}</span>
-      ${!p.online?'<span class="tag off">offline</span>': showGuess ? (p.guessed?'<span class="tag ok">locked in</span>':'<span class="tag">thinking…</span>') : `<span class="score">${p.score}</span>`}
+      ${!p.online?'<span class="tag off">offline</span>': showGuess ? (p.guessed?'<span class="tag ok">locked in</span>':'<span class="tag">thinking…</span>') : `<span class="score">${esc(p.score)}</span>`}
     </li>`).join("")}</ul>`;
 
   if(s.phase==="lobby"){
@@ -451,7 +498,7 @@ function render(){
     const locked = me && me.guessed;
     app.innerHTML = `${head}
     <section class="panel">
-      <div class="meta"><span class="eyebrow">Round ${s.round} of ${s.total}</span><span id="clock" class="clock">35</span></div>
+      <div class="meta"><span class="eyebrow">Round ${esc(s.round)} of ${esc(s.total)}</span><span id="clock" class="clock">35</span></div>
       <p class="q">${esc(s.q)}</p>
       ${locked ? `<div class="waiting"><span class="dot"></span>Guess locked in. Waiting for the others…</div>`
       : `<label for="guess">Your guess<input id="guess" inputmode="decimal" autocomplete="off" placeholder="Type a number"></label>
@@ -469,7 +516,7 @@ function render(){
     const r=s.reveal, last=s.round>=s.total;
     app.innerHTML = `${head}
     <section class="panel">
-      <span class="eyebrow">Round ${s.round} of ${s.total}</span>
+      <span class="eyebrow">Round ${esc(s.round)} of ${esc(s.total)}</span>
       <p class="q">${esc(s.q)}</p>
       <div class="answer"><span class="eyebrow">The answer</span><span class="num lit">${fmt(r.answer, s.q)}</span></div>
       <div style="overflow-x:auto"><table>
@@ -477,7 +524,7 @@ function render(){
         <tbody>${r.results.map(x=>`<tr><td><span class="name">${esc(x.name)}</span>${x.id===ME?'<span class="you">YOU</span>':''}</td>
           <td class="r">${x.guess===null?'<span class="note">no guess</span>':fmt(x.guess, s.q)}</td>
           <td class="r">${x.diff===null?'–':x.diff===0?'<b class="lit">EXACT</b>':fmt(x.diff)}</td>
-          <td class="r"><span class="pts">${x.pts?'+'+x.pts:'0'}</span></td></tr>`).join("")}</tbody>
+          <td class="r"><span class="pts">${x.pts?'+'+esc(x.pts):'0'}</span></td></tr>`).join("")}</tbody>
       </table></div>
     </section>
     <section class="panel"><div class="meta"><h2>Scoreboard</h2></div>${playerList(false)}
@@ -494,9 +541,9 @@ function render(){
       <span class="eyebrow">Final whistle</span>
       <h2>${winners.length>1?"It's a tie":"Winner"}</h2>
       <div class="num lit">${winners.map(w=>esc(w.name)).join(" & ")}</div>
-      <p class="note">${top} points over ${s.total} rounds</p>
+      <p class="note">${esc(top)} points over ${esc(s.total)} rounds</p>
     </section>
-    <section class="panel"><h2>Standings</h2>${`<ul class="players">${ranked.map((p,i)=>`<li><span class="name">${i+1}. ${esc(p.name)}${p.id===ME?'<span class="you">YOU</span>':''}</span><span class="score">${p.score}</span></li>`).join("")}</ul>`}
+    <section class="panel"><h2>Standings</h2>${`<ul class="players">${ranked.map((p,i)=>`<li><span class="name">${i+1}. ${esc(p.name)}${p.id===ME?'<span class="you">YOU</span>':''}</span><span class="score">${esc(p.score)}</span></li>`).join("")}</ul>`}
       ${isHost?'<button id="againBtn">Play again</button>':'<div class="waiting"><span class="dot"></span>The host can start a rematch.</div>'}
     </section>`;
     if(isHost) $("#againBtn").onclick=()=>Host.begin();
