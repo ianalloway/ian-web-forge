@@ -442,13 +442,15 @@ async function fromHost(env){
 }
 async function onSignedState(env){ const s = await fromHost(env); if(s) onState(s); }
 let lastTs = 0, byeEnv = null, outbox = Promise.resolve();
-/* sign and send in order; also keep a signed "bye" ready, because pagehide can't wait for crypto */
+const nextTs = () => (lastTs = Math.max(lastTs+1, Date.now()));  // one strictly rising counter for every signed message
+/* sign and send in order; also keep a signed "bye" ready, because pagehide can't wait for crypto.
+   The bye takes its own timestamp from the counter, so the next real send is always newer than the
+   bye before it and the bye prepared after that send is newer still.                              */
 function sendUp(d){
   const room = view.joinCode;
   outbox = outbox.then(async()=>{
-    lastTs = Math.max(lastTs+1, Date.now());
-    net.send(await seal({...d, from:ME, room, ts:lastTs}));
-    byeEnv = await seal({t:"bye", from:ME, room, ts:lastTs+1});
+    net.send(await seal({...d, from:ME, room, ts:nextTs()}));
+    byeEnv = await seal({t:"bye", from:ME, room, ts:nextTs()});
   }).catch(()=>{});
 }
 function onState(raw){
