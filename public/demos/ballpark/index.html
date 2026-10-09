@@ -152,13 +152,12 @@ const fmt = (n, q) => esc(Number(n).toLocaleString("en-US", {maximumFractionDigi
 const parseGuess = s => { const t = String(s).replace(/[,\s]/g, ""); if (!/^-?\d*\.?\d+$/.test(t)) return null; const n = Number(t); return Number.isFinite(n) ? n : null; };
 const randCode = () => Array.from({length:4}, () => CODE_CHARS[Math.floor(Math.random()*CODE_CHARS.length)]).join("");
 const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
-function myKey(){ let k; try{ k = sessionStorage.getItem("bp-key"); }catch(e){} if(!k){ k = Math.random().toString(36).slice(2,10); try{ sessionStorage.setItem("bp-key",k);}catch(e){} } return k; }
 /* ---------------- untrusted input ----------------
    The relay is public, so anyone who knows the room code can publish to its topics. Every game
    state is checked against a strict schema and rebuilt from known fields before it is rendered,
    and every value that reaches innerHTML goes through esc().                                    */
 const PHASES = ["lobby","question","reveal","final"];
-const ID_RE = /^[a-z0-9]{1,16}$/;
+const ID_RE = /^[0-9a-f]{32}$/;    // player ids are key fingerprints, see "identity" below
 const isId = x => typeof x==="string" && ID_RE.test(x);
 const isStr = (x, max) => typeof x==="string" && x.length<=max;
 const isInt = (x, lo, hi) => Number.isInteger(x) && x>=lo && x<=hi;
@@ -200,12 +199,67 @@ function validState(s){
 function savedName(){ try{ return localStorage.getItem("bp-name")||""; }catch(e){ return ""; } }
 function saveName(n){ try{ localStorage.setItem("bp-name",n); }catch(e){} }
 
+/* ---------------- identity: everything sent over the relay is signed ----------------
+   Each tab makes an ECDSA P-256 key pair. The private key stays in this tab (sessionStorage, so a
+   refresh keeps your seat) and is never published. A player's id is a fingerprint of their public
+   key (first 128 bits of its SHA-256), so a seat is bound to one key and nobody else can sign for it.
+   Players sign every message to the host with a fresh timestamp (the host drops anything not newer
+   than the last one it accepted, so replays fail), and the host signs every state and dm. Players
+   pin the host key from the first validly signed state of the room and ignore any other signer.  */
+const SIG = {name:"ECDSA", namedCurve:"P-256"}, SIGN = {name:"ECDSA", hash:"SHA-256"};
+const b64 = buf => btoa(String.fromCharCode(...new Uint8Array(buf)));
+const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+const utf8 = s => new TextEncoder().encode(s);
+async function fingerprint(pubB64){
+  const h = new Uint8Array(await crypto.subtle.digest("SHA-256", unb64(pubB64)));
+  return Array.from(h.slice(0,16), b => b.toString(16).padStart(2,"0")).join("");
+}
+const pubKeys = new Map();
+function importPub(pubB64){
+  if(!pubKeys.has(pubB64)) pubKeys.set(pubB64, crypto.subtle.importKey("raw", unb64(pubB64), SIG, false, ["verify"]));
+  return pubKeys.get(pubB64);
+}
+let ME = "", MYPUB = "", MYKEY = null;
+async function loadIdentity(){
+  let kp = null;
+  try{
+    const saved = JSON.parse(sessionStorage.getItem("bp-id"));
+    if(saved) kp = {privateKey: await crypto.subtle.importKey("jwk", saved.priv, SIG, false, ["sign"]),
+                    publicKey: await crypto.subtle.importKey("jwk", saved.pub, SIG, true, ["verify"])};
+  }catch(e){ kp = null; }
+  if(!kp){
+    kp = await crypto.subtle.generateKey(SIG, true, ["sign","verify"]);
+    try{ sessionStorage.setItem("bp-id", JSON.stringify({priv: await crypto.subtle.exportKey("jwk", kp.privateKey),
+                                                         pub: await crypto.subtle.exportKey("jwk", kp.publicKey)})); }catch(e){}
+  }
+  MYKEY = kp.privateKey;
+  MYPUB = b64(await crypto.subtle.exportKey("raw", kp.publicKey));
+  ME = await fingerprint(MYPUB);
+}
+const identity = loadIdentity();
+identity.catch(()=>{});  // reported when hosting or joining
+/* a signed envelope: b is the JSON body, g the signature over it, k the signer's public key */
+async function seal(body){
+  const b = JSON.stringify(body);
+  return {b, g: b64(await crypto.subtle.sign(SIGN, MYKEY, utf8(b))), k: MYPUB};
+}
+/* returns the parsed body if env is validly signed by the key it names and that key's fingerprint is
+   expectId (or the key is exactly expectKey); otherwise null */
+async function unseal(env, {expectId, expectKey}){
+  try{
+    if(!isObj(env) || !isStr(env.b,20000) || !isStr(env.g,200) || !isStr(env.k,200)) return null;
+    if(expectKey ? env.k!==expectKey : (await fingerprint(env.k))!==expectId) return null;
+    if(!(await crypto.subtle.verify(SIGN, await importPub(env.k), unb64(env.g), utf8(env.b)))) return null;
+    return JSON.parse(env.b);
+  }catch(e){ return null; }
+}
+
 /* ---------------- transport: MQTT relay over secure WebSockets (real) or BroadcastChannel (?local) ----------------
    Topics under ballpark-ia/v1/<CODE>/
      alive  retained, the host's id while the room is open ("" once it closes; also the host's last will)
-     state  retained, the full public game state, published by the host on every change
-     up     player -> host messages, each tagged with the sender's id (a player's last will is a "bye")
-     dm/<id> host -> one player (only "room full")                                                     */
+     state  retained, the full public game state, published by the host on every change (signed)
+     up     player -> host messages, each signed by the sender (see "identity")
+     dm/<id> host -> one player (only "room full", signed)                                             */
 const BROKER = "wss://broker.emqx.io:8084/mqtt";
 const topic = (code, t) => `ballpark-ia/v1/${code}/${t}`;
 function mq(will){
@@ -255,12 +309,11 @@ async function openClient(code, h){
   if (LOCAL){
     const ch = new BroadcastChannel("bp-"+code);
     ch.onmessage = e => { const m=e.data; if(m.k==="state") h.state(m.d); else if(m.k==="dm"&&m.id===ME) h.dm(m.d); else if(m.k==="gone") h.gone(); };
-    addEventListener("beforeunload", () => ch.postMessage({k:"up",d:{t:"bye",from:ME}}));
-    const api = { send:d=>ch.postMessage({k:"up",d:{...d,from:ME}}) };
+    const api = { send:d=>ch.postMessage({k:"up",d}) };
     ch.postMessage({k:"hello"});
     return api;
   }
-  const c = mq({topic:topic(code,"up"), payload:enc({t:"bye",from:ME}), qos:1, retain:false});
+  const c = mq();  // no last will: a will can't carry a fresh signature, so a dropped player times out instead
   await connected(c);
   let alive = false, goneTimer = null, found;
   const foundP = new Promise(r => found = r);
@@ -274,14 +327,12 @@ async function openClient(code, h){
   c.subscribe([topic(code,"alive"), topic(code,"state"), topic(code,"dm/"+ME)], {qos:1});
   setTimeout(()=>found(false), 4000);
   if (!(await foundP)){ c.end(true); throw {type:"not-found"}; }
-  const api = { send: d => c.publish(topic(code,"up"), enc({...d, from:ME}), {qos:1}) };
+  const api = { send: d => c.publish(topic(code,"up"), enc(d), {qos:1}) };
   c.on("connect", () => h.reconnected && h.reconnected());
-  addEventListener("pagehide", () => api.send({t:"bye"}));
   return api;
 }
 
 /* ---------------- app state ---------------- */
-const ME = myKey();
 let view = {screen:"home", error:"", joinCode:(location.hash.slice(1)||"").toUpperCase().replace(/[^A-Z]/g,"").slice(0,4)};
 let pub = null;          // public game state from host
 let net = null;          // player connection
@@ -290,7 +341,7 @@ let tick = null, recvAt = 0, myName = "", joinTimer = null;
 
 /* ---------------- host engine (the host's browser is the referee) ---------------- */
 const Host = {
-  code:null, t:null, s:null, guesses:{}, deck:[], timer:null, seen:{},
+  code:null, t:null, s:null, guesses:{}, deck:[], timer:null, seen:{}, lastTs:{}, inbox:Promise.resolve(), outbox:Promise.resolve(),
   async start(name){
     for (let tries=0; tries<5 && !this.t; tries++){
       const code = randCode();
@@ -303,15 +354,20 @@ const Host = {
     setInterval(()=>this.sweep(), 5000);
     addEventListener("pagehide", ()=>this.t.close());
   },
-  onUp(m){
-    if(!m || typeof m!=="object") return;
-    const key = String(m.from||"").slice(0,16); if(!key || key===ME) return;
+  onUp(env){ this.inbox = this.inbox.then(()=>this.receive(env)).catch(()=>{}); },  // one at a time, in order
+  async receive(env){
+    let m; try{ m = JSON.parse(env && env.b); }catch(e){ return; }
+    if(!isObj(m) || m.room!==this.code || !isId(m.from) || m.from===ME) return;
+    if(!isNum(m.ts,0,Number.MAX_SAFE_INTEGER) || m.ts<=(this.lastTs[m.from]||0)) return;  // stale or replayed
+    if(!(await unseal(env, {expectId:m.from}))) return;  // not signed by the key this id belongs to
+    this.lastTs[m.from] = m.ts;
+    const key = m.from;
     this.seen[key] = Date.now();
     const p = this.s.players.find(p=>p.id===key);
     if(m.t==="join"){
       const name = String(m.name||"").trim().slice(0,20) || "Player";
       if(!p){
-        if(this.s.players.length>=MAX_PLAYERS){ this.t.dm(key,{t:"full"}); return; }
+        if(this.s.players.length>=MAX_PLAYERS){ seal({t:"full", to:key, room:this.code}).then(d=>this.t.dm(key,d)); return; }
         this.s.players.push({id:key,name,score:0,online:true,guessed:false,last:0});
       } else { p.online = true; p.name = name; }
       this.push();
@@ -369,12 +425,32 @@ const Host = {
     this.s.msLeft = this.s.phase==="question" ? Math.max(0,this.deadline-Date.now()) : 0;
     this.s.v++;
     const snap = JSON.parse(JSON.stringify(this.s));
-    this.t.state(snap);
+    this.outbox = this.outbox.then(async()=>this.t.state(await seal(snap))).catch(()=>{});  // signed, in order
     onState(snap);
   }
 };
 
 /* ---------------- player side ---------------- */
+let hostKey = null;       // the host's public key, pinned from the first validly signed state
+async function fromHost(env){
+  if(hostKey) return unseal(env, {expectKey:hostKey});
+  let body; try{ body = JSON.parse(env && env.b); }catch(e){ return null; }
+  if(!isObj(body) || !isId(body.host) || body.code!==view.joinCode) return null;
+  const s = await unseal(env, {expectId:body.host});
+  if(s && !hostKey) hostKey = env.k;
+  return s;
+}
+async function onSignedState(env){ const s = await fromHost(env); if(s) onState(s); }
+let lastTs = 0, byeEnv = null, outbox = Promise.resolve();
+/* sign and send in order; also keep a signed "bye" ready, because pagehide can't wait for crypto */
+function sendUp(d){
+  const room = view.joinCode;
+  outbox = outbox.then(async()=>{
+    lastTs = Math.max(lastTs+1, Date.now());
+    net.send(await seal({...d, from:ME, room, ts:lastTs}));
+    byeEnv = await seal({t:"bye", from:ME, room, ts:lastTs+1});
+  }).catch(()=>{});
+}
 function onState(raw){
   const s = validState(raw);
   if(!s) return;                                      // malformed or hostile state: drop it
@@ -394,6 +470,7 @@ async function hostGame(){
   const name = ($("#name").value||"").trim();
   if(!name){ view.error="Enter your name first."; return render(); }
   saveName(name); view.screen="connecting"; render();
+  try{ await identity; }catch(e){ view.screen="home"; view.error="This browser can't sign game messages. Open the game over https in a current browser."; return render(); }
   try{ await Host.start(name.slice(0,20)); }
   catch(e){ view.screen="home"; view.error="Couldn't open a game room. Check your connection and try again."; render(); }
 }
@@ -403,16 +480,22 @@ async function joinGame(){
   if(!name){ view.error="Enter your name first."; return render(); }
   if(code.length!==4){ view.error="Room codes are 4 letters."; return render(); }
   saveName(name); myName=name.slice(0,20); view.joinCode=code; view.screen="connecting"; render();
+  try{ await identity; }catch(e){ view.screen="home"; view.error="This browser can't sign game messages. Open the game over https in a current browser."; return render(); }
   try{
     net = await openClient(code, {
-      state: onState,
-      dm: m => { if(m.t==="full"){ clearInterval(joinTimer); view.screen="home"; view.error="That game is full (8 players max)."; render(); } },
+      state: onSignedState,
+      dm: async env => {
+        if(!hostKey) return;
+        const m = await unseal(env, {expectKey:hostKey});
+        if(m && m.t==="full" && m.to===ME && m.room===code){ clearInterval(joinTimer); view.screen="home"; view.error="That game is full (8 players max)."; render(); }
+      },
       gone: () => { view.screen="ended"; render(); },
-      reconnected: () => net && net.send({t:"join", name:myName})
+      reconnected: () => net && sendUp({t:"join", name:myName})
     });
-    const hello = () => net.send({t:"join", name:myName});
+    const hello = () => sendUp({t:"join", name:myName});
     hello(); joinTimer = setInterval(hello, 3000);        // repeat until the host lists us
-    setInterval(()=>net.send({t:"hb"}), 5000);
+    setInterval(()=>sendUp({t:"hb"}), 5000);
+    addEventListener("pagehide", () => { if(byeEnv) net.send(byeEnv); });
     setTimeout(()=>{ if(view.screen==="connecting"){ clearInterval(joinTimer); view.screen="home"; view.error="The host didn't respond. Check the code and try again."; render(); } }, 15000);
   }catch(e){
     view.screen="home";
@@ -423,7 +506,7 @@ async function joinGame(){
 function sendGuess(){
   const v = parseGuess($("#guess").value);
   if(v===null){ $("#gerr").textContent="Type a number, like 1200 or 26.2"; return; }
-  if(isHost) Host.guess(ME, v); else { net.send({t:"guess", v}); $("#gBtn").disabled=true; $("#gBtn").textContent="Sending…"; }
+  if(isHost) Host.guess(ME, v); else { sendUp({t:"guess", v}); $("#gBtn").disabled=true; $("#gBtn").textContent="Sending…"; }
 }
 function copyLink(){
   const link = location.origin+location.pathname+location.search+"#"+pub.code;
