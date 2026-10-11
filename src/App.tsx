@@ -101,6 +101,7 @@ const RingPage = lazy(() => import("./pages/Ring"));
 const DiffPage = lazy(() => import("./pages/Diff"));
 const Skiplist = lazy(() => import("./pages/Skiplist"));
 const Bwt = lazy(() => import("./pages/Bwt"));
+const Ratelimit = lazy(() => import("./pages/Ratelimit"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -208,6 +209,7 @@ const routes = [
   { path: "/diff", Component: DiffPage, seo: { title: "Myers Diff — the algorithm behind git diff", description: "A diff is a shortest path. Lay the old file along one axis and the new along the other: right deletes, down inserts, and a diagonal is a shared line that costs nothing. Myers explores the graph in order of edit distance, and the first wavefront to reach the far corner is the minimal diff — without ever filling an N×M table." } },
   { path: "/skiplist", Component: Skiplist, seo: { title: "Skip Lists — a balanced structure that never balances", description: "An AVL tree stays shallow by measuring its height and rotating. A skip list reaches the same O(log n) by flipping a coin: each node is promoted to the next express lane with probability p, and a search runs along the top lane and drops a level whenever the next hop would overshoot. No rotations, no rebalancing — just a probabilistic guarantee." } },
   { path: "/bwt", Component: Bwt, seo: { title: "Burrows-Wheeler — sorting a string into something compressible", description: "The Burrows-Wheeler transform compresses nothing by itself: it is a reversible permutation. What it does is gather repetition into runs, by sorting every rotation of the text and reading the last column. Watch the runs form, the move-to-front codes collapse to zeros, and the whole thing invert back to the original exactly — the first stage of bzip2." } },
+  { path: "/ratelimit", Component: Ratelimit, seo: { title: "Rate Limiting — four algorithms that disagree under a burst", description: "Fixed window, sliding log, sliding counter and token bucket all promise N requests per minute, and they mean different things. Run the boundary burst and watch the fixed window pass twice its own limit while the sliding log never does, with each algorithm’s worst observed window measured live." } },
   { path: "*", Component: NotFound, seo: { title: "Page not found", noIndex: true } },
 ] satisfies RouteConfig[];
 
