@@ -106,6 +106,12 @@ export const EXPERIMENTS: Experiment[] = [
     category: "ml",
   },
   {
+    path: "/viterbi",
+    title: "The Viterbi Algorithm — and why the most likely path is not the most accurate one",
+    description: "A hidden Markov model emits noisy observations and you want the states behind them. Viterbi finds the exact most likely path in O(T·S²) instead of scoring all S^T of them. But the most likely path and the most likely state at each position are different questions with different answers — run both decoders and watch Viterbi win on path probability while losing on accuracy.",
+    category: "ml",
+  },
+  {
     path: "/kalman",
     title: "Kalman Filter — tracking a target through noise",
     description: "A constant-velocity Kalman filter tracking a maneuvering target from noisy position fixes alone. Watch it recover a velocity it never measures, grow its uncertainty ellipse through sensor dropouts, and beat the raw sensor by several times — then detune the process noise and watch it lag every hard turn.",
@@ -262,6 +268,12 @@ export const EXPERIMENTS: Experiment[] = [
     category: "algorithms",
   },
   {
+    path: "/sat",
+    title: "DPLL — deciding satisfiability by guessing, then regretting it efficiently",
+    description: "SAT is NP-complete, so in the worst case nothing beats trying all 2^n assignments. DPLL avoids that in practice using two moves that are forced rather than clever: unit propagation and pure literal elimination. Watch the ratio of forced moves to guesses, toggle them off, and try the pigeonhole formula a human solves instantly and DPLL has to grind out.",
+    category: "algorithms",
+  },
+  {
     path: "/turing",
     title: "Turing Machine — watch computation from first principles",
     description: "A single-tape Turing machine with a genuinely two-way infinite tape: step through binary increment, a unary doubler, a palindrome checker, and the 3- and 4-state busy beaver champions, watching the head read, write, and move one transition at a time.",
@@ -325,6 +337,12 @@ export const EXPERIMENTS: Experiment[] = [
     path: "/bwt",
     title: "Burrows-Wheeler — sorting a string into something compressible",
     description: "The Burrows-Wheeler transform compresses nothing by itself: it is a reversible permutation. What it does is gather repetition into runs, by sorting every rotation of the text and reading the last column. Watch the runs form, the move-to-front codes collapse to zeros, and the whole thing invert back to the original exactly — the first stage of bzip2.",
+    category: "systems",
+  },
+  {
+    path: "/lru",
+    title: "Cache Eviction — LRU, FIFO, LFU, CLOCK and the ceiling none of them reach",
+    description: "Five eviction policies replaying the same reference string. Bélády's OPT evicts whatever is needed furthest ahead, which needs the future and so cannot be built — but nothing can beat it, making it the only honest ceiling. Then the surprise: LRU's hit rate can never fall as the cache grows, and FIFO's can.",
     category: "systems",
   },
   {

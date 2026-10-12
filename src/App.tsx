@@ -106,6 +106,9 @@ const Skiplist = lazy(() => import("./pages/Skiplist"));
 const Bwt = lazy(() => import("./pages/Bwt"));
 const Ratelimit = lazy(() => import("./pages/Ratelimit"));
 const Topo = lazy(() => import("./pages/Topo"));
+const ViterbiPage = lazy(() => import("./pages/Viterbi"));
+const Lru = lazy(() => import("./pages/Lru"));
+const Sat = lazy(() => import("./pages/Sat"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -217,6 +220,9 @@ const routes = [
   { path: "/bwt", Component: Bwt, seo: experimentSeo("/bwt") },
   { path: "/ratelimit", Component: Ratelimit, seo: experimentSeo("/ratelimit") },
   { path: "/topo", Component: Topo, seo: experimentSeo("/topo") },
+  { path: "/viterbi", Component: ViterbiPage, seo: experimentSeo("/viterbi") },
+  { path: "/lru", Component: Lru, seo: experimentSeo("/lru") },
+  { path: "/sat", Component: Sat, seo: experimentSeo("/sat") },
   { path: "*", Component: NotFound, seo: { title: "Page not found", noIndex: true } },
 ] satisfies RouteConfig[];
 
