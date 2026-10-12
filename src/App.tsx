@@ -105,6 +105,7 @@ const Ratelimit = lazy(() => import("./pages/Ratelimit"));
 const Topo = lazy(() => import("./pages/Topo"));
 const ViterbiPage = lazy(() => import("./pages/Viterbi"));
 const Lru = lazy(() => import("./pages/Lru"));
+const Sat = lazy(() => import("./pages/Sat"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -216,6 +217,7 @@ const routes = [
   { path: "/topo", Component: Topo, seo: { title: "Build Scheduling — topological order, waves and the critical path", description: "Kahn’s algorithm on a build graph, taken a wave at a time: everything in a wave can run at once, so the number of waves is the depth of the graph and the longest dependency chain is the floor on build time no amount of hardware gets under. Cycles are detected without a separate pass, because nothing is ever ready." } },
   { path: "/viterbi", Component: ViterbiPage, seo: { title: "The Viterbi Algorithm — and why the most likely path is not the most accurate one", description: "A hidden Markov model emits noisy observations and you want the states behind them. Viterbi finds the exact most likely path in O(T·S²) instead of scoring all S^T of them. But the most likely path and the most likely state at each position are different questions with different answers — run both decoders and watch Viterbi win on path probability while losing on accuracy." } },
   { path: "/lru", Component: Lru, seo: { title: "Cache Eviction — LRU, FIFO, LFU, CLOCK and the ceiling none of them reach", description: "Five eviction policies replaying the same reference string. Bélády's OPT evicts whatever is needed furthest ahead, which needs the future and so cannot be built — but nothing can beat it, making it the only honest ceiling. Then the surprise: LRU's hit rate can never fall as the cache grows, and FIFO's can." } },
+  { path: "/sat", Component: Sat, seo: { title: "DPLL — deciding satisfiability by guessing, then regretting it efficiently", description: "SAT is NP-complete, so in the worst case nothing beats trying all 2^n assignments. DPLL avoids that in practice using two moves that are forced rather than clever: unit propagation and pure literal elimination. Watch the ratio of forced moves to guesses, toggle them off, and try the pigeonhole formula a human solves instantly and DPLL has to grind out." } },
   { path: "*", Component: NotFound, seo: { title: "Page not found", noIndex: true } },
 ] satisfies RouteConfig[];
 
