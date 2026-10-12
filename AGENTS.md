@@ -94,5 +94,13 @@ grep -o '\.px-4[,{ :]' dist/assets/*.css   # must match
 
 ## Routes
 
-`/`, `/now`, `/hireme`, `/toolkit`, `/demos`, `/bots`, `/kelly`, and a catch-all 404. Keep
-`Index.tsx` and `HireMe.tsx` intact — they're the hire-me-critical pages.
+`/`, `/now`, `/hireme`, `/toolkit`, `/demos`, `/bots`, `/lab`, a catch-all 404, and one route per
+interactive experiment (`/judge`, `/kelly`, `/lorenz`, …). Keep `Index.tsx` and `HireMe.tsx`
+intact — they're the hire-me-critical pages.
+
+## Adding an experiment
+
+Every experiment is catalogued in `src/lib/experiments.ts` (title, description, category). The
+route in `App.tsx` takes its SEO from there with `experimentSeo("/path")`, `/lab` lists it, and
+`src/lib/experiments.test.ts` fails if a route is missing from the catalog or the sitemap. So: add
+the page, the route, the catalog entry, and a `<url>` in `public/sitemap.xml`.

@@ -222,8 +222,8 @@ export default function Diff() {
     <div className="min-h-screen bg-background text-primary font-mono flex flex-col">
       <div className="border-b border-primary/20 px-4 py-3 flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-3">
-          <Link to="/" className="text-primary/50 hover:text-primary text-sm transition-colors">
-            ← home
+          <Link to="/lab" className="text-primary/50 hover:text-primary text-sm transition-colors">
+            ← lab
           </Link>
           <span className="text-primary/20">|</span>
           <span className="text-sm">myers diff</span>
