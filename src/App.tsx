@@ -103,6 +103,7 @@ const Skiplist = lazy(() => import("./pages/Skiplist"));
 const Bwt = lazy(() => import("./pages/Bwt"));
 const Ratelimit = lazy(() => import("./pages/Ratelimit"));
 const Topo = lazy(() => import("./pages/Topo"));
+const ViterbiPage = lazy(() => import("./pages/Viterbi"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -212,6 +213,7 @@ const routes = [
   { path: "/bwt", Component: Bwt, seo: { title: "Burrows-Wheeler — sorting a string into something compressible", description: "The Burrows-Wheeler transform compresses nothing by itself: it is a reversible permutation. What it does is gather repetition into runs, by sorting every rotation of the text and reading the last column. Watch the runs form, the move-to-front codes collapse to zeros, and the whole thing invert back to the original exactly — the first stage of bzip2." } },
   { path: "/ratelimit", Component: Ratelimit, seo: { title: "Rate Limiting — four algorithms that disagree under a burst", description: "Fixed window, sliding log, sliding counter and token bucket all promise N requests per minute, and they mean different things. Run the boundary burst and watch the fixed window pass twice its own limit while the sliding log never does, with each algorithm’s worst observed window measured live." } },
   { path: "/topo", Component: Topo, seo: { title: "Build Scheduling — topological order, waves and the critical path", description: "Kahn’s algorithm on a build graph, taken a wave at a time: everything in a wave can run at once, so the number of waves is the depth of the graph and the longest dependency chain is the floor on build time no amount of hardware gets under. Cycles are detected without a separate pass, because nothing is ever ready." } },
+  { path: "/viterbi", Component: ViterbiPage, seo: { title: "The Viterbi Algorithm — and why the most likely path is not the most accurate one", description: "A hidden Markov model emits noisy observations and you want the states behind them. Viterbi finds the exact most likely path in O(T·S²) instead of scoring all S^T of them. But the most likely path and the most likely state at each position are different questions with different answers — run both decoders and watch Viterbi win on path probability while losing on accuracy." } },
   { path: "*", Component: NotFound, seo: { title: "Page not found", noIndex: true } },
 ] satisfies RouteConfig[];
 
