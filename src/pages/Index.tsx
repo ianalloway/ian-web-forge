@@ -1,5 +1,8 @@
-import { useEffect, type PointerEvent as ReactPointerEvent } from "react";
+import { useEffect, useMemo, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
+import { Link } from "react-router-dom";
 import Newsletter from "@/components/Newsletter";
+import { DEFAULT_MATCHUP, PRESETS, THRESHOLDS, runAudit } from "@/features/judge/audit";
+import { EXPERIMENTS } from "@/lib/experiments";
 
 type ProjectVisual = "solvent" | "sports" | "juryrig";
 
@@ -57,6 +60,8 @@ const PROJECTS: Project[] = [
     metricLabel: "runtime dependencies",
     visual: "juryrig",
     code: "https://github.com/ianalloway/juryrig",
+    live: "/judge",
+    liveLabel: "Run the audit live",
   },
 ];
 
@@ -221,22 +226,45 @@ function ProjectGraphic({ type }: { type: ProjectVisual }) {
     );
   }
 
+  return <JuryrigGraphic />;
+}
+
+/**
+ * The juryrig card shows a real audit: the "typical judge" preset from /judge,
+ * run on its default seed. Each bar is scaled so the audit's pass/fail line
+ * sits at the midpoint, so a bar past the line is a flag.
+ */
+function JuryrigGraphic() {
+  const rows = useMemo(() => {
+    const r = runAudit(PRESETS[0].judge, DEFAULT_MATCHUP);
+    const get = (id: string) => r.audits.find((a) => a.id === id)!;
+    const flip = get("position");
+    const lift = get("verbosity");
+    const rerun = get("consistency");
+    const kappa = get("panel");
+    return [
+      { label: "ORDER / FLIPS", value: `${Math.round(flip.value * 100)}%`, severity: flip.value / THRESHOLDS.flipRate, flag: flip.status === "flag" },
+      { label: "PADDING / LIFT", value: `+${(lift.value * 100).toFixed(1)}`, severity: lift.value / THRESHOLDS.verbosityLift, flag: lift.status === "flag" },
+      { label: "RE-RUN / DRIFT", value: `${Math.round(rerun.value * 100)}%`, severity: rerun.value / THRESHOLDS.rerunDisagreement, flag: rerun.status === "flag" },
+      { label: "PANEL / κ", value: kappa.value.toFixed(2), severity: (1 - kappa.value) / (1 - THRESHOLDS.minKappa), flag: kappa.status === "flag" },
+    ];
+  }, []);
+
   return (
     <div className="rd-project-graphic rd-project-graphic--juryrig" aria-hidden="true">
-      {[
-        ["POSITION", "42%"],
-        ["VERBOSITY", "61%"],
-        ["SELF / CONSISTENCY", "84%"],
-        ["PANEL / AGREEMENT", "73%"],
-      ].map(([label, width]) => (
-        <div className="rd-audit-row" key={label}>
-          <span className="rd-mono">{label}</span>
+      {rows.map((row) => (
+        <div className="rd-audit-row" key={row.label}>
+          <span className="rd-mono">{row.label}</span>
           <i>
-            <b style={{ width }} />
+            <b
+              className={row.flag ? "is-flag" : undefined}
+              style={{ "--bar-width": `${Math.min(100, Math.max(3, row.severity * 50)).toFixed(1)}%` } as CSSProperties}
+            />
           </i>
-          <em>{width}</em>
+          <em>{row.value}</em>
         </div>
       ))}
+      <span className="rd-audit-caption rd-mono">SIMULATED JUDGE · LINE = JURYRIG THRESHOLD</span>
     </div>
   );
 }
@@ -295,6 +323,7 @@ export default function Index() {
         </a>
         <div className="rd-nav-links rd-mono">
           <a href="#work">Work</a>
+          <Link to="/lab">Lab</Link>
           <a href="#source">Source</a>
           <a href="#writing">Writing</a>
         </div>
@@ -394,7 +423,12 @@ export default function Index() {
                     <a href={project.code} target="_blank" rel="noreferrer">
                       Source <Arrow />
                     </a>
-                    {project.live && (
+                    {project.live?.startsWith("/") && (
+                      <Link to={project.live}>
+                        {project.liveLabel} <span aria-hidden="true">→</span>
+                      </Link>
+                    )}
+                    {project.live && !project.live.startsWith("/") && (
                       <a href={project.live} target="_blank" rel="noreferrer">
                         {project.liveLabel} <Arrow />
                       </a>
@@ -407,6 +441,17 @@ export default function Index() {
                 </div>
               </article>
             ))}
+          </div>
+
+          <div className="rd-lab-teaser" data-reveal>
+            <p>
+              <strong>Plus {EXPERIMENTS.length} interactive experiments in the lab</strong> — a live LLM-judge
+              audit, Kelly and closing-line tools, samplers and optimisers you can watch converge, and the systems
+              internals behind caches and compressors. All from scratch, all in the browser.
+            </p>
+            <Link className="rd-index-link rd-mono" to="/lab">
+              Enter the lab <span aria-hidden="true">→</span>
+            </Link>
           </div>
         </section>
 

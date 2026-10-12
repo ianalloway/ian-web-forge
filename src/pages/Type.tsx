@@ -105,11 +105,11 @@ export default function Type() {
       <div className="border-b border-primary/20 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link
-            to="/"
+            to="/lab"
             className="text-primary/50 hover:text-primary text-sm transition-colors"
             onClick={(e) => e.stopPropagation()}
           >
-            ← home
+            ← lab
           </Link>
           <span className="text-primary/20">|</span>
           <span className="text-sm">typing speed test</span>
