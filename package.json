@@ -37,16 +37,19 @@
     "test:unit": "vitest run"
   },
   "dependencies": {
+    "@fontsource/ibm-plex-mono": "^5.3.0",
     "@radix-ui/react-slot": "^1.3.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "gsap": "^3.15.0",
     "lucide-react": "^1.30.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-helmet-async": "^3.0.0",
     "react-router-dom": "^7.18.2",
     "tailwind-merge": "^3.6.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "@babel/core": "^8.0.1",
@@ -57,6 +60,7 @@
     "@types/node": "^26.2.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
+    "@types/three": "^0.186.0",
     "@vitejs/plugin-react-swc": "^4.3.3",
     "autoprefixer": "^10.5.4",
     "eslint": "^10.8.1",

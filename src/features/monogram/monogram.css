@@ -1,0 +1,631 @@
+/* Scoped styles for the /monogram landing page. */
+.monogram {
+  --bg: #0b0c0a;
+  --text: #d9d7cc;
+  --dim: #8f8e84;
+  --line: #262722;
+  --accent: #7cff6b;
+  --secondary: #ff4d00;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --gutter: clamp(16px, 4vw, 56px);
+  color-scheme: dark;
+}
+
+
+.monogram {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 15px/1.7 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.monogram h1,
+.monogram h2,
+.monogram p,
+.monogram ol,
+.monogram ul,
+.monogram figure {
+  margin: 0;
+}
+
+.monogram ol,
+.monogram ul {
+  padding: 0;
+  list-style: none;
+}
+
+.monogram a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.monogram :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.monogram ::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.monogram .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.monogram .skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 10;
+  padding: 8px 12px;
+  background: var(--accent);
+  color: var(--bg);
+  transform: translateY(-200%);
+}
+
+.monogram .skip-link:focus {
+  transform: none;
+}
+
+/* ASCII stage: one fixed canvas behind the hero and the work list. */
+.monogram #ascii {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease);
+  pointer-events: none;
+}
+
+.monogram[data-zone='hero'] #ascii {
+  opacity: 1;
+}
+
+.monogram[data-zone='work'] #ascii {
+  opacity: 0.8;
+}
+
+.monogram.no-webgl #ascii {
+  display: none;
+}
+
+.monogram.no-webgl .hero {
+  background: radial-gradient(60% 60% at 30% 45%, #1b2a17 0%, var(--bg) 70%);
+}
+
+.monogram .topbar,
+.monogram main,
+.monogram .footer {
+  position: relative;
+  z-index: 1;
+}
+
+.monogram .topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 24px var(--gutter);
+  font-size: 12px;
+}
+
+.monogram .prompt {
+  font-size: 15px;
+}
+
+.monogram .cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  margin-left: 0.2em;
+  vertical-align: text-bottom;
+  background: var(--accent);
+  animation: monogram-blink 1.06s steps(1) infinite;
+}
+
+@keyframes monogram-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.monogram .badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--dim);
+  text-align: right;
+}
+
+.monogram .dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* Hero */
+.monogram .hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 96px var(--gutter) 72px;
+}
+
+.monogram .hero-copy {
+  width: min(100%, 480px);
+}
+
+.monogram .path,
+.monogram .label {
+  font-size: 12px;
+  color: var(--accent);
+}
+
+.monogram h1 {
+  margin: 12px 0 20px;
+  font-size: clamp(36px, 6.2vw, 72px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.monogram .bio {
+  max-width: 46ch;
+}
+
+.monogram .commands {
+  display: grid;
+  justify-items: start;
+  gap: 2px;
+  margin-top: 28px;
+}
+
+.monogram .commands a {
+  padding: 4px 8px 4px 0;
+  transition: transform 0.3s var(--ease);
+}
+
+.monogram .commands a span {
+  color: var(--dim);
+}
+
+.monogram .commands a:hover,
+.monogram .commands a:focus-visible {
+  color: var(--accent);
+  transform: translateX(8px);
+}
+
+.monogram .commands a:hover span,
+.monogram .commands a:focus-visible span {
+  color: var(--accent);
+}
+
+.monogram .status {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 24px;
+  font-size: 12px;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Shared section furniture */
+.monogram section {
+  scroll-margin-top: 24px;
+}
+
+.monogram .wrap,
+.monogram .work-inner {
+  padding: clamp(72px, 12vh, 140px) var(--gutter);
+}
+
+.monogram .wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.monogram h2 {
+  margin: 12px 0 16px;
+  max-width: 22ch;
+  font-size: clamp(26px, 3.6vw, 44px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.monogram .lede {
+  max-width: 58ch;
+  color: var(--dim);
+}
+
+.monogram .more {
+  margin-top: 28px;
+}
+
+.monogram .more a,
+.monogram .links a {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.monogram .more a:hover,
+.monogram .links a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Work */
+.monogram .work {
+  min-height: 100vh;
+}
+
+.monogram .work-inner {
+  width: min(100%, 760px);
+  background: linear-gradient(90deg, var(--bg) 78%, transparent);
+}
+
+.monogram .rows {
+  margin-top: 40px;
+  border-top: 1px solid var(--line);
+}
+
+.monogram .rows a {
+  display: grid;
+  grid-template-columns: 4ch minmax(0, 1.1fr) minmax(0, 1fr) 2ch;
+  column-gap: 16px;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.monogram .rows .n,
+.monogram .rows .type {
+  font-size: 12px;
+  color: var(--dim);
+}
+
+.monogram .rows .name {
+  font-weight: 600;
+}
+
+.monogram .rows .arrow {
+  transition: transform 0.3s var(--ease);
+}
+
+.monogram .rows .desc {
+  grid-column: 2 / -1;
+  max-width: 60ch;
+  font-size: 12px;
+  color: var(--dim);
+}
+
+.monogram .rows a:hover .name,
+.monogram .rows a:focus-visible .name,
+.monogram .rows a:hover .arrow,
+.monogram .rows a:focus-visible .arrow {
+  color: var(--accent);
+}
+
+.monogram .rows a:hover .arrow,
+.monogram .rows a:focus-visible .arrow {
+  transform: translateX(6px);
+}
+
+/* Lab, about, contact sit on solid ground above the canvas. */
+.monogram .lab,
+.monogram .about,
+.monogram .contact,
+.monogram .footer {
+  background: var(--bg);
+}
+
+.monogram .lab,
+.monogram .about,
+.monogram .contact {
+  border-top: 1px solid var(--line);
+}
+
+.monogram .lab-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.monogram .panel {
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.monogram .panel pre {
+  margin: 0;
+  padding: 16px 0;
+  height: 232px;
+  display: grid;
+  place-content: center;
+  font: 400 12px/1.1 'IBM Plex Mono', ui-monospace, monospace;
+  color: var(--tone);
+  overflow: hidden;
+}
+
+.monogram .panel figcaption {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+}
+
+.monogram .panel figcaption span:last-child {
+  color: var(--dim);
+}
+
+.monogram .about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 96px);
+  align-items: start;
+}
+
+.monogram .typed {
+  max-width: 52ch;
+}
+
+.monogram .typed .rest {
+  visibility: hidden;
+}
+
+.monogram .typed .caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  vertical-align: text-bottom;
+  background: var(--accent);
+}
+
+.monogram .skip,
+.monogram .term-buttons button {
+  font: inherit;
+  font-size: 12px;
+  color: var(--text);
+  background: none;
+  border: 1px solid var(--line);
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.monogram .skip {
+  margin-top: 20px;
+}
+
+.monogram .skip:hover,
+.monogram .term-buttons button:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.monogram .log {
+  border: 1px solid var(--line);
+  padding: 20px;
+  font-size: 13px;
+}
+
+.monogram .log-head {
+  color: var(--dim);
+  margin-bottom: 12px;
+}
+
+.monogram .log li {
+  display: grid;
+  grid-template-columns: 5ch 1fr;
+  gap: 12px;
+  padding: 6px 0;
+}
+
+.monogram .hash {
+  color: var(--secondary);
+}
+
+.monogram .terminal {
+  margin-top: 40px;
+  max-width: 760px;
+  border: 1px solid var(--line);
+  padding: 20px;
+  cursor: text;
+}
+
+.monogram .term-output {
+  max-height: 240px;
+  overflow-y: auto;
+  color: var(--dim);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.monogram .term-output a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.monogram .term-form {
+  display: flex;
+  gap: 1ch;
+  margin-top: 8px;
+}
+
+.monogram .term-form label {
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.monogram .term-form input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  color: var(--text);
+  background: none;
+  border: 0;
+  padding: 0;
+  caret-color: var(--accent);
+}
+
+.monogram .term-form input:focus-visible {
+  outline: none;
+}
+
+.monogram .terminal:focus-within {
+  border-color: var(--accent);
+}
+
+.monogram .term-buttons {
+  display: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.monogram .links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  margin-top: 28px;
+}
+
+.monogram .footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px var(--gutter);
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--dim);
+}
+
+.monogram .footer a:hover {
+  color: var(--accent);
+}
+
+/* Entrances: once, transform and opacity only. */
+.monogram .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transition-delay: var(--delay, 0ms);
+}
+
+.monogram .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 767px) {
+  .monogram .badge {
+    max-width: 18ch;
+  }
+
+  .monogram .hero {
+    align-items: flex-end;
+    padding-bottom: 64px;
+  }
+
+  .monogram .hero-copy {
+    padding-top: 24px;
+    background: linear-gradient(transparent, var(--bg) 24px);
+  }
+
+  .monogram .status {
+    bottom: 20px;
+  }
+
+  .monogram[data-zone='work'] #ascii {
+    opacity: 0.16;
+  }
+
+  .monogram .work-inner {
+    background: none;
+  }
+
+  .monogram .rows a {
+    grid-template-columns: 3ch minmax(0, 1fr) 2ch;
+  }
+
+  .monogram .rows .type {
+    grid-column: 2 / -1;
+    grid-row: 2;
+  }
+
+  .monogram .rows .arrow {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .monogram .lab-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .monogram .lab-grid .panel:nth-child(n + 3) {
+    display: none;
+  }
+
+  .monogram .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .monogram .term-form {
+    display: none;
+  }
+
+  .monogram .term-buttons {
+    display: flex;
+  }
+
+  .monogram .terminal {
+    cursor: default;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .monogram .cursor {
+    animation: none;
+  }
+
+  .monogram .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .monogram #ascii,
+  .monogram .commands a,
+  .monogram .rows .arrow {
+    transition: none;
+  }
+}
