@@ -1,6 +1,12 @@
-import { useEffect, useMemo, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import Newsletter from "@/components/Newsletter";
+import ForecastLedger, { ForecastDock } from "@/components/home/ForecastLedger";
+import Receipt from "@/components/home/Receipt";
+import ScrambleText from "@/components/home/ScrambleText";
+import SignalField from "@/components/home/SignalField";
+import { useForecasts, type Forecasts } from "@/features/forecast/useForecasts";
+import "@/features/forecast/home.css";
 import { DEFAULT_MATCHUP, PRESETS, THRESHOLDS, runAudit } from "@/features/judge/audit";
 import { EXPERIMENTS } from "@/lib/experiments";
 
@@ -128,56 +134,74 @@ function Arrow() {
   return <span aria-hidden="true">↗</span>;
 }
 
-function HeroPlot() {
+/**
+ * The hero: the name is a cloud of samples that locks onto the letterforms, and the panel beside it
+ * is the page's own forecasts about this visit.
+ */
+function Hero({ forecasts }: { forecasts: Forecasts }) {
+  const heading = useRef<HTMLHeadingElement>(null);
+  const [noise, setNoise] = useState(0);
+  const [samples, setSamples] = useState<number | null>(null);
+
   return (
-    <div className="rd-hero-plot" aria-label="Abstract model calibration plot">
-      <div className="rd-plot-meta rd-mono">
-        <span>RUN / 0724</span>
-        <span>CALIBRATION TRACE</span>
+    <header className="hx-hero" id="hero">
+      <SignalField target={heading} noise={noise / 100} onReady={setSamples} />
+      <div className="hx-hero-main">
+        <div className="rd-availability rd-mono">
+          <span />
+          Open to AI engineering &amp; evaluation roles
+        </div>
+        <p className="rd-hero-kicker rd-mono">AI ENGINEER · LLM EVALUATION · USF M.S. AI</p>
+        <h1 className="hx-name" ref={heading}>
+          <span data-signal-line="Ian">Ian</span>
+          <span data-signal-line="Alloway" data-signal-accent=".">
+            Alloway<i>.</i>
+          </span>
+        </h1>
+        <p className="hx-statement">
+          <ScrambleText text="I build systems that make the right call when the data gets noisy." delay={1100} />
+        </p>
+        <p className="rd-hero-detail">
+          Applied ML, agent economics, sports models, and evaluation tooling—shipped in public
+          and measured in production.
+        </p>
+        <label className="hx-noise rd-mono">
+          <span>Add noise</span>
+          <input
+            type="range"
+            min={0}
+            max={100}
+            value={noise}
+            onChange={(event) => setNoise(Number(event.target.value))}
+            aria-valuetext={`sigma ${(noise / 100).toFixed(2)}`}
+          />
+          <output>
+            σ {(noise / 100).toFixed(2)}
+            {samples !== null && ` · n = ${samples.toLocaleString("en-US")}`}
+          </output>
+        </label>
+        <div className="rd-hero-actions">
+          <a className="rd-primary-action" href="#work">
+            Explore the experiments <span aria-hidden="true">↓</span>
+          </a>
+          <a className="rd-text-action rd-mono" href="https://github.com/ianalloway" target="_blank" rel="noreferrer">
+            GitHub <Arrow />
+          </a>
+          <a className="rd-text-action rd-mono" href="/Ian_Alloway_Resume_CV.pdf" download>
+            Résumé ↓
+          </a>
+          <a
+            className="rd-text-action rd-mono"
+            href="https://ian-alloway-visual-resume--ianalloway43.replit.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Visual résumé <Arrow />
+          </a>
+        </div>
       </div>
-      <svg viewBox="0 0 640 560" role="img" aria-label="Calibration curve rising across a coordinate field">
-        <defs>
-          <linearGradient id="plot-fade" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#d7ff5f" stopOpacity="0" />
-            <stop offset="35%" stopColor="#d7ff5f" stopOpacity=".78" />
-            <stop offset="100%" stopColor="#d7ff5f" stopOpacity="1" />
-          </linearGradient>
-        </defs>
-        <g className="rd-grid-lines">
-          {[64, 160, 256, 352, 448, 544].map((x) => (
-            <line key={`x-${x}`} x1={x} y1="40" x2={x} y2="512" />
-          ))}
-          {[64, 152, 240, 328, 416, 504].map((y) => (
-            <line key={`y-${y}`} x1="40" y1={y} x2="600" y2={y} />
-          ))}
-        </g>
-        <path className="rd-plot-reference" d="M64 470 L558 84" />
-        <path
-          className="rd-plot-line"
-          pathLength="1"
-          d="M64 474 C118 459 152 419 196 414 C241 408 256 340 315 350 C369 360 391 252 443 264 C498 276 510 154 559 112"
-        />
-        <g className="rd-plot-points">
-          {[
-            [64, 474],
-            [196, 414],
-            [315, 350],
-            [443, 264],
-            [559, 112],
-          ].map(([x, y], index) => (
-            <circle key={`${x}-${y}`} cx={x} cy={y} r={index === 4 ? 7 : 4} />
-          ))}
-        </g>
-        <circle className="rd-orbit" cx="443" cy="264" r="54" />
-        <path className="rd-plot-signal" d="M443 264 L542 264 L574 236" />
-      </svg>
-      <div className="rd-plot-readout">
-        <span className="rd-mono">MODEL / NBA</span>
-        <strong>68.3</strong>
-        <span className="rd-mono">OBSERVED ACCURACY</span>
-      </div>
-      <div className="rd-plot-caption rd-mono">PREDICTED PROBABILITY →</div>
-    </div>
+      <ForecastLedger forecasts={forecasts} />
+    </header>
   );
 }
 
@@ -302,13 +326,35 @@ export default function Index() {
     return () => document.body.classList.remove("home-redesign");
   }, []);
 
-  const movePlot = (event: ReactPointerEvent<HTMLElement>) => {
-    const bounds = event.currentTarget.getBoundingClientRect();
-    const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 2;
-    const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 2;
-    event.currentTarget.style.setProperty("--pointer-x", x.toFixed(3));
-    event.currentTarget.style.setProperty("--pointer-y", y.toFixed(3));
-  };
+  const forecasts = useForecasts();
+  const { mark } = forecasts;
+  const footer = useRef<HTMLElement>(null);
+  const [pastHero, setPastHero] = useState(false);
+  const [atReceipt, setAtReceipt] = useState(false);
+
+  // Two of the forecasts are about scrolling: leaving the hero, and reaching the footer.
+  useEffect(() => {
+    const hero = document.getElementById("hero");
+    if (!hero || !footer.current) return;
+    const heroObserver = new IntersectionObserver(([entry]) => {
+      setPastHero(!entry.isIntersecting);
+      if (!entry.isIntersecting) mark("scroll");
+    });
+    const endObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) mark("bottom");
+    });
+    // The dock steps aside while the full receipt is on screen.
+    const receiptObserver = new IntersectionObserver(([entry]) => setAtReceipt(entry.isIntersecting), { threshold: 0.2 });
+    const receipt = document.getElementById("receipt");
+    if (receipt) receiptObserver.observe(receipt);
+    heroObserver.observe(hero);
+    endObserver.observe(footer.current);
+    return () => {
+      heroObserver.disconnect();
+      endObserver.disconnect();
+      receiptObserver.disconnect();
+    };
+  }, [mark]);
 
   return (
     <div className="rd-site">
@@ -323,7 +369,7 @@ export default function Index() {
         </a>
         <div className="rd-nav-links rd-mono">
           <a href="#work">Work</a>
-          <Link to="/lab">Lab</Link>
+          <Link to="/lab" onClick={() => mark("lab")}>Lab</Link>
           <a href="#source">Source</a>
           <a href="#writing">Writing</a>
         </div>
@@ -333,57 +379,7 @@ export default function Index() {
       </nav>
 
       <main id="top">
-        <header className="rd-hero" onPointerMove={movePlot}>
-          <div className="rd-hero-copy">
-            <div className="rd-availability rd-mono">
-              <span />
-              Open to AI engineering &amp; evaluation roles
-            </div>
-            <p className="rd-hero-kicker rd-mono">AI ENGINEER · LLM EVALUATION · USF M.S. AI</p>
-            <h1>
-              Ian
-              <br />
-              Alloway<span>.</span>
-            </h1>
-            <p className="rd-hero-statement">
-              I build systems that make the right call when the data gets noisy.
-            </p>
-            <p className="rd-hero-detail">
-              Applied ML, agent economics, sports models, and evaluation tooling—shipped in public
-              and measured in production.
-            </p>
-            <div className="rd-hero-actions">
-              <a className="rd-primary-action" href="#work">
-                Explore the experiments <span aria-hidden="true">↓</span>
-              </a>
-              <a
-                className="rd-text-action rd-mono"
-                href="https://github.com/ianalloway"
-                target="_blank"
-                rel="noreferrer"
-              >
-                GitHub <Arrow />
-              </a>
-              <a className="rd-text-action rd-mono" href="/Ian_Alloway_Resume_CV.pdf" download>
-                Résumé ↓
-              </a>
-              <a
-                className="rd-text-action rd-mono"
-                href="https://ian-alloway-visual-resume--ianalloway43.replit.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Visual résumé <Arrow />
-              </a>
-            </div>
-          </div>
-          <HeroPlot />
-          <div className="rd-hero-index rd-mono">
-            <span>39.4851° N</span>
-            <span>80.1426° W</span>
-            <span>BUILD / TEST / MEASURE</span>
-          </div>
-        </header>
+        <Hero forecasts={forecasts} />
 
         <div className="rd-signal-strip rd-mono" aria-label="Current areas of focus">
           <span>Current signal</span>
@@ -409,7 +405,13 @@ export default function Index() {
 
           <div className="rd-case-list">
             {PROJECTS.map((project) => (
-              <article className="rd-case" key={project.title} data-reveal>
+              <article
+                className="rd-case"
+                key={project.title}
+                data-reveal
+                onPointerEnter={() => mark("project")}
+                onFocus={() => mark("project")}
+              >
                 <div className="rd-case-heading">
                   <span className="rd-case-number rd-mono">{project.number}</span>
                   <p className="rd-mono">{project.label}</p>
@@ -449,7 +451,7 @@ export default function Index() {
               audit, Kelly and closing-line tools, samplers and optimisers you can watch converge, and the systems
               internals behind caches and compressors. All from scratch, all in the browser.
             </p>
-            <Link className="rd-index-link rd-mono" to="/lab">
+            <Link className="rd-index-link rd-mono" to="/lab" onClick={() => mark("lab")}>
               Enter the lab <span aria-hidden="true">→</span>
             </Link>
           </div>
@@ -528,6 +530,8 @@ export default function Index() {
           <Newsletter />
         </section>
 
+        <Receipt forecasts={forecasts} />
+
         <section className="rd-contact" id="contact">
           <div data-reveal>
             <p className="rd-mono">AVAILABLE FOR THE RIGHT PROBLEM</p>
@@ -546,14 +550,16 @@ export default function Index() {
         </section>
       </main>
 
-      <footer className="rd-footer rd-mono">
+      <ForecastDock forecasts={forecasts} hidden={!pastHero || atReceipt} />
+
+      <footer className="rd-footer rd-mono" ref={footer}>
         <span>© 2026 Alloway LLC</span>
         <div>
           <a href="https://github.com/ianalloway" target="_blank" rel="noreferrer">GitHub</a>
           <a href="https://x.com/ianallowayxyz" target="_blank" rel="noreferrer">X</a>
           <a href="https://allowayai.substack.com" target="_blank" rel="noreferrer">Substack</a>
         </div>
-        <span>Designed as a living research log.</span>
+        <span>A homepage that keeps score of itself.</span>
       </footer>
     </div>
   );
