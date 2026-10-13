@@ -109,6 +109,7 @@ const Topo = lazy(() => import("./pages/Topo"));
 const ViterbiPage = lazy(() => import("./pages/Viterbi"));
 const Lru = lazy(() => import("./pages/Lru"));
 const Sat = lazy(() => import("./pages/Sat"));
+const Monogram = lazy(() => import("./pages/Monogram"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 type RouteConfig = {
@@ -121,6 +122,7 @@ const routes = [
   { path: "/", Component: Index },
   { path: "/now", Component: Now, seo: { title: "Now" } },
   { path: "/hireme", Component: HireMe, seo: { title: "Hire Me" } },
+  { path: "/monogram", Component: Monogram, seo: { title: "Monogram — ASCII landing page", description: "Ian Alloway’s portfolio as a terminal: a 3D monogram rendered live as shape-aware ASCII, with work, lab sketches and a contact prompt." } },
   { path: "/toolkit", Component: Toolkit, seo: { title: "Toolkit — Sports analytics & OSS", description: "Public index of Ian Alloway’s sports ML stack, odds utilities, reporting tools, and GitHub repos — solvent-agent, ai-advantage, nba-ratings, kelly-js, juryrig, and more." } },
   { path: "/demos", Component: Demos, seo: { title: "Live Demos — SOLVENT, kelly-js, sports ML", description: "Working product demos: SOLVENT self-funding agent, kelly-js calculator, nba-edge Streamlit, sports-betting-ml, and AI Advantage." } },
   { path: "/bots", Component: Bots, seo: { title: "How to Start the Bots — SOLVENT, juryrig, OpenClaw skills", description: "Copy-paste commands to run SOLVENT, juryrig, and OpenClaw agent skills locally. No API keys needed for the SOLVENT demo." } },

@@ -18,7 +18,7 @@ describe("the experiment catalog", () => {
   });
 
   it("lists every routed demo, so nothing is reachable only by URL", () => {
-    const pages = new Set(["/", "/now", "/hireme", "/toolkit", "/demos", "/bots", "/lab", "*"]);
+    const pages = new Set(["/", "/now", "/hireme", "/toolkit", "/demos", "/bots", "/lab", "/monogram", "*"]);
     const listed = new Set(EXPERIMENTS.map((e) => e.path));
     for (const path of routed) if (!pages.has(path)) expect(listed, path).toContain(path);
   });
