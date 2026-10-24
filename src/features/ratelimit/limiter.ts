@@ -185,7 +185,7 @@ export const PATTERNS: Pattern[] = [
     id: "spike",
     label: "one big spike",
     note: "quiet, then everything at once — the bucket spends its savings, the others refuse",
-    times: (span, windowMs, limit) => {
+    times: (span, _windowMs, limit) => {
       const out: number[] = [];
       const at = span * 0.45;
       for (let i = 0; i < limit * 3; i++) out.push(at + i * 0.5);

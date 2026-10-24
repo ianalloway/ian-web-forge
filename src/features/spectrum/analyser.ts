@@ -2,7 +2,7 @@ export interface MicAnalyser {
   ctx: AudioContext;
   analyser: AnalyserNode;
   stream: MediaStream;
-  freq: Uint8Array; // frequency-domain magnitudes (0-255)
+  freq: Uint8Array<ArrayBuffer>; // frequency-domain magnitudes (0-255)
   time: Uint8Array; // time-domain samples (0-255, 128 = zero)
 }
 

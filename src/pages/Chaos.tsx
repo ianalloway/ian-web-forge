@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Bounds, PRESETS, applyAffine, computeBounds, pickMap } from "../features/ifs/ifs";
+import { Bounds, PRESETS, computeBounds, pickMap } from "../features/ifs/ifs";
 
 export default function Chaos() {
   const canvasRef = useRef<HTMLCanvasElement>(null);

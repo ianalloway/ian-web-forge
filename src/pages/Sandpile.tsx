@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Sandpile } from "../features/sandpile/sandpile";
+import { Sandpile as SandpileModel } from "../features/sandpile/sandpile";
 
 const CS = 3; // pixels per cell
 
@@ -16,7 +16,7 @@ export default function Sandpile() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const offRef = useRef<HTMLCanvasElement | null>(null);
   const imgRef = useRef<ImageData | null>(null);
-  const pileRef = useRef<Sandpile | null>(null);
+  const pileRef = useRef<SandpileModel | null>(null);
   const colsRef = useRef(0);
   const rowsRef = useRef(0);
   const speedRef = useRef(60000);
@@ -64,7 +64,7 @@ export default function Sandpile() {
       off.width = cols;
       off.height = rows;
       imgRef.current = offCtx.createImageData(cols, rows);
-      pileRef.current = new Sandpile(cols, rows);
+      pileRef.current = new SandpileModel(cols, rows);
       dropCenter(30000);
     };
     resize();

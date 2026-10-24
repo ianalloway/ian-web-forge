@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Terminal, ArrowLeft, Book, Code, Brain, Music, MapPin, Target, Zap, Coffee, GraduationCap } from 'lucide-react';
+import { Terminal, ArrowLeft, Book, Code, Music, MapPin, Target, Zap, Coffee, GraduationCap } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 import { applyTheme, getStoredTheme, type SiteTheme } from '@/lib/theme';
 

@@ -110,7 +110,7 @@ export function tracebackPath(table: Table): [number, number][] {
 }
 
 /** Apply an edit script to `a`; should reproduce `b`. */
-export function applyScript(a: string, steps: Step[]): string {
+export function applyScript(_a: string, steps: Step[]): string {
   let out = "";
   for (const s of steps) {
     if (s.op === "match" || s.op === "substitute") out += s.bChar;

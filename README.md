@@ -10,7 +10,7 @@ Matrix-themed developer portfolio for **Ian Alloway** — ML, sports analytics, 
 [![CI](https://github.com/ianalloway/ian-web-forge/actions/workflows/ci.yml/badge.svg)](https://github.com/ianalloway/ian-web-forge/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 [![React](https://img.shields.io/badge/React-19-61dafb?style=flat-square&logo=react&logoColor=white)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-7-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Vite](https://img.shields.io/badge/Vite-8-646cff?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
 
 </div>
@@ -38,11 +38,12 @@ Matrix-themed developer portfolio for **Ian Alloway** — ML, sports analytics, 
 ```bash
 git clone https://github.com/ianalloway/ian-web-forge.git
 cd ian-web-forge
-npm install
+npm ci
 npm run dev          # http://localhost:8080
 npm run build        # production build → dist/
 npm run lint         # ESLint
-npm test             # eslint . && tsc --noEmit
+npm run typecheck    # check app and Vite configuration
+npm test             # lint, type checks, and unit tests
 npm run check:forms  # after build — Netlify form wiring guard
 ```
 
