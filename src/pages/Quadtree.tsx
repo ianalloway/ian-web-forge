@@ -8,7 +8,6 @@ import {
   WORLD,
   WORLD_BOUNDS,
   build,
-  bruteForceNearest,
   countNodes,
   depthOf,
   makeRng,

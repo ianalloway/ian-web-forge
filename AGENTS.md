@@ -16,23 +16,25 @@ contact form — the contact section is a `mailto:` link.
 ## Commands
 
 ```bash
-npm install
+npm ci
 npm run dev       # Vite dev server → http://localhost:8080 (port set in vite.config.ts)
 npm run build     # production build → dist/
 npm run lint      # ESLint
-npm test          # eslint . && tsc --noEmit && vitest run
+npm run typecheck # app + Vite configuration
+npm test          # lint, type checks, and unit tests
 npm run test:unit # vitest only
 npm run preview   # preview a production build
 npm run check:forms  # verify the Netlify form wiring (needs a build first)
 ```
 
-There is no `typecheck` script — `npm test` already runs `tsc --noEmit`. Unit tests are vitest,
+`npm run typecheck` checks both referenced TypeScript projects explicitly; a root `tsc --noEmit`
+does not traverse the references. `package-lock.json` is committed for repeatable installs. Unit tests are vitest,
 colocated with the code as `src/**/*.test.ts`, configured in `vite.config.ts`. There is no
 browser/smoke test harness.
 
 ## CI
 
-- `.github/workflows/ci.yml` — checkout → `npm ci` → lint → `tsc --noEmit` → unit tests → build →
+- `.github/workflows/ci.yml` — checkout → `npm ci` → lint → typecheck → unit tests → build →
   form check. Runs on every push/PR against `main`.
 - `.github/workflows/codeql.yml` — GitHub CodeQL security scanning (scheduled + push/PR).
 - `.github/workflows/form-check.yml` — probes the **live** Netlify form wiring. The read-only probe

@@ -4,7 +4,6 @@ import {
   SAMPLES,
   SENTINEL,
   Sample,
-  alphabetOf,
   inverse,
   longestRun,
   meanCode,

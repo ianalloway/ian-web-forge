@@ -75,7 +75,7 @@ export function binomialPmf(rows: number, p: number, k: number): number {
  * While descending, position interpolates between current displacement
  * and the pegs it might hit; we simply center on rights - row*p drift.
  */
-export function ballX(b: Ball, s: GaltonState): number {
+export function ballX(b: Ball, _s: GaltonState): number {
   // displacement from center in half-bin units: rights - row/2
   const cur = b.rights - b.row / 2;
   return cur + b.jitter;

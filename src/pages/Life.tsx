@@ -10,7 +10,6 @@ import {
   PATTERNS,
   PatternId,
   stampPattern,
-  toggleCell,
 } from "../features/life/engine";
 
 const CELL = 8; // px per cell

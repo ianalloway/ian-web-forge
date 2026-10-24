@@ -33,7 +33,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "check:forms": "node scripts/check-netlify-forms.mjs",
-    "test": "eslint . && tsc --noEmit && vitest run",
+    "typecheck": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.node.json --noEmit",
+    "test": "eslint . && npm run typecheck && vitest run",
     "test:unit": "vitest run"
   },
   "dependencies": {
