@@ -8,6 +8,7 @@ import { EXPERIMENTS, experimentSeo } from "./lib/experiments";
 const Now = lazy(() => import("./pages/Now"));
 const Lab = lazy(() => import("./pages/Lab"));
 const Judge = lazy(() => import("./pages/Judge"));
+const Roc = lazy(() => import("./pages/Roc"));
 const HireMe = lazy(() => import("./pages/HireMe"));
 const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
@@ -28,6 +29,7 @@ const Flow = lazy(() => import("./pages/Flow"));
 const Cipher = lazy(() => import("./pages/Cipher"));
 const Regress = lazy(() => import("./pages/Regress"));
 const Cluster = lazy(() => import("./pages/Cluster"));
+const Gmm = lazy(() => import("./pages/Gmm"));
 const Pi = lazy(() => import("./pages/Pi"));
 const Game2048 = lazy(() => import("./pages/Game2048"));
 const Waves = lazy(() => import("./pages/Waves"));
@@ -63,6 +65,7 @@ const Chaos = lazy(() => import("./pages/Chaos"));
 const Hull = lazy(() => import("./pages/Hull"));
 const Sandpile = lazy(() => import("./pages/Sandpile"));
 const NeuralNet = lazy(() => import("./pages/NeuralNet"));
+const Dtree = lazy(() => import("./pages/Dtree"));
 const IsingPage = lazy(() => import("./pages/Ising"));
 const Huffman = lazy(() => import("./pages/Huffman"));
 const WatorPage = lazy(() => import("./pages/Wator"));
@@ -128,6 +131,7 @@ const routes = [
   { path: "/bots", Component: Bots, seo: { title: "How to Start the Bots — SOLVENT, juryrig, OpenClaw skills", description: "Copy-paste commands to run SOLVENT, juryrig, and OpenClaw agent skills locally. No API keys needed for the SOLVENT demo." } },
   { path: "/lab", Component: Lab, seo: { title: `Lab — ${EXPERIMENTS.length} interactive experiments`, description: "Every interactive experiment on ianalloway.xyz in one index: an LLM-judge audit, Kelly and CLV tools, ML and statistics you can watch converge, algorithms, systems internals, physics simulations and generative systems. All client-side, all from scratch." } },
   { path: "/judge", Component: Judge, seo: experimentSeo("/judge") },
+  { path: "/roc", Component: Roc, seo: experimentSeo("/roc") },
   { path: "/kelly", Component: Kelly, seo: experimentSeo("/kelly") },
   { path: "/dla", Component: Dla, seo: experimentSeo("/dla") },
   { path: "/lorenz", Component: Lorenz, seo: experimentSeo("/lorenz") },
@@ -144,6 +148,7 @@ const routes = [
   { path: "/cipher", Component: Cipher, seo: experimentSeo("/cipher") },
   { path: "/regress", Component: Regress, seo: experimentSeo("/regress") },
   { path: "/cluster", Component: Cluster, seo: experimentSeo("/cluster") },
+  { path: "/gmm", Component: Gmm, seo: experimentSeo("/gmm") },
   { path: "/pi", Component: Pi, seo: experimentSeo("/pi") },
   { path: "/2048", Component: Game2048, seo: experimentSeo("/2048") },
   { path: "/waves", Component: Waves, seo: experimentSeo("/waves") },
@@ -179,6 +184,7 @@ const routes = [
   { path: "/hull", Component: Hull, seo: experimentSeo("/hull") },
   { path: "/sandpile", Component: Sandpile, seo: experimentSeo("/sandpile") },
   { path: "/neuralnet", Component: NeuralNet, seo: experimentSeo("/neuralnet") },
+  { path: "/dtree", Component: Dtree, seo: experimentSeo("/dtree") },
   { path: "/ising", Component: IsingPage, seo: experimentSeo("/ising") },
   { path: "/huffman", Component: Huffman, seo: experimentSeo("/huffman") },
   { path: "/wator", Component: WatorPage, seo: experimentSeo("/wator") },
