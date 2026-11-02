@@ -81,6 +81,11 @@ const CORE_SECTION: CatalogSection = {
   icon: LineChart,
   rows: [
     {
+      name: 'spendaudit',
+      href: 'https://github.com/ianalloway/spendaudit',
+      oneLine: 'Benchmark: LLM payment auditors vs an executable spend policy · paper + data',
+    },
+    {
       name: 'solvent-agent',
       href: 'https://github.com/ianalloway/solvent-agent',
       oneLine: 'Self-funding AI agent — Stripe earn/spend, Nemotron, guardrails (Hackathon)',

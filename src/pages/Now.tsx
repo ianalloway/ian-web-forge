@@ -6,25 +6,26 @@ import { Terminal, ArrowLeft, Book, Code, Music, MapPin, Target, Zap, Coffee, Gr
 import MatrixRain from '@/components/MatrixRain';
 import { applyTheme, getStoredTheme, type SiteTheme } from '@/lib/theme';
 
-const LAST_UPDATED = 'July 2026';
+const LAST_UPDATED = 'November 2026';
 
 const NOW_DATA = {
   focus: {
     title: 'Main Focus',
     icon: Target,
     items: [
-      'Shipping SOLVENT (self-funding AI agent) to v1.0 with stable Stripe webhooks + LLM fulfillment',
-      'Pushing nba-edge from 68.3% to 70% accuracy with real-time injury data and rest-day features',
-      'Interviewing for ML engineering roles — focused on AI evaluation and applied systems teams',
-      'Finishing my M.S. in AI at USF — capstone on LLM judge calibration',
+      'Applying to Fall 2027 PhD programs in data science and AI, focused on whether LLM judges measure what they claim to',
+      'SpendAudit — published a benchmark testing whether LLM payment auditors match an executable spend policy',
+      'M.S. in Artificial Intelligence at USF, in progress since Fall 2026',
+      'AI evaluation contract work — side-by-side evaluations scored against written policies',
     ],
   },
   building: {
     title: 'Currently Building',
     icon: Code,
     items: [
-      'solvent-agent v0.2 — adding P&L reporting, multi-job queue, and Stripe Issuing integration',
-      'juryrig v0.2 — releasing prompt-injection audit and drift monitoring probes',
+      'solvent-agent 0.3 — margin-gated agent business loop with Stripe test-mode payments and spend guardrails',
+      'juryrig 0.3 — agreement matrices and a disagreement atlas for LLM judge panels',
+      'SpendAudit — next run with full coverage, held-out scenarios, and a mechanical verifier',
       'nba-clv-dashboard v2 — adding live calibration charts and CLV-by-strategy breakdowns',
       'openclaw-skills bundles — Sports Bettor, Crypto Watcher, Developer Power Tools',
     ],
@@ -57,7 +58,7 @@ const NOW_DATA = {
       'Cursor — AI-native editor for heavy refactoring sessions',
       'OpenClaw — my personal assistant, runs in terminal + Telegram + Discord',
       'Vercel — deploy everything, zero config',
-      'Stripe + Stripe Issuing — production payment infrastructure for solvent-agent',
+      'Stripe test mode — payment rails for solvent-agent',
     ],
   },
   listening: {
@@ -74,7 +75,7 @@ const NOW_DATA = {
     title: 'Where I Am',
     icon: MapPin,
     items: [
-      'Fairmont, WV — remote M.S. in AI at the University of South Florida',
+      'Fairmont, WV for now — M.S. in AI at the University of South Florida',
       'Open to remote AI engineering and LLM evaluation roles',
       'Available for LLM evaluation consulting engagements',
     ],
@@ -83,7 +84,6 @@ const NOW_DATA = {
     title: 'NOT Doing Right Now',
     icon: Coffee,
     items: [
-      'Taking on freelance clients — fully heads-down on product work until May',
       'Social media growth hacking — just shipping and letting the work speak',
       'Anything that doesn\'t compound (one-off gigs, unfocused side projects)',
     ],

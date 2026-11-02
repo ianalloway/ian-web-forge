@@ -73,6 +73,12 @@ const PROJECTS: Project[] = [
 
 const OPEN_SOURCE = [
   {
+    name: "spendaudit",
+    kind: "Python",
+    description: "Benchmark: do LLM payment auditors match an executable spend policy? Data, responses, recount.",
+    href: "https://github.com/ianalloway/spendaudit",
+  },
+  {
     name: "kelly-js",
     kind: "TypeScript",
     description: "Kelly sizing, CLV tracking, bankroll stats. Zero dependencies.",
@@ -106,6 +112,11 @@ const OPEN_SOURCE = [
 
 const NOTES = [
   {
+    type: "Working paper · evaluation",
+    title: "SpendAudit: Evaluating LLM payment auditors against an executable policy",
+    href: "https://github.com/ianalloway/spendaudit/blob/main/paper/spendaudit.pdf",
+  },
+  {
     type: "Field note · agent economics",
     title: "I gave an AI agent a Stripe key and walked away",
     href: "https://allowayai.substack.com/p/i-gave-an-ai-agent-a-stripe-key-and",
@@ -123,11 +134,11 @@ const NOTES = [
 ];
 
 const PRACTICE = [
-  ["2020", "Started Alloway LLC and began shipping ML and analytics for clients."],
+  ["Earlier", "Started Alloway LLC and began shipping ML and analytics for clients."],
   ["2024", "Audited multichain data at Omniichain; turned sports modeling into a decision product."],
   ["2025", "Published open-source agent skills, evaluation tools, and nba-edge."],
   ["2026", "B.S. at USF. Started grading frontier models for AI labs' eval programs."],
-  ["Now", "M.S. Artificial Intelligence at USF. Building juryrig in public."],
+  ["Now", "M.S. Artificial Intelligence at USF. Published the SpendAudit benchmark; building juryrig in public."],
 ];
 
 function Arrow() {
