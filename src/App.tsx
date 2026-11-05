@@ -102,6 +102,8 @@ const Hashmap = lazy(() => import("./pages/Hashmap"));
 const QuadtreePage = lazy(() => import("./pages/Quadtree"));
 const Arithmetic = lazy(() => import("./pages/Arithmetic"));
 const Hamming = lazy(() => import("./pages/Hamming"));
+const Crdt = lazy(() => import("./pages/Crdt"));
+const Raft = lazy(() => import("./pages/Raft"));
 const Hyperloglog = lazy(() => import("./pages/Hyperloglog"));
 const RingPage = lazy(() => import("./pages/Ring"));
 const DiffPage = lazy(() => import("./pages/Diff"));
@@ -221,6 +223,8 @@ const routes = [
   { path: "/quadtree", Component: QuadtreePage, seo: experimentSeo("/quadtree") },
   { path: "/arithmetic", Component: Arithmetic, seo: experimentSeo("/arithmetic") },
   { path: "/hamming", Component: Hamming, seo: experimentSeo("/hamming") },
+  { path: "/crdt", Component: Crdt, seo: experimentSeo("/crdt") },
+  { path: "/raft", Component: Raft, seo: experimentSeo("/raft") },
   { path: "/hyperloglog", Component: Hyperloglog, seo: experimentSeo("/hyperloglog") },
   { path: "/ring", Component: RingPage, seo: experimentSeo("/ring") },
   { path: "/diff", Component: DiffPage, seo: experimentSeo("/diff") },

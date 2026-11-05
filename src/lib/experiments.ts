@@ -310,6 +310,18 @@ export const EXPERIMENTS: Experiment[] = [
     category: "systems",
   },
   {
+    path: "/crdt",
+    title: "CRDTs — editing without agreement",
+    description: "Three replicas of the same document, each editable, each able to go offline. Type over each other while disconnected and reconnect: nothing is lost and every replica lands on the same text, with no leader and no votes. An RGA sequence CRDT where every character carries its own id and a pointer to the one it followed — and the tombstones that make it work are visible.",
+    category: "systems",
+  },
+  {
+    path: "/raft",
+    title: "Raft — consensus you can break on purpose",
+    description: "Five nodes, one log, no shared clock. Watch followers time out and campaign, a candidate collect a majority, and entries replicate and commit. Then kill nodes and cut the network: progress stops without a majority, a stranded leader's writes are quietly discarded when it rejoins, and the three Raft safety invariants — one leader per term, log matching, and state machine safety — are rechecked live and never break.",
+    category: "systems",
+  },
+  {
     path: "/hyperloglog",
     title: "HyperLogLog — counting distinct things without remembering any",
     description: "Counting unique visitors exactly means storing every id. HyperLogLog answers the same question in a fixed few kilobytes by keeping only the longest run of leading zeros each register has seen, with error settling at 1.04/√m regardless of the count. Watch the estimate track the truth while an exact set runs out of room.",
