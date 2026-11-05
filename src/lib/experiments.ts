@@ -22,6 +22,12 @@ export const EXPERIMENTS: Experiment[] = [
     category: "decisions",
   },
   {
+    path: "/roc",
+    title: "ROC & PR Explorer — read a classifier at every threshold",
+    description: "Two overlapping score distributions and a threshold you slide through them. Watch the confusion matrix, precision, recall and F1 update live while the ROC and precision–recall curves trace out behind them — AUC and average precision summarise every threshold at once, and the operating-point dot shows where yours sits. Tune class separation and prevalence to see why accuracy flatters a classifier on imbalanced data.",
+    category: "decisions",
+  },
+  {
     path: "/kelly",
     title: "Kelly Criterion Calculator — optimal bet sizing",
     description: "Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js.",
@@ -82,6 +88,12 @@ export const EXPERIMENTS: Experiment[] = [
     category: "ml",
   },
   {
+    path: "/gmm",
+    title: "Gaussian Mixture (EM) — soft clustering with covariance",
+    description: "Expectation–Maximisation fits a mixture of Gaussians: unlike k-means, every point is shared across components by responsibility and each cluster carries a full covariance, so the fitted ellipses stretch and tilt to the data. Watch the E-step recolour points and the M-step reshape ellipses while the log-likelihood climbs monotonically — and try the stretched dataset, where k-means' spherical assumption falls apart.",
+    category: "ml",
+  },
+  {
     path: "/descent",
     title: "Gradient Descent Arena — SGD vs Momentum vs Adam",
     description: "Drop three optimizers on a bumpy loss surface and watch SGD, momentum, and Adam race downhill — local minima, overshoot, and adaptive steps made visible.",
@@ -91,6 +103,12 @@ export const EXPERIMENTS: Experiment[] = [
     path: "/neuralnet",
     title: "Neural Network — watch a decision boundary learn",
     description: "A tiny 2·8·8·1 neural network trains by backpropagation on 2D toy datasets — blobs, circles, XOR, and spirals. Watch the decision boundary bend to fit the data in real time.",
+    category: "ml",
+  },
+  {
+    path: "/dtree",
+    title: "Decision Tree (CART) — the staircase decision boundary",
+    description: "A classification tree grown split by split: at each node CART searches both axes for the single cut that most reduces Gini impurity, carving the plane into axis-aligned rectangles — the staircase boundary that gives a tree away. Crank the depth to watch training accuracy climb to 100% as it overfits, and compare the blocky partition to the neural network's smooth one.",
     category: "ml",
   },
   {
