@@ -28,6 +28,12 @@ export const EXPERIMENTS: Experiment[] = [
     category: "decisions",
   },
   {
+    path: "/calibration",
+    title: "Calibration — do the probabilities mean anything?",
+    description: "A classifier's confidence is only trustworthy if it is calibrated: among the cases it calls 70% likely, about 70% should actually happen. The reliability diagram plots predicted against observed frequency, so a well-calibrated model sits on the diagonal. Dial the model over- or under-confident and watch the curve bow away while ECE, Brier score and log loss climb — then fit a single temperature and watch it snap back onto the line.",
+    category: "decisions",
+  },
+  {
     path: "/kelly",
     title: "Kelly Criterion Calculator — optimal bet sizing",
     description: "Interactive Kelly Criterion calculator: enter win probability, decimal odds, and bankroll to get optimal bet size, expected value, and full / half / quarter Kelly stakes. Powered by kelly-js.",
@@ -85,6 +91,12 @@ export const EXPERIMENTS: Experiment[] = [
     path: "/cluster",
     title: "K-Means Playground — watch clustering converge",
     description: "Interactive k-means clustering: scatter points, seed centroids with k-means++, and step through Lloyd iterations watching assignments and inertia converge.",
+    category: "ml",
+  },
+  {
+    path: "/pca",
+    title: "Principal Components — the directions a cloud varies along",
+    description: "PCA finds the axes a point cloud actually spreads along: PC1 is the direction of greatest variance, PC2 is perpendicular to it, and each is an eigenvector of the covariance matrix whose eigenvalue is the variance it carries. Drop in points and watch the principal axes and covariance ellipse re-fit, read how much variance PC1 keeps, and project the cloud onto that single axis to watch dimensionality reduction happen.",
     category: "ml",
   },
   {
@@ -175,6 +187,12 @@ export const EXPERIMENTS: Experiment[] = [
     path: "/sort",
     title: "Sorting Algorithm Visualizer",
     description: "Watch bubble, insertion, selection, quick, and merge sort race through a bar chart in real time. Adjustable speed, step counter, and color-coded comparisons.",
+    category: "algorithms",
+  },
+  {
+    path: "/heap",
+    title: "Binary Heap — a priority queue you can watch",
+    description: "A binary heap is a complete tree packed into an array where every parent beats its children — the one invariant a priority queue needs to return the top in O(1) and re-balance in O(log n). Insert and watch a value sift up, extract the root and watch the last leaf sift down, build a heap from chaos with Floyd's heapify, then run heapsort and watch it peel the root to the tail. Min- or max-heap, shown as tree and array at once.",
     category: "algorithms",
   },
   {
