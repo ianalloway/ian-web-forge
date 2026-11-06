@@ -30,8 +30,8 @@ const fitPoints = [
 ];
 
 const outcomes = [
-  { label: '40%', detail: 'client efficiency improvement through analytics and automation work' },
-  { label: '30%', detail: 'fraud reduction support from anomaly detection and blockchain analytics work' },
+  { label: '320', detail: 'item SpendAudit benchmark, published with every model response and a one-command recount' },
+  { label: '2', detail: 'Python packages on PyPI, solvent-agent and juryrig, each with CI and tests' },
   { label: '4', detail: 'flagship public projects that show modeling, evaluation, deployment, and tooling' },
   { label: 'Now', detail: 'B.S. Information Science completed; M.S. in AI in progress at USF' },
 ];

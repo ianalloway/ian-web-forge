@@ -48,8 +48,8 @@
     </g>
     <circle cx="416" cy="75" r="9" fill="#d7ff5f"/>
     <circle cx="416" cy="75" r="30" fill="none" stroke="#d7ff5f" stroke-opacity=".25"/>
-    <text x="303" y="337" fill="#d7ff5f" font-family="'Helvetica Neue', Arial, sans-serif" font-size="46" font-weight="700" letter-spacing="-2">68.3</text>
-    <text x="303" y="358" fill="#9a9e8c" font-family="'Courier New', monospace" font-size="10" font-weight="700" letter-spacing="1.2">OBSERVED ACCURACY</text>
+    <text x="303" y="337" fill="#d7ff5f" font-family="'Helvetica Neue', Arial, sans-serif" font-size="46" font-weight="700" letter-spacing="-2">320</text>
+    <text x="303" y="358" fill="#9a9e8c" font-family="'Courier New', monospace" font-size="10" font-weight="700" letter-spacing="1.2">BENCHMARK ITEMS</text>
   </g>
 
   <line x1="64" y1="435" x2="1136" y2="435" stroke="#f3f1e8" stroke-opacity=".14"/>

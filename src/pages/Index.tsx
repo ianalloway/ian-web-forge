@@ -48,8 +48,8 @@ const PROJECTS: Project[] = [
     description:
       "Live sports decision desk: model-backed picks, Kelly sizing, portfolio risk, and closing-line evaluation—shipped as a real product surface.",
     proof: "Built on nba-ratings (PyPI: nba-edge), kelly-js, and the sports-betting-ml training stack.",
-    metric: "68.3%",
-    metricLabel: "recorded model accuracy",
+    metric: "Live",
+    metricLabel: "deployed decision desk",
     visual: "sports",
     code: "https://github.com/ianalloway/ai-advantage",
     live: "https://aiadvantagesports.com",
