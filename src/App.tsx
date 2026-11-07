@@ -9,6 +9,7 @@ const Now = lazy(() => import("./pages/Now"));
 const Lab = lazy(() => import("./pages/Lab"));
 const Judge = lazy(() => import("./pages/Judge"));
 const Roc = lazy(() => import("./pages/Roc"));
+const Calibration = lazy(() => import("./pages/Calibration"));
 const HireMe = lazy(() => import("./pages/HireMe"));
 const Toolkit = lazy(() => import("./pages/Toolkit"));
 const Demos = lazy(() => import("./pages/Demos"));
@@ -20,6 +21,7 @@ const Gravity = lazy(() => import("./pages/Gravity"));
 const Ascii = lazy(() => import("./pages/Ascii"));
 const Type = lazy(() => import("./pages/Type"));
 const Sort = lazy(() => import("./pages/Sort"));
+const Heap = lazy(() => import("./pages/Heap"));
 const Life = lazy(() => import("./pages/Life"));
 const Boids = lazy(() => import("./pages/Boids"));
 const Path = lazy(() => import("./pages/Path"));
@@ -29,6 +31,7 @@ const Flow = lazy(() => import("./pages/Flow"));
 const Cipher = lazy(() => import("./pages/Cipher"));
 const Regress = lazy(() => import("./pages/Regress"));
 const Cluster = lazy(() => import("./pages/Cluster"));
+const Pca = lazy(() => import("./pages/Pca"));
 const Gmm = lazy(() => import("./pages/Gmm"));
 const Pi = lazy(() => import("./pages/Pi"));
 const Game2048 = lazy(() => import("./pages/Game2048"));
@@ -134,6 +137,7 @@ const routes = [
   { path: "/lab", Component: Lab, seo: { title: `Lab — ${EXPERIMENTS.length} interactive experiments`, description: "Every interactive experiment on ianalloway.xyz in one index: an LLM-judge audit, Kelly and CLV tools, ML and statistics you can watch converge, algorithms, systems internals, physics simulations and generative systems. All client-side, all from scratch." } },
   { path: "/judge", Component: Judge, seo: experimentSeo("/judge") },
   { path: "/roc", Component: Roc, seo: experimentSeo("/roc") },
+  { path: "/calibration", Component: Calibration, seo: experimentSeo("/calibration") },
   { path: "/kelly", Component: Kelly, seo: experimentSeo("/kelly") },
   { path: "/dla", Component: Dla, seo: experimentSeo("/dla") },
   { path: "/lorenz", Component: Lorenz, seo: experimentSeo("/lorenz") },
@@ -141,6 +145,7 @@ const routes = [
   { path: "/ascii", Component: Ascii, seo: experimentSeo("/ascii") },
   { path: "/type", Component: Type, seo: experimentSeo("/type") },
   { path: "/sort", Component: Sort, seo: experimentSeo("/sort") },
+  { path: "/heap", Component: Heap, seo: experimentSeo("/heap") },
   { path: "/life", Component: Life, seo: experimentSeo("/life") },
   { path: "/boids", Component: Boids, seo: experimentSeo("/boids") },
   { path: "/path", Component: Path, seo: experimentSeo("/path") },
@@ -150,6 +155,7 @@ const routes = [
   { path: "/cipher", Component: Cipher, seo: experimentSeo("/cipher") },
   { path: "/regress", Component: Regress, seo: experimentSeo("/regress") },
   { path: "/cluster", Component: Cluster, seo: experimentSeo("/cluster") },
+  { path: "/pca", Component: Pca, seo: experimentSeo("/pca") },
   { path: "/gmm", Component: Gmm, seo: experimentSeo("/gmm") },
   { path: "/pi", Component: Pi, seo: experimentSeo("/pi") },
   { path: "/2048", Component: Game2048, seo: experimentSeo("/2048") },
