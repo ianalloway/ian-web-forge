@@ -71,6 +71,36 @@ const PROJECTS: Project[] = [
   },
 ];
 
+/**
+ * Contract evaluation work. Name the contracting firms only: never the labs behind them,
+ * project codenames, or anything copied from a client deliverable.
+ */
+const CONTRACT_CASE = {
+  label: "Turing · contract · 2026",
+  title: "Season scoreboard",
+  description:
+    "I owned one evaluation case end to end for an AI app builder: a basketball season scoreboard a coach and the team's parents run from their own game data. I wrote the spec, the skills the model works from, two user interviews with their context files, and the prompts for the golden builds.",
+  proof:
+    "I audited the engineering team's build plans and rubrics, ran each rubric against its golden, scored the model's one-shot attempts, and hash-checked the code captures. That caught a doc editor quietly turning template placeholders into equation objects on paste.",
+  metric: "2",
+  metricLabel: "user personas, a golden build for each",
+};
+
+const ENGAGEMENTS = [
+  {
+    firm: "Handshake AI",
+    period: "Jun–Oct 2026",
+    description:
+      "Graded frontier coding agents and the software they built, with rubrics and preference evals. Built long-horizon agent benchmark tasks over 20 to 130+ file corpora, each with a 30 to 45 criterion binary rubric, a golden solution and a failure analysis.",
+  },
+  {
+    firm: "Mercor",
+    period: "2026",
+    description:
+      "Designed accounting-domain agent tasks: world files, golden solutions, grader guidelines, failure and grader analyses, and pairwise preference labels.",
+  },
+];
+
 const OPEN_SOURCE = [
   {
     name: "spendaudit",
@@ -304,6 +334,31 @@ function JuryrigGraphic() {
   );
 }
 
+/** The stages of the contract case, from the spec to the build every model attempt is graded against. */
+function EvalGraphic() {
+  return (
+    <div className="rd-project-graphic rd-project-graphic--solvent" aria-hidden="true">
+      <div className="rd-flow-node">
+        <span className="rd-mono">01</span>
+        <strong>Spec</strong>
+        <small>skills · interviews</small>
+      </div>
+      <span className="rd-flow-line" />
+      <div className="rd-flow-node">
+        <span className="rd-mono">02</span>
+        <strong>One-shot</strong>
+        <small>model's first try</small>
+      </div>
+      <span className="rd-flow-line" />
+      <div className="rd-flow-node rd-flow-node--active">
+        <span className="rd-mono">03</span>
+        <strong>Golden</strong>
+        <small>repaired · checked</small>
+      </div>
+    </div>
+  );
+}
+
 function useReveal() {
   useEffect(() => {
     const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
@@ -380,6 +435,7 @@ export default function Index() {
         </a>
         <div className="rd-nav-links rd-mono">
           <a href="#work">Work</a>
+          <a href="#evals">Evals</a>
           <Link to="/lab" onClick={() => mark("lab")}>Lab</Link>
           <a href="#source">Source</a>
           <a href="#writing">Writing</a>
@@ -468,9 +524,60 @@ export default function Index() {
           </div>
         </section>
 
+        <section className="rd-section rd-evals" id="evals">
+          <div className="rd-section-intro rd-section-intro--compact" data-reveal>
+            <p className="rd-section-label rd-mono">02 / CONTRACT EVALUATION</p>
+            <h2>Building the tests<br />models take.</h2>
+            <p>
+              In 2026 I built evaluation data for AI labs on contract: agent tasks, rubrics,
+              golden solutions, and write-ups of where the models broke. The labs and their
+              materials stay private, so this is a description of what I did on each one.
+            </p>
+          </div>
+
+          <div className="rd-case-list">
+            <article
+              className="rd-case"
+              data-reveal
+              onPointerEnter={() => mark("project")}
+              onFocus={() => mark("project")}
+            >
+              <div className="rd-case-heading">
+                <span className="rd-case-number rd-mono">01</span>
+                <p className="rd-mono">{CONTRACT_CASE.label}</p>
+                <h3>{CONTRACT_CASE.title}</h3>
+              </div>
+              <EvalGraphic />
+              <div className="rd-case-copy">
+                <p>{CONTRACT_CASE.description}</p>
+                <small>{CONTRACT_CASE.proof}</small>
+                <div className="rd-case-links rd-mono">
+                  <span className="rd-case-note">Client deliverables stay private</span>
+                </div>
+              </div>
+              <div className="rd-case-metric">
+                <strong>{CONTRACT_CASE.metric}</strong>
+                <span className="rd-mono">{CONTRACT_CASE.metricLabel}</span>
+              </div>
+            </article>
+          </div>
+
+          <div className="rd-engagements" data-reveal>
+            <p className="rd-engagements-label rd-mono">Other 2026 contracts</p>
+            {ENGAGEMENTS.map((engagement, index) => (
+              <div className="rd-engagement" key={engagement.firm}>
+                <span className="rd-repo-count rd-mono">{String(index + 2).padStart(2, "0")}</span>
+                <strong>{engagement.firm}</strong>
+                <span className="rd-engagement-period rd-mono">{engagement.period}</span>
+                <p>{engagement.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         <section className="rd-section rd-source" id="source">
           <div className="rd-section-intro rd-section-intro--compact" data-reveal>
-            <p className="rd-section-label rd-mono">02 / OPEN SOURCE</p>
+            <p className="rd-section-label rd-mono">03 / OPEN SOURCE</p>
             <h2>Useful before impressive.</h2>
             <p>
               Small tools with legible code, direct interfaces, and enough documentation for
@@ -495,7 +602,7 @@ export default function Index() {
 
         <section className="rd-practice" id="about">
           <div className="rd-practice-statement" data-reveal>
-            <p className="rd-section-label rd-mono">03 / PRACTICE</p>
+            <p className="rd-section-label rd-mono">04 / PRACTICE</p>
             <h2>Builder by habit.<br />Skeptic by training.</h2>
             <p>
               I like models with receipts: calibration curves, cost constraints, failure cases,
@@ -522,7 +629,7 @@ export default function Index() {
 
         <section className="rd-section rd-writing" id="writing">
           <div className="rd-section-intro rd-section-intro--compact" data-reveal>
-            <p className="rd-section-label rd-mono">04 / FIELD NOTES</p>
+            <p className="rd-section-label rd-mono">05 / FIELD NOTES</p>
             <h2>Thinking in public.</h2>
             <p>
               Notes on the edge cases, wrong turns, and design decisions that do not fit in a
