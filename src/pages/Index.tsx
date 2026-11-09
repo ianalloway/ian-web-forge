@@ -81,9 +81,10 @@ const CONTRACT_CASE = {
   description:
     "I owned one evaluation case end to end for an AI app builder: a basketball season scoreboard a coach and the team's parents run from their own game data. I wrote the spec, the skills the model works from, two user interviews with their context files, and the prompts for the golden builds.",
   proof:
-    "I audited the engineering team's build plans and rubrics, ran each rubric against its golden, scored the model's one-shot attempts, and hash-checked the code captures. That caught a doc editor quietly turning template placeholders into equation objects on paste.",
+    "I audited the engineering team's build plans and rubrics, ran each rubric against its golden, scored the model's one-shot attempts, and hash-checked the code captures against the editor's copy. That's how I confirmed the fix when a doc editor quietly turned template placeholders into equation objects on paste.",
   metric: "2",
   metricLabel: "user personas, a golden build for each",
+  writeup: "https://github.com/ianalloway/eval-casework",
 };
 
 const ENGAGEMENTS = [
@@ -552,6 +553,9 @@ export default function Index() {
                 <p>{CONTRACT_CASE.description}</p>
                 <small>{CONTRACT_CASE.proof}</small>
                 <div className="rd-case-links rd-mono">
+                  <a href={CONTRACT_CASE.writeup} target="_blank" rel="noreferrer">
+                    Read the case study <Arrow />
+                  </a>
                   <span className="rd-case-note">Client deliverables stay private</span>
                 </div>
               </div>
