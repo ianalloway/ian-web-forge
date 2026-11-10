@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0b0c0a" data-rh="true" />
-    <meta http-equiv="Content-Security-Policy" content="frame-src https://*.substack.com https://nba-edge-demo.streamlit.app https://ian-sports-betting-ml.streamlit.app" />
+    <!-- Content-Security-Policy and the other security headers are served from
+         netlify.toml (the production host) so they apply to every response and
+         can use header-only directives like frame-ancestors. Keep the two in
+         sync if the set of allowed origins changes. -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
