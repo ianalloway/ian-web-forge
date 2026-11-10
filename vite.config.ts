@@ -17,5 +17,9 @@ export default defineConfig({
   test: {
     environment: "node",
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    // Reuse workers across test files instead of spawning one per file. The
+    // suite is pure, deterministic unit tests with no shared global state, so
+    // isolation buys nothing and costs ~130ms of worker startup per file.
+    isolate: false,
   },
 });

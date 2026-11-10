@@ -2,6 +2,24 @@
   command = "npm run build"
   publish = "dist"
 
+# Security headers for every response. The CSP is deliberately strict: no
+# 'unsafe-inline'/'unsafe-eval' for scripts (the app ships no inline or eval'd
+# JS — the only inline <script> is non-executable JSON-LD). Allowed origins:
+#   - Google Fonts stylesheet (fonts.googleapis.com) + font files (fonts.gstatic.com)
+#   - the embedded Substack post + Streamlit demos (frame-src)
+#   - self-hosted video/images (media-src/img-src)
+#   - plausible.io for the opt-in cookieless analytics (script-src/connect-src)
+# style-src keeps 'unsafe-inline' because React sets inline style attributes.
+# If you add an origin here, mirror the note in index.html.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://plausible.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; connect-src 'self' https://plausible.io; frame-src https://*.substack.com https://nba-edge-demo.streamlit.app https://ian-sports-betting-ml.streamlit.app; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), camera=(), microphone=(), payment=(), usb=()"
+
 [[headers]]
   for = "/Ian_Alloway_Resume.pdf"
   [headers.values]
