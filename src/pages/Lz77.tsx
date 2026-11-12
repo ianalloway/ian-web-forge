@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   MIN_MATCH,
   SAMPLES,
@@ -30,6 +31,7 @@ function gridMetrics(width: number, height: number, length: number) {
 
 export default function Lz77() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const encRef = useRef<Encoder>(newEncoder(SAMPLES[1].text, 64, 24));
   const runningRef = useRef(true);
   const paceRef = useRef(6); // frames between tokens
@@ -70,7 +72,7 @@ export default function Lz77() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const enc = encRef.current;
 
     ctx.fillStyle = "#000";
@@ -200,8 +202,8 @@ export default function Lz77() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();

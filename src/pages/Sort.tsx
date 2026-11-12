@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   AlgoId,
   ALGORITHMS,
@@ -15,6 +16,7 @@ type Status = "idle" | "running" | "paused" | "done";
 
 export default function Sort() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const sorterRef = useRef<Generator<Frame> | null>(null);
   const frameRef = useRef<Frame | null>(null);
   const baseArrayRef = useRef<number[]>(randomArray(BAR_COUNT));
@@ -36,7 +38,7 @@ export default function Sort() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
 
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, W, H);
@@ -111,8 +113,8 @@ export default function Sort() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();

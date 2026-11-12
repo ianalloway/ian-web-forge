@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   DOMAIN,
   HIST_BINS,
@@ -20,6 +21,7 @@ const TRACE_H = 62; // trace plot strip
 
 export default function Mcmc() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const targetRef = useRef<Target>(TARGETS[0]);
   const chainRef = useRef<Chain>(newChain(TARGETS[0]));
   const sigmaRef = useRef(0.55);
@@ -81,7 +83,7 @@ export default function Mcmc() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const chain = chainRef.current;
 
     ctx.fillStyle = "#000";
@@ -240,8 +242,8 @@ export default function Mcmc() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     if (!surfaceRef.current) rebuildSurface(targetRef.current);

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { Diff as DiffResult, SAMPLES, Sample, apply, diff, minimumEdits, stats } from "../features/diff/myers";
 
 interface Run {
@@ -22,6 +23,7 @@ function freshRun(sample: Sample): Run {
 
 export default function Diff() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const runRef = useRef<Run>(freshRun(SAMPLES[0]));
   const runningRef = useRef(true);
   const paceRef = useRef(26);
@@ -65,7 +67,7 @@ export default function Diff() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const { sample, result, depth } = runRef.current;
     const n = sample.before.length;
     const m = sample.after.length;
@@ -193,8 +195,8 @@ export default function Diff() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();

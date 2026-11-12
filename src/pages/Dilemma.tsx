@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   STRATEGIES,
   Tournament,
@@ -27,6 +28,7 @@ const MAX_GENS = 600;
 
 export default function Dilemma() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const [rounds, setRounds] = useState(120);
   const [noise, setNoise] = useState(0);
   const [seed, setSeed] = useState(1337);
@@ -75,7 +77,7 @@ export default function Dilemma() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
 
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, W, H);
@@ -164,8 +166,8 @@ export default function Dilemma() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();

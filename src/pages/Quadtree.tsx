@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   DISTRIBUTIONS,
   Node,
@@ -19,6 +20,7 @@ import {
 
 export default function Quadtree() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const pointsRef = useRef<Point[]>(DISTRIBUTIONS[0].place(900, makeRng(9)));
   // Seeded empty and built in the mount effect: reading pointsRef during
   // render would be reading a ref mid-render.
@@ -49,7 +51,7 @@ export default function Quadtree() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
 
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, W, H);
@@ -168,8 +170,8 @@ export default function Quadtree() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     treeRef.current = build(pointsRef.current, WORLD_BOUNDS, capacityRef.current);

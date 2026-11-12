@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   SEQUENCES,
   Node,
@@ -39,6 +40,7 @@ function freshState(seq: Sequence): TreeState {
 
 export default function Avl() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const stateRef = useRef<TreeState>(freshState(SEQUENCES[0]));
   const runningRef = useRef(true);
   const speedRef = useRef(22); // frames between inserts
@@ -178,7 +180,7 @@ export default function Avl() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const s = stateRef.current;
 
     ctx.fillStyle = "#000";
@@ -242,8 +244,8 @@ export default function Avl() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();

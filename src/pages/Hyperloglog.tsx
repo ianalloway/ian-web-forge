@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   STREAMS,
   Sketch,
@@ -48,6 +49,7 @@ function freshRun(stream: Stream, p: number): Run {
 
 export default function Hyperloglog() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const runRef = useRef<Run>(freshRun(STREAMS[0], 10));
   const runningRef = useRef(true);
   const rateRef = useRef(2000);
@@ -119,7 +121,7 @@ export default function Hyperloglog() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const run = runRef.current;
     const sketch = run.sketch;
 
@@ -259,8 +261,8 @@ export default function Hyperloglog() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();

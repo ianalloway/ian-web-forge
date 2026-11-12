@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   DiceState,
   newDiceState,
@@ -14,6 +15,7 @@ const SIDES_OPTIONS = [6, 8, 20];
 
 export default function Dice() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const stateRef = useRef<DiceState>(newDiceState(2, 6));
   const autoRef = useRef(false);
 
@@ -29,7 +31,7 @@ export default function Dice() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const s = stateRef.current;
 
     ctx.fillStyle = "#000";
@@ -124,8 +126,8 @@ export default function Dice() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   ALGORITHMS,
   Algorithm,
@@ -21,6 +22,7 @@ const COLOURS: Record<Algorithm, string> = {
 
 export default function Ratelimit() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const [patternId, setPatternId] = useState(PATTERNS[1].id);
   const [limit, setLimit] = useState(10);
   const [windowMs, setWindowMs] = useState(1000);
@@ -46,7 +48,7 @@ export default function Ratelimit() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
 
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, W, H);
@@ -137,8 +139,8 @@ export default function Ratelimit() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();
