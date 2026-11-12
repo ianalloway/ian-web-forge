@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   PRESETS,
   Sim,
@@ -17,6 +18,7 @@ const MAX_DRAWN = 26; // waiting customers drawn before the queue is summarised
 
 export default function Queue() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const simRef = useRef<Sim>(newSim(PRESETS[1].lambda, PRESETS[1].mu, PRESETS[1].servers));
   const runningRef = useRef(true);
   const speedRef = useRef(40);
@@ -39,7 +41,7 @@ export default function Queue() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const sim = simRef.current;
     const th = theory(sim.lambda, sim.mu, sim.servers);
     const m = measured(sim);
@@ -201,8 +203,8 @@ export default function Queue() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();

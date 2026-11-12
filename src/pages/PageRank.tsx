@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   TOPOLOGIES,
   Graph,
@@ -19,6 +20,7 @@ const HISTORY = 90;
 
 export default function PageRank() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const graphRef = useRef<Graph>(buildGraph(24, TOPOLOGIES[0].id, 7));
   const ranksRef = useRef<Float64Array>(uniformRanks(24));
   const surferRef = useRef<Surfer>(newSurfer(24));
@@ -64,7 +66,7 @@ export default function PageRank() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const g = graphRef.current;
     const ranks = ranksRef.current;
     const surfer = surferRef.current;
@@ -247,8 +249,8 @@ export default function PageRank() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();

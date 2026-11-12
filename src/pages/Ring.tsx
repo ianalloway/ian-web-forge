@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   NODE_NAMES,
   RING_SIZE,
@@ -28,6 +29,7 @@ interface LastChange {
 
 export default function Ring() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const ringRef = useRef<HashRing>(newRing(120, NODE_NAMES.slice(0, 4)));
   const keysRef = useRef<string[]>(makeKeys(2000));
   const movedRef = useRef<Set<string>>(new Set());
@@ -101,7 +103,7 @@ export default function Ring() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const ring = ringRef.current;
     const keys = keysRef.current;
 
@@ -222,8 +224,8 @@ export default function Ring() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();

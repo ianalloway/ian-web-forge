@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   SAMPLES,
   SENTINEL,
@@ -36,6 +37,7 @@ const show = (s: string) => s.replace(new RegExp(SENTINEL, "g"), "¤").replace(/
 
 export default function Bwt() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const runRef = useRef<Run>(freshRun(SAMPLES[0]));
   const runningRef = useRef(true);
   const paceRef = useRef(12);
@@ -95,7 +97,7 @@ export default function Bwt() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const run = runRef.current;
     const { sample, rows, last, revealed } = run;
 
@@ -226,8 +228,8 @@ export default function Bwt() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();

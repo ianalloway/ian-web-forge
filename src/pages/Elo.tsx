@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   League,
   Team,
@@ -16,6 +17,7 @@ const MAX_ROUNDS = 200;
 
 export default function Elo() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const leagueRef = useRef<League>(newLeague(TEAM_COUNT));
   const runningRef = useRef(true);
   const kRef = useRef(24);
@@ -32,7 +34,7 @@ export default function Elo() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const league = leagueRef.current;
     const hist = league.history;
     const n = hist[0]?.length ?? 1;
@@ -122,8 +124,8 @@ export default function Elo() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();

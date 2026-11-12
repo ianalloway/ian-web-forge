@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   SIZES,
   STRATEGIES,
@@ -37,6 +38,7 @@ function freshRun(size: number, strategy: Strategy, seed: number): Run {
 
 export default function Hashmap() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const runRef = useRef<Run>(freshRun(SIZES[1], "linear", 17));
   const runningRef = useRef(true);
   const paceRef = useRef(4);
@@ -92,7 +94,7 @@ export default function Hashmap() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const run = runRef.current;
     const t = run.table;
 
@@ -233,8 +235,8 @@ export default function Hashmap() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();

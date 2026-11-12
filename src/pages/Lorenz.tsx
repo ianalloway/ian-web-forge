@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   Vec3,
   LorenzParams,
@@ -21,6 +22,7 @@ interface Particle {
 
 export default function Lorenz() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const paramsRef = useRef<LorenzParams>({ ...DEFAULT_LORENZ });
   const particlesRef = useRef<Particle[]>([]);
   const angleRef = useRef(0);
@@ -49,8 +51,8 @@ export default function Lorenz() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
     };
     resize();
     window.addEventListener("resize", resize);
@@ -59,7 +61,7 @@ export default function Lorenz() {
     let raf = 0;
     const loop = () => {
       raf = requestAnimationFrame(loop);
-      const { width: W, height: H } = canvas;
+      const { w: W, h: H } = sizeRef.current;
       const cx = W / 2;
       const cy = H / 2;
       const scale = Math.min(W, H) / 60;

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   SurfaceId,
   SURFACES,
@@ -16,6 +17,7 @@ const HEAT_RES = 3; // px per heatmap sample
 
 export default function Descent() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const heatRef = useRef<HTMLCanvasElement | null>(null);
   const optsRef = useRef<Record<OptimizerId, OptState> | null>(null);
   const surfaceRef = useRef<SurfaceId>("twopits");
@@ -29,7 +31,7 @@ export default function Descent() {
   const buildHeatmap = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const gw = Math.max(2, Math.floor(W / HEAT_RES));
     const gh = Math.max(2, Math.floor(H / HEAT_RES));
     const off = document.createElement("canvas");
@@ -84,8 +86,8 @@ export default function Descent() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       buildHeatmap();
       dropAt(-0.8, -0.75);
     };

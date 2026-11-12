@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   GaltonState,
   newGalton,
@@ -13,6 +14,7 @@ const ROW_OPTIONS = [8, 12, 16];
 
 export default function Galton() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const stateRef = useRef<GaltonState>(newGalton(12, 0.5));
   const runningRef = useRef(true);
   const rateRef = useRef(3); // balls per 10 frames
@@ -35,8 +37,8 @@ export default function Galton() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
     };
     resize();
     window.addEventListener("resize", resize);
@@ -47,7 +49,7 @@ export default function Galton() {
       raf = requestAnimationFrame(loop);
       frame++;
       const s = stateRef.current;
-      const { width: W, height: H } = canvas;
+      const { w: W, h: H } = sizeRef.current;
 
       if (runningRef.current) {
         if (frame % 10 < rateRef.current && s.balls.length < 120) spawnBall(s);

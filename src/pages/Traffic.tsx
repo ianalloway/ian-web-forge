@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   Diagram,
   PRESETS,
@@ -31,6 +32,7 @@ function speedColor(v: number, vmax: number): [number, number, number] {
 
 export default function Traffic() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const roadRef = useRef<Road>(newRoad(ROAD_LENGTH, INITIAL.cars, INITIAL.vmax));
   const paramsRef = useRef<Params>({ vmax: INITIAL.vmax, dawdle: INITIAL.dawdle });
   const diagramRef = useRef<Diagram>(newDiagram());
@@ -108,7 +110,7 @@ export default function Traffic() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const road = roadRef.current;
     const { vmax: vm } = paramsRef.current;
 
@@ -273,8 +275,8 @@ export default function Traffic() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();
