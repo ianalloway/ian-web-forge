@@ -400,6 +400,12 @@ export const EXPERIMENTS: Experiment[] = [
     category: "systems",
   },
   {
+    path: "/ecc",
+    title: "Elliptic Curves — the group law, then the hardness",
+    description: "Add two points on a curve by drawing a line through them and reflecting where it lands, then watch the same algebra over a prime field turn a smooth curve into a scatter of dots with no geometry left. Walk a generator around its subgroup, agree a shared key the way ECDH does, and run the identical code on secp256k1 — where one 256-bit multiply is 256 doublings and reversing it is the discrete log problem.",
+    category: "systems",
+  },
+  {
     path: "/rsa",
     title: "RSA Playground — build a key and break it",
     description: "Pick two primes, watch RSA build a keypair, encrypt and decrypt by modular exponentiation with the square-and-multiply ladder shown step by step — then factor the modulus to recover the private key. Textbook RSA, for learning only.",
