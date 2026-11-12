@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   DatasetId,
   DATASETS,
@@ -24,6 +25,7 @@ const RGB_COLORS: RGB[] = CLUSTER_COLORS.map((h) => [
 
 export default function Gmm() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const pointsRef = useRef<Pt[]>([]);
   const stateRef = useRef<GmmState | null>(null);
   const historyRef = useRef<number[]>([]);
@@ -43,7 +45,7 @@ export default function Gmm() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const points = pointsRef.current;
     const st = stateRef.current;
 
@@ -213,10 +215,10 @@ export default function Gmm() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       if (pointsRef.current.length === 0) {
-        pointsRef.current = makeDataset("blobs", canvas.width, canvas.height);
+        pointsRef.current = makeDataset("blobs", width, height);
       }
       redraw();
     };
@@ -235,7 +237,7 @@ export default function Gmm() {
   const handleDataset = (id: DatasetId) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    pointsRef.current = makeDataset(id, canvas.width, canvas.height);
+    pointsRef.current = makeDataset(id, sizeRef.current.w, sizeRef.current.h);
     reset();
   };
 
@@ -323,7 +325,13 @@ export default function Gmm() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full cursor-crosshair" onClick={onClick} />
+        <canvas
+          ref={canvasRef}
+          role="img"
+          aria-label="Gaussian mixture model fit by expectation–maximization, drawing each component's covariance ellipse over the clustered points; click to add points."
+          className="block w-full h-full cursor-crosshair"
+          onClick={onClick}
+        />
         <div className="absolute bottom-3 right-4 text-xs text-primary/30 pointer-events-none max-w-md text-right">
           ellipses are 1σ &amp; 2σ covariances · point colour = soft responsibility · click to add points · try “Stretched” — k-means can’t tilt
         </div>

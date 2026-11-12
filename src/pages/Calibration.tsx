@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   Sample,
   accuracy,
@@ -23,6 +24,7 @@ const GAP = "#ffe066";
 
 export default function Calibration() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const [seed, setSeed] = useState(1);
   const [samples, setSamples] = useState<Sample[]>(() => makeDataset(N, SPREAD, makeRng(1)));
   const [confidence, setConfidence] = useState(1.8);
@@ -53,7 +55,7 @@ export default function Calibration() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, W, H);
     ctx.font = "11px monospace";
@@ -169,8 +171,8 @@ export default function Calibration() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();
@@ -246,7 +248,12 @@ export default function Calibration() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas
+          ref={canvasRef}
+          role="img"
+          aria-label="Reliability diagram and confidence histogram showing how well predicted probabilities match observed frequencies, with optional temperature scaling."
+          className="block w-full h-full"
+        />
         <div className="absolute bottom-2 right-4 text-xs text-primary/30 pointer-events-none max-w-sm text-right">
           make the model over- or under-confident, then temperature-scale it back onto the diagonal
         </div>

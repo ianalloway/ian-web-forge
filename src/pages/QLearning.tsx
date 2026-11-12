@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   PRESETS,
   DEFAULT_PARAMS,
@@ -31,6 +32,7 @@ const DIR: [number, number][] = [
 
 export default function QLearning() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const learnerRef = useRef<Learner>(newLearner(buildGrid(PRESETS[0])));
   const paramsRef = useRef<Params>({ ...DEFAULT_PARAMS });
   const speedRef = useRef(60); // env steps per animation frame
@@ -62,7 +64,7 @@ export default function QLearning() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const l = learnerRef.current;
     const g = l.grid;
 
@@ -318,8 +320,8 @@ export default function QLearning() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();
@@ -481,7 +483,12 @@ export default function QLearning() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas
+          ref={canvasRef}
+          role="img"
+          aria-label="Grid-world Q-learning agent showing per-cell state-action values as colours and the learned policy as arrows, with the greedy route from the start."
+          className="block w-full h-full"
+        />
         <div className="absolute bottom-2 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           green = high value, red = danger · arrows = learned policy · cyan = greedy route from start ·
           it learns only from reward, no map given

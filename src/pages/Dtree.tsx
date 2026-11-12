@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   DatasetId,
   DATASETS,
@@ -21,6 +22,7 @@ const MIN_LEAF = 2;
 
 export default function Dtree() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const pointsRef = useRef<LabeledPt[]>([]);
   const treeRef = useRef<Tree | null>(null);
   const runningRef = useRef(false);
@@ -60,7 +62,7 @@ export default function Dtree() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const points = pointsRef.current;
     const tree = treeRef.current;
 
@@ -118,10 +120,10 @@ export default function Dtree() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       if (pointsRef.current.length === 0) {
-        pointsRef.current = makeDataset(datasetRef.current, canvas.width, canvas.height, makeRng(seedRef.current));
+        pointsRef.current = makeDataset(datasetRef.current, width, height, makeRng(seedRef.current));
       }
       apply();
     };
@@ -137,7 +139,7 @@ export default function Dtree() {
     datasetRef.current = id;
     setDataset(id);
     classesRef.current = DATASETS[id].classes;
-    pointsRef.current = makeDataset(id, canvas.width, canvas.height, makeRng(seedRef.current));
+    pointsRef.current = makeDataset(id, sizeRef.current.w, sizeRef.current.h, makeRng(seedRef.current));
     runningRef.current = false;
     setRunning(false);
     shownRef.current = depthRef.current;
@@ -268,7 +270,13 @@ export default function Dtree() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full cursor-crosshair" onClick={onClick} />
+        <canvas
+          ref={canvasRef}
+          role="img"
+          aria-label="Decision-tree classifier showing its recursive axis-aligned splits as shaded regions over a labelled point cloud; click to paint new points."
+          className="block w-full h-full cursor-crosshair"
+          onClick={onClick}
+        />
         <div className="absolute bottom-3 right-4 text-xs text-primary/30 pointer-events-none max-w-md text-right">
           axis-aligned splits → a staircase boundary · crank depth to watch it overfit · click to add points of the painted class
         </div>
