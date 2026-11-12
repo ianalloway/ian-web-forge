@@ -83,6 +83,7 @@ const KellySim = lazy(() => import("./pages/KellySim"));
 const Clv = lazy(() => import("./pages/Clv"));
 const Vig = lazy(() => import("./pages/Vig"));
 const FluidPage = lazy(() => import("./pages/Fluid"));
+const Ecc = lazy(() => import("./pages/Ecc"));
 const Rsa = lazy(() => import("./pages/Rsa"));
 const Cube = lazy(() => import("./pages/Cube"));
 const Raycast = lazy(() => import("./pages/Raycast"));
@@ -207,6 +208,7 @@ const routes = [
   { path: "/clv", Component: Clv, seo: experimentSeo("/clv") },
   { path: "/vig", Component: Vig, seo: experimentSeo("/vig") },
   { path: "/fluid", Component: FluidPage, seo: experimentSeo("/fluid") },
+  { path: "/ecc", Component: Ecc, seo: experimentSeo("/ecc") },
   { path: "/rsa", Component: Rsa, seo: experimentSeo("/rsa") },
   { path: "/cube", Component: Cube, seo: experimentSeo("/cube") },
   { path: "/raycast", Component: Raycast, seo: experimentSeo("/raycast") },
