@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   DatasetId,
   DATASETS,
@@ -15,6 +16,7 @@ const PC2 = "#00cfff";
 
 export default function Pca() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const pointsRef = useRef<Pt[]>([]);
   const [dataset, setDataset] = useState<DatasetId>("tilted");
   const [projecting, setProjecting] = useState(false);
@@ -45,7 +47,7 @@ export default function Pca() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const points = pointsRef.current;
 
     ctx.fillStyle = "#000";
@@ -143,10 +145,10 @@ export default function Pca() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       if (pointsRef.current.length === 0) {
-        pointsRef.current = makeDataset("tilted", canvas.width, canvas.height);
+        pointsRef.current = makeDataset("tilted", width, height);
       }
       redraw();
     };
@@ -166,7 +168,7 @@ export default function Pca() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     setDataset(id);
-    pointsRef.current = makeDataset(id, canvas.width, canvas.height);
+    pointsRef.current = makeDataset(id, sizeRef.current.w, sizeRef.current.h);
     redraw();
   };
 
@@ -224,7 +226,13 @@ export default function Pca() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full cursor-crosshair" onClick={onClick} />
+        <canvas
+          ref={canvasRef}
+          role="img"
+          aria-label="Scatter of 2D points with the principal-component axes and the projection of the data onto the first component; click to add points."
+          className="block w-full h-full cursor-crosshair"
+          onClick={onClick}
+        />
         <div className="absolute bottom-3 right-4 text-xs text-primary/30 pointer-events-none max-w-md text-right">
           green = PC1 (max variance), cyan = PC2 ⟂ · click to add points · project to see the 1-D reduction
         </div>

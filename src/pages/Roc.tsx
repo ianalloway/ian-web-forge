@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   RocPoint,
   PrPoint,
@@ -28,6 +29,7 @@ const SIGMA = 1;
 
 export default function Roc() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const samplesRef = useRef<Sample[]>([]);
   const rocRef = useRef<RocPoint[]>([]);
   const prRef = useRef<PrPoint[]>([]);
@@ -80,7 +82,7 @@ export default function Roc() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const samples = samplesRef.current;
     const thr = thresholdRef.current;
     const { min: sMin, max: sMax } = rangeRef.current;
@@ -342,8 +344,8 @@ export default function Roc() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     if (samplesRef.current.length === 0) resample(separation, prevalence, false);
@@ -442,6 +444,8 @@ export default function Roc() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="ROC and precision–recall curves with a draggable decision threshold sweeping across overlapping positive and negative score distributions."
           className="block w-full h-full cursor-crosshair"
           onPointerDown={handleCanvasPointer}
           onPointerMove={handleCanvasPointer}

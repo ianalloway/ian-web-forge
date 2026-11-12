@@ -12,12 +12,14 @@ import {
   randomValues,
   right,
 } from "../features/heap/heap";
+import { fitCanvas } from "../lib/canvas";
 
 const MAX = 31; // keeps the tree to five readable levels
 const TICK_MS = 55;
 
 export default function Heap() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const heapRef = useRef<number[]>([]);
   const animRef = useRef<Generator<HeapStep, unknown> | null>(null);
   const stepRef = useRef<HeapStep>({ active: [], compare: [], sorted: 0 });
@@ -44,7 +46,7 @@ export default function Heap() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const arr = heapRef.current;
     const n = arr.length;
     const { active, compare, sorted } = stepRef.current;
@@ -191,8 +193,8 @@ export default function Heap() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       if (heapRef.current.length === 0) {
         heapRef.current = randomValues(14);
         heapify(heapRef.current, minRef.current);
@@ -308,7 +310,12 @@ export default function Heap() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas
+          ref={canvasRef}
+          role="img"
+          aria-label="Binary heap shown as a tree and as its backing array, animating insert, extract-top, heapify and heapsort for both max- and min-heaps."
+          className="block w-full h-full"
+        />
         <div className="absolute bottom-2 right-4 text-xs text-primary/30 pointer-events-none max-w-md text-right">
           green = moving · amber = comparing · every parent beats its children · heapsort peels the root to the tail
         </div>

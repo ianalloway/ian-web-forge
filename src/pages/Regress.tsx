@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   Point,
   PresetId,
@@ -14,6 +15,7 @@ const POINT_R = 5;
 
 export default function Regress() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const pointsRef = useRef<Point[]>([]);
   const degreeRef = useRef(1);
 
@@ -26,7 +28,7 @@ export default function Regress() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const points = pointsRef.current;
 
     ctx.fillStyle = "#000";
@@ -87,10 +89,10 @@ export default function Regress() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       if (pointsRef.current.length === 0) {
-        pointsRef.current = makePreset("wave", canvas.width, canvas.height);
+        pointsRef.current = makePreset("wave", width, height);
       }
       redraw();
     };
@@ -125,7 +127,7 @@ export default function Regress() {
   const handlePreset = (id: PresetId) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    pointsRef.current = makePreset(id, canvas.width, canvas.height);
+    pointsRef.current = makePreset(id, sizeRef.current.w, sizeRef.current.h);
     redraw();
   };
 
@@ -201,6 +203,8 @@ export default function Regress() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="Polynomial regression over scatter points, showing the fitted curve and each point's residual; click to add a point or click a point to remove it."
           className="block w-full h-full cursor-crosshair"
           onClick={onClick}
         />

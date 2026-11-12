@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   SCENARIOS,
   WORLD,
@@ -37,6 +38,7 @@ interface Hud {
 
 export default function Kalman() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const scenarioRef = useRef<Scenario>(SCENARIOS[0]);
   const truthRef = useRef<Target>(newTarget(SCENARIOS[0]));
   const estimateRef = useRef<Estimate>(newEstimate(WORLD * 0.3, WORLD * 0.62, 25));
@@ -109,7 +111,7 @@ export default function Kalman() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
 
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, W, H);
@@ -297,8 +299,8 @@ export default function Kalman() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();
@@ -453,7 +455,12 @@ export default function Kalman() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas
+          ref={canvasRef}
+          role="img"
+          aria-label="Kalman filter tracking a moving target: the hidden truth, noisy measurements, and the filtered estimate with its 2σ uncertainty ellipse and inferred velocity."
+          className="block w-full h-full"
+        />
         <div className="absolute bottom-2 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           green = truth (never observed) · orange = noisy fixes · cyan = estimate, its 2σ ellipse and
           its inferred velocity · low q lags hard turns, high q chases noise
