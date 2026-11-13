@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { HullResult, Pt, monotoneChain } from "../features/hull/hull";
 
 export default function Hull() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   // Points stored normalized in [0,1] so they survive resizes.
   const ptsRef = useRef<Pt[]>([]);
   const resultRef = useRef<HullResult | null>(null);
@@ -48,8 +50,8 @@ export default function Hull() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       dimsRef.current = [rect.width, rect.height];
       recompute();
     };
@@ -60,8 +62,8 @@ export default function Hull() {
     let raf = 0;
     const loop = () => {
       raf = requestAnimationFrame(loop);
-      const W = canvas.width;
-      const H = canvas.height;
+      const W = sizeRef.current.w;
+      const H = sizeRef.current.h;
       const res = resultRef.current;
 
       // Advance animation.

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { Cluster, type ClusterEvent, type Entry, type Role, checkAll } from "../features/raft/raft";
 
 const SIZE = 5;
@@ -63,6 +64,7 @@ function termColor(term: number, filled: boolean): string {
 
 export default function Raft() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const clusterRef = useRef<Cluster | null>(null);
   const runningRef = useRef(true);
   const speedRef = useRef(1);
@@ -127,8 +129,8 @@ export default function Raft() {
     const resize = () => {
       if (!canvas) return;
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
     };
     resize();
     window.addEventListener("resize", resize);
@@ -150,7 +152,7 @@ export default function Raft() {
       }
 
       // Draw every frame so messages glide even while the DOM lags behind.
-      if (canvas && ctx) draw(ctx, canvas.width, canvas.height, c);
+      if (canvas && ctx) draw(ctx, sizeRef.current.w, sizeRef.current.h, c);
 
       if (dirtyRef.current && (frame++ & 3) === 0) {
         dirtyRef.current = false;

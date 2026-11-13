@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   Perlin,
   Particle,
@@ -21,6 +22,7 @@ const PALETTE_KEYS = Object.keys(PALETTES) as Palette[];
 
 export default function Flow() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const particlesRef = useRef<Particle[]>([]);
   const noiseRef = useRef<Perlin>(new Perlin(42));
   const paramsRef = useRef<FlowParams>({ ...DEFAULT_FLOW });
@@ -41,11 +43,11 @@ export default function Flow() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       ctx.fillStyle = "#000";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      particlesRef.current = makeParticles(count, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, sizeRef.current.w, sizeRef.current.h);
+      particlesRef.current = makeParticles(count, sizeRef.current.w, sizeRef.current.h);
     };
     resize();
     window.addEventListener("resize", resize);
@@ -56,7 +58,7 @@ export default function Flow() {
       raf = requestAnimationFrame(loop);
       if (pausedRef.current) return;
       t++;
-      const { width: W, height: H } = canvas;
+      const { w: W, h: H } = sizeRef.current;
 
       // Slow fade instead of clear — lines accumulate into silky streams
       ctx.fillStyle = "rgba(0,0,0,0.04)";
@@ -90,7 +92,7 @@ export default function Flow() {
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
     ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, sizeRef.current.w, sizeRef.current.h);
   };
 
   const reseed = () => {

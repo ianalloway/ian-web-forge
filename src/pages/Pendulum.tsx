@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   PendulumState,
   PendulumParams,
@@ -17,6 +18,7 @@ const BOB_R = 12;
 
 export default function Pendulum() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const stateRef = useRef<PendulumState>(randomState());
   const ghostRef = useRef<PendulumState | null>(null);
   const paramsRef = useRef<PendulumParams>({ ...DEFAULT_PARAMS });
@@ -30,8 +32,7 @@ export default function Pendulum() {
   const [damping, setDamping] = useState(false);
 
   const pivot = useCallback(() => {
-    const canvas = canvasRef.current!;
-    return { px: canvas.width / 2, py: canvas.height * 0.35 };
+    return { px: sizeRef.current.w / 2, py: sizeRef.current.h * 0.35 };
   }, []);
 
   // Sim + render loop
@@ -43,8 +44,8 @@ export default function Pendulum() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
     };
     resize();
     window.addEventListener("resize", resize);
@@ -72,7 +73,7 @@ export default function Pendulum() {
 
       // Render
       ctx.fillStyle = "#000";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, sizeRef.current.w, sizeRef.current.h);
 
       const drawTrail = (trail: { x: number; y: number }[], color: string) => {
         if (trail.length < 2) return;

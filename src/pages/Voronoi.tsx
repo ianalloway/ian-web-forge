@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   Site,
   randomSites,
@@ -12,6 +13,7 @@ type Mode = "cells" | "delaunay" | "both";
 
 export default function Voronoi() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const sitesRef = useRef<Site[]>([]);
   const modeRef = useRef<Mode>("both");
   const dragRef = useRef(-1);
@@ -24,7 +26,7 @@ export default function Voronoi() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     const sites = sitesRef.current;
     const m = modeRef.current;
 
@@ -86,10 +88,10 @@ export default function Voronoi() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       if (sitesRef.current.length === 0) {
-        sitesRef.current = randomSites(12, canvas.width, canvas.height);
+        sitesRef.current = randomSites(12, sizeRef.current.w, sizeRef.current.h);
       }
       render();
     };
@@ -181,7 +183,7 @@ export default function Voronoi() {
             onClick={() => {
               const canvas = canvasRef.current;
               if (!canvas) return;
-              sitesRef.current = randomSites(12, canvas.width, canvas.height);
+              sitesRef.current = randomSites(12, sizeRef.current.w, sizeRef.current.h);
               render();
             }}
             className="px-3 py-1 text-xs border border-primary/30 hover:border-primary text-primary/70 hover:text-primary transition-colors"

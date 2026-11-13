@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { Edge, Pt, kruskalMST, primMST } from "../features/mst/mst";
 
 type Algo = "prim" | "kruskal";
 
 export default function Mst() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const ptsRef = useRef<Pt[]>([]); // normalized [0,1]
   const primRef = useRef<Edge[]>([]);
   const kruskalRef = useRef<Edge[]>([]);
@@ -44,8 +46,8 @@ export default function Mst() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
     };
     resize();
     window.addEventListener("resize", resize);
@@ -55,8 +57,8 @@ export default function Mst() {
     let frame = 0;
     const loop = () => {
       raf = requestAnimationFrame(loop);
-      const W = canvas.width;
-      const H = canvas.height;
+      const W = sizeRef.current.w;
+      const H = sizeRef.current.h;
       const pts = ptsRef.current;
       const edges = activeEdges();
 

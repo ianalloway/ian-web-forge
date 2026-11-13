@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { Cloth } from "../features/cloth/verlet";
 
 type Mode = "drag" | "cut";
 
 export default function ClothPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const clothRef = useRef<Cloth | null>(null);
   const modeRef = useRef<Mode>("drag");
   const gravityRef = useRef(0.32);
@@ -20,16 +22,16 @@ export default function ClothPage() {
 
   const build = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas || canvas.width === 0) return;
-    const spacing = Math.max(12, Math.min(22, canvas.width / 46));
-    const cols = Math.max(10, Math.floor((canvas.width * 0.7) / spacing));
-    const rows = Math.max(8, Math.floor((canvas.height * 0.6) / spacing));
+    if (!canvas || sizeRef.current.w === 0) return;
+    const spacing = Math.max(12, Math.min(22, sizeRef.current.w / 46));
+    const cols = Math.max(10, Math.floor((sizeRef.current.w * 0.7) / spacing));
+    const rows = Math.max(8, Math.floor((sizeRef.current.h * 0.6) / spacing));
     const c = new Cloth({
       cols,
       rows,
       spacing,
-      originX: (canvas.width - (cols - 1) * spacing) / 2,
-      originY: canvas.height * 0.12,
+      originX: (sizeRef.current.w - (cols - 1) * spacing) / 2,
+      originY: sizeRef.current.h * 0.12,
       pinEvery: Math.max(2, Math.round(cols / 7)),
     });
     c.gravity = gravityRef.current;
@@ -46,8 +48,8 @@ export default function ClothPage() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       build();
     };
     resize();
@@ -59,8 +61,8 @@ export default function ClothPage() {
       raf = requestAnimationFrame(loop);
       const c = clothRef.current;
       if (!c) return;
-      const W = canvas.width;
-      const H = canvas.height;
+      const W = sizeRef.current.w;
+      const H = sizeRef.current.h;
       const ptr = pointerRef.current;
 
       // Pointer interaction.

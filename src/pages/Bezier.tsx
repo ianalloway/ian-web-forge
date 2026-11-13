@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   Pt,
   deCasteljauLevels,
@@ -21,6 +22,7 @@ const LEVEL_COLORS = [
 
 export default function Bezier() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const pointsRef = useRef<Pt[]>([]);
   const dragIdxRef = useRef(-1);
   const tRef = useRef(0);
@@ -40,10 +42,10 @@ export default function Bezier() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       if (pointsRef.current.length === 0) {
-        pointsRef.current = defaultPoints(canvas.width, canvas.height);
+        pointsRef.current = defaultPoints(sizeRef.current.w, sizeRef.current.h);
         setPointCount(pointsRef.current.length);
       }
     };
@@ -55,7 +57,7 @@ export default function Bezier() {
     const loop = () => {
       raf = requestAnimationFrame(loop);
       frame++;
-      const { width: W, height: H } = canvas;
+      const { w: W, h: H } = sizeRef.current;
       const points = pointsRef.current;
       if (points.length < MIN_POINTS) return;
 
@@ -257,7 +259,7 @@ export default function Bezier() {
           onClick={() => {
             const canvas = canvasRef.current;
             if (!canvas) return;
-            pointsRef.current = defaultPoints(canvas.width, canvas.height);
+            pointsRef.current = defaultPoints(sizeRef.current.w, sizeRef.current.h);
             setPointCount(pointsRef.current.length);
           }}
           className="ml-auto px-3 py-1 text-xs border border-primary/30 hover:border-primary text-primary/70 hover:text-primary transition-colors"

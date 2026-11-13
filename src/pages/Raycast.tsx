@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { Grid, castRay, collides, generateMaze } from "../features/raycast/dda";
 
 const MAP_W = 31;
@@ -18,6 +19,7 @@ const MATERIAL: [number, number, number][] = [
 
 export default function Raycast() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const gridRef = useRef<Grid | null>(null);
   const posRef = useRef({ x: 1.5, y: 1.5, angle: 0 });
   const keysRef = useRef(new Set<string>());
@@ -41,8 +43,8 @@ export default function Raycast() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
     };
     resize();
     window.addEventListener("resize", resize);
@@ -84,8 +86,8 @@ export default function Raycast() {
         if (!collides(g, p.x, ny)) p.y = ny;
       }
 
-      const W = canvas.width;
-      const H = canvas.height;
+      const W = sizeRef.current.w;
+      const H = sizeRef.current.h;
       const horizon = H / 2;
 
       // Ceiling and floor.

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   SeedMode,
   ruleToTable,
@@ -13,6 +14,7 @@ const CELL = 3; // px per cell
 
 export default function Eca() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const rowRef = useRef<Uint8Array>(new Uint8Array(0));
   const yRef = useRef(0);
   const ruleRef = useRef(30);
@@ -29,8 +31,8 @@ export default function Eca() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    const cols = Math.floor(canvas.width / CELL);
+    ctx.fillRect(0, 0, sizeRef.current.w, sizeRef.current.h);
+    const cols = Math.floor(sizeRef.current.w / CELL);
     rowRef.current = seedRow(cols, seedRef.current);
     yRef.current = 0;
   }, []);
@@ -43,8 +45,8 @@ export default function Eca() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       restart();
     };
     resize();
@@ -54,7 +56,7 @@ export default function Eca() {
     const loop = () => {
       raf = requestAnimationFrame(loop);
       if (!runningRef.current) return;
-      const rows = Math.floor(canvas.height / CELL);
+      const rows = Math.floor(sizeRef.current.h / CELL);
       const table = ruleToTable(ruleRef.current);
 
       // Draw a few generations per frame
@@ -64,7 +66,7 @@ export default function Eca() {
           // Scroll up by shifting the canvas image and keep going
           ctx.drawImage(canvas, 0, -CELL);
           ctx.fillStyle = "#000";
-          ctx.fillRect(0, (rows - 1) * CELL, canvas.width, CELL);
+          ctx.fillRect(0, (rows - 1) * CELL, sizeRef.current.w, CELL);
           yRef.current = rows - 1;
         }
         const row = rowRef.current;

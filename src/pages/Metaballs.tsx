@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { Ball, fieldAt, marchingSquares } from "../features/metaballs/marchingSquares";
 
 const CELL = 9; // grid sample spacing in pixels
 
 export default function Metaballs() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const ballsRef = useRef<Ball[]>([]);
   const valsRef = useRef<Float32Array>(new Float32Array(0));
   const colsRef = useRef(0);
@@ -41,8 +43,8 @@ export default function Metaballs() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       colsRef.current = Math.ceil(rect.width / CELL) + 1;
       rowsRef.current = Math.ceil(rect.height / CELL) + 1;
       valsRef.current = new Float32Array(colsRef.current * rowsRef.current);
@@ -54,8 +56,8 @@ export default function Metaballs() {
     let raf = 0;
     const loop = () => {
       raf = requestAnimationFrame(loop);
-      const W = canvas.width;
-      const H = canvas.height;
+      const W = sizeRef.current.w;
+      const H = sizeRef.current.h;
       const balls = ballsRef.current;
 
       if (runningRef.current) {
@@ -131,7 +133,7 @@ export default function Metaballs() {
   const chooseCount = (n: number) => {
     setCount(n);
     const canvas = canvasRef.current;
-    if (canvas) makeBalls(n, canvas.width, canvas.height);
+    if (canvas) makeBalls(n, sizeRef.current.w, sizeRef.current.h);
   };
 
   return (

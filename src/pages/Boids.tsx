@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   Boid,
   FlockParams,
@@ -23,6 +24,7 @@ const SLIDERS: SliderDef[] = [
 
 export default function Boids() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const boidsRef = useRef<Boid[]>([]);
   const paramsRef = useRef<FlockParams>({ ...DEFAULT_PARAMS });
   const mouseRef = useRef<{ x: number; y: number } | null>(null);
@@ -41,18 +43,18 @@ export default function Boids() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
     };
     resize();
     window.addEventListener("resize", resize);
 
-    boidsRef.current = makeFlock(flockSize, canvas.width, canvas.height);
+    boidsRef.current = makeFlock(flockSize, sizeRef.current.w, sizeRef.current.h);
 
     let raf = 0;
     const loop = () => {
       raf = requestAnimationFrame(loop);
-      const { width: W, height: H } = canvas;
+      const { w: W, h: H } = sizeRef.current;
 
       if (!pausedRef.current) {
         stepFlock(boidsRef.current, W, H, paramsRef.current, mouseRef.current);

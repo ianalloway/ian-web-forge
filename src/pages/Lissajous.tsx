@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   HarmonoParams,
   DEFAULT_HARMONO,
@@ -14,6 +15,7 @@ const SEGMENTS_PER_FRAME = 120;
 
 export default function Lissajous() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const paramsRef = useRef<HarmonoParams>({ ...DEFAULT_HARMONO });
   const tRef = useRef(0);
   const doneRef = useRef(false);
@@ -28,7 +30,7 @@ export default function Lissajous() {
     const ctx = canvas?.getContext("2d");
     if (canvas && ctx) {
       ctx.fillStyle = "#000";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, sizeRef.current.w, sizeRef.current.h);
     }
     tRef.current = 0;
     doneRef.current = false;
@@ -50,8 +52,8 @@ export default function Lissajous() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       clearAndRestart();
     };
     resize();
@@ -61,7 +63,7 @@ export default function Lissajous() {
     const loop = () => {
       raf = requestAnimationFrame(loop);
       if (pausedRef.current || doneRef.current) return;
-      const { width: W, height: H } = canvas;
+      const { w: W, h: H } = sizeRef.current;
       const cx = W / 2;
       const cy = H / 2;
       const R = Math.min(W, H) * 0.42;

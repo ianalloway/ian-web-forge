@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   Agent,
   Counts,
@@ -17,6 +18,7 @@ const COLORS = { s: "#00cfff", i: "#ff4da6", r: "#00ff41" };
 
 export default function Epidemic() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const agentsRef = useRef<Agent[]>([]);
   const paramsRef = useRef<SirParams>({ ...DEFAULT_SIR });
   const historyRef = useRef<Counts[]>([]);
@@ -32,10 +34,10 @@ export default function Epidemic() {
   const restart = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const arenaH = canvas.height - CHART_H;
+    const arenaH = sizeRef.current.h - CHART_H;
     agentsRef.current = makePopulation(
       POP,
-      canvas.width,
+      sizeRef.current.w,
       arenaH,
       paramsRef.current.distancing
     );
@@ -54,8 +56,8 @@ export default function Epidemic() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       restart();
     };
     resize();
@@ -64,7 +66,7 @@ export default function Epidemic() {
     let raf = 0;
     const loop = () => {
       raf = requestAnimationFrame(loop);
-      const { width: W, height: H } = canvas;
+      const { w: W, h: H } = sizeRef.current;
       const arenaH = H - CHART_H;
 
       if (!overRef.current) {

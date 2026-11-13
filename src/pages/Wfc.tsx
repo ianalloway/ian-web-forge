@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { TILES, WFC } from "../features/wfc/wfc";
 
 const CS = 22; // pixels per tile
@@ -14,6 +15,7 @@ const EDGE = [
 
 export default function Wfc() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const wfcRef = useRef<WFC | null>(null);
   const colsRef = useRef(0);
   const rowsRef = useRef(0);
@@ -45,8 +47,8 @@ export default function Wfc() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       colsRef.current = Math.max(4, Math.floor(rect.width / CS));
       rowsRef.current = Math.max(4, Math.floor(rect.height / CS));
       rebuild();
@@ -84,8 +86,8 @@ export default function Wfc() {
       }
 
       // Render.
-      const W = canvas.width;
-      const H = canvas.height;
+      const W = sizeRef.current.w;
+      const H = sizeRef.current.h;
       ctx.fillStyle = "#050805";
       ctx.fillRect(0, 0, W, H);
       ctx.lineCap = "round";

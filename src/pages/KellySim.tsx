@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { SimResult, kellyFraction, makeRng, simulate } from "../features/kellysim/kellysim";
 
 const FRACTIONS: { label: string; value: number }[] = [
@@ -13,6 +14,7 @@ const PATHS = 220;
 
 export default function KellySim() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const [winProb, setWinProb] = useState(0.55);
   const [odds, setOdds] = useState(2);
   const [fraction, setFraction] = useState(0.5);
@@ -35,10 +37,10 @@ export default function KellySim() {
 
     const draw = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-      const W = canvas.width;
-      const H = canvas.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
+      const W = sizeRef.current.w;
+      const H = sizeRef.current.h;
       ctx.fillStyle = "#050805";
       ctx.fillRect(0, 0, W, H);
 
