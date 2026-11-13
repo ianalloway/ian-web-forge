@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { PoissonDisk } from "../features/poisson/bridson";
 
 export default function Poisson() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const samplerRef = useRef<PoissonDisk | null>(null);
   const radiusRef = useRef(16);
   const speedRef = useRef(12);
@@ -17,8 +19,8 @@ export default function Poisson() {
 
   const rebuild = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas || canvas.width === 0) return;
-    samplerRef.current = new PoissonDisk(canvas.width, canvas.height, radiusRef.current);
+    if (!canvas || sizeRef.current.w === 0) return;
+    samplerRef.current = new PoissonDisk(sizeRef.current.w, sizeRef.current.h, radiusRef.current);
     setCount(0);
     setDone(false);
   }, []);
@@ -31,8 +33,8 @@ export default function Poisson() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       rebuild();
     };
     resize();
@@ -57,7 +59,7 @@ export default function Poisson() {
       const dotR = Math.max(1.5, Math.min(4, radiusRef.current * 0.16));
 
       ctx.fillStyle = "#050805";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, sizeRef.current.w, sizeRef.current.h);
 
       // All points, dim.
       ctx.fillStyle = "rgba(0,190,70,0.72)";

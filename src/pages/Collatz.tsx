@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { sequence } from "../features/collatz/collatz";
 
 const SEG = 5; // pixels per step
 
 export default function Collatz() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const nextRef = useRef(1); // next starting number to draw
   const bendRef = useRef(0.16); // radians per step
   const countRef = useRef(4000);
@@ -22,7 +24,7 @@ export default function Collatz() {
     if (!canvas || !ctx) return;
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = "#050805";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, sizeRef.current.w, sizeRef.current.h);
     nextRef.current = 1;
     setDrawn(0);
   }, []);
@@ -35,8 +37,8 @@ export default function Collatz() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       reset();
     };
     resize();
@@ -46,8 +48,8 @@ export default function Collatz() {
     const drawOne = (n: number) => {
       const seq = sequence(n);
       const bend = bendRef.current;
-      let x = canvas.width / 2;
-      let y = canvas.height - 8;
+      let x = sizeRef.current.w / 2;
+      let y = sizeRef.current.h - 8;
       let heading = -Math.PI / 2; // up
       ctx.beginPath();
       ctx.moveTo(x, y);

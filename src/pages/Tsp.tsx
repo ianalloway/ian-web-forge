@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   City,
   TspEvent,
@@ -14,6 +15,7 @@ type Phase = "idle" | "construct" | "improve" | "done";
 
 export default function Tsp() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const citiesRef = useRef<City[]>([]);
   const tourRef = useRef<number[]>([]);
   const solverRef = useRef<Generator<TspEvent> | null>(null);
@@ -40,7 +42,7 @@ export default function Tsp() {
     const tour = tourRef.current;
 
     ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, sizeRef.current.w, sizeRef.current.h);
 
     // Tour edges
     if (tour.length > 1) {
@@ -86,7 +88,7 @@ export default function Tsp() {
   const scatter = useCallback((n: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    citiesRef.current = randomCities(n, canvas.width, canvas.height);
+    citiesRef.current = randomCities(n, sizeRef.current.w, sizeRef.current.h);
     tourRef.current = [];
     solverRef.current = null;
     setPhaseBoth("idle");
@@ -138,8 +140,8 @@ export default function Tsp() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       scatter(40);
     };
     resize();

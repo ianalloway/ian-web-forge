@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   PresetId,
   PRESETS,
@@ -12,6 +13,7 @@ const DRAW_PER_FRAME = 400;
 
 export default function Lsystem() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const drawIdxRef = useRef(0);
   const segmentsRef = useRef<ReturnType<typeof trace>["segments"]>([]);
   const transformRef = useRef({ scale: 1, ox: 0, oy: 0 });
@@ -35,7 +37,7 @@ export default function Lsystem() {
     drawIdxRef.current = 0;
 
     // Fit bounds into canvas with padding
-    const W = canvas.width, H = canvas.height;
+    const W = sizeRef.current.w, H = sizeRef.current.h;
     const bw = Math.max(1e-6, bounds.maxX - bounds.minX);
     const bh = Math.max(1e-6, bounds.maxY - bounds.minY);
     const scale = Math.min((W - 60) / bw, (H - 60) / bh);
@@ -88,8 +90,8 @@ export default function Lsystem() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       rebuild(preset, iterations, angle);
     };
     resize();

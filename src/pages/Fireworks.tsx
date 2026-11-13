@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   Rocket,
   Spark,
@@ -15,6 +16,7 @@ const MAX_SPARKS = 4000;
 
 export default function Fireworks() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const rocketsRef = useRef<Rocket[]>([]);
   const sparksRef = useRef<Spark[]>([]);
   const autoRef = useRef(true);
@@ -29,10 +31,10 @@ export default function Fireworks() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       ctx.fillStyle = "#000";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, sizeRef.current.w, sizeRef.current.h);
     };
     resize();
     window.addEventListener("resize", resize);
@@ -42,7 +44,7 @@ export default function Fireworks() {
     const loop = () => {
       raf = requestAnimationFrame(loop);
       frame++;
-      const { width: W, height: H } = canvas;
+      const { w: W, h: H } = sizeRef.current;
 
       // Auto-show: random launches
       if (autoRef.current && frame % 45 === 0 && Math.random() < 0.9) {
@@ -109,7 +111,7 @@ export default function Fireworks() {
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    rocketsRef.current.push(launchRocket(x, canvas.height, Math.max(40, y)));
+    rocketsRef.current.push(launchRocket(x, sizeRef.current.h, Math.max(40, y)));
   };
 
   return (

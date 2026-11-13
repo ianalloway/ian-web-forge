@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   MicAnalyser,
   startMic,
@@ -12,6 +13,7 @@ type Status = "idle" | "running" | "error";
 
 export default function Spectrum() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const micRef = useRef<MicAnalyser | null>(null);
   const rafRef = useRef(0);
   const [status, setStatus] = useState<Status>("idle");
@@ -36,7 +38,7 @@ export default function Spectrum() {
     if (!canvas || !mic) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
 
     const specH = Math.floor(H * 0.68); // scrolling spectrogram
     const barTop = specH + 8;
@@ -94,7 +96,7 @@ export default function Spectrum() {
       const canvas = canvasRef.current;
       if (canvas) {
         const ctx = canvas.getContext("2d");
-        ctx?.clearRect(0, 0, canvas.width, canvas.height);
+        ctx?.clearRect(0, 0, sizeRef.current.w, sizeRef.current.h);
       }
       setStatus("running");
       draw();
@@ -110,10 +112,10 @@ export default function Spectrum() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       const ctx = canvas.getContext("2d");
-      if (ctx) { ctx.fillStyle = "#000"; ctx.fillRect(0, 0, canvas.width, canvas.height); }
+      if (ctx) { ctx.fillStyle = "#000"; ctx.fillRect(0, 0, sizeRef.current.w, sizeRef.current.h); }
     };
     resize();
     window.addEventListener("resize", resize);

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { Body, loadPreset, makeBody, stepLeapfrog, Preset } from "../features/gravity/sim";
 
 const PRESETS: { id: Preset; label: string }[] = [
@@ -14,6 +15,7 @@ const STEPS_PER_FRAME = 3;
 
 export default function Gravity() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const bodiesRef = useRef<Body[]>([]);
   const pausedRef = useRef(false);
   const dragStartRef = useRef<{ x: number; y: number } | null>(null);
@@ -29,7 +31,7 @@ export default function Gravity() {
   const initPreset = useCallback((p: Preset) => {
     const canvas = getCanvas();
     if (!canvas) return;
-    bodiesRef.current = loadPreset(p, canvas.width, canvas.height);
+    bodiesRef.current = loadPreset(p, sizeRef.current.w, sizeRef.current.h);
     setBodyCount(bodiesRef.current.length);
   }, []);
 
@@ -38,7 +40,7 @@ export default function Gravity() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
 
     // Fade trails
     ctx.fillStyle = "rgba(0,0,0,0.18)";
@@ -119,8 +121,8 @@ export default function Gravity() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       initPreset(preset);
     };
     resize();
@@ -153,8 +155,8 @@ export default function Gravity() {
 
   const toCanvasPos = (e: React.MouseEvent | React.TouchEvent, canvas: HTMLCanvasElement) => {
     const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
+    const scaleX = sizeRef.current.w / rect.width;
+    const scaleY = sizeRef.current.h / rect.height;
     if ("touches" in e) {
       const t = e.touches[0] ?? e.changedTouches[0];
       return { x: (t.clientX - rect.left) * scaleX, y: (t.clientY - rect.top) * scaleY };

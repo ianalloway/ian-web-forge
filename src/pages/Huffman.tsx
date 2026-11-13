@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { HNode, analyze } from "../features/huffman/huffman";
 
 const SAMPLE = "the quick brown fox jumps over the lazy dog";
@@ -14,6 +15,7 @@ function label(ch: string): string {
 
 export default function Huffman() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const [text, setText] = useState(SAMPLE);
   const stats = useMemo(() => analyze(text), [text]);
 
@@ -32,10 +34,10 @@ export default function Huffman() {
 
     const draw = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       ctx.fillStyle = "#050805";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, sizeRef.current.w, sizeRef.current.h);
       const tree = stats.tree;
       if (!tree) return;
 
@@ -63,8 +65,8 @@ export default function Huffman() {
 
       const mx = 26;
       const my = 26;
-      const W = canvas.width;
-      const H = canvas.height;
+      const W = sizeRef.current.w;
+      const H = sizeRef.current.h;
       const px = (x: number) => (leaves === 1 ? W / 2 : mx + (x / (leaves - 1)) * (W - 2 * mx));
       const py = (d: number) => (maxDepth === 0 ? H / 2 : my + (d / maxDepth) * (H - 2 * my));
 
