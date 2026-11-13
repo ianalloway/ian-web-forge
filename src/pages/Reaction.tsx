@@ -88,7 +88,7 @@ export default function Reaction() {
     };
   }, []);
 
-  const paintAt = (e: React.MouseEvent) => {
+  const paintAt = (e: React.PointerEvent) => {
     const canvas = canvasRef.current;
     const gs = gsRef.current;
     if (!canvas || !gs) return;
@@ -202,11 +202,11 @@ export default function Reaction() {
           role="img"
           aria-label="The Gray-Scott model: two diffusing chemicals react into spots, stripes, coral, and mazes — the math behind how a leopard gets its spots, running in your browser."
           className="block w-full h-full cursor-crosshair touch-none"
-          onPointerDown={() => { paintRef.current = true; }}
+          onPointerDown={(e) => { paintRef.current = true; paintAt(e); }}
           onPointerUp={() => { paintRef.current = false; }}
           onPointerLeave={() => { paintRef.current = false; }}
+          onPointerCancel={() => { paintRef.current = false; }}
           onPointerMove={(e) => { if (paintRef.current) paintAt(e); }}
-          onMouseDownCapture={paintAt}
         />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none max-w-lg">
           two chemicals react and diffuse — the same equations Turing proposed for
