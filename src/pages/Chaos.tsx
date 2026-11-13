@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { Bounds, PRESETS, computeBounds, pickMap } from "../features/ifs/ifs";
 
 export default function Chaos() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const offRef = useRef<HTMLCanvasElement | null>(null);
   const imgRef = useRef<ImageData | null>(null);
   const densRef = useRef<Uint32Array>(new Uint32Array(0));
@@ -64,8 +66,8 @@ export default function Chaos() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       const rw = Math.max(2, Math.round(rect.width * 0.75));
       const rh = Math.max(2, Math.round(rect.height * 0.75));
       rwRef.current = rw;
@@ -138,7 +140,7 @@ export default function Chaos() {
         data[o + 3] = 255;
       }
       offCtx.putImageData(img, 0, 0);
-      ctx.drawImage(off, 0, 0, rw, rh, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(off, 0, 0, rw, rh, 0, 0, sizeRef.current.w, sizeRef.current.h);
 
       if ((plottedRef.current & 0x3ffff) < speedRef.current) setPlotted(plottedRef.current);
     };

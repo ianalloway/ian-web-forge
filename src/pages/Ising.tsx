@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { Ising, TC } from "../features/ising/ising";
 
 const N = 200; // lattice is N×N
 
 export default function IsingPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const offRef = useRef<HTMLCanvasElement | null>(null);
   const imgRef = useRef<ImageData | null>(null);
   const modelRef = useRef<Ising | null>(null);
@@ -42,8 +44,8 @@ export default function IsingPage() {
       const rect = canvas.parentElement!.getBoundingClientRect();
       // Keep the lattice square and centered.
       const side = Math.min(rect.width, rect.height);
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       canvas.dataset.side = String(side);
     };
     resize();
@@ -79,8 +81,8 @@ export default function IsingPage() {
       }
       offCtx.putImageData(img, 0, 0);
 
-      const W = canvas.width;
-      const H = canvas.height;
+      const W = sizeRef.current.w;
+      const H = sizeRef.current.h;
       const side = Math.min(W, H);
       ctx.fillStyle = "#050805";
       ctx.fillRect(0, 0, W, H);

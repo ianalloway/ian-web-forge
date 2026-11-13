@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { Terrain, diamondSquare } from "../features/terrain/diamondSquare";
 
 const N = 8; // grid is 2^N + 1 = 257
@@ -11,6 +12,7 @@ const LZ = 0.53;
 
 export default function TerrainPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const offRef = useRef<HTMLCanvasElement | null>(null);
   const imgRef = useRef<ImageData | null>(null);
   const terrainRef = useRef<Terrain | null>(null);
@@ -99,7 +101,7 @@ export default function TerrainPage() {
     }
     offCtx.putImageData(img, 0, 0);
     ctx.imageSmoothingEnabled = true;
-    ctx.drawImage(off, 0, 0, size, size, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(off, 0, 0, size, size, 0, 0, sizeRef.current.w, sizeRef.current.h);
   }, []);
 
   // Capture the initial persistence so the mount effect can seed the first
@@ -120,8 +122,8 @@ export default function TerrainPage() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       paint();
     };
 

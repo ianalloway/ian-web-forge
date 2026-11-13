@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { Fluid } from "../features/fluid/stableFluids";
 
 const N = 128; // simulation grid resolution
 
 export default function FluidPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const offRef = useRef<HTMLCanvasElement | null>(null);
   const imgRef = useRef<ImageData | null>(null);
   const fluidRef = useRef<Fluid | null>(null);
@@ -43,8 +45,8 @@ export default function FluidPage() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
     };
     resize();
     window.addEventListener("resize", resize);
@@ -58,8 +60,8 @@ export default function FluidPage() {
       f.viscosity = viscRef.current;
       f.dissipation = dissRef.current;
 
-      const W = canvas.width;
-      const H = canvas.height;
+      const W = sizeRef.current.w;
+      const H = sizeRef.current.h;
       const side = Math.min(W, H);
       const ox = (W - side) / 2;
       const oy = (H - side) / 2;

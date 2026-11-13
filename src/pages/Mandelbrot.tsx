@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   HOME,
   View,
@@ -14,6 +15,7 @@ const SS = 0.6;
 
 export default function Mandelbrot() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const viewRef = useRef<View>({ ...HOME });
   const imgRef = useRef<ImageData | null>(null);
   const rowRef = useRef(0); // next scanline to compute (progressive)
@@ -38,12 +40,12 @@ export default function Mandelbrot() {
       if (!canvas) return;
       const v = viewRef.current;
       // Keep the point under the cursor fixed while scaling.
-      const target = pixelToComplex(px, py, canvas.width, canvas.height, v);
+      const target = pixelToComplex(px, py, sizeRef.current.w, sizeRef.current.h, v);
       const ns = v.scale * factor;
       viewRef.current = {
         scale: ns,
-        cx: target.x - (px - canvas.width / 2) * ns,
-        cy: target.y - (py - canvas.height / 2) * ns,
+        cx: target.x - (px - sizeRef.current.w / 2) * ns,
+        cy: target.y - (py - sizeRef.current.h / 2) * ns,
       };
       restart();
     },
@@ -64,8 +66,8 @@ export default function Mandelbrot() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       const rw = Math.max(2, Math.round(rect.width * SS));
       const rh = Math.max(2, Math.round(rect.height * SS));
       rwRef.current = rw;
@@ -120,7 +122,7 @@ export default function Mandelbrot() {
 
       const offCanvas = offRef.current!;
       offCtx.putImageData(img, 0, 0);
-      ctx.drawImage(offCanvas, 0, 0, rw, rh, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(offCanvas, 0, 0, rw, rh, 0, 0, sizeRef.current.w, sizeRef.current.h);
     };
     raf = requestAnimationFrame(loop);
 

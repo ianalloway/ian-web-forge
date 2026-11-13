@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   SlimeParams,
   SlimeWorld,
@@ -13,6 +14,7 @@ const AGENT_COUNTS = [4000, 10000, 20000];
 
 export default function Slime() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const worldRef = useRef<SlimeWorld | null>(null);
   const paramsRef = useRef<SlimeParams>({ ...DEFAULT_SLIME });
   const pausedRef = useRef(false);
@@ -34,8 +36,8 @@ export default function Slime() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       const gw = Math.max(100, Math.floor(rect.width / SCALE));
       const gh = Math.max(80, Math.floor(rect.height / SCALE));
       worldRef.current = makeWorld(gw, gh, agents);
@@ -70,7 +72,7 @@ export default function Slime() {
       }
       offCtx.putImageData(img, 0, 0);
       ctx.imageSmoothingEnabled = true;
-      ctx.drawImage(off, 0, 0, world.w, world.h, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(off, 0, 0, world.w, world.h, 0, 0, sizeRef.current.w, sizeRef.current.h);
     };
     raf = requestAnimationFrame(loop);
 

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   Source,
   WaveParams,
@@ -13,6 +14,7 @@ const SCALE = 3; // render grid is 1/SCALE of display resolution
 
 export default function Waves() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const sourcesRef = useRef<Source[]>([]);
   const paramsRef = useRef<WaveParams>({ ...DEFAULT_WAVE });
   const pausedRef = useRef(false);
@@ -37,8 +39,8 @@ export default function Waves() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       gw = Math.max(80, Math.floor(rect.width / SCALE));
       gh = Math.max(60, Math.floor(rect.height / SCALE));
       off = document.createElement("canvas");
@@ -71,12 +73,12 @@ export default function Waves() {
       renderWaves(buffer.data, gw, gh, sourcesRef.current, t, paramsRef.current);
       offCtx.putImageData(buffer, 0, 0);
       ctx.imageSmoothingEnabled = true;
-      ctx.drawImage(off, 0, 0, gw, gh, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(off, 0, 0, gw, gh, 0, 0, sizeRef.current.w, sizeRef.current.h);
 
       // Source markers
       for (const s of sourcesRef.current) {
-        const sx = (s.x / gw) * canvas.width;
-        const sy = (s.y / gh) * canvas.height;
+        const sx = (s.x / gw) * sizeRef.current.w;
+        const sy = (s.y / gh) * sizeRef.current.h;
         ctx.beginPath();
         ctx.arc(sx, sy, 7, 0, Math.PI * 2);
         ctx.strokeStyle = "#fff";

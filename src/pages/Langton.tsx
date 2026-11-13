@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { Ant, Turn, parseRule, palette, stepAnt } from "../features/langton/turmite";
 
 const CELL = 4; // on-screen pixels per grid cell
@@ -22,6 +23,7 @@ const PRESETS: Preset[] = [
 
 export default function Langton() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const offRef = useRef<HTMLCanvasElement | null>(null);
   const imgRef = useRef<ImageData | null>(null);
   const gridRef = useRef<Uint8Array>(new Uint8Array(0));
@@ -85,8 +87,8 @@ export default function Langton() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       const cols = Math.max(8, Math.floor(rect.width / CELL));
       const rows = Math.max(8, Math.floor(rect.height / CELL));
       off.width = cols;
