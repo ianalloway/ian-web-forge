@@ -388,7 +388,9 @@ export default function Hyperloglog() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Counting unique visitors exactly means storing every id." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           the sketch never stores an id — only the longest run of leading zeros each register has seen
           · the amber band is the ±1.04/√m error the theory promises · repeats cannot move a register,

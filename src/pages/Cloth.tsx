@@ -236,6 +236,8 @@ export default function ClothPage() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="A cloth of point masses held together by distance constraints and integrated with Verlet: drag it, pin corners, crank gravity, and tear the fabric apart."
           onPointerDown={onDown}
           onPointerMove={onMove}
           onPointerUp={onUp}

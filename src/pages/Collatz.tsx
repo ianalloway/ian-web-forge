@@ -152,7 +152,9 @@ export default function Collatz() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Draw thousands of Collatz (3n+1) trajectories from a shared root, bending one way at each even step and the other at each odd." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-xl">
           every number's 3n+1 descent to 1, drawn from a shared root and bent one way at each even
           step, the other at each odd. the paths merge on their common tails — order growing like coral

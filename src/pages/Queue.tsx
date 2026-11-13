@@ -360,7 +360,9 @@ export default function Queue() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="An event-driven M/M/c queue running against Erlang C." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           waiting customers redden as they age · the wait grows like 1/(1−ρ), so 90% → 95% busy
           doubles it and 95% → 98% doubles it again · three servers sharing one line beat one server

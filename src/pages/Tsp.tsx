@@ -249,6 +249,8 @@ export default function Tsp() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="Watch a nearest-neighbor tour get built city by city, then 2-opt swaps untangle the crossings — tour length dropping in real time."
           className="block w-full h-full cursor-crosshair"
           onClick={onClick}
         />

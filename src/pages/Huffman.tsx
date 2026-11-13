@@ -182,7 +182,9 @@ export default function Huffman() {
         </div>
 
         <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-          <canvas ref={canvasRef} className="block w-full h-full" />
+          <canvas ref={canvasRef}
+          role="img"
+          aria-label="Type text and watch Huffman coding build the optimal prefix-free binary code: merge the two rarest symbols, repeat." className="block w-full h-full" />
           <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-md">
             merge the two rarest symbols, repeat: common letters end up near the root with short codes,
             rare ones sink deep. left edge = 0, right = 1, and no code is a prefix of another.

@@ -277,7 +277,9 @@ export default function Ratelimit() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Fixed window, sliding log, sliding counter and token bucket all promise N requests per minute, and they mean different things." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           &quot;worst&quot; is the most each algorithm let through in any window of that length · run the
           boundary burst and watch the fixed window pass twice its own limit while the sliding log

@@ -246,7 +246,9 @@ export default function Dice() {
 
       {/* Histogram */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Roll handfuls of dice and watch the sum histogram converge to the normal curve — the central limit theorem live, with theoretical overlay and running mean." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 text-xs text-primary/30 pointer-events-none">
           σ = {sd.toFixed(2)} · yellow curve: normal approximation — more dice per roll → closer fit
         </div>

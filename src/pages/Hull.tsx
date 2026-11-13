@@ -211,7 +211,9 @@ export default function Hull() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} onClick={onClick} className="block w-full h-full cursor-crosshair" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Click to drop points and watch Andrew's monotone chain algorithm wrap them in a convex hull step by step — sorting, sweeping, and popping points that would dent the boundary inward." onClick={onClick} className="block w-full h-full cursor-crosshair" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-xl">
           sort by x, then sweep: keep a point only while the last turn stays left. a red ring marks a
           point being popped off because it would dent the hull inward.

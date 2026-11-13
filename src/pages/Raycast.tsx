@@ -246,7 +246,9 @@ export default function Raycast() {
 
       {/* Viewport */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Walk a maze rendered the Wolfenstein way: one ray per screen column, walked cell by cell through a 2D grid with a digital differential analyser." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-xl">
           no 3D geometry here — one ray per screen column, walked cell by cell through a flat grid.
           how far it travels before hitting a wall becomes the height of that column, and that alone

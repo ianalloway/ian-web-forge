@@ -236,7 +236,9 @@ export default function Chaos() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Watch a single point hop under randomly chosen affine maps and converge to exact fractals — the Sierpiński triangle, Barnsley fern, Heighway dragon, Lévy C curve, and a fractal spiral." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-xl">
           {PRESETS[preset].blurb}. a single point hops under randomly chosen maps — yet the cloud
           of where it lands is an exact fractal, brighter where the point visits most.

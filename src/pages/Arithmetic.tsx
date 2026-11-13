@@ -334,7 +334,9 @@ export default function Arithmetic() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Huffman must spend a whole bit on a symbol worth 0.15 bits." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           each symbol claims a slice of the interval in proportion to its probability · a symbol with
           probability 0.9 costs 0.15 bits here, where Huffman must spend a whole one · the red line is

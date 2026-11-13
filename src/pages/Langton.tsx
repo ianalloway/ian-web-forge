@@ -248,7 +248,9 @@ export default function Langton() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Watch Langton's Ant and generalized turmites build order from a single deterministic rule: chaos for thousands of steps, then a spontaneous highway." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-xl">
           {activeNote}. one ant, one rule per cell state — no randomness. complexity is not
           designed here, it emerges.

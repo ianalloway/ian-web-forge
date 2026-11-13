@@ -206,7 +206,9 @@ export default function Fourier() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Watch rotating circles stack harmonics into square, sawtooth, and triangle waves — Fourier series drawn live, complete with Gibbs ringing at the corners." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none">
           rotating circles stack harmonics — more harmonics, sharper corners (and gibbs ringing)
         </div>

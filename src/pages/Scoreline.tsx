@@ -294,6 +294,8 @@ export default function Scoreline() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="Interactive sports scoreline model: tune independent Poisson λ for home and away goals, see the full P(i,j) heatmap, the mode scoreline, 1X2 probabilities, and over/under 2.5."
           className="block w-full h-full cursor-crosshair"
           onPointerMove={onPointer}
           onPointerLeave={() => setHover(null)}

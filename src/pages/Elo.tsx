@@ -199,7 +199,9 @@ export default function Elo() {
       {/* Chart + standings */}
       <div className="flex-1 flex flex-col lg:flex-row gap-px bg-primary/10" style={{ minHeight: 0 }}>
         <div className="flex-1 bg-background relative min-h-64">
-          <canvas ref={canvasRef} className="block w-full h-full absolute inset-0" />
+          <canvas ref={canvasRef}
+          role="img"
+          aria-label="A simulated league where Elo ratings chase hidden true skill: tune the K-factor and watch the convergence/noise tradeoff, with rank agreement and error metrics." className="block w-full h-full absolute inset-0" />
           <div className="absolute bottom-2 left-4 text-xs text-primary/30 pointer-events-none">
             solid lines: elo estimates · dotted stubs: hidden true skill
           </div>

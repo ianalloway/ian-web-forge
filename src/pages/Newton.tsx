@@ -138,6 +138,8 @@ export default function Newton() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="Newton's method for finding polynomial roots draws a fractal: each point is colored by which root it converges to."
           className="block w-full h-full cursor-zoom-in"
           onWheel={onWheel}
           onClick={onClick}

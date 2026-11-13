@@ -270,7 +270,9 @@ export default function Dilemma() {
       {/* Evolution + leaderboard */}
       <div className="grid lg:grid-cols-[minmax(0,1fr)_340px]">
         <div className="relative h-[300px] md:h-[400px] border-b lg:border-b-0 lg:border-r border-primary/10">
-          <canvas ref={canvasRef} className="block w-full h-full" />
+          <canvas ref={canvasRef}
+          role="img"
+          aria-label="Ten strategies play a round-robin iterated prisoner’s dilemma, then a population evolves under replicator dynamics." className="block w-full h-full" />
           <div className="absolute bottom-1 left-10 right-3 text-[10px] text-primary/40 pointer-events-none">
             each band is a strategy&apos;s share of the population, reproducing in proportion to what
             it scores against everyone else

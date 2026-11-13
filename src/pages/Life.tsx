@@ -262,6 +262,8 @@ export default function Life() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="Interactive Conway's Game of Life: paint cells, drop classic patterns like the Gosper glider gun and pulsar, and watch generations evolve on a wrap-around grid."
           className="block cursor-crosshair"
           onMouseDown={onMouseDown}
           onMouseMove={onMouseMove}

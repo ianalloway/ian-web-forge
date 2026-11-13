@@ -164,7 +164,9 @@ export default function Spectrum() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Turn your microphone into a scrolling spectrogram and live bar spectrum via the Web Audio FFT — whistle, hum, or play music and watch the harmonics." className="block w-full h-full" />
         {status !== "running" && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <span className="text-primary/20 text-sm">microphone idle</span>

@@ -166,7 +166,9 @@ export default function Poisson() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Watch Bridson's algorithm fill space with blue noise: points placed so none are closer than a set radius, yet with no large gaps — the even spacing behind stippling and dithering." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-xl">
           from each new point, throw darts into the ring around it; keep the first that lands far
           enough from every neighbor. a background grid makes that test instant — the result is "blue

@@ -238,6 +238,8 @@ export default function FluidPage() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="An interactive real-time fluid solver using Jos Stam's Stable Fluids method: each frame the velocity field is diffused, self-advected, then projected divergence-free."
           onPointerDown={onDown}
           onPointerMove={onMove}
           onPointerUp={onUp}

@@ -387,7 +387,9 @@ export default function Hashmap() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Watch a hash table fill and measure what collisions actually cost." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           cyan = the slot a key hashed to, amber = the slots it had to try instead · watch linear
           probing track the theory curve and then run away with it past α ≈ 0.8, as clusters merge

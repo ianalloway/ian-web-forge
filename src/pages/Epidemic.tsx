@@ -210,7 +210,9 @@ export default function Epidemic() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Watch an outbreak spread through a wandering population: tune transmission and social distancing, flatten the curve, and read the live S/I/R chart." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 text-xs text-primary/40 pointer-events-none">
           peak infected {peakI} · white rings = distanced (immobile) · flatten the curve with the distancing slider
         </div>

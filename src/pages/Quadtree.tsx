@@ -345,7 +345,9 @@ export default function Quadtree() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full cursor-crosshair" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="A quadtree over thousands of moving points, rebuilt every frame." className="block w-full h-full cursor-crosshair" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           move the cursor to steer the search box · cyan = points the query returned, amber = the
           nearest neighbour · a square that does not overlap the box is dismissed whole, along with

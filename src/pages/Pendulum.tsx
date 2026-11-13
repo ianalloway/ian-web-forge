@@ -253,6 +253,8 @@ export default function Pendulum() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="Interactive double pendulum with RK4 physics: drag the bobs, spawn a ghost twin 0.001 radians apart, and watch chaos tear the trajectories apart."
           className="block w-full h-full cursor-grab active:cursor-grabbing"
           onMouseDown={onMouseDown}
           onMouseMove={onMouseMove}

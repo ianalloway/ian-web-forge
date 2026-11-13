@@ -167,7 +167,9 @@ export default function Dla() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Random-walking particles freeze on contact to grow dendritic fractals — the process behind frost, coral, mineral deposits, and lightning." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none max-w-lg">
           random-walking particles freeze on contact with the cluster — the same process behind
           frost, coral, and lightning. tips (newer) glow brighter than the core.

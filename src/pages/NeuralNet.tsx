@@ -229,7 +229,9 @@ export default function NeuralNet() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="A tiny 2·8·8·1 neural network trains by backpropagation on 2D toy datasets — blobs, circles, XOR, and spirals." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-xl">
           a 2·8·8·1 network learns by backpropagation. the background is what it predicts everywhere;
           watch the boundary bend to fit the dots as gradient descent lowers the loss.

@@ -180,7 +180,9 @@ export default function Lorenz() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Integrate the Lorenz equations with RK4 and watch three trajectories starting 0.001 apart trace the butterfly yet diverge — deterministic chaos in a rotating 3D orbit." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none max-w-xl">
           three trajectories start 0.001 apart — watch them trace the same butterfly yet drift
           onto different wings. deterministic, yet unpredictable.

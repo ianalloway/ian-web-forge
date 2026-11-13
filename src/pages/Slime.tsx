@@ -173,7 +173,9 @@ export default function Slime() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Thousands of agents deposit and chase pheromone trails, self-organizing into living vein networks — the classic Physarum simulation." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none max-w-lg">
           agents deposit pheromone and steer toward the strongest trail ahead —
           vein networks emerge with nobody in charge

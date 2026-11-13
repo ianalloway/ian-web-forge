@@ -413,7 +413,9 @@ export default function PageRank() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="PageRank computed two ways at once: power iteration on the link graph, and a random surfer whose visit counts drift onto the same numbers." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           node size = rank · amber ring = a dead end that links nowhere · the cyan surfer walks at
           random and its visit counts drift onto the same answer the algebra computes

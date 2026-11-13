@@ -272,6 +272,8 @@ export default function Bezier() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="Drag control points and watch De Casteljau's algorithm sweep out Bézier curves — nested interpolation levels animated from linear to septic."
           className="block w-full h-full cursor-pointer"
           onMouseDown={onMouseDown}
           onMouseMove={onMouseMove}

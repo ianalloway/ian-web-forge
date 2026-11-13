@@ -221,7 +221,9 @@ export default function Sort() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Watch bubble, insertion, selection, quick, and merge sort race through a bar chart in real time." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none flex gap-4">
           <span><span className="text-yellow-300">■</span> comparing</span>
           <span><span className="text-orange-400">■</span> writing</span>

@@ -386,7 +386,9 @@ export default function Sat() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="SAT is NP-complete, so in the worst case nothing beats trying all 2^n assignments." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           amber bars are guesses, green are forced — on structured formulas almost all the work is
           forced, which is why SAT solvers are useful at all · a SAT answer carries a witness you

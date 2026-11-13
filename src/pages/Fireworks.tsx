@@ -147,6 +147,8 @@ export default function Fireworks() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="Click to launch rockets and watch physics-based firework bursts — spheres, rings, and golden willows with glitter, gravity, and additive glow."
           className="block w-full h-full cursor-pointer"
           onClick={onClick}
         />

@@ -187,7 +187,9 @@ export default function IsingPage() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="A lattice of spins evolved by Metropolis Monte Carlo." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-xl">
           each cell is a spin that wants to match its neighbors but is jostled by heat. drag the
           temperature across Tc≈2.27 and watch magnetic order appear or dissolve — a phase transition

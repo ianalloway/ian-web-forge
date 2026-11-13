@@ -236,7 +236,9 @@ export default function Maze() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="A recursive backtracker carves a perfect maze live on canvas, then BFS floods it to find the shortest path from entrance to exit." className="block" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none flex gap-4">
           <span><span className="text-cyan-400">■</span> start</span>
           <span><span className="text-pink-400">■</span> goal</span>
