@@ -276,11 +276,11 @@ export default function Path() {
           ref={canvasRef}
           role="img"
           aria-label="Draw walls, move the start and end points, and watch A*, BFS, DFS, and greedy best-first search explore the grid to find a path."
-          className="block cursor-crosshair"
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
-          onMouseLeave={onMouseUp}
+          className="block cursor-crosshair touch-none"
+          onPointerDown={onMouseDown}
+          onPointerMove={onMouseMove}
+          onPointerUp={onMouseUp}
+          onPointerLeave={onMouseUp}
         />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none flex gap-4">
           <span><span className="text-cyan-400">■</span> start</span>

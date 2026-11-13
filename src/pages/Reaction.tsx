@@ -201,11 +201,11 @@ export default function Reaction() {
           ref={canvasRef}
           role="img"
           aria-label="The Gray-Scott model: two diffusing chemicals react into spots, stripes, coral, and mazes — the math behind how a leopard gets its spots, running in your browser."
-          className="block w-full h-full cursor-crosshair"
-          onMouseDown={() => { paintRef.current = true; }}
-          onMouseUp={() => { paintRef.current = false; }}
-          onMouseLeave={() => { paintRef.current = false; }}
-          onMouseMove={(e) => { if (paintRef.current) paintAt(e); }}
+          className="block w-full h-full cursor-crosshair touch-none"
+          onPointerDown={() => { paintRef.current = true; }}
+          onPointerUp={() => { paintRef.current = false; }}
+          onPointerLeave={() => { paintRef.current = false; }}
+          onPointerMove={(e) => { if (paintRef.current) paintAt(e); }}
           onMouseDownCapture={paintAt}
         />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none max-w-lg">
