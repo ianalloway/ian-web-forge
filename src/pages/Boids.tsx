@@ -164,9 +164,9 @@ export default function Boids() {
           ref={canvasRef}
           role="img"
           aria-label="Classic Reynolds boids flocking simulation: tune cohesion, alignment, and separation live, scatter the flock with your cursor, and watch emergent murmurations."
-          className="block w-full h-full"
-          onMouseMove={(e) => { mouseRef.current = canvasPos(e); }}
-          onMouseLeave={() => { mouseRef.current = null; }}
+          className="block w-full h-full touch-none"
+          onPointerMove={(e) => { mouseRef.current = canvasPos(e); }}
+          onPointerLeave={() => { mouseRef.current = null; }}
         />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none">
           move the cursor to scatter the flock

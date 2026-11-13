@@ -268,11 +268,11 @@ export default function Gravity() {
           ref={canvasRef}
           role="img"
           aria-label="Interactive N-body gravity sandbox: launch bodies, watch orbits form, and simulate binary stars, solar systems, and figure-8 choreographies."
-          className="block w-full h-full cursor-crosshair"
-          onMouseDown={onPointerDown}
-          onMouseMove={onPointerMove}
-          onMouseUp={onPointerUp}
-          onMouseLeave={onPointerLeave}
+          className="block w-full h-full cursor-crosshair touch-none"
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerLeave={onPointerLeave}
         />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none">
           drag to launch a body · bodies merge on collision

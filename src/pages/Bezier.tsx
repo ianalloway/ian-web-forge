@@ -274,11 +274,11 @@ export default function Bezier() {
           ref={canvasRef}
           role="img"
           aria-label="Drag control points and watch De Casteljau's algorithm sweep out Bézier curves — nested interpolation levels animated from linear to septic."
-          className="block w-full h-full cursor-pointer"
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
-          onMouseLeave={onMouseUp}
+          className="block w-full h-full cursor-pointer touch-none"
+          onPointerDown={onMouseDown}
+          onPointerMove={onMouseMove}
+          onPointerUp={onMouseUp}
+          onPointerLeave={onMouseUp}
           onDoubleClick={onDoubleClick}
         />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none">

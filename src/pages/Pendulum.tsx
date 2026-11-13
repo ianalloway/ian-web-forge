@@ -255,11 +255,11 @@ export default function Pendulum() {
           ref={canvasRef}
           role="img"
           aria-label="Interactive double pendulum with RK4 physics: drag the bobs, spawn a ghost twin 0.001 radians apart, and watch chaos tear the trajectories apart."
-          className="block w-full h-full cursor-grab active:cursor-grabbing"
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
-          onMouseLeave={onMouseUp}
+          className="block w-full h-full cursor-grab active:cursor-grabbing touch-none"
+          onPointerDown={onMouseDown}
+          onPointerMove={onMouseMove}
+          onPointerUp={onMouseUp}
+          onPointerLeave={onMouseUp}
         />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none">
           drag a bob to reposition · ghost twin starts 0.001 rad apart — watch them diverge

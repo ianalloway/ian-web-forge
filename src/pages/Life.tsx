@@ -264,11 +264,11 @@ export default function Life() {
           ref={canvasRef}
           role="img"
           aria-label="Interactive Conway's Game of Life: paint cells, drop classic patterns like the Gosper glider gun and pulsar, and watch generations evolve on a wrap-around grid."
-          className="block cursor-crosshair"
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
-          onMouseLeave={onMouseUp}
+          className="block cursor-crosshair touch-none"
+          onPointerDown={onMouseDown}
+          onPointerMove={onMouseMove}
+          onPointerUp={onMouseUp}
+          onPointerLeave={onMouseUp}
         />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none">
           click / drag to paint cells · edges wrap around

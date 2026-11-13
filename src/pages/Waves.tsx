@@ -239,11 +239,11 @@ export default function Waves() {
           ref={canvasRef}
           role="img"
           aria-label="A digital ripple tank: place and drag wave sources, tune wavelength and speed, and watch constructive and destructive interference paint the classic fringe patterns."
-          className="block w-full h-full cursor-crosshair"
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
-          onMouseLeave={onMouseUp}
+          className="block w-full h-full cursor-crosshair touch-none"
+          onPointerDown={onMouseDown}
+          onPointerMove={onMouseMove}
+          onPointerUp={onMouseUp}
+          onPointerLeave={onMouseUp}
           onDoubleClick={onDoubleClick}
         />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none">
