@@ -217,7 +217,9 @@ export default function Metaballs() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Watch organic blobs merge and split as marching squares traces the iso-contour of their combined inverse-square field." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-xl">
           each blob radiates an inverse-square field; the bright line is where the sum crosses a
           threshold, traced cell by cell with marching squares. drop the threshold and separate blobs

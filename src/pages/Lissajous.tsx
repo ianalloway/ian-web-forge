@@ -188,7 +188,9 @@ export default function Lissajous() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Watch a virtual harmonograph draw damped Lissajous figures line by line." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none">
           two damped pendulums, one per axis — detune makes the figure precess
         </div>

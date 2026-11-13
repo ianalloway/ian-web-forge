@@ -295,7 +295,9 @@ export default function Raft() {
 
       {/* Canvas */}
       <div className="relative overflow-hidden" style={{ height: "clamp(220px, 34vh, 360px)" }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Five nodes, one log, no shared clock." className="block w-full h-full" />
         <div className="absolute bottom-2 left-4 text-[11px] text-primary/35 pointer-events-none max-w-md">
           green = leader, amber = candidate, dim = follower. dots are messages in flight; dashed red
           links are cut by the split.

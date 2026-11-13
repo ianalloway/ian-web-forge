@@ -355,7 +355,9 @@ export default function Kmp() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Naive search and Knuth-Morris-Pratt hunt the same text side by side at the same rate." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           both search the same text at the same rate · red = a mismatch · on a mismatch naive slides
           one character and rereads, while KMP consults its failure table and never looks at a text

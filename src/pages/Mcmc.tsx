@@ -378,7 +378,9 @@ export default function Mcmc() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Watch a Markov chain sample a distribution it can never solve: propose a nearby point, accept it in proportion to how much better it is, repeat." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           green field = the density being sampled · dashed circle = one proposal&apos;s reach · red ✕ =
           a rejected move · a rejection still counts as a draw, which is why tiny σ looks busy and

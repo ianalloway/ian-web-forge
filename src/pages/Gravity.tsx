@@ -266,6 +266,8 @@ export default function Gravity() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="Interactive N-body gravity sandbox: launch bodies, watch orbits form, and simulate binary stars, solar systems, and figure-8 choreographies."
           className="block w-full h-full cursor-crosshair"
           onMouseDown={onPointerDown}
           onMouseMove={onPointerMove}

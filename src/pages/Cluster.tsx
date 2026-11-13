@@ -260,6 +260,8 @@ export default function Cluster() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="Interactive k-means clustering: scatter points, seed centroids with k-means++, and step through Lloyd iterations watching assignments and inertia converge."
           className="block w-full h-full cursor-crosshair"
           onClick={onClick}
         />

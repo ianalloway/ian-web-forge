@@ -274,6 +274,8 @@ export default function Path() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="Draw walls, move the start and end points, and watch A*, BFS, DFS, and greedy best-first search explore the grid to find a path."
           className="block cursor-crosshair"
           onMouseDown={onMouseDown}
           onMouseMove={onMouseMove}

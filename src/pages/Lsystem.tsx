@@ -189,7 +189,9 @@ export default function Lsystem() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Grow ferns, dragon curves, and Koch snowflakes from L-system rewrite rules with turtle graphics — tune depth and branching angle live." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none">
           {sys.axiom} → {Object.entries(sys.rules).map(([k, v]) => `${k}:${v}`).join("  ")} · drag the angle off its natural value and watch the form mutate
         </div>

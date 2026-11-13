@@ -238,6 +238,8 @@ export default function Descent() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="Drop three optimizers on a bumpy loss surface and watch SGD, momentum, and Adam race downhill — local minima, overshoot, and adaptive steps made visible."
           className="block w-full h-full cursor-crosshair"
           onClick={onClick}
         />

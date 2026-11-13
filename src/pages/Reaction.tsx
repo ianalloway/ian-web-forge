@@ -199,6 +199,8 @@ export default function Reaction() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="The Gray-Scott model: two diffusing chemicals react into spots, stripes, coral, and mazes — the math behind how a leopard gets its spots, running in your browser."
           className="block w-full h-full cursor-crosshair"
           onMouseDown={() => { paintRef.current = true; }}
           onMouseUp={() => { paintRef.current = false; }}

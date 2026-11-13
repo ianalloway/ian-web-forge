@@ -369,7 +369,9 @@ export default function Avl() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="An AVL tree and a plain binary search tree receive the same keys in the same order." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           both trees receive the same keys in the same order · amber = the nodes a rotation just
           moved · white = the key that went in last · with sorted input the plain BST is a linked

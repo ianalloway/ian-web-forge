@@ -184,7 +184,9 @@ export default function Eca() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Explore Wolfram's elementary cellular automata: scrub through all 256 rules and watch Rule 30's chaos, Rule 90's Sierpiński triangle, and Rule 110's complexity evolve." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none">
           each cell's next state depends on itself and its two neighbors — 256 rules, wildly different worlds
         </div>

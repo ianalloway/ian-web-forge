@@ -357,7 +357,9 @@ export default function Lz77() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Watch LZ77 slide a window over text, find the longest run it has already seen, and emit a pointer instead of the characters." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           a match may run past the cursor and copy what it is still producing, which is how one
           pointer swallows a long run · LZ77 removes the repetition, Huffman shortens what is left,

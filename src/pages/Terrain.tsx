@@ -200,7 +200,9 @@ export default function TerrainPage() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Generate procedural terrain with the diamond-square algorithm: seed four corners, set each midpoint to its neighbors' average plus a shrinking random nudge, repeat." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-xl">
           seed four corners, set each midpoint to its neighbors' average plus a shrinking random
           nudge, repeat. that one recursive rule carves coastlines, ridgelines, and peaks — hill-shaded

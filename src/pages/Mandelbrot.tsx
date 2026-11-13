@@ -195,6 +195,8 @@ export default function Mandelbrot() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="Explore the Mandelbrot set: z ↦ z² + c iterated, with smooth escape-time coloring and click-to-zoom into the infinitely detailed boundary."
           onClick={onClick}
           onContextMenu={(e) => {
             e.preventDefault();

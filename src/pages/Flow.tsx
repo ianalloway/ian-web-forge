@@ -206,7 +206,9 @@ export default function Flow() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Thousands of particles trace an evolving Perlin-noise vector field into silky generative streams." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none">
           particles trace an evolving perlin vector field
         </div>

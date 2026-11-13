@@ -200,7 +200,9 @@ export default function Sandpile() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} onClick={onClick} className="block w-full h-full cursor-crosshair" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Drop grains of sand: a cell with 4 or more topples one to each neighbor." onClick={onClick} className="block w-full h-full cursor-crosshair" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-xl">
           a cell with ≥4 grains topples one to each neighbor. the same simple rule builds a fractal
           from a single pile, and — with steady rain — self-organizes to the critical state where one

@@ -408,7 +408,9 @@ export default function Hamming() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full cursor-pointer" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Put parity bits at the powers of two and the checks that fail spell out, in binary, the address of the bit that flipped." className="block w-full h-full cursor-pointer" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           parity bit p covers every position whose index has p&apos;s bit set, so the failing checks
           add up to the address of the broken bit · flip two bits on the plain code and watch it

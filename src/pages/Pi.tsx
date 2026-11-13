@@ -202,7 +202,12 @@ export default function Pi() {
       <div className="flex-1 flex flex-col lg:flex-row gap-px bg-primary/10" style={{ minHeight: 0 }}>
         {/* Dart board */}
         <div className="flex-1 bg-background flex items-center justify-center p-2 min-h-72">
-          <canvas ref={dartsRef} className="block max-w-full max-h-full" />
+          <canvas
+            ref={dartsRef}
+            role="img"
+            aria-label="Monte Carlo estimate of π from random darts: green points land inside the quarter circle, pink outside, and the ratio converges on π/4."
+            className="block max-w-full max-h-full"
+          />
         </div>
 
         {/* Stats + convergence */}

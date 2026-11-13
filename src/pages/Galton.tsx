@@ -206,7 +206,9 @@ export default function Galton() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Watch balls cascade through pegs into bins, piling up into the binomial distribution — with a bias slider to skew it and a live theoretical overlay." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 text-xs text-primary/30 pointer-events-none">
           each peg deflects right with probability p — bins fill toward the binomial (yellow)
         </div>

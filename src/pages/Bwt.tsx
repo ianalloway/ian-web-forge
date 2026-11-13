@@ -351,7 +351,9 @@ export default function Bwt() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="The Burrows-Wheeler transform compresses nothing by itself: it is a reversible permutation." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           sorting the rotations groups every position whose following text looks alike, and the last
           column holds what came just before each · BWT compresses nothing by itself, it just makes

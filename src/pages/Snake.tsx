@@ -161,6 +161,8 @@ export default function Snake() {
         <div className="relative">
           <canvas
             ref={canvasRef}
+          role="img"
+          aria-label="Play classic snake in the terminal aesthetic: arrows or WASD to steer, speed ramps up as you grow, best score saved locally."
             width={COLS * CELL}
             height={ROWS * CELL}
             className="border border-primary/20 max-w-full h-auto"

@@ -218,7 +218,9 @@ export default function Wfc() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Watch Wave Function Collapse solve a tiled circuit board from local adjacency rules alone: the lowest-entropy cell collapses, constraints propagate, and a coherent matrix-green pattern emerges from…" className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-xl">
           each cell starts as every tile at once. the lowest-entropy cell collapses to one tile,
           then that choice propagates along matching edges — order assembled from local rules alone.

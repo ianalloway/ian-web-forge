@@ -203,6 +203,8 @@ export default function Voronoi() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="Drop sites and watch Voronoi cells and their dual Delaunay triangulation update live — Bowyer-Watson triangulation in the browser."
           className="block w-full h-full cursor-crosshair"
           onMouseDown={onMouseDown}
           onMouseMove={onMouseMove}

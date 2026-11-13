@@ -315,7 +315,9 @@ export default function Gp() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} onClick={handleClick} className="block w-full h-full cursor-crosshair" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Click to place observations and watch a Gaussian process condition every plausible function on them." onClick={handleClick} className="block w-full h-full cursor-crosshair" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           green line = posterior mean · the band is ±1σ and ±2σ · cyan = functions drawn from the
           posterior, all of them consistent with the data · the band ignores y entirely: it knows

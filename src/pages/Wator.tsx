@@ -235,7 +235,9 @@ export default function WatorPage() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="The classic Wa-Tor simulation: fish wander and breed while sharks hunt, breed, and starve without food." className="block w-full h-full" />
         <div className="absolute top-3 left-4 text-xs text-primary/40 pointer-events-none max-w-md">
           fish wander and breed; sharks hunt, breed, and starve without food. neither is steered —
           the green and orange curves chase each other in endless predator-prey cycles.

@@ -425,7 +425,9 @@ export default function Lru() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Five eviction policies replaying the same reference string." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           amber OPT evicts whatever is needed furthest ahead — impossible to build, and nothing can
           beat it, so it is the only honest ceiling · try the loop workload with slots one below the

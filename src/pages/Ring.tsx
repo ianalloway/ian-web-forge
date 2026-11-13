@@ -322,7 +322,9 @@ export default function Ring() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="`hash(key) % n` works until n changes: add a fifth server and four fifths of the cache is suddenly in the wrong place." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           each key belongs to the first server clockwise from it · add a server and only the keys
           that turn white move — one arc per virtual node, so at 120 replicas that is 120 slivers

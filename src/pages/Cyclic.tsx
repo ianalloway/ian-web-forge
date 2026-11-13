@@ -217,7 +217,9 @@ export default function CyclicPage() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Griffeath's cyclic cellular automaton: each color is beaten by the next in the cycle and advances when enough neighbors already hold it." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-xl">
           each cell is beaten by the next color in the cycle and advances when enough neighbors already
           hold it. from pure noise, the rock-paper-scissors rule winds itself into rotating spirals.

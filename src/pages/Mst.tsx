@@ -214,7 +214,9 @@ export default function Mst() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Watch Prim's and Kruskal's algorithms build the minimum spanning tree — the cheapest cycle-free web connecting every point." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-xl">
           the cheapest web of edges connecting every point with no cycles. prim grows one tree from a
           seed; kruskal glues the globally-shortest edges across a scattered forest — different paths to

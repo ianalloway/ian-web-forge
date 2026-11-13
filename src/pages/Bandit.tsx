@@ -204,7 +204,9 @@ export default function Bandit() {
 
       {/* Chart */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Watch greedy, ε-greedy, UCB1, and Thompson sampling race to find the best arm, with cumulative regret plotted live — the math behind A/B testing and ad allocation." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none max-w-xl">
           lower regret = smarter exploration. greedy locks onto a wrong arm; Thompson and UCB
           keep the flattest curves — the core tradeoff behind A/B testing and ad allocation.

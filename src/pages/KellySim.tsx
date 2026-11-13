@@ -234,7 +234,9 @@ export default function KellySim() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Monte Carlo hundreds of bankrolls betting the same edge at quarter, half, full, and double Kelly." className="block w-full h-full" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-xl">
           {PATHS} bankrolls betting the same edge, log scale, bright line = median. full kelly grows
           fastest in theory and still routinely halves your money; overbet it and the median collapses

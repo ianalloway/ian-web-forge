@@ -319,7 +319,9 @@ export default function Diff() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="A diff is a shortest path." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           cyan dots are everything reachable in d edits · green diagonals are lines both files share
           and cost nothing · the first wavefront to touch the far corner gives the fewest-edit diff,

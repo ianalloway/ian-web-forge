@@ -167,7 +167,9 @@ export default function Percolation() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Sweep site probability across the percolation threshold and watch a spanning cluster snap into existence — a phase transition on a random lattice." className="block" />
         <div className="absolute bottom-3 left-4 text-xs text-primary/30 pointer-events-none max-w-xl">
           sites open with probability p over a fixed random field — bright green marks the cluster
           connecting top to bottom. it appears abruptly near p_c: a phase transition.

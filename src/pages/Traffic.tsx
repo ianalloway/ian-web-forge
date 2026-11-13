@@ -443,7 +443,9 @@ export default function Traffic() {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Traffic jams with no cause: four simple rules on a ring road, one of them a random moment of inattention." className="block w-full h-full" />
         <div className="absolute bottom-2 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           red = stopped, green = top speed · the red stripes lean backwards: jams travel against the
           traffic · set p to 0 and every jam dissolves

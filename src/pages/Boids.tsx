@@ -162,6 +162,8 @@ export default function Boids() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="Classic Reynolds boids flocking simulation: tune cohesion, alignment, and separation live, scatter the flock with your cursor, and watch emergent murmurations."
           className="block w-full h-full"
           onMouseMove={(e) => { mouseRef.current = canvasPos(e); }}
           onMouseLeave={() => { mouseRef.current = null; }}

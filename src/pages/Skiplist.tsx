@@ -408,7 +408,9 @@ export default function Skiplist() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="An AVL tree stays shallow by measuring its height and rotating." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           amber = the node just inserted, at the height its coin flips bought · cyan = the route a
           search takes, running right along the top lane and dropping a level whenever the next hop

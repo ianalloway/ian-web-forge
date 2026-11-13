@@ -315,7 +315,9 @@ export default function Topo() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="Kahn’s algorithm on a build graph, taken a wave at a time: everything in a wave can run at once, so the number of waves is the depth of the graph and the longest dependency chain is the floor on bu…" className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           amber is the critical path: the longest chain of dependencies, and the floor on the build
           time that no number of machines can get under · a cycle has no legal order at all, and

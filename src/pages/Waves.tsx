@@ -237,6 +237,8 @@ export default function Waves() {
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
         <canvas
           ref={canvasRef}
+          role="img"
+          aria-label="A digital ripple tank: place and drag wave sources, tune wavelength and speed, and watch constructive and destructive interference paint the classic fringe patterns."
           className="block w-full h-full cursor-crosshair"
           onMouseDown={onMouseDown}
           onMouseMove={onMouseMove}

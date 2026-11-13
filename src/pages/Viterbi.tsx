@@ -387,7 +387,9 @@ export default function Viterbi() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 0 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef}
+          role="img"
+          aria-label="A hidden Markov model emits noisy observations and you want the states behind them." className="block w-full h-full" />
         <div className="absolute bottom-1 left-4 right-4 text-xs text-primary/40 pointer-events-none">
           red ticks are wrong positions · viterbi (amber) returns the single most likely path and
           always wins the log P(path) column — but when transitions are stickier than emissions are
