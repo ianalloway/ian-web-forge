@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   MODELS,
   accuracy,
@@ -20,6 +21,7 @@ const DIM = "rgba(0,255,65,0.35)";
 
 export default function Viterbi() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const [modelIdx, setModelIdx] = useState(0);
   const [seed, setSeed] = useState(777);
   const [length, setLength] = useState(80);
@@ -72,7 +74,7 @@ export default function Viterbi() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
 
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, W, H);
@@ -231,8 +233,8 @@ export default function Viterbi() {
       const parent = canvas.parentElement;
       if (!parent) return;
       const rect = parent.getBoundingClientRect();
-      canvas.width = Math.max(320, Math.floor(rect.width));
-      canvas.height = Math.max(260, Math.floor(rect.height));
+      const { width, height } = fitCanvas(canvas, Math.max(320, Math.floor(rect.width)), Math.max(260, Math.floor(rect.height)));
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();

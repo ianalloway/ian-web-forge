@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvasFixed } from "../lib/canvas";
 import {
   MazeGrid,
   CarveEvent,
@@ -16,6 +17,7 @@ type Phase = "carving" | "carved" | "solving" | "solved";
 
 export default function Maze() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const gridRef = useRef<MazeGrid | null>(null);
   const carverRef = useRef<Generator<CarveEvent> | null>(null);
   const solverRef = useRef<Generator<SolveEvent> | null>(null);
@@ -43,7 +45,7 @@ export default function Maze() {
     if (!ctx) return;
 
     ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, sizeRef.current.w, sizeRef.current.h);
 
     const pathSet = new Set(pathRef.current);
 
@@ -104,8 +106,8 @@ export default function Maze() {
     const rect = canvas.parentElement!.getBoundingClientRect();
     const cols = Math.max(10, Math.floor(rect.width / CELL));
     const rows = Math.max(10, Math.floor(rect.height / CELL));
-    canvas.width = cols * CELL;
-    canvas.height = rows * CELL;
+    const { width, height } = fitCanvasFixed(canvas, cols * CELL, rows * CELL);
+    sizeRef.current = { w: width, h: height };
 
     const g = newGrid(cols, rows);
     gridRef.current = g;

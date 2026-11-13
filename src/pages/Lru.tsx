@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   POLICIES,
   WORKLOADS,
@@ -20,6 +21,7 @@ const COLORS: Record<PolicyId, string> = {
 
 export default function Lru() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const [workloadId, setWorkloadId] = useState(WORKLOADS[0].id);
   const [capacity, setCapacity] = useState(4);
   const [universe, setUniverse] = useState(12);
@@ -65,7 +67,7 @@ export default function Lru() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, W, H);
 
@@ -258,8 +260,8 @@ export default function Lru() {
       const parent = canvas.parentElement;
       if (!parent) return;
       const rect = parent.getBoundingClientRect();
-      canvas.width = Math.max(320, Math.floor(rect.width));
-      canvas.height = Math.max(380, Math.floor(rect.height));
+      const { width, height } = fitCanvas(canvas, Math.max(320, Math.floor(rect.width)), Math.max(380, Math.floor(rect.height)));
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvasFixed } from "../lib/canvas";
 import {
   PercField,
   CRITICAL_P,
@@ -11,6 +12,7 @@ const CELL = 6;
 
 export default function Percolation() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const fieldRef = useRef<PercField | null>(null);
   const sweepRef = useRef(false);
   const sweepDirRef = useRef(1);
@@ -34,7 +36,7 @@ export default function Percolation() {
     const n = cols * rows;
 
     ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, sizeRef.current.w, sizeRef.current.h);
 
     for (let i = 0; i < n; i++) {
       if (!result.open[i]) continue;
@@ -62,8 +64,8 @@ export default function Percolation() {
       const rect = canvas.parentElement!.getBoundingClientRect();
       const cols = Math.max(40, Math.floor(rect.width / CELL));
       const rows = Math.max(40, Math.floor(rect.height / CELL));
-      canvas.width = cols * CELL;
-      canvas.height = rows * CELL;
+      const { width, height } = fitCanvasFixed(canvas, cols * CELL, rows * CELL);
+      sizeRef.current = { w: width, h: height };
       fieldRef.current = newField(cols, rows);
       render();
     };
