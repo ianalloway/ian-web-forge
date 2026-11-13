@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { canvasDpr, fitCanvas, pointerPos, shouldAutoAnimate } from "./canvas";
+import { canvasDpr, fitCanvas, fitCanvasFixed, pointerPos, shouldAutoAnimate } from "./canvas";
 
 function setDpr(v: number) {
   Object.defineProperty(window, "devicePixelRatio", { configurable: true, value: v });
@@ -70,6 +70,20 @@ describe("fitCanvas", () => {
     const f = fitCanvas(canvas, 0, 0);
     expect(canvas.width).toBeGreaterThanOrEqual(1);
     expect(f.width).toBeGreaterThanOrEqual(1);
+  });
+});
+
+describe("fitCanvasFixed", () => {
+  it("pins the CSS display size to the logical dims while scaling the backing store", () => {
+    setDpr(2);
+    const { canvas } = canvasWithRecordingCtx();
+    const { width, height } = fitCanvasFixed(canvas, 300, 150);
+    expect(width).toBe(300);
+    expect(height).toBe(150);
+    expect(canvas.width).toBe(600); // backing, device pixels
+    expect(canvas.height).toBe(300);
+    expect(canvas.style.width).toBe("300px"); // display stays logical
+    expect(canvas.style.height).toBe("150px");
   });
 });
 

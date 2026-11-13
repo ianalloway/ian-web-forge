@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvasFixed } from "../lib/canvas";
 import {
   PiEstimate,
   ErrorPoint,
@@ -28,6 +29,7 @@ function drawBoard(ctx: CanvasRenderingContext2D, size: number) {
 
 export default function Pi() {
   const dartsRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const chartRef = useRef<HTMLCanvasElement>(null);
   const stateRef = useRef<PiEstimate>({ total: 0, inside: 0 });
   const errorsRef = useRef<ErrorPoint[]>([]);
@@ -95,8 +97,8 @@ export default function Pi() {
     const ctx = canvas?.getContext("2d");
     if (canvas && ctx) {
       ctx.fillStyle = "#000";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      drawBoard(ctx, canvas.width);
+      ctx.fillRect(0, 0, sizeRef.current.w, sizeRef.current.h);
+      drawBoard(ctx, sizeRef.current.w);
     }
     drawChart();
   }, [drawChart]);
@@ -111,8 +113,8 @@ export default function Pi() {
     // Square board sized to the container
     const parent = canvas.parentElement!;
     const size = Math.min(parent.clientWidth, parent.clientHeight) - 8;
-    canvas.width = size;
-    canvas.height = size;
+    const { width, height } = fitCanvasFixed(canvas, size, size);
+    sizeRef.current = { w: width, h: height };
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, size, size);
     drawBoard(ctx, size);

@@ -57,6 +57,25 @@ export function fitCanvas(
 }
 
 /**
+ * Like {@link fitCanvas}, but also pins the element's CSS display size to the
+ * logical dimensions. Use it for canvases whose on-screen size comes from their
+ * width/height attributes — e.g. a grid sized to an exact cell count — rather
+ * than from CSS such as `w-full h-full`. Without this, raising the backing store
+ * to device pixels would also blow up the displayed size.
+ */
+export function fitCanvasFixed(
+  canvas: HTMLCanvasElement,
+  cssWidth: number,
+  cssHeight: number,
+  maxDpr = MAX_DPR,
+): FittedCanvas {
+  const fitted = fitCanvas(canvas, cssWidth, cssHeight, maxDpr);
+  canvas.style.width = `${fitted.width}px`;
+  canvas.style.height = `${fitted.height}px`;
+  return fitted;
+}
+
+/**
  * Logical (CSS-pixel) position of a pointer/mouse event inside a canvas,
  * relative to its top-left. Works for PointerEvent, MouseEvent and the React
  * synthetic equivalents, so mouse, touch and pen all go through one path.

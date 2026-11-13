@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvasFixed } from "../lib/canvas";
 import {
   Grid,
   WorldSize,
@@ -17,6 +18,7 @@ const PATTERN_KEYS = Object.keys(PATTERNS) as PatternId[];
 
 export default function Life() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const dispRef = useRef({ w: 0, h: 0 });
   const gridRef = useRef<Grid>(new Uint8Array(0));
   const sizeRef = useRef<WorldSize>({ cols: 0, rows: 0 });
   const runningRef = useRef(false);
@@ -38,7 +40,7 @@ export default function Life() {
     const grid = gridRef.current;
 
     ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, dispRef.current.w, dispRef.current.h);
     ctx.fillStyle = "#00ff41";
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
@@ -67,8 +69,8 @@ export default function Life() {
     const rect = canvas.parentElement!.getBoundingClientRect();
     const cols = Math.max(20, Math.floor(rect.width / CELL));
     const rows = Math.max(20, Math.floor(rect.height / CELL));
-    canvas.width = cols * CELL;
-    canvas.height = rows * CELL;
+    const { width, height } = fitCanvasFixed(canvas, cols * CELL, rows * CELL);
+    dispRef.current = { w: width, h: height };
     sizeRef.current = { cols, rows };
     gridRef.current = randomize(makeGrid({ cols, rows }));
 

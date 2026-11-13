@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvasFixed } from "../lib/canvas";
 import {
   AlgoId,
   ALGORITHMS,
@@ -16,6 +17,7 @@ type DragMode = null | "wall" | "erase" | "start" | "end";
 
 export default function Path() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const dimsRef = useRef({ cols: 0, rows: 0 });
   const wallsRef = useRef<Set<number>>(new Set());
   const startRef = useRef(0);
@@ -47,7 +49,7 @@ export default function Path() {
     const { cols, rows } = dimsRef.current;
 
     ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, sizeRef.current.w, sizeRef.current.h);
 
     const pathSet = new Set(pathRef.current);
     for (let y = 0; y < rows; y++) {
@@ -93,8 +95,8 @@ export default function Path() {
     const rect = canvas.parentElement!.getBoundingClientRect();
     const cols = Math.max(10, Math.floor(rect.width / CELL));
     const rows = Math.max(10, Math.floor(rect.height / CELL));
-    canvas.width = cols * CELL;
-    canvas.height = rows * CELL;
+    const { width, height } = fitCanvasFixed(canvas, cols * CELL, rows * CELL);
+    sizeRef.current = { w: width, h: height };
     dimsRef.current = { cols, rows };
     startRef.current = Math.floor(rows / 2) * cols + 2;
     endRef.current = Math.floor(rows / 2) * cols + (cols - 3);

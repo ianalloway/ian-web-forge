@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   PRESETS,
   clauseStatus,
@@ -16,6 +17,7 @@ const CYAN = "#5cf0e0";
 
 export default function Sat() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const [presetId, setPresetId] = useState(PRESETS[1].id);
   const [seed, setSeed] = useState(3);
   const [useUnit, setUseUnit] = useState(true);
@@ -59,7 +61,7 @@ export default function Sat() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const { width: W, height: H } = canvas;
+    const { w: W, h: H } = sizeRef.current;
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, W, H);
 
@@ -222,8 +224,8 @@ export default function Sat() {
       const parent = canvas.parentElement;
       if (!parent) return;
       const rect = parent.getBoundingClientRect();
-      canvas.width = Math.max(320, Math.floor(rect.width));
-      canvas.height = Math.max(380, Math.floor(rect.height));
+      const { width, height } = fitCanvas(canvas, Math.max(320, Math.floor(rect.width)), Math.max(380, Math.floor(rect.height)));
+      sizeRef.current = { w: width, h: height };
       draw();
     };
     resize();
