@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   PolyId,
   POLYS,
@@ -13,6 +14,7 @@ const RES = 2; // render buffer is 1/RES of display for speed
 
 export default function Newton() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const viewRef = useRef<View>({ ...DEFAULT_VIEW });
   const polyRef = useRef<PolyId>("cube");
 
@@ -24,8 +26,8 @@ export default function Newton() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const gw = Math.max(100, Math.floor(canvas.width / RES));
-    const gh = Math.max(80, Math.floor(canvas.height / RES));
+    const gw = Math.max(100, Math.floor(sizeRef.current.w / RES));
+    const gh = Math.max(80, Math.floor(sizeRef.current.h / RES));
     const off = document.createElement("canvas");
     off.width = gw;
     off.height = gh;
@@ -34,7 +36,7 @@ export default function Newton() {
     renderNewton(img.data, gw, gh, POLYS[polyRef.current], viewRef.current);
     octx.putImageData(img, 0, 0);
     ctx.imageSmoothingEnabled = true;
-    ctx.drawImage(off, 0, 0, gw, gh, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(off, 0, 0, gw, gh, 0, 0, sizeRef.current.w, sizeRef.current.h);
     setZoomLabel(DEFAULT_VIEW.scale / viewRef.current.scale);
   }, []);
 
@@ -43,8 +45,8 @@ export default function Newton() {
     if (!canvas) return;
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       render();
     };
     resize();
@@ -59,7 +61,7 @@ export default function Newton() {
     const px = e.clientX - rect.left;
     const py = e.clientY - rect.top;
     const factor = e.deltaY > 0 ? 1.2 : 1 / 1.2;
-    viewRef.current = zoomAt(viewRef.current, px, py, canvas.width, canvas.height, factor);
+    viewRef.current = zoomAt(viewRef.current, px, py, sizeRef.current.w, sizeRef.current.h, factor);
     render();
   };
 
@@ -71,8 +73,8 @@ export default function Newton() {
       viewRef.current,
       e.clientX - rect.left,
       e.clientY - rect.top,
-      canvas.width,
-      canvas.height,
+      sizeRef.current.w,
+      sizeRef.current.h,
       1 / 2
     );
     render();

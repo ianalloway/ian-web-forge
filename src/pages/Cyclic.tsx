@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { Cyclic } from "../features/cyclic/cyclic";
 
 const CS = 3; // pixels per cell
@@ -28,6 +29,7 @@ function makePalette(n: number): [number, number, number][] {
 
 export default function CyclicPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const offRef = useRef<HTMLCanvasElement | null>(null);
   const imgRef = useRef<ImageData | null>(null);
   const caRef = useRef<Cyclic | null>(null);
@@ -67,8 +69,8 @@ export default function CyclicPage() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       const cols = Math.max(16, Math.floor(rect.width / CS));
       const rows = Math.max(16, Math.floor(rect.height / CS));
       colsRef.current = cols;
@@ -105,7 +107,7 @@ export default function CyclicPage() {
         data[o + 3] = 255;
       }
       offCtx.putImageData(img, 0, 0);
-      ctx.drawImage(off, 0, 0, ca.w, ca.h, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(off, 0, 0, ca.w, ca.h, 0, 0, sizeRef.current.w, sizeRef.current.h);
 
       if ((frame++ & 7) === 0) setGen(ca.generation);
     };

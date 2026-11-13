@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { DEFAULT_PARAMS, EMPTY, FISH, Wator } from "../features/wator/wator";
 
 const CS = 4; // pixels per cell
@@ -7,6 +8,7 @@ const HISTORY = 260;
 
 export default function WatorPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const offRef = useRef<HTMLCanvasElement | null>(null);
   const imgRef = useRef<ImageData | null>(null);
   const modelRef = useRef<Wator | null>(null);
@@ -40,8 +42,8 @@ export default function WatorPage() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       const cols = Math.max(20, Math.floor(rect.width / CS));
       const rows = Math.max(20, Math.floor(rect.height / CS));
       colsRef.current = cols;
@@ -99,8 +101,8 @@ export default function WatorPage() {
         data[o + 3] = 255;
       }
       offCtx.putImageData(img, 0, 0);
-      const W = canvas.width;
-      const H = canvas.height;
+      const W = sizeRef.current.w;
+      const H = sizeRef.current.h;
       ctx.drawImage(off, 0, 0, cols, rows, 0, 0, W, H);
 
       // Population history chart (bottom overlay).

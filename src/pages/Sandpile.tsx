@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { Sandpile as SandpileModel } from "../features/sandpile/sandpile";
 
 const CS = 3; // pixels per cell
@@ -14,6 +15,7 @@ const COLORS: [number, number, number][] = [
 
 export default function Sandpile() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const offRef = useRef<HTMLCanvasElement | null>(null);
   const imgRef = useRef<ImageData | null>(null);
   const pileRef = useRef<SandpileModel | null>(null);
@@ -55,8 +57,8 @@ export default function Sandpile() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       const cols = Math.max(16, Math.floor(rect.width / CS));
       const rows = Math.max(16, Math.floor(rect.height / CS));
       colsRef.current = cols;
@@ -107,7 +109,7 @@ export default function Sandpile() {
         data[o + 3] = 255;
       }
       offCtx.putImageData(img, 0, 0);
-      ctx.drawImage(off, 0, 0, cols, rows, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(off, 0, 0, cols, rows, 0, 0, sizeRef.current.w, sizeRef.current.h);
 
       if ((frame++ & 7) === 0) {
         setTopples(p.topples);

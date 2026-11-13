@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   GrayScott,
   RdParams,
@@ -15,6 +16,7 @@ const STEPS_PER_FRAME = 8;
 
 export default function Reaction() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const gsRef = useRef<GrayScott | null>(null);
   const paramsRef = useRef<RdParams>({ ...PRESETS.coral.params });
   const pausedRef = useRef(false);
@@ -38,8 +40,8 @@ export default function Reaction() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       gw = Math.max(80, Math.floor(rect.width / SCALE));
       gh = Math.max(60, Math.floor(rect.height / SCALE));
       gsRef.current = makeGrayScott(gw, gh);
@@ -76,7 +78,7 @@ export default function Reaction() {
       }
       offCtx.putImageData(img, 0, 0);
       ctx.imageSmoothingEnabled = true;
-      ctx.drawImage(off, 0, 0, gw, gh, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(off, 0, 0, gw, gh, 0, 0, sizeRef.current.w, sizeRef.current.h);
     };
     raf = requestAnimationFrame(loop);
 

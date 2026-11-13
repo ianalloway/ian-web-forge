@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import {
   DlaWorld,
   SeedMode,
@@ -11,6 +12,7 @@ const SCALE = 2; // sim grid is 1/SCALE of display
 
 export default function Dla() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const worldRef = useRef<DlaWorld | null>(null);
   const modeRef = useRef<SeedMode>("center");
   const runningRef = useRef(true);
@@ -35,8 +37,8 @@ export default function Dla() {
 
     const rebuild = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
       gw = Math.max(120, Math.floor(rect.width / SCALE));
       gh = Math.max(90, Math.floor(rect.height / SCALE));
       worldRef.current = makeWorld(gw, gh, modeRef.current);
@@ -81,7 +83,7 @@ export default function Dla() {
       }
       offCtx.putImageData(img, 0, 0);
       ctx.imageSmoothingEnabled = false;
-      ctx.drawImage(off, 0, 0, gw, gh, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(off, 0, 0, gw, gh, 0, 0, sizeRef.current.w, sizeRef.current.h);
     };
     raf = requestAnimationFrame(loop);
 

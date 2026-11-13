@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fitCanvas } from "../lib/canvas";
 import { DatasetKind, MLP, Sample, makeDataset } from "../features/neuralnet/net";
 
 const DOMAIN = 1.15; // plot spans [-DOMAIN, DOMAIN]
@@ -16,6 +17,7 @@ const DATASETS: { kind: DatasetKind; label: string }[] = [
 
 export default function NeuralNet() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sizeRef = useRef({ w: 0, h: 0 });
   const offRef = useRef<HTMLCanvasElement | null>(null);
   const imgRef = useRef<ImageData | null>(null);
   const netRef = useRef<MLP | null>(null);
@@ -82,8 +84,8 @@ export default function NeuralNet() {
 
     const resize = () => {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const { width, height } = fitCanvas(canvas, rect.width, rect.height);
+      sizeRef.current = { w: width, h: height };
     };
     resize();
     window.addEventListener("resize", resize);
@@ -119,8 +121,8 @@ export default function NeuralNet() {
         }
       }
       offCtx.putImageData(img, 0, 0);
-      const W = canvas.width;
-      const H = canvas.height;
+      const W = sizeRef.current.w;
+      const H = sizeRef.current.h;
       ctx.drawImage(off, 0, 0, RW, RH, 0, 0, W, H);
 
       // Data points.
