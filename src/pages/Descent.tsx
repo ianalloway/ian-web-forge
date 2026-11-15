@@ -99,7 +99,7 @@ export default function Descent() {
     const loop = () => {
       raf = requestAnimationFrame(loop);
       frame++;
-      const { width: W, height: H } = canvas;
+      const { w: W, h: H } = sizeRef.current;
       const opts = optsRef.current;
       const surf = SURFACES[surfaceRef.current];
 

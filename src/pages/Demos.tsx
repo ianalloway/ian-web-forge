@@ -440,13 +440,13 @@ open http://127.0.0.1:8787/`}
           icon={Gamepad2}
           title="Ballpark — multiplayer party game"
           repo="ianalloway/ballpark-game"
-          blurb="Real-time estimation game for 2–8 players on their own devices. One player hosts and shares a 4-letter room code; everyone guesses the number and the closest guess scores."
+          blurb="Real-time estimation game for 2–8 players on their own devices. One player hosts and shares an invite link; everyone guesses the number and the closest guess scores."
         >
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <ul className="text-xs font-mono text-muted-foreground space-y-1">
               <li><span className="text-primary">Rules</span> — 8 rounds, 35s each; closest guess 3 pts, second 1, exact answer +2</li>
               <li><span className="text-primary">Netcode</span> — host browser is the referee; players sync through an MQTT relay over WSS</li>
-              <li><span className="text-primary">Stack</span> — one static HTML file, no backend, works across phones and networks</li>
+              <li><span className="text-primary">Stack</span> — static browser game, no dedicated backend, works across phones and networks</li>
             </ul>
             <a
               href="/demos/ballpark/"
