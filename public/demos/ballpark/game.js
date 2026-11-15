@@ -47,12 +47,18 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fmt = (n, q) => esc(Number(n).toLocaleString("en-US", {maximumFractionDigits: 2, useGrouping: !/\byear\b/i.test(q||"")})); // no "1,903" for years
 const parseGuess = s => { const t = String(s).replace(/[,\s]/g, ""); if (!/^-?\d*\.?\d+$/.test(t)) return null; const n = Number(t); return Number.isFinite(n) ? n : null; };
-const randCode = () => Array.from({length:4}, () => CODE_CHARS[Math.floor(Math.random()*CODE_CHARS.length)]).join("");
-const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+function randomIndex(size){
+  const limit=2**32-(2**32 % size);
+  const sample=new Uint32Array(1);
+  do{ crypto.getRandomValues(sample); }while(sample[0]>=limit);
+  return sample[0] % size;
+}
+const randCode = () => Array.from({length:4}, () => CODE_CHARS[randomIndex(CODE_CHARS.length)]).join("");
+const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){const j=randomIndex(i+1);[a[i],a[j]]=[a[j],a[i]];} return a; };
 /* ---------------- untrusted input ----------------
-   The relay is public, so anyone who knows the room code can publish to its topics. Every game
-   state is checked against a strict schema and rebuilt from known fields before it is rendered,
-   and every value that reaches innerHTML goes through esc().                                    */
+   The relay is public. Every game state is checked against a strict schema
+   and rebuilt from known fields before rendering. Values sent to innerHTML
+   are escaped. */
 const PHASES = ["lobby","question","reveal","final"];
 const ID_RE = /^[0-9a-f]{32}$/;    // player ids are key fingerprints, see "identity" below
 const isId = x => typeof x==="string" && ID_RE.test(x);
