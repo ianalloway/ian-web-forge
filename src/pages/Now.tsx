@@ -24,7 +24,7 @@ const NOW_DATA = {
     icon: Code,
     items: [
       'solvent-agent 0.3 — margin-gated agent business loop with Stripe test-mode payments and spend guardrails',
-      'juryrig 0.3 — agreement matrices and a disagreement atlas for LLM judge panels',
+      'juryrig 0.3.2 — security patch (judge HTTP calls refuse redirects so API keys cannot leak), plus agreement matrices and a disagreement atlas for LLM judge panels',
       'SpendAudit — next run with full coverage, held-out scenarios, and a mechanical verifier',
       'nba-clv-dashboard v2 — adding live calibration charts and CLV-by-strategy breakdowns',
       'openclaw-skills bundles — Sports Bettor, Crypto Watcher, Developer Power Tools',
