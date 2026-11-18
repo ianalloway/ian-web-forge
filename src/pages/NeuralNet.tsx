@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import { DatasetKind, MLP, Sample, makeDataset } from "../features/neuralnet/net";
 
 const DOMAIN = 1.15; // plot spans [-DOMAIN, DOMAIN]
@@ -25,12 +25,12 @@ export default function NeuralNet() {
   const datasetRef = useRef<DatasetKind>("blobs");
   const lrRef = useRef(0.5);
   const epochsPerFrameRef = useRef(3);
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const epochRef = useRef(0);
 
   const [dataset, setDataset] = useState<DatasetKind>("blobs");
   const [lr, setLr] = useState(0.5);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [epoch, setEpoch] = useState(0);
   const [loss, setLoss] = useState(0);
   const [acc, setAcc] = useState(0);

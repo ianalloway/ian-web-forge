@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   Diagram,
   PRESETS,
@@ -39,14 +39,14 @@ export default function Traffic() {
   const historyRef = useRef<Int8Array[]>([]);
   const cellsRef = useRef<Int8Array>(new Int8Array(ROAD_LENGTH));
   const stripRef = useRef<HTMLCanvasElement | null>(null);
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const rateRef = useRef(2);
   const sweepRef = useRef(false);
   const settleRef = useRef(0);
   const emaRef = useRef({ speed: 0, flow: 0, stopped: 0 });
 
   const [presetId, setPresetId] = useState(INITIAL.id);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [cars, setCars] = useState(INITIAL.cars);
   const [vmax, setVmax] = useState(INITIAL.vmax);
   const [dawdle, setDawdle] = useState(INITIAL.dawdle);

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   SIZES,
   STRATEGIES,
@@ -40,13 +40,13 @@ export default function Hashmap() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sizeRef = useRef({ w: 0, h: 0 });
   const runRef = useRef<Run>(freshRun(SIZES[1], "linear", 17));
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const paceRef = useRef(4);
   const flashRef = useRef(0);
 
   const [strategy, setStrategy] = useState<Strategy>("linear");
   const [size, setSize] = useState(SIZES[1]);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [pace, setPace] = useState(4);
   const [seed, setSeed] = useState(17);
   const [hud, setHud] = useState({ count: 0, alpha: 0, probes: 0, theory: 0, cluster: 0, full: false });

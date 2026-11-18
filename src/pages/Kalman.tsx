@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   SCENARIOS,
   WORLD,
@@ -45,7 +45,7 @@ export default function Kalman() {
   const errorsRef = useRef<Errors>(newErrors());
   const sensorRef = useRef<Sensor>({ sigma: 4, dropout: 0 });
   const qRef = useRef(DEFAULT_Q);
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const rateRef = useRef(1);
 
   const truthTrail = useRef<[number, number][]>([]);
@@ -54,7 +54,7 @@ export default function Kalman() {
   const errHistory = useRef<[number, number | null][]>([]);
 
   const [scenarioId, setScenarioId] = useState(SCENARIOS[0].id);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [sigma, setSigma] = useState(4);
   const [q, setQ] = useState(DEFAULT_Q);
   const [dropout, setDropout] = useState(0);

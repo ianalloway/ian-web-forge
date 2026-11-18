@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import { Edge, Pt, kruskalMST, primMST } from "../features/mst/mst";
 
 type Algo = "prim" | "kruskal";
@@ -15,7 +15,7 @@ export default function Mst() {
   const algoRef = useRef<Algo>("prim");
   const tRef = useRef(0);
   const speedRef = useRef(0.6);
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
 
   const [algo, setAlgo] = useState<Algo>("prim");
   const [nodes, setNodes] = useState(80);

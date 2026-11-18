@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   Encoded,
   Model,
@@ -32,11 +32,11 @@ export default function Arithmetic() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sizeRef = useRef({ w: 0, h: 0 });
   const runRef = useRef<Run>(freshRun(SAMPLES[0]));
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const paceRef = useRef(22);
 
   const [sampleId, setSampleId] = useState(SAMPLES[0].id);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [pace, setPace] = useState(22);
   const [hud, setHud] = useState({ step: 0, total: 0, bits: 0, entropy: 0, huffman: 0, spent: 0 });
 

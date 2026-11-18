@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import { Cyclic } from "../features/cyclic/cyclic";
 
 const CS = 3; // pixels per cell
@@ -39,12 +39,12 @@ export default function CyclicPage() {
   const statesRef = useRef(6);
   const thresholdRef = useRef(3);
   const speedRef = useRef(2);
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
 
   const [states, setStates] = useState(6);
   const [threshold, setThreshold] = useState(3);
   const [speed, setSpeed] = useState(2);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [gen, setGen] = useState(0);
 
   const build = useCallback(() => {

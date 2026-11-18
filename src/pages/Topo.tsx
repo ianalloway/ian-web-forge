@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   PRESETS,
   Preset,
@@ -16,8 +16,8 @@ export default function Topo() {
   const sizeRef = useRef({ w: 0, h: 0 });
   const [presetId, setPresetId] = useState(PRESETS[0].id);
   const [revealed, setRevealed] = useState(0); // waves shown
-  const [running, setRunning] = useState(true);
-  const runningRef = useRef(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
+  const runningRef = useRef(shouldAutoAnimate());
   const revealedRef = useRef(0);
   const paceRef = useRef(40);
   const [pace, setPace] = useState(40);

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   DISTRIBUTIONS,
   Node,
@@ -27,7 +27,7 @@ export default function Quadtree() {
   const treeRef = useRef<Node>(newNode(WORLD_BOUNDS));
   const queryRef = useRef<Rect>({ x: WORLD * 0.5, y: WORLD * 0.5, hw: 110, hh: 110 });
   const pointerRef = useRef<{ x: number; y: number } | null>(null);
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const capacityRef = useRef(4);
   const showTreeRef = useRef(true);
   const orbitRef = useRef(0);
@@ -36,7 +36,7 @@ export default function Quadtree() {
   const [count, setCount] = useState(900);
   const [capacity, setCapacity] = useState(4);
   const [querySize, setQuerySize] = useState(110);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [showTree, setShowTree] = useState(true);
   const [hud, setHud] = useState({ nodes: 0, depth: 0, found: 0, checks: 0, brute: 0, rejected: 0 });
 
@@ -195,6 +195,10 @@ export default function Quadtree() {
 
     let raf = 0;
     let frame = 0;
+    // When the viewer prefers reduced motion the scene starts paused, so the
+    // query box must not drift on its own either — otherwise the page is never
+    // actually still. Hovering the canvas still steers it (that is user-driven).
+    const ambientDrift = shouldAutoAnimate();
     const loop = () => {
       raf = requestAnimationFrame(loop);
       if (runningRef.current) {
@@ -204,11 +208,11 @@ export default function Quadtree() {
         treeRef.current = build(pointsRef.current, WORLD_BOUNDS, capacityRef.current);
       }
       // The query follows the cursor, and drifts on its own when the cursor is
-      // elsewhere so the page is never static.
+      // elsewhere so the page is never static — unless reduced motion is on.
       const pointer = pointerRef.current;
       if (pointer) {
         queryRef.current = { ...queryRef.current, x: pointer.x, y: pointer.y };
-      } else {
+      } else if (ambientDrift) {
         orbitRef.current += 0.006;
         queryRef.current = {
           ...queryRef.current,

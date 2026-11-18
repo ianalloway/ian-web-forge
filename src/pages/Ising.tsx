@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import { Ising, TC } from "../features/ising/ising";
 
 const N = 200; // lattice is N×N
@@ -13,11 +13,11 @@ export default function IsingPage() {
   const modelRef = useRef<Ising | null>(null);
   const tempRef = useRef(2.4);
   const sweepsRef = useRef(4);
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
 
   const [temp, setTemp] = useState(2.4);
   const [sweeps, setSweeps] = useState(4);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [mag, setMag] = useState(0);
   const [energy, setEnergy] = useState(0);
 

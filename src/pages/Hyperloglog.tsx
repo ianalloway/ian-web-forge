@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   STREAMS,
   Sketch,
@@ -51,12 +51,12 @@ export default function Hyperloglog() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sizeRef = useRef({ w: 0, h: 0 });
   const runRef = useRef<Run>(freshRun(STREAMS[0], 10));
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const rateRef = useRef(2000);
 
   const [streamId, setStreamId] = useState(STREAMS[0].id);
   const [p, setP] = useState(10);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [rate, setRate] = useState(2000);
   const [hud, setHud] = useState({
     seen: 0,

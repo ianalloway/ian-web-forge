@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   MIN_MATCH,
   SAMPLES,
@@ -33,14 +33,14 @@ export default function Lz77() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sizeRef = useRef({ w: 0, h: 0 });
   const encRef = useRef<Encoder>(newEncoder(SAMPLES[1].text, 64, 24));
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const paceRef = useRef(6); // frames between tokens
   const flashRef = useRef(0);
 
   const [sampleId, setSampleId] = useState(SAMPLES[1].id);
   const [windowSize, setWindowSize] = useState(64);
   const [maxMatch, setMaxMatch] = useState(24);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [pace, setPace] = useState(6);
   const [hud, setHud] = useState({ pos: 0, tokens: 0, matches: 0, ratio: 1, done: false, longest: 0 });
 

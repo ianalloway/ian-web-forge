@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   PRESETS,
   clauseStatus,
@@ -23,8 +23,8 @@ export default function Sat() {
   const [useUnit, setUseUnit] = useState(true);
   const [usePure, setUsePure] = useState(true);
   const [cursor, setCursor] = useState(0);
-  const [running, setRunning] = useState(true);
-  const runningRef = useRef(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
+  const runningRef = useRef(shouldAutoAnimate());
   const cursorRef = useRef(0);
   const paceRef = useRef(8);
   const [pace, setPace] = useState(8);

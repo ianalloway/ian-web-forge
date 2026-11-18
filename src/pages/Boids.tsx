@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   Boid,
   FlockParams,
@@ -28,11 +28,11 @@ export default function Boids() {
   const boidsRef = useRef<Boid[]>([]);
   const paramsRef = useRef<FlockParams>({ ...DEFAULT_PARAMS });
   const mouseRef = useRef<{ x: number; y: number } | null>(null);
-  const pausedRef = useRef(false);
+  const pausedRef = useRef(!shouldAutoAnimate());
 
   const [params, setParams] = useState<FlockParams>({ ...DEFAULT_PARAMS });
   const [flockSize, setFlockSize] = useState(100);
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(!shouldAutoAnimate());
 
   // Sim + render loop
   useEffect(() => {

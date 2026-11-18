@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import { Diff as DiffResult, SAMPLES, Sample, apply, diff, minimumEdits, stats } from "../features/diff/myers";
 
 interface Run {
@@ -25,11 +25,11 @@ export default function Diff() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sizeRef = useRef({ w: 0, h: 0 });
   const runRef = useRef<Run>(freshRun(SAMPLES[0]));
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const paceRef = useRef(26);
 
   const [sampleId, setSampleId] = useState(SAMPLES[0].id);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [pace, setPace] = useState(26);
   const [hud, setHud] = useState({ depth: 0, edits: 0, minimum: 0, kept: 0, inserted: 0, deleted: 0, verified: true });
 

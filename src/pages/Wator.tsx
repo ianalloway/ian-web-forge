@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import { DEFAULT_PARAMS, EMPTY, FISH, Wator } from "../features/wator/wator";
 
 const CS = 4; // pixels per cell
@@ -15,11 +15,11 @@ export default function WatorPage() {
   const colsRef = useRef(0);
   const rowsRef = useRef(0);
   const speedRef = useRef(1);
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const histRef = useRef<{ f: number; s: number }[]>([]);
 
   const [speed, setSpeed] = useState(1);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [params, setParams] = useState({ ...DEFAULT_PARAMS });
   const [stat, setStat] = useState({ chronon: 0, fish: 0, sharks: 0 });
 

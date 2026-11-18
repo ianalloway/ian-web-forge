@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   PRESETS,
   DEFAULT_PARAMS,
@@ -37,13 +37,13 @@ export default function QLearning() {
   const paramsRef = useRef<Params>({ ...DEFAULT_PARAMS });
   const speedRef = useRef(60); // env steps per animation frame
   const maxStepsRef = useRef(300);
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const trailRef = useRef<number[]>([]);
   const smoothRef = useRef<number[]>([]); // EMA of episode return
   const emaRef = useRef<number | null>(null);
 
   const [presetId, setPresetId] = useState(PRESETS[0].id);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [alpha, setAlpha] = useState(DEFAULT_PARAMS.alpha);
   const [gamma, setGamma] = useState(DEFAULT_PARAMS.gamma);
   const [epsilon, setEpsilon] = useState(DEFAULT_PARAMS.epsilon);

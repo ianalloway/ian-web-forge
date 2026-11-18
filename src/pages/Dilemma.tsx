@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   STRATEGIES,
   Tournament,
@@ -32,7 +32,7 @@ export default function Dilemma() {
   const [rounds, setRounds] = useState(120);
   const [noise, setNoise] = useState(0);
   const [seed, setSeed] = useState(1337);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [generation, setGeneration] = useState(0);
   const [shares, setShares] = useState<number[]>(() => uniformShares(STRATEGIES.length));
 

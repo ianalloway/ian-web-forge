@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   POLICIES,
   WORKLOADS,
@@ -27,8 +27,8 @@ export default function Lru() {
   const [universe, setUniverse] = useState(12);
   const [seed, setSeed] = useState(5);
   const [cursor, setCursor] = useState(0);
-  const [running, setRunning] = useState(true);
-  const runningRef = useRef(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
+  const runningRef = useRef(shouldAutoAnimate());
   const cursorRef = useRef(0);
   const paceRef = useRef(6);
   const [pace, setPace] = useState(6);

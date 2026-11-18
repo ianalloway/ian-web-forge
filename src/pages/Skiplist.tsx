@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   SEQUENCES,
   Sequence,
@@ -48,14 +48,14 @@ export default function Skiplist() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sizeRef = useRef({ w: 0, h: 0 });
   const runRef = useRef<Run>(freshRun(SEQUENCES[1], 0.5, 7));
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const paceRef = useRef(26);
   const flashRef = useRef(0);
 
   const [sequenceId, setSequenceId] = useState(SEQUENCES[1].id);
   const [p, setP] = useState(0.5);
   const [seed, setSeed] = useState(7);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [pace, setPace] = useState(26);
   const [hud, setHud] = useState({ size: 0, levels: 1, remaining: TOTAL, comparisons: 0, linear: 0 });
 

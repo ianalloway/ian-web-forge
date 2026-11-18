@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   DOMAIN,
   HIST_BINS,
@@ -26,14 +26,14 @@ export default function Mcmc() {
   const chainRef = useRef<Chain>(newChain(TARGETS[0]));
   const sigmaRef = useRef(0.55);
   const rateRef = useRef(12);
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const surfaceRef = useRef<HTMLCanvasElement | null>(null);
   const marginalRef = useRef<Float64Array>(trueMarginal(TARGETS[0], HIST_BINS));
 
   const [targetId, setTargetId] = useState(TARGETS[0].id);
   const [sigma, setSigma] = useState(0.55);
   const [rate, setRate] = useState(12);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [showPath, setShowPath] = useState(true);
   const [hud, setHud] = useState({ samples: 0, accept: 0, ess: 0, efficiency: 0 });
 

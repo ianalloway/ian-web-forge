@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   GaltonState,
   newGalton,
@@ -16,12 +16,12 @@ export default function Galton() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sizeRef = useRef({ w: 0, h: 0 });
   const stateRef = useRef<GaltonState>(newGalton(12, 0.5));
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const rateRef = useRef(3); // balls per 10 frames
 
   const [rows, setRows] = useState(12);
   const [p, setP] = useState(0.5);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [dropped, setDropped] = useState(0);
 
   const reset = useCallback((r: number, prob: number) => {
