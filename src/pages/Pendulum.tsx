@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   PendulumState,
   PendulumParams,
@@ -24,10 +24,10 @@ export default function Pendulum() {
   const paramsRef = useRef<PendulumParams>({ ...DEFAULT_PARAMS });
   const trailRef = useRef<{ x: number; y: number }[]>([]);
   const ghostTrailRef = useRef<{ x: number; y: number }[]>([]);
-  const pausedRef = useRef(false);
+  const pausedRef = useRef(!shouldAutoAnimate());
   const dragRef = useRef<null | 1 | 2>(null);
 
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(!shouldAutoAnimate());
   const [ghostOn, setGhostOn] = useState(false);
   const [damping, setDamping] = useState(false);
 

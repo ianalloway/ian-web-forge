@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   League,
   Team,
@@ -19,10 +19,10 @@ export default function Elo() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sizeRef = useRef({ w: 0, h: 0 });
   const leagueRef = useRef<League>(newLeague(TEAM_COUNT));
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const kRef = useRef(24);
 
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [k, setK] = useState(24);
   const [rounds, setRounds] = useState(0);
   const [agreement, setAgreement] = useState(0);

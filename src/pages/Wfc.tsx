@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import { TILES, WFC } from "../features/wfc/wfc";
 
 const CS = 22; // pixels per tile
@@ -20,11 +20,11 @@ export default function Wfc() {
   const colsRef = useRef(0);
   const rowsRef = useRef(0);
   const holdRef = useRef(0); // frames to linger on a finished board before re-rolling
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const speedRef = useRef(8);
   const loopRef = useRef(true);
 
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [speed, setSpeed] = useState(8);
   const [loop, setLoop] = useState(true);
   const [status, setStatus] = useState("collapsing");

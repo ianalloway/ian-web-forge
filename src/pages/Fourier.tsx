@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   WaveId,
   WAVES,
@@ -18,13 +18,13 @@ export default function Fourier() {
   const waveRef = useRef<WaveId>("square");
   const countRef = useRef(4);
   const speedRef = useRef(0.02);
-  const pausedRef = useRef(false);
+  const pausedRef = useRef(!shouldAutoAnimate());
   const traceRef = useRef<number[]>([]);
 
   const [wave, setWave] = useState<WaveId>("square");
   const [count, setCount] = useState(4);
   const [speed, setSpeed] = useState(0.02);
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(!shouldAutoAnimate());
 
   useEffect(() => {
     const canvas = canvasRef.current;

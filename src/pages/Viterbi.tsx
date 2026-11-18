@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   MODELS,
   accuracy,
@@ -26,9 +26,9 @@ export default function Viterbi() {
   const [seed, setSeed] = useState(777);
   const [length, setLength] = useState(80);
   const [revealed, setRevealed] = useState(0);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [showPosterior, setShowPosterior] = useState(true);
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const revealedRef = useRef(0);
   const paceRef = useRef(3);
   const [pace, setPace] = useState(3);

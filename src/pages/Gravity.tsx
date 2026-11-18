@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import { Body, loadPreset, makeBody, stepLeapfrog, Preset } from "../features/gravity/sim";
 
 const PRESETS: { id: Preset; label: string }[] = [
@@ -17,12 +17,12 @@ export default function Gravity() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sizeRef = useRef({ w: 0, h: 0 });
   const bodiesRef = useRef<Body[]>([]);
-  const pausedRef = useRef(false);
+  const pausedRef = useRef(!shouldAutoAnimate());
   const dragStartRef = useRef<{ x: number; y: number } | null>(null);
   const dragCurrentRef = useRef<{ x: number; y: number } | null>(null);
 
 
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(!shouldAutoAnimate());
   const [preset, setPreset] = useState<Preset>("binary");
   const [bodyCount, setBodyCount] = useState(0);
 

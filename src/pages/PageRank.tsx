@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   TOPOLOGIES,
   Graph,
@@ -25,7 +25,7 @@ export default function PageRank() {
   const ranksRef = useRef<Float64Array>(uniformRanks(24));
   const surferRef = useRef<Surfer>(newSurfer(24));
   const dampingRef = useRef(0.85);
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const surferOnRef = useRef(true);
   const iterRef = useRef(0);
   const deltaRef = useRef(1);
@@ -36,7 +36,7 @@ export default function PageRank() {
   const [nodes, setNodes] = useState(24);
   const [damping, setDamping] = useState(0.85);
   const [seed, setSeed] = useState(7);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [surferOn, setSurferOn] = useState(true);
   const [hud, setHud] = useState({ iter: 0, delta: 1, top: 0, topShare: 0, surferSteps: 0, surferErr: 1 });
 

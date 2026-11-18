@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   PRESETS,
   Sim,
@@ -20,14 +20,14 @@ export default function Queue() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sizeRef = useRef({ w: 0, h: 0 });
   const simRef = useRef<Sim>(newSim(PRESETS[1].lambda, PRESETS[1].mu, PRESETS[1].servers));
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const speedRef = useRef(40);
 
   const [presetId, setPresetId] = useState(PRESETS[1].id);
   const [lambda, setLambda] = useState(PRESETS[1].lambda);
   const [mu, setMu] = useState(PRESETS[1].mu);
   const [servers, setServers] = useState(PRESETS[1].servers);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [speed, setSpeed] = useState(40);
   const [hud, setHud] = useState({ t: 0, inSystem: 0, L: 0, W: 0, util: 0, served: 0 });
 

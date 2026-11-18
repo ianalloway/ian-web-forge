@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   GrayScott,
   RdParams,
@@ -19,13 +19,13 @@ export default function Reaction() {
   const sizeRef = useRef({ w: 0, h: 0 });
   const gsRef = useRef<GrayScott | null>(null);
   const paramsRef = useRef<RdParams>({ ...PRESETS.coral.params });
-  const pausedRef = useRef(false);
+  const pausedRef = useRef(!shouldAutoAnimate());
   const paintRef = useRef(false);
 
   const [preset, setPreset] = useState<PresetId>("coral");
   const [feed, setFeed] = useState(PRESETS.coral.params.feed);
   const [kill, setKill] = useState(PRESETS.coral.params.kill);
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(!shouldAutoAnimate());
 
   useEffect(() => {
     const canvas = canvasRef.current;

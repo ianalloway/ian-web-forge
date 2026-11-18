@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   ALGORITHMS,
   Algorithm,
@@ -27,8 +27,8 @@ export default function Ratelimit() {
   const [limit, setLimit] = useState(10);
   const [windowMs, setWindowMs] = useState(1000);
   const [reveal, setReveal] = useState(0); // how much of the timeline is played
-  const [running, setRunning] = useState(true);
-  const runningRef = useRef(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
+  const runningRef = useRef(shouldAutoAnimate());
   const revealRef = useRef(0);
 
   const pattern = PATTERNS.find((p) => p.id === patternId) ?? PATTERNS[1];

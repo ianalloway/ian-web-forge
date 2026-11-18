@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvasFixed } from "../lib/canvas";
+import { fitCanvasFixed, shouldAutoAnimate } from "../lib/canvas";
 import {
   PiEstimate,
   ErrorPoint,
@@ -34,10 +34,10 @@ export default function Pi() {
   const stateRef = useRef<PiEstimate>({ total: 0, inside: 0 });
   const errorsRef = useRef<ErrorPoint[]>([]);
   const lastRecordedRef = useRef(0);
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const rateRef = useRef(1); // index into RATES
 
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [rateIdx, setRateIdx] = useState(1);
   const [total, setTotal] = useState(0);
   const [piEst, setPiEst] = useState(0);

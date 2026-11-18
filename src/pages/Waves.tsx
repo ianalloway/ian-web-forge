@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   Source,
   WaveParams,
@@ -17,10 +17,10 @@ export default function Waves() {
   const sizeRef = useRef({ w: 0, h: 0 });
   const sourcesRef = useRef<Source[]>([]);
   const paramsRef = useRef<WaveParams>({ ...DEFAULT_WAVE });
-  const pausedRef = useRef(false);
+  const pausedRef = useRef(!shouldAutoAnimate());
   const dragIdxRef = useRef(-1);
 
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(!shouldAutoAnimate());
   const [wavelength, setWavelength] = useState(DEFAULT_WAVE.wavelength);
   const [speed, setSpeed] = useState(DEFAULT_WAVE.speed);
   const [attenuate, setAttenuate] = useState(DEFAULT_WAVE.attenuate);

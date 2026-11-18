@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import { Ant, Turn, parseRule, palette, stepAnt } from "../features/langton/turmite";
 
 const CELL = 4; // on-screen pixels per grid cell
@@ -34,12 +34,12 @@ export default function Langton() {
   const rowsRef = useRef(0);
   const stepsRef = useRef(0);
 
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const speedRef = useRef(1500);
   const antsCountRef = useRef(1);
 
   const [preset, setPreset] = useState("RL");
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [speed, setSpeed] = useState(1500);
   const [antCount, setAntCount] = useState(1);
   const [steps, setSteps] = useState(0);

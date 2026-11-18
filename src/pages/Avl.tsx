@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   SEQUENCES,
   Node,
@@ -42,12 +42,12 @@ export default function Avl() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sizeRef = useRef({ w: 0, h: 0 });
   const stateRef = useRef<TreeState>(freshState(SEQUENCES[0]));
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const speedRef = useRef(22); // frames between inserts
   const flashRef = useRef(0); // frames left highlighting the last rotation
 
   const [seqId, setSeqId] = useState(SEQUENCES[0].id);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [speed, setSpeed] = useState(22);
   const [hud, setHud] = useState({ n: 0, avlH: 0, bstH: 0, rotations: 0, avlWorst: 0, bstWorst: 0, remaining: TOTAL });
 

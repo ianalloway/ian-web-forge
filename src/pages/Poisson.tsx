@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import { PoissonDisk } from "../features/poisson/bridson";
 
 export default function Poisson() {
@@ -9,11 +9,11 @@ export default function Poisson() {
   const samplerRef = useRef<PoissonDisk | null>(null);
   const radiusRef = useRef(16);
   const speedRef = useRef(12);
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
 
   const [radius, setRadius] = useState(16);
   const [speed, setSpeed] = useState(12);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [count, setCount] = useState(0);
   const [done, setDone] = useState(false);
 

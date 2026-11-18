@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import { SAMPLES, Sample, SearchState, newSearch, step } from "../features/kmp/kmp";
 
 interface Pair {
@@ -19,11 +19,11 @@ export default function Kmp() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sizeRef = useRef({ w: 0, h: 0 });
   const pairRef = useRef<Pair>(freshPair(SAMPLES[1]));
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const paceRef = useRef(6);
 
   const [sampleId, setSampleId] = useState(SAMPLES[1].id);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [pace, setPace] = useState(6);
   const [hud, setHud] = useState({ naive: 0, kmp: 0, naiveDone: false, kmpDone: false, matches: 0 });
 

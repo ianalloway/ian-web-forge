@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import { Cluster, type ClusterEvent, type Entry, type Role, checkAll } from "../features/raft/raft";
 
 const SIZE = 5;
@@ -66,12 +66,12 @@ export default function Raft() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sizeRef = useRef({ w: 0, h: 0 });
   const clusterRef = useRef<Cluster | null>(null);
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
   const speedRef = useRef(1);
   const accRef = useRef(0);
   const dirtyRef = useRef(true);
 
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [speed, setSpeed] = useState(1);
   const [view, setView] = useState<View | null>(null);
 

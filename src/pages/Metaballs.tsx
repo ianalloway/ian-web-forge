@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import { Ball, fieldAt, marchingSquares } from "../features/metaballs/marchingSquares";
 
 const CELL = 9; // grid sample spacing in pixels
@@ -14,11 +14,11 @@ export default function Metaballs() {
   const rowsRef = useRef(0);
   const isoRef = useRef(1);
   const speedRef = useRef(1);
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
 
   const [count, setCount] = useState(5);
   const [iso, setIso] = useState(1);
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
 
   const makeBalls = useCallback((n: number, w: number, h: number) => {
     ballsRef.current = Array.from({ length: n }, () => {

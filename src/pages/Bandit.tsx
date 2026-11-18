@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { fitCanvas } from "../lib/canvas";
+import { fitCanvas, shouldAutoAnimate } from "../lib/canvas";
 import {
   StrategyId,
   STRATEGIES,
@@ -23,9 +23,9 @@ export default function Bandit() {
   const historyRef = useRef<Record<StrategyId, number[]>>(
     Object.fromEntries(STRATEGY_KEYS.map((s) => [s, [0]])) as Record<StrategyId, number[]>
   );
-  const runningRef = useRef(true);
+  const runningRef = useRef(shouldAutoAnimate());
 
-  const [running, setRunning] = useState(true);
+  const [running, setRunning] = useState(shouldAutoAnimate());
   const [pulls, setPulls] = useState(0);
   const [rates, setRates] = useState<number[]>(() => randomRates(K));
   const [stats, setStats] = useState<Record<StrategyId, number>>(
