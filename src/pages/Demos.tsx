@@ -1,11 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Terminal, ExternalLink, GitBranch as Github, Calculator, LineChart, Cpu, Trophy, Coins, Gamepad2 } from 'lucide-react';
 import MatrixRain from '@/components/MatrixRain';
 import { kelly, convertOdds, arbitrage } from '@/lib/kelly';
 
 /** Live product demos for the flagship repos.
  *  kelly-js math runs IN THIS PAGE (vendored helper, no install-time GitHub dependency).
- *  nba-ratings runs on Streamlit. The sports ML project links to its evaluation and local setup.
+ *  The NBA ratings model and Sports ML dashboard run on Streamlit.
  *  ai-advantage is the production site. */
 
 const STREAMLIT_EDGE = 'https://nba-edge-demo.streamlit.app';
@@ -221,6 +221,11 @@ function StreamlitEmbed({ src, title }: { src: string; title: string }) {
 }
 
 const Demos = () => {
+  useEffect(() => {
+    // The section only exists after this lazy-loaded route mounts.
+    document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ behavior: 'instant' });
+  }, []);
+
   return (
     <div className="min-h-screen bg-background relative">
       <MatrixRain />
@@ -275,8 +280,7 @@ const Demos = () => {
             Working product demos
           </h1>
           <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
-            Try the calculators, explore the live NBA ratings model, or see how the sports ML
-            project tests its predictions against historical games.
+            Try the calculators, explore NBA ratings, or compare matchup predictions in the Sports ML dashboard.
           </p>
         </header>
 
@@ -409,7 +413,15 @@ open http://127.0.0.1:8787/`}
           repo="ianalloway/sports-betting-ml"
           blurb="The XGBoost dashboard uses synthetic NBA games to demonstrate predictions and Kelly stakes. A separate benchmark tests predictions on historical results."
         >
-          <div className="flex flex-wrap gap-4 font-mono text-sm">
+          <div className="flex flex-wrap items-center gap-4 font-mono text-sm">
+            <a
+              href="https://ian-sports-betting-ml.streamlit.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded border border-primary/50 bg-primary/10 px-4 py-2 text-primary hover:bg-primary/20"
+            >
+              Open live Sports ML dashboard <ExternalLink size={14} />
+            </a>
             <a
               href="https://github.com/ianalloway/sports-betting-ml/blob/main/docs/historical-benchmark.md"
               target="_blank"
