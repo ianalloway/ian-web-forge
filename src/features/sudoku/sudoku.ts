@@ -21,6 +21,23 @@ export function canPlace(grid: Grid, idx: number, val: number): boolean {
   return true;
 }
 
+/** Read 81 clues in row order; whitespace separates rows or cells. */
+export function parsePuzzle(input: string): Grid {
+  const cells = input.replace(/\s/g, "");
+  if (!/^[0-9.]{81}$/.test(cells)) {
+    throw new Error("Enter 81 cells using digits 1–9 and a dot or zero for each blank.");
+  }
+  const grid = new Int8Array(81);
+  for (let i = 0; i < cells.length; i++) {
+    const digit = cells[i] === "." ? 0 : Number(cells[i]);
+    if (digit && !canPlace(grid, i, digit)) {
+      throw new Error(`Conflicting ${digit} at row ${Math.floor(i / 9) + 1}, column ${i % 9 + 1}.`);
+    }
+    grid[i] = digit;
+  }
+  return grid;
+}
+
 /** True if a filled grid satisfies every row/column/box constraint. */
 export function isSolved(grid: Grid): boolean {
   for (let i = 0; i < 81; i++) {

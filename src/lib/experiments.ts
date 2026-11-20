@@ -228,7 +228,7 @@ export const EXPERIMENTS: Experiment[] = [
   {
     path: "/sudoku",
     title: "Sudoku Solver — watch backtracking search",
-    description: "Watch a backtracking Sudoku solver think: it places digits that fit, hits dead ends, and backtracks (in red) to try again. Generate easy/medium/hard puzzles and step through the search.",
+    description: "Watch a backtracking Sudoku solver think: it places digits that fit, hits dead ends, and backtracks (in red) to try again. Import your own puzzle or generate one, then step through the search.",
     category: "algorithms",
   },
   {

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Grid, StepResult, SudokuSolver, generate } from "../features/sudoku/sudoku";
+import { Grid, StepResult, SudokuSolver, generate, parsePuzzle } from "../features/sudoku/sudoku";
 
 const DIFFICULTY: { label: string; holes: number }[] = [
   { label: "easy", holes: 40 },
@@ -37,7 +37,9 @@ export default function Sudoku() {
     backtracks: 0,
     steps: 0,
   });
-  const [holes, setHoles] = useState(50);
+  const [holes, setHoles] = useState<number | null>(50);
+  const [puzzleText, setPuzzleText] = useState("");
+  const [importMessage, setImportMessage] = useState("");
   const [speed, setSpeed] = useState(40);
   const [running, setRunning] = useState(false);
 
@@ -102,6 +104,7 @@ export default function Sudoku() {
   }, [newPuzzle]);
 
   const onNew = (h: number) => {
+    setImportMessage("");
     setHoles(h);
     holesRef.current = h;
     runningRef.current = false;
@@ -134,6 +137,30 @@ export default function Sudoku() {
           {status} · {meta.steps.toLocaleString()} steps · {meta.backtracks.toLocaleString()} backtracks
         </div>
       </div>
+
+      <details className="border-b border-primary/10 px-4 py-2 text-sm">
+        <summary className="w-fit cursor-pointer">Import a puzzle</summary>
+        <form className="my-3 flex max-w-xl flex-col items-start gap-2" onSubmit={(event) => {
+          event.preventDefault();
+          try {
+            puzzleRef.current = parsePuzzle(puzzleText);
+            resetPuzzle();
+            setHoles(null);
+            runningRef.current = false;
+            setRunning(false);
+            setImportMessage("Puzzle loaded.");
+          } catch (error) {
+            setImportMessage(error instanceof Error ? error.message : "Invalid puzzle.");
+          }
+        }}>
+          <label htmlFor="sudoku-input">Paste 81 cells. Use a dot or zero for each blank.</label>
+          <textarea id="sudoku-input" rows={3} value={puzzleText} spellCheck={false}
+            onChange={(e) => { setPuzzleText(e.target.value); setImportMessage(""); }}
+            className="w-full border border-primary/30 bg-background p-2" />
+          <button type="submit" className="border border-primary/50 px-3 py-1">Load puzzle</button>
+          <p aria-live="polite">{importMessage}</p>
+        </form>
+      </details>
 
       {/* Controls */}
       <div className="border-b border-primary/10 px-4 py-2 flex flex-wrap items-center gap-4">
