@@ -32,16 +32,10 @@ jobs:
   probe:
     name: Probe form wiring
     runs-on: ubuntu-latest
+    env:
+      TARGET: ${{ inputs.target || 'ianalloway.xyz' }}
     steps:
-      - name: Resolve target
-        id: cfg
-        run: |
-          TARGET="${{ github.event.inputs.target }}"
-          echo "target=${TARGET:-ianalloway.xyz}" >> "$GITHUB_OUTPUT"
-
       - name: Read-only probe (no submission)
-        env:
-          TARGET: ${{ steps.cfg.outputs.target }}
         run: |
           echo "## Read-only probe of https://$TARGET" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
@@ -74,8 +68,6 @@ jobs:
         if: >-
           (github.event_name == 'workflow_dispatch' && inputs.submit) ||
           contains(github.event.head_commit.message, '[form-submit]')
-        env:
-          TARGET: ${{ steps.cfg.outputs.target }}
         run: |
           TOKEN=$(openssl rand -hex 6)
           EMAIL="formtest+${TOKEN}@example.com"
