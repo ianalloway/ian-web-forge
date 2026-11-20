@@ -88,7 +88,7 @@ const CORE_SECTION: CatalogSection = {
     {
       name: 'solvent-agent',
       href: 'https://github.com/ianalloway/solvent-agent',
-      oneLine: 'Self-funding AI agent — Stripe earn/spend, Nemotron, guardrails (Hackathon)',
+      oneLine: 'Python agent workflow with simulated payments, spending policies, and a SQLite ledger',
     },
     {
       name: 'ai-advantage',

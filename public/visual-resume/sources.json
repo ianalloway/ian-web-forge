@@ -1,12 +1,17 @@
 {
   "name": "Ian Alloway",
   "role": "Applied AI Engineer",
-  "reviewed": "2026-10-06",
+  "reviewed": "2026-11-20",
   "sources": [
     {
       "id": "profile",
       "label": "Public professional profile",
       "url": "https://github.com/ianalloway"
+    },
+    {
+      "id": "spendaudit",
+      "label": "SpendAudit benchmark",
+      "url": "https://github.com/ianalloway/spendaudit"
     },
     {
       "id": "juryrig",
@@ -26,14 +31,31 @@
     {
       "id": "resume",
       "label": "Public résumé (PDF)",
-      "url": "/Ian_Alloway_Resume_CV.pdf"
+      "url": "/Ian_Alloway_Resume.pdf"
     }
   ],
   "projects": [
     {
+      "id": "spendaudit",
+      "name": "SpendAudit",
+      "category": "01 / EVALUATION BENCHMARK",
+      "headline": "Test model verdicts against an executable policy.",
+      "problem": "A payment memo can influence a model even when the transaction violates a written spending policy.",
+      "action": "Built 160 synthetic payment scenarios and tested each with a clean memo and a prompt-injected memo. Compared three models using verdict-only and rule-by-rule evidence protocols.",
+      "result": "Requiring evidence reduced false approvals on clean traces from 34 to 6 for one model and from 47 to 18 for another.",
+      "limit": "Every model still approved some violations when the memo contained an injection. The repository includes the data, model responses, and a script to reproduce the counts.",
+      "stack": [
+        "Python",
+        "LLM evaluation",
+        "Agent systems"
+      ],
+      "url": "https://github.com/ianalloway/spendaudit",
+      "linkLabel": "Inspect the benchmark"
+    },
+    {
       "id": "juryrig",
       "name": "juryrig",
-      "category": "01 / AI EVALUATION",
+      "category": "02 / AI EVALUATION",
       "headline": "Audit the judge before trusting the score.",
       "problem": "LLM judges can reward position or verbosity instead of answer quality.",
       "action": "Built a Python toolkit for bias audits, prompt-injection checks, judge panels, and calibration.",
@@ -50,7 +72,7 @@
     {
       "id": "solvent",
       "name": "SOLVENT",
-      "category": "02 / AGENT SYSTEMS",
+      "category": "03 / AGENT SYSTEMS",
       "headline": "Give agent decisions an auditable trail.",
       "problem": "An agent that earns and spends needs explicit financial boundaries.",
       "action": "Built an agent business-loop demo with a SQLite treasury, margin checks, and policy-screened spending.",
@@ -67,7 +89,7 @@
     {
       "id": "sports",
       "name": "AI Advantage Sports",
-      "category": "03 / APPLIED ML PRODUCT",
+      "category": "04 / APPLIED ML PRODUCT",
       "headline": "Make model output useful in a real interface.",
       "problem": "Predictions need an understandable workflow for odds, sizing, and risk.",
       "action": "Built a sports analytics product with a React / TypeScript interface and Kelly-based sizing workflows.",
@@ -94,11 +116,12 @@
         "Tell me about Ian",
         "What should I remember about Ian"
       ],
-      "answer": "Ian’s target role is Applied AI Engineer. His work combines evaluation tooling (juryrig), agent workflows (SOLVENT), and an applied analytics product (AI Advantage Sports). These projects show how he connects model behavior, inspectable software, and usable interfaces.",
+      "answer": "Ian builds AI evaluation tools and agent workflows in Python and TypeScript. SpendAudit tests whether models follow a spending policy, JuryRig tests the consistency of model judges, and SOLVENT simulates an agent’s spending and accounting.",
       "sources": [
+        "spendaudit",
         "juryrig",
         "solvent",
-        "sports"
+        "resume"
       ]
     },
     {
@@ -110,11 +133,13 @@
         "What are his projects",
         "What has he built"
       ],
-      "answer": "For this target role, the selected projects are juryrig, SOLVENT, and AI Advantage Sports, in that order. Each has a public implementation to inspect. The page distinguishes working demonstrations from measured production outcomes.",
+      "answer": "Ian’s résumé highlights SpendAudit, JuryRig, and SOLVENT. Each has a public implementation. His portfolio also includes AI Advantage Sports, a sports analytics product.",
       "sources": [
+        "spendaudit",
         "juryrig",
         "solvent",
-        "sports"
+        "sports",
+        "resume"
       ]
     },
     {
@@ -126,10 +151,11 @@
         "How does Ian evaluate AI",
         "What evaluation work has Ian done"
       ],
-      "answer": "juryrig audits LLM judges for position, verbosity, and prompt-injection bias, alongside self-consistency, judge panels, and calibration. Its mock-judge demo runs without network access. Ian’s public profile also describes contract work with Handshake AI evaluating ChatGPT app development and agent-built software.",
+      "answer": "Ian evaluates consumer app results at AgentsOnly. At Handshake AI he reviewed coding agents and agent-built software. At Mercor and Turing he designed evaluation tasks, reference solutions, rubrics, and grader guidance. His public evaluation projects include SpendAudit and JuryRig.",
       "sources": [
-        "juryrig",
-        "profile"
+        "resume",
+        "spendaudit",
+        "juryrig"
       ]
     },
     {
@@ -182,9 +208,9 @@
         "What is his work experience",
         "Who does Ian work for"
       ],
-      "answer": "Ian’s current public profile describes contract work with Handshake AI evaluating ChatGPT app development and agent-built software, and his role as founder of Alloway LLC building applied ML products, analytics tooling, and agent systems.",
+      "answer": "Ian has evaluated consumer app results at AgentsOnly since October 2026. His Handshake AI contract ran from June to October 2026. In 2026 he also designed evaluation tasks and grading materials for Mercor and Turing. As founder of Alloway LLC, he builds applied ML products, analytics tools, and agent systems.",
       "sources": [
-        "profile"
+        "resume"
       ]
     },
     {
@@ -195,9 +221,9 @@
         "What degree does Ian have",
         "What is his educational background"
       ],
-      "answer": "Ian’s public profile lists a B.S. in Information Science, cum laude, and M.S. Artificial Intelligence candidacy at the University of South Florida. The master’s is in progress, not a completed degree.",
+      "answer": "Ian earned his B.S. in Information Science at the University of South Florida on May 7, 2026, cum laude, with a 3.50 overall GPA. He began USF’s non-CS-track M.S. in Artificial Intelligence in Fall 2026. Fall 2027 is his tentative completion date.",
       "sources": [
-        "profile"
+        "resume"
       ]
     },
     {
@@ -221,11 +247,11 @@
         "What outcomes can I verify",
         "What results can I verify"
       ],
-      "answer": "You can inspect the project implementations and demonstrations. SOLVENT’s offline amounts are simulated, juryrig’s demonstration uses mock judges, and the related sports training demo uses synthetic data. No production revenue, customer count, or live-return metric is verified in this source library.",
+      "answer": "In SpendAudit, requiring rule-by-rule evidence reduced false approvals on clean traces from 34 to 6 for one model and from 47 to 18 for another. With prompt-injected memos, every model still made some false approvals. JuryRig’s demo uses mock judges, and SOLVENT’s offline demo uses simulated amounts.",
       "sources": [
+        "spendaudit",
         "juryrig",
-        "solvent",
-        "sports"
+        "solvent"
       ]
     }
   ]
