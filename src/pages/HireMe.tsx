@@ -166,8 +166,8 @@ const HireMe = () => {
                 </a>
               </Button>
               <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
-                <a href="/resume.html" target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="mr-2" size={16} /> Read résumé online
+                <a href="/visual-resume/">
+                  <ExternalLink className="mr-2" size={16} /> Visual résumé
                 </a>
               </Button>
               <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
@@ -376,8 +376,8 @@ const HireMe = () => {
                   </a>
                 </Button>
                 <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
-                  <a href="/resume.html" target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="mr-2" size={16} /> Read résumé online
+                  <a href="/visual-resume/">
+                    <ExternalLink className="mr-2" size={16} /> Visual résumé
                   </a>
                 </Button>
                 <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>

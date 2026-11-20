@@ -1,0 +1,258 @@
+{
+  "name": "Ian Alloway",
+  "role": "Applied AI Engineer",
+  "reviewed": "2026-11-20",
+  "sources": [
+    {
+      "id": "profile",
+      "label": "Public professional profile",
+      "url": "https://github.com/ianalloway"
+    },
+    {
+      "id": "spendaudit",
+      "label": "SpendAudit benchmark",
+      "url": "https://github.com/ianalloway/spendaudit"
+    },
+    {
+      "id": "juryrig",
+      "label": "juryrig repository",
+      "url": "https://github.com/ianalloway/juryrig"
+    },
+    {
+      "id": "solvent",
+      "label": "SOLVENT repository",
+      "url": "https://github.com/ianalloway/solvent-agent"
+    },
+    {
+      "id": "sports",
+      "label": "AI Advantage repository",
+      "url": "https://github.com/ianalloway/ai-advantage"
+    },
+    {
+      "id": "resume",
+      "label": "Public résumé (PDF)",
+      "url": "/Ian_Alloway_Resume.pdf"
+    }
+  ],
+  "projects": [
+    {
+      "id": "spendaudit",
+      "name": "SpendAudit",
+      "category": "01 / EVALUATION BENCHMARK",
+      "headline": "Test model verdicts against an executable policy.",
+      "problem": "A payment memo can influence a model even when the transaction violates a written spending policy.",
+      "action": "Built 160 synthetic payment scenarios and tested each with a clean memo and a prompt-injected memo. Compared three models using verdict-only and rule-by-rule evidence protocols.",
+      "result": "Requiring evidence reduced false approvals on clean traces from 34 to 6 for one model and from 47 to 18 for another.",
+      "limit": "Every model still approved some violations when the memo contained an injection. The repository includes the data, model responses, and a script to reproduce the counts.",
+      "stack": [
+        "Python",
+        "LLM evaluation",
+        "Agent systems"
+      ],
+      "url": "https://github.com/ianalloway/spendaudit",
+      "linkLabel": "Inspect the benchmark"
+    },
+    {
+      "id": "juryrig",
+      "name": "juryrig",
+      "category": "02 / AI EVALUATION",
+      "headline": "Audit the judge before trusting the score.",
+      "problem": "LLM judges can reward position or verbosity instead of answer quality.",
+      "action": "Built a Python toolkit for bias audits, prompt-injection checks, judge panels, and calibration.",
+      "result": "Inspectable audit reports and a network-free demonstration comparing fair and deliberately flawed mock judges.",
+      "limit": "Mock-judge demonstrations are tests of the tooling, not production benchmark results.",
+      "stack": [
+        "Python",
+        "LLM evaluation",
+        "Calibration"
+      ],
+      "url": "https://github.com/ianalloway/juryrig",
+      "linkLabel": "Explore the toolkit"
+    },
+    {
+      "id": "solvent",
+      "name": "SOLVENT",
+      "category": "03 / AGENT SYSTEMS",
+      "headline": "Give agent decisions an auditable trail.",
+      "problem": "An agent that earns and spends needs explicit financial boundaries.",
+      "action": "Built an agent business-loop demo with a SQLite treasury, margin checks, and policy-screened spending.",
+      "result": "An offline earn → fulfill → spend → P&L workflow that can be inspected without API keys.",
+      "limit": "The offline demo uses simulated amounts. It is not evidence of production revenue.",
+      "stack": [
+        "Python",
+        "SQLite",
+        "Agent workflows"
+      ],
+      "url": "https://github.com/ianalloway/solvent-agent",
+      "linkLabel": "Inspect the agent"
+    },
+    {
+      "id": "sports",
+      "name": "AI Advantage Sports",
+      "category": "04 / APPLIED ML PRODUCT",
+      "headline": "Make model output useful in a real interface.",
+      "problem": "Predictions need an understandable workflow for odds, sizing, and risk.",
+      "action": "Built a sports analytics product with a React / TypeScript interface and Kelly-based sizing workflows.",
+      "result": "A public product surface and open-source implementation connecting analytics with product design.",
+      "limit": "Related training demos use synthetic data. No live return or profitability claim is made.",
+      "stack": [
+        "React",
+        "TypeScript",
+        "Decision tools"
+      ],
+      "url": "https://github.com/ianalloway/ai-advantage",
+      "live": "https://aiadvantagesports.com",
+      "linkLabel": "View the implementation"
+    }
+  ],
+  "answers": [
+    {
+      "id": "fit",
+      "question": "Why Applied AI Engineer?",
+      "aliases": [
+        "What role is Ian targeting",
+        "What role are you targeting",
+        "Why is Ian a fit for this role",
+        "Tell me about Ian",
+        "What should I remember about Ian"
+      ],
+      "answer": "Ian builds AI evaluation tools and agent workflows in Python and TypeScript. SpendAudit tests whether models follow a spending policy, JuryRig tests the consistency of model judges, and SOLVENT simulates an agent’s spending and accounting.",
+      "sources": [
+        "spendaudit",
+        "juryrig",
+        "solvent",
+        "resume"
+      ]
+    },
+    {
+      "id": "projects",
+      "question": "What are his strongest projects?",
+      "aliases": [
+        "What projects has Ian built",
+        "Show me his projects",
+        "What are his projects",
+        "What has he built"
+      ],
+      "answer": "Ian’s résumé highlights SpendAudit, JuryRig, and SOLVENT. Each has a public implementation. His portfolio also includes AI Advantage Sports, a sports analytics product.",
+      "sources": [
+        "spendaudit",
+        "juryrig",
+        "solvent",
+        "sports",
+        "resume"
+      ]
+    },
+    {
+      "id": "eval",
+      "question": "What is his AI evaluation experience?",
+      "aliases": [
+        "Tell me about juryrig",
+        "What is juryrig",
+        "How does Ian evaluate AI",
+        "What evaluation work has Ian done"
+      ],
+      "answer": "Ian evaluates consumer app results at AgentsOnly. At Handshake AI he reviewed coding agents and agent-built software. At Mercor and Turing he designed evaluation tasks, reference solutions, rubrics, and grader guidance. His public evaluation projects include SpendAudit and JuryRig.",
+      "sources": [
+        "resume",
+        "spendaudit",
+        "juryrig"
+      ]
+    },
+    {
+      "id": "agent",
+      "question": "How does SOLVENT work?",
+      "aliases": [
+        "What is SOLVENT",
+        "Tell me about SOLVENT",
+        "What agent systems has Ian built"
+      ],
+      "answer": "SOLVENT is an agent business-loop demo with a SQLite treasury, margin checks, and policy-screened spending. Its offline workflow demonstrates earning, fulfillment, spending, and P&L. Demo amounts are simulated; they do not establish production revenue.",
+      "sources": [
+        "solvent"
+      ]
+    },
+    {
+      "id": "product",
+      "question": "What is AI Advantage Sports?",
+      "aliases": [
+        "Tell me about AI Advantage Sports",
+        "What product has Ian built",
+        "What has Ian deployed"
+      ],
+      "answer": "AI Advantage Sports is a sports analytics product with a public interface and open-source implementation. It includes React / TypeScript UI and Kelly-based sizing workflows. Related training demos use synthetic data; this source library does not establish live betting returns.",
+      "sources": [
+        "sports"
+      ]
+    },
+    {
+      "id": "stack",
+      "question": "What tools does he use?",
+      "aliases": [
+        "What are his skills",
+        "What programming languages does Ian use",
+        "What is his tech stack",
+        "What technologies does he use"
+      ],
+      "answer": "Ian’s public profile lists Python, TypeScript, SQL, and JavaScript, along with tools including FastAPI, React, PostgreSQL, Docker, and GitHub Actions. The selected projects provide concrete examples of Python evaluation and agent tooling and TypeScript product work.",
+      "sources": [
+        "profile",
+        "juryrig",
+        "sports"
+      ]
+    },
+    {
+      "id": "experience",
+      "question": "What is his professional experience?",
+      "aliases": [
+        "Where has Ian worked",
+        "What is his work experience",
+        "Who does Ian work for"
+      ],
+      "answer": "Ian has evaluated consumer app results at AgentsOnly since October 2026. His Handshake AI contract ran from June to October 2026. In 2026 he also designed evaluation tasks and grading materials for Mercor and Turing. As founder of Alloway LLC, he builds applied ML products, analytics tools, and agent systems.",
+      "sources": [
+        "resume"
+      ]
+    },
+    {
+      "id": "education",
+      "question": "What is his education?",
+      "aliases": [
+        "Where did Ian study",
+        "What degree does Ian have",
+        "What is his educational background"
+      ],
+      "answer": "Ian earned his B.S. in Information Science at the University of South Florida on May 7, 2026, cum laude, with a 3.50 overall GPA. He began USF’s non-CS-track M.S. in Artificial Intelligence in Fall 2026. Fall 2027 is his tentative completion date.",
+      "sources": [
+        "resume"
+      ]
+    },
+    {
+      "id": "contact",
+      "question": "How can I contact Ian?",
+      "aliases": [
+        "How do I reach Ian",
+        "How can a recruiter contact Ian",
+        "What is his email"
+      ],
+      "answer": "Use Ian’s public professional email, ian@allowayllc.com, or his LinkedIn profile linked on this page. The ambassador cannot make commitments, schedule interviews, or negotiate on his behalf.",
+      "sources": [
+        "profile"
+      ]
+    },
+    {
+      "id": "results",
+      "question": "Are the results from production?",
+      "aliases": [
+        "Are the demo numbers real",
+        "What outcomes can I verify",
+        "What results can I verify"
+      ],
+      "answer": "In SpendAudit, requiring rule-by-rule evidence reduced false approvals on clean traces from 34 to 6 for one model and from 47 to 18 for another. With prompt-injected memos, every model still made some false approvals. JuryRig’s demo uses mock judges, and SOLVENT’s offline demo uses simulated amounts.",
+      "sources": [
+        "spendaudit",
+        "juryrig",
+        "solvent"
+      ]
+    }
+  ]
+}

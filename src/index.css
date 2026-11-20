@@ -108,7 +108,7 @@ body.home-redesign {
   --rd-faint: #64685a;
   --rd-line: rgba(243, 241, 232, 0.14);
   min-height: 100vh;
-  overflow: hidden;
+  overflow: clip;
   background:
     radial-gradient(circle at 83% 9%, rgba(215, 255, 95, 0.055), transparent 26rem),
     var(--rd-paper);
@@ -158,6 +158,10 @@ body.home-redesign {
 .rd-site :focus-visible {
   outline: 2px solid var(--rd-signal);
   outline-offset: 5px;
+}
+
+.rd-site :is(main, section, footer)[id] {
+  scroll-margin-top: 80px;
 }
 
 .rd-nav {
@@ -1443,10 +1447,33 @@ body.home-redesign {
 @media (max-width: 900px) {
   .rd-nav {
     grid-template-columns: 1fr auto;
+    grid-template-areas: "brand contact" "links links";
+    grid-template-rows: minmax(44px, auto) auto;
+  }
+
+  .rd-wordmark {
+    grid-area: brand;
+  }
+
+  .rd-nav-cta {
+    grid-area: contact;
   }
 
   .rd-nav-links {
-    display: none;
+    grid-area: links;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0 8px;
+  }
+
+  .rd-nav-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+  }
+
+  .rd-site :is(main, section, footer)[id] {
+    scroll-margin-top: 88px;
   }
 
   .rd-hero {
@@ -1827,7 +1854,9 @@ body.home-redesign {
 @layer base {
   * { @apply border-border; }
 
-  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
 
   body {
     @apply bg-background text-foreground;

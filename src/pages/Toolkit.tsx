@@ -36,7 +36,7 @@ const START_HERE: { label: string; href: string; note: string }[] = [
   {
     label: 'Live demos',
     href: '/demos',
-    note: 'SOLVENT agent, kelly-js, Streamlit apps',
+    note: 'SOLVENT agent, kelly-js, NBA Edge',
   },
   {
     label: 'CLV playground',
@@ -129,11 +129,6 @@ const CORE_SECTION: CatalogSection = {
       name: 'openclaw-skills',
       href: 'https://github.com/ianalloway/openclaw-skills',
       oneLine: '9+ agent skills for OpenClaw / ClawHub',
-    },
-    {
-      name: 'Resume',
-      href: 'https://github.com/ianalloway/Resume',
-      oneLine: 'CV source + PDF',
     },
     {
       name: 'ian-web-forge',
