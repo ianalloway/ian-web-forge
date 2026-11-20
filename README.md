@@ -17,6 +17,8 @@ Matrix-themed developer portfolio for **Ian Alloway** — ML, sports analytics, 
 
 ## Features
 
+- Share a filtered experiment catalog by copying the Lab URL, for example `/lab?category=decisions&q=kelly`.
+
 - **Matrix rain** — Canvas-based digital rain effect with HiDPI/retina support
 - **Terminal aesthetic** — Monospace typography, green-on-black, scanline glow
 - **Selected work** — Filterable project showcase (Sports ML, AI Agents, MLOps, Tools, Web3)

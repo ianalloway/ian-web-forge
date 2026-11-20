@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import ResearchShell from "@/components/ResearchShell";
 import { CATEGORIES, type ExperimentCategory } from "@/lib/experimentCategories";
 import { EXPERIMENTS, type Experiment } from "@/lib/experiments";
@@ -15,8 +14,16 @@ function split(title: string) {
 }
 
 export default function Lab() {
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState<ExperimentCategory | "all">("all");
+  const [params, setParams] = useSearchParams();
+  const query = params.get("q") ?? "";
+  const category = CATEGORIES.find((c) => c.id === params.get("category"))?.id ?? "all";
+
+  function updateFilter(key: "q" | "category", value: string) {
+    const next = new URLSearchParams(params);
+    if (value) next.set(key, value);
+    else next.delete(key);
+    setParams(next, { replace: key === "q", preventScrollReset: true });
+  }
 
   const picks = START_HERE.map((p) => EXPERIMENTS.find((e) => e.path === p)).filter(
     (e): e is Experiment => Boolean(e)
@@ -83,12 +90,12 @@ export default function Lab() {
             <input
               type="search"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => updateFilter("q", e.target.value)}
               placeholder="kelly, entropy, phase transition…"
             />
           </label>
           <div className="rl-chips rd-mono" role="group" aria-label="Filter by category">
-            <button type="button" aria-pressed={category === "all"} onClick={() => setCategory("all")}>
+            <button type="button" aria-pressed={category === "all"} onClick={() => updateFilter("category", "")}>
               All <i>{EXPERIMENTS.length}</i>
             </button>
             {CATEGORIES.map((c) => (
@@ -96,7 +103,7 @@ export default function Lab() {
                 type="button"
                 key={c.id}
                 aria-pressed={category === c.id}
-                onClick={() => setCategory(c.id)}
+                onClick={() => updateFilter("category", c.id)}
               >
                 {c.label} <i>{COUNTS.get(c.id) ?? 0}</i>
               </button>
