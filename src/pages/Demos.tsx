@@ -5,10 +5,9 @@ import { kelly, convertOdds, arbitrage } from '@/lib/kelly';
 
 /** Live product demos for the flagship repos.
  *  kelly-js math runs IN THIS PAGE (vendored helper, no install-time GitHub dependency).
- *  nba-ratings + sports-betting-ml are live Streamlit apps (real backends).
+ *  nba-ratings runs on Streamlit. The sports ML project links to its evaluation and local setup.
  *  ai-advantage is the production site. */
 
-const STREAMLIT_ML = 'https://ian-sports-betting-ml.streamlit.app';
 const STREAMLIT_EDGE = 'https://nba-edge-demo.streamlit.app';
 
 function SectionShell({
@@ -276,8 +275,8 @@ const Demos = () => {
             Working product demos
           </h1>
           <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
-            Every demo on this page runs the actual code from the repo it links to — the npm package
-            executes in your browser, the Python apps run on live backends.
+            Try the calculators, explore the live NBA ratings model, or see how the sports ML
+            project tests its predictions against historical games.
           </p>
         </header>
 
@@ -408,9 +407,26 @@ open http://127.0.0.1:8787/`}
           icon={Cpu}
           title="sports-betting-ml — model pipeline"
           repo="ianalloway/sports-betting-ml"
-          blurb="XGBoost game predictions with leak-free walk-forward evaluation, edge detection and Kelly stakes. Live app, demo odds data."
+          blurb="The XGBoost dashboard uses synthetic NBA games to demonstrate predictions and Kelly stakes. A separate benchmark tests predictions on historical results."
         >
-          <StreamlitEmbed src={STREAMLIT_ML} title="sports-betting-ml app" />
+          <div className="flex flex-wrap gap-4 font-mono text-sm">
+            <a
+              href="https://github.com/ianalloway/sports-betting-ml/blob/main/docs/historical-benchmark.md"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-primary underline underline-offset-4"
+            >
+              Read the historical benchmark <ExternalLink size={14} />
+            </a>
+            <a
+              href="https://github.com/ianalloway/sports-betting-ml#local-installation"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-primary underline underline-offset-4"
+            >
+              Run the dashboard locally <ExternalLink size={14} />
+            </a>
+          </div>
         </SectionShell>
 
         <SectionShell

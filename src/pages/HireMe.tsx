@@ -166,7 +166,7 @@ const HireMe = () => {
                 </a>
               </Button>
               <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
-                <a href="https://ian-alloway-visual-resume--ianalloway43.replit.app/" target="_blank" rel="noopener noreferrer">
+                <a href="/visual-resume/">
                   <ExternalLink className="mr-2" size={16} /> Visual résumé
                 </a>
               </Button>
@@ -376,7 +376,7 @@ const HireMe = () => {
                   </a>
                 </Button>
                 <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
-                  <a href="https://ian-alloway-visual-resume--ianalloway43.replit.app/" target="_blank" rel="noopener noreferrer">
+                  <a href="/visual-resume/">
                     <ExternalLink className="mr-2" size={16} /> Visual résumé
                   </a>
                 </Button>

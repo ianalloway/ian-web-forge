@@ -232,14 +232,12 @@ function Hero({ forecasts }: { forecasts: Forecasts }) {
           <a className="rd-text-action rd-mono" href="/Ian_Alloway_Resume_CV.pdf" download>
             Résumé ↓
           </a>
-          <a
-            className="rd-text-action rd-mono"
-            href="https://ian-alloway-visual-resume--ianalloway43.replit.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Visual résumé <Arrow />
+          <a className="rd-text-action rd-mono" href="/visual-resume/">
+            Visual résumé <span aria-hidden="true">→</span>
           </a>
+          <Link className="rd-text-action rd-mono" to="/monogram">
+            ASCII portfolio <span aria-hidden="true">→</span>
+          </Link>
         </div>
       </div>
       <ForecastLedger forecasts={forecasts} />
@@ -390,6 +388,9 @@ export default function Index() {
 
   useEffect(() => {
     document.body.classList.add("home-redesign");
+    // On a direct fragment visit the browser can look for the section before React mounts it.
+    const section = document.getElementById(window.location.hash.slice(1));
+    section?.scrollIntoView({ behavior: "instant" });
     return () => document.body.classList.remove("home-redesign");
   }, []);
 
