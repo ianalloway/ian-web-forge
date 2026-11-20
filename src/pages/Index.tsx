@@ -32,8 +32,8 @@ const PROJECTS: Project[] = [
     label: "Agent economics",
     title: "SOLVENT",
     description:
-      "A self-funding AI analyst that quotes work, collects payment, fulfills with Nemotron, pays its own vendor bills, and refuses jobs that cannot clear margin.",
-    proof: "Guardrailed cash flow, Stripe settlement, vendor accounting, and a no-key demo.",
+      "A Python agent that quotes work, simulates payments and fulfillment, and checks vendor and budget limits before it records spending in SQLite.",
+    proof: "The offline demo runs without keys. A regression test checks that retrying a payment records revenue only once.",
     metric: "P&L",
     metricLabel: "is a first-class constraint",
     visual: "solvent",
@@ -61,7 +61,7 @@ const PROJECTS: Project[] = [
     title: "juryrig",
     description:
       "A zero-dependency audit kit for LLM judges. It measures position bias, verbosity bias, self-consistency, calibration, and panel agreement before the scores ship.",
-    proof: "Small enough to read in one sitting; sharp enough to fail an eval pipeline on purpose.",
+    proof: "The demo uses deterministic fixtures to show how a mock judge responds when the answer order or padding changes.",
     metric: "0",
     metricLabel: "runtime dependencies",
     visual: "juryrig",
@@ -88,6 +88,12 @@ const CONTRACT_CASE = {
 };
 
 const ENGAGEMENTS = [
+  {
+    firm: "AgentsOnly",
+    period: "Oct 2026–present",
+    description:
+      "Compare place pages across two consumer apps, score individual features against written guidelines, and document discrepancies for quality review.",
+  },
   {
     firm: "Handshake AI",
     period: "Jun–Oct 2026",
@@ -168,8 +174,8 @@ const PRACTICE = [
   ["Earlier", "Started Alloway LLC and began shipping ML and analytics for clients."],
   ["2024", "Audited multichain data at Omniichain; turned sports modeling into a decision product."],
   ["2025", "Published open-source agent skills, evaluation tools, and nba-edge."],
-  ["2026", "B.S. at USF. Started grading frontier models for AI labs' eval programs."],
-  ["Now", "M.S. Artificial Intelligence at USF. Published the SpendAudit benchmark; building juryrig in public."],
+  ["2026", "Earned a B.S. in Information Science at USF in May, cum laude. Evaluated coding agents and the software they built for Handshake AI."],
+  ["Now", "Pursuing an M.S. in Artificial Intelligence at USF. Published SpendAudit to compare model judgments with an executable spending policy."],
 ];
 
 function Arrow() {
@@ -204,8 +210,8 @@ function Hero({ forecasts }: { forecasts: Forecasts }) {
           <ScrambleText text="I build systems that make the right call when the data gets noisy." delay={1100} />
         </p>
         <p className="rd-hero-detail">
-          Applied ML, agent economics, sports models, and evaluation tooling—shipped in public
-          and measured in production.
+          I build evaluation tools and agent workflows in Python and TypeScript. My projects test
+          how models make decisions and whether those decisions follow a written policy.
         </p>
         <label className="hx-noise rd-mono">
           <span>Add noise</span>
@@ -229,16 +235,16 @@ function Hero({ forecasts }: { forecasts: Forecasts }) {
           <a className="rd-text-action rd-mono" href="https://github.com/ianalloway" target="_blank" rel="noreferrer">
             GitHub <Arrow />
           </a>
-          <a className="rd-text-action rd-mono" href="/Ian_Alloway_Resume_CV.pdf" download>
+          <a className="rd-text-action rd-mono" href="/Ian_Alloway_Resume.pdf" download>
             Résumé ↓
           </a>
           <a
             className="rd-text-action rd-mono"
-            href="https://ian-alloway-visual-resume--ianalloway43.replit.app/"
+            href="/resume.html"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Visual résumé <Arrow />
+            Read résumé online <Arrow />
           </a>
         </div>
       </div>
@@ -530,9 +536,9 @@ export default function Index() {
             <p className="rd-section-label rd-mono">02 / CONTRACT EVALUATION</p>
             <h2>Building the tests<br />models take.</h2>
             <p>
-              In 2026 I built evaluation data for AI labs on contract: agent tasks, rubrics,
-              golden solutions, and write-ups of where the models broke. The labs and their
-              materials stay private, so this is a description of what I did on each one.
+              My contract work covers consumer app comparisons, coding-agent reviews, and task design.
+              I score results against written policies, write rubrics and reference solutions, and
+              document where models go wrong.
             </p>
           </div>
 

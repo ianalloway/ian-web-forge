@@ -12,7 +12,7 @@ const WORK: { name: string; type: string; href: string; model: ModelKey; desc: s
     type: "agent economics",
     href: "https://github.com/ianalloway/solvent-agent",
     model: "solvent",
-    desc: "A self-funding AI analyst that quotes work, collects payment, pays its own vendor bills and refuses jobs that cannot clear margin.",
+    desc: "A Python agent that quotes work, simulates payments, and checks vendor and budget limits before recording spending.",
   },
   {
     name: "ai advantage",
@@ -110,8 +110,7 @@ export default function Monogram() {
             <p className="path">~/ai-engineer</p>
             <h1 id="hero-title">Ian Alloway.</h1>
             <p className="bio">
-              I build systems that make the right call when the data gets noisy. Applied ML, agent economics, sports
-              models and evaluation tooling — shipped in public, measured in production.
+              I build systems that make the right call when the data gets noisy. I build evaluation tools and agent workflows in Python and TypeScript. My projects include SpendAudit, JuryRig, and SOLVENT.
             </p>
             <nav className="commands" aria-label="Sections">
               {["work", "lab", "about", "contact"].map((id, i) => (

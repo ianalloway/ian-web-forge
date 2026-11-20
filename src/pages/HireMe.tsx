@@ -43,7 +43,7 @@ const featuredWork = [
     href: 'https://github.com/ianalloway/solvent-agent',
     stack: 'Python, Stripe, Nemotron, SQLite',
     whyItMatters:
-      'A self-funding agent that earns, verifies payment, pays vendors under guardrails, and refuses unprofitable work — agentic systems with a balance sheet.',
+      'A Python agent simulates payment and fulfillment, checks spending policies, and records transactions in SQLite.',
   },
   {
     name: 'AI Advantage Sports',
@@ -90,12 +90,12 @@ const education = [
   {
     title: 'B.S. Information Science',
     sub: 'University of South Florida',
-    meta: 'Completed',
+    meta: 'May 2026 · cum laude · overall GPA 3.50/4.00',
   },
   {
     title: 'M.S. Artificial Intelligence',
     sub: 'University of South Florida',
-    meta: 'In Progress',
+    meta: 'Non-CS track · in progress since Fall 2026 · projected completion Fall 2027 (tentative)',
   },
 ];
 
@@ -161,13 +161,13 @@ const HireMe = () => {
                 </a>
               </Button>
               <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
-                <a href="/Ian_Alloway_Resume_CV.pdf" download>
+                <a href="/Ian_Alloway_Resume.pdf" download>
                   <Download className="mr-2" size={16} /> Download Resume
                 </a>
               </Button>
               <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
-                <a href="https://ian-alloway-visual-resume--ianalloway43.replit.app/" target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="mr-2" size={16} /> Visual résumé
+                <a href="/resume.html" target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="mr-2" size={16} /> Read résumé online
                 </a>
               </Button>
               <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
@@ -182,9 +182,9 @@ const HireMe = () => {
             <CardContent className="p-6">
               <p className="text-xs uppercase tracking-[0.2em] text-green-400/65 mb-4">The Simple Pitch</p>
               <div className="space-y-4 text-sm text-green-400/75 leading-relaxed">
-                <p>I build applied ML systems that are easier to trust because the evaluation layer is part of the work, not an afterthought.</p>
-                <p>My public proof is strongest in sports analytics, forecasting-style tooling, and developer utilities, but the underlying skill transfers well to risk, experimentation, fraud, and product analytics.</p>
-                <p>B.S. Information Science completed; currently pursuing an M.S. in Artificial Intelligence at USF.</p>
+                <p>I build tools for evaluating AI systems. SpendAudit compares model judgments with an executable payment policy. JuryRig tests whether changes in order or padding affect a judge’s score.</p>
+                <p>I compare consumer app results for AgentsOnly. At Handshake AI I evaluated coding agents, and my work with Mercor and Turing has included task design, rubrics, and grader guidance.</p>
+                <p>I’m based in Fairmont, West Virginia, and pursuing an M.S. in Artificial Intelligence at the University of South Florida.</p>
               </div>
               <div className="mt-6 flex flex-wrap gap-3 text-sm">
                 <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">
@@ -371,13 +371,13 @@ const HireMe = () => {
                   </a>
                 </Button>
                 <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
-                  <a href="/Ian_Alloway_Resume_CV.pdf" download>
+                  <a href="/Ian_Alloway_Resume.pdf" download>
                     <Download className="mr-2" size={16} /> Resume PDF
                   </a>
                 </Button>
                 <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
-                  <a href="https://ian-alloway-visual-resume--ianalloway43.replit.app/" target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="mr-2" size={16} /> Visual résumé
+                  <a href="/resume.html" target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="mr-2" size={16} /> Read résumé online
                   </a>
                 </Button>
                 <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>

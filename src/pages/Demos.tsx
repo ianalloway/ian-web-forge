@@ -295,9 +295,9 @@ const Demos = () => {
         <SectionShell
           id="solvent"
           icon={Coins}
-          title="solvent-agent — self-funding business agent"
+          title="SOLVENT — agent workflow simulation"
           repo="ianalloway/solvent-agent"
-          blurb="Hermes Hackathon project (NVIDIA × Stripe × Nous): earns via Stripe Payment Links, verifies Checkout Sessions before fulfilment, fulfils on Nemotron, pays vendors through Issuing guardrails, and books P&L to SQLite."
+          blurb="SOLVENT quotes jobs, checks vendor spending policies, and records transactions in SQLite. The figures below come from an offline simulation. Stripe test mode is optional."
         >
           <div className="space-y-5">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">

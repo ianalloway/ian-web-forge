@@ -16,7 +16,7 @@ const NOW_DATA = {
       'Applying to Fall 2027 PhD programs in data science and AI, focused on whether LLM judges measure what they claim to',
       'SpendAudit — published a benchmark testing whether LLM payment auditors match an executable spend policy',
       'M.S. in Artificial Intelligence at USF, in progress since Fall 2026',
-      'AI evaluation contract work — side-by-side evaluations scored against written policies',
+      'AgentsOnly — comparing place pages across consumer apps and writing the rationale for each score',
     ],
   },
   building: {
@@ -75,7 +75,7 @@ const NOW_DATA = {
     title: 'Where I Am',
     icon: MapPin,
     items: [
-      'Fairmont, WV for now — M.S. in AI at the University of South Florida',
+      'Fairmont, WV — pursuing an M.S. in AI at the University of South Florida',
       'Open to remote AI engineering and LLM evaluation roles',
       'Available for LLM evaluation consulting engagements',
     ],

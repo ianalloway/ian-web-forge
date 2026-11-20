@@ -22,9 +22,9 @@ const BOTS: BotGuide[] = [
     icon: Coins,
     name: 'SOLVENT',
     repo: 'ianalloway/solvent-agent',
-    tagline: 'Self-funding business agent',
+    tagline: 'Agent workflow and spending-policy simulation',
     whatItIs:
-      'An AI analyst that quotes jobs, collects Stripe payment, fulfils work on Nemotron, pays its own vendor bills under guardrails, and books P&L — declining work that does not clear margin.',
+      'A Python agent that quotes work, simulates payment and fulfillment, checks vendor and budget limits, and records each transaction in SQLite.',
     prerequisites: [
       'Python 3.10+ (stdlib only for the demo — no pip install required)',
       'No API keys needed for the offline demo',
