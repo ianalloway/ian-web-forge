@@ -49,7 +49,7 @@ function SectionShell({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className="mb-14 scroll-mt-24">
+    <section id={id} className="mb-14">
       <div className="flex items-center gap-2 mb-1">
         <Icon size={18} className="text-primary" />
         <h2 className="text-xl md:text-2xl font-bold font-mono text-primary matrix-text">{title}</h2>
@@ -253,7 +253,7 @@ const Demos = () => {
     <div className="min-h-screen bg-background relative">
       <MatrixRain />
 
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-sm border-b border-primary/30">
+      <nav className="sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-primary/30">
         <div className="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-2">
           <a href="/" className="text-primary font-bold text-sm font-mono matrix-text flex items-center gap-2">
             <Terminal size={16} />
@@ -297,7 +297,7 @@ const Demos = () => {
         </div>
       </nav>
 
-      <main className="relative z-10 max-w-5xl mx-auto px-4 pt-24 pb-20">
+      <main className="relative z-10 max-w-5xl mx-auto px-4 pt-10 pb-20 [&>section]:scroll-mt-40 md:[&>section]:scroll-mt-32 lg:[&>section]:scroll-mt-24">
         <header className="mb-12 text-center">
           <p className="text-primary text-xs font-mono mb-2 terminal-border inline-block px-2 py-1">
             LIVE_DEMOS
@@ -310,7 +310,7 @@ const Demos = () => {
           </p>
         </header>
 
-        <section id="hugging-face" aria-labelledby="spaces-title" className="mb-14 scroll-mt-24">
+        <section id="hugging-face" aria-labelledby="spaces-title" className="mb-14">
           <h2 id="spaces-title" className="mb-4 text-xl md:text-2xl font-bold font-mono text-primary matrix-text">
             Hugging Face Spaces
           </h2>
