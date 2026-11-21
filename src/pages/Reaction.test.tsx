@@ -6,6 +6,7 @@ import * as reaction from "../features/reaction/grayscott";
 import Reaction from "./Reaction";
 
 beforeEach(() => {
+  vi.stubGlobal("matchMedia", () => ({ matches: false }));
   vi.stubGlobal("requestAnimationFrame", () => 0);
   vi.stubGlobal("cancelAnimationFrame", () => {});
   vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockReturnValue(
