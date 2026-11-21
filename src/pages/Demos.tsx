@@ -10,6 +10,29 @@ import { kelly, convertOdds, arbitrage } from '@/lib/kelly';
 
 const STREAMLIT_EDGE = 'https://nba-edge-demo.streamlit.app';
 
+const HUGGING_FACE_SPACES = [
+  {
+    slug: 'solvent-agent-demo',
+    title: 'SOLVENT',
+    description: 'Run five simulated jobs, then change the budget to see which offers the agent accepts.',
+  },
+  {
+    slug: 'juryrig-judge-audit',
+    title: 'Juryrig Judge Audit',
+    description: 'Paste an AI judge’s scores to check whether it favors the first answer or the longer one.',
+  },
+  {
+    slug: 'browser-agent-benchmark',
+    title: 'Browser Agent Benchmark',
+    description: 'Read the benchmark write-up on how to verify that a browser agent actually finished a task.',
+  },
+  {
+    slug: 'sports-betting-ml',
+    title: 'Sports ML Dashboard',
+    description: 'Compare NBA matchup probabilities from an XGBoost model trained on simulated games.',
+  },
+];
+
 function SectionShell({
   id,
   icon: Icon,
@@ -237,6 +260,9 @@ const Demos = () => {
             IAN.SYS
           </a>
           <div className="flex flex-wrap gap-2 text-xs font-mono justify-end">
+            <a href="#hugging-face" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
+              Spaces
+            </a>
             <a href="#kelly" className="text-primary/80 hover:text-primary px-2 py-0.5 terminal-border rounded">
               kelly-js
             </a>
@@ -280,9 +306,34 @@ const Demos = () => {
             Working product demos
           </h1>
           <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
-            Try the calculators, explore NBA ratings, or compare matchup predictions in the Sports ML dashboard.
+            Run an agent simulation, audit an AI judge, or explore NBA ratings and bet-sizing calculators.
           </p>
         </header>
+
+        <section id="hugging-face" aria-labelledby="spaces-title" className="mb-14 scroll-mt-24">
+          <h2 id="spaces-title" className="mb-4 text-xl md:text-2xl font-bold font-mono text-primary matrix-text">
+            Hugging Face Spaces
+          </h2>
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {HUGGING_FACE_SPACES.map(({ slug, title, description }) => (
+              <li key={slug}>
+                <a
+                  href={`https://huggingface.co/spaces/ianalloway/${slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-labelledby={`space-${slug}`}
+                  className="block h-full rounded-md border border-primary/30 bg-card/60 p-4 hover:border-primary focus-visible:outline-2 focus-visible:outline-primary"
+                >
+                  <span className="flex items-center justify-between gap-3 font-mono font-bold text-primary">
+                    <span id={`space-${slug}`}>{title}</span>
+                    <ExternalLink size={15} aria-hidden="true" />
+                  </span>
+                  <span className="mt-1 block text-sm text-muted-foreground">{description}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
 
         <SectionShell
           id="kelly"
