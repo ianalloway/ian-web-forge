@@ -36,7 +36,17 @@ const outcomes = [
   { label: 'Now', detail: 'B.S. Information Science completed; M.S. in AI in progress at USF' },
 ];
 
+const SPENDAUDIT_PAPER = 'https://github.com/ianalloway/spendaudit/blob/main/paper/spendaudit.pdf';
+
 const featuredWork = [
+  {
+    name: 'JuryRig',
+    image: '/proof/repo-health.svg',
+    href: 'https://github.com/ianalloway/juryrig',
+    stack: 'Python, Evaluation, Zero deps',
+    whyItMatters:
+      'Audit LLM judges for bias and calibration before you trust automated evals — evaluation rigor for the agent era.',
+  },
   {
     name: 'SOLVENT',
     image: '/demos/solvent/solvent_dashboard_actual.png',
@@ -60,14 +70,6 @@ const featuredWork = [
     stack: 'Python, FastAPI, MLOps, Hugging Face',
     whyItMatters:
       'Demonstrates full workflow ownership from feature engineering to deployment and public demo packaging.',
-  },
-  {
-    name: 'juryrig',
-    image: '/proof/repo-health.svg',
-    href: 'https://github.com/ianalloway/juryrig',
-    stack: 'Python, Evaluation, Zero deps',
-    whyItMatters:
-      'Audit LLM judges for bias and calibration before you trust automated evals — evaluation rigor for the agent era.',
   },
 ];
 
@@ -171,8 +173,8 @@ const HireMe = () => {
                 </a>
               </Button>
               <Button variant="outline" className="border-green-500/40 text-green-300 hover:bg-green-500/10 font-mono" asChild>
-                <a href="/papers/sports-ml-evaluation-case-study.html" target="_blank" rel="noopener noreferrer">
-                  <FileText className="mr-2" size={16} /> View Case Study
+                <a href={SPENDAUDIT_PAPER} target="_blank" rel="noopener noreferrer">
+                  <FileText className="mr-2" size={16} /> Read SpendAudit
                 </a>
               </Button>
             </div>
@@ -185,6 +187,14 @@ const HireMe = () => {
                 <p>I build tools for evaluating AI systems. SpendAudit compares model judgments with an executable payment policy. JuryRig tests whether changes in order or padding affect a judge’s score.</p>
                 <p>I compare consumer app results for AgentsOnly. At Handshake AI I evaluated coding agents, and my work with Mercor and Turing has included task design, rubrics, and grader guidance.</p>
                 <p>I’m based in Fairmont, West Virginia, and pursuing an M.S. in Artificial Intelligence at the University of South Florida.</p>
+              </div>
+              <div className="mt-6 border-t border-green-500/20 pt-4">
+                <h2 className="text-xs uppercase tracking-[0.2em] text-green-400/65 mb-3">Start with the work</h2>
+                <ul className="space-y-2 text-sm">
+                  <li><a href="https://huggingface.co/spaces/ianalloway/juryrig-judge-audit" target="_blank" rel="noopener noreferrer" className="text-green-300 underline hover:text-green-200">Try JuryRig</a> <span className="text-green-400/75">· Audit a sample judge without an API key.</span></li>
+                  <li><a href="https://github.com/ianalloway/spendaudit#reproducing" target="_blank" rel="noopener noreferrer" className="text-green-300 underline hover:text-green-200">Reproduce SpendAudit</a> <span className="text-green-400/75">· Recompute the working paper’s tables without API calls.</span></li>
+                  <li><a href="https://huggingface.co/spaces/ianalloway/solvent-agent-demo" target="_blank" rel="noopener noreferrer" className="text-green-300 underline hover:text-green-200">Try SOLVENT</a> <span className="text-green-400/75">· See spending decisions with simulated funds.</span></li>
+                </ul>
               </div>
               <div className="mt-6 flex flex-wrap gap-3 text-sm">
                 <a href="https://github.com/ianalloway" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-green-300 hover:text-green-200 transition-colors">
@@ -252,7 +262,7 @@ const HireMe = () => {
                       <h3 className="text-xl font-bold text-white mb-2">{project.name}</h3>
                       <p className="text-sm text-green-400/60">{project.stack}</p>
                     </div>
-                    <a href={project.href} target="_blank" rel="noopener noreferrer" className="text-green-300 hover:text-green-200 transition-colors shrink-0">
+                    <a href={project.href} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.name} source on GitHub`} className="text-green-300 hover:text-green-200 transition-colors shrink-0">
                       <ExternalLink size={18} />
                     </a>
                   </div>
