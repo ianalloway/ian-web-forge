@@ -326,7 +326,12 @@ export default function Clv() {
       </div>
 
       <div className="flex-1 relative overflow-hidden" style={{ minHeight: 220 }}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas
+          ref={canvasRef}
+          role="img"
+          aria-label="Line chart tracing the implied-probability move from your entry odds to the closing odds, with a zero push baseline and a callout of closing line value in probability points; above zero means the line shortened and you beat the close."
+          className="block w-full h-full"
+        />
         <div className="absolute bottom-3 left-4 text-xs text-primary/40 pointer-events-none max-w-xl">
           clv pts = (implied(close) − implied(entry)) × 100. positive means the close shortened —
           you beat the market&apos;s last number.
