@@ -564,7 +564,12 @@ export default function Vig() {
 
         <div className="relative min-h-[260px] flex flex-col">
           <div className="flex-1 relative overflow-hidden" style={{ minHeight: 240 }}>
-            <canvas ref={canvasRef} className="block w-full h-full" />
+            <canvas
+              ref={canvasRef}
+              role="img"
+              aria-label="Bar chart comparing each outcome's raw implied probability with its fair, de-vigged probability after the bookmaker's hold is removed; dashed gridlines mark 25, 50, and 75 percent."
+              className="block w-full h-full"
+            />
           </div>
           <div className="border-t border-primary/15 px-4 py-2 text-[11px] text-primary/40 flex flex-wrap gap-x-4 gap-y-1">
             <span>click ○ bet to pick the side for edge / Kelly</span>
